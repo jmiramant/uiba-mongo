@@ -1,6 +1,38 @@
 import * as types from 'types';
 import { combineReducers } from 'redux';
 
+const isFetching = (
+  state = false,
+  action
+) => {
+  switch (action.type) {
+    case types.GET_USERS_REQUEST:
+      return true;
+    case types.GET_USERS_SUCCESS:
+    case types.GET_USERS_FAILURE:
+      return false;
+    default:
+      return state;
+  }
+};
+
+const currentUser = (
+  state = [],
+  action
+) => {
+  switch (action.type) {
+    case types.GET_CURRENT_USERS:
+      debugger
+      return action.res.data;
+    case types.GET_CURRENT_USERS_REQUEST:
+      return [...state, USER(undefined, action)];
+    case types.GET_CURRENT_USERS_FAILURE:
+      return state.filter(t => t.id !== action.id);
+    default:
+      return state;
+  }
+};
+
 const isLogin = (
   state = true,
   action

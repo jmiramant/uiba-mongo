@@ -129,7 +129,6 @@ export function fetchTopics() {
   };
 }
 
-
 export function incrementCount(id) {
   return dispatch => {
     return makeTopicRequest('put', id, {

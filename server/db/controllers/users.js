@@ -2,6 +2,17 @@ import User from '../models/user';
 import passport from 'passport';
 
 /**
+ * GET /user
+ */
+export function me(req, res) {
+    if (!req.user) {
+      console.log('Error in first query');
+      return res.status(500).send('Something went wrong getting the data');
+    }
+
+    return res.json(req.user);
+}
+/**
  * POST /login
  */
 export function login(req, res, next) {
@@ -59,6 +70,7 @@ export function signUp(req, res, next) {
 }
 
 export default {
+  me,
   login,
   logout,
   signUp

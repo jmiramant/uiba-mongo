@@ -20,7 +20,6 @@ function makeUserRequest(method, data, api = '/login') {
   return request[method](api, data);
 }
 
-
 // Log In Action Creators
 export function beginLogin() {
   return { type: types.MANUAL_LOGIN_USER };
@@ -74,6 +73,14 @@ export function logoutError() {
 
 export function toggleLoginMode() {
   return { type: types.TOGGLE_LOGIN_MODE };
+}
+
+// Fetch all users
+export function fetchCurrentUser() {
+  return {
+    type: types.GET_CURRENT_USER,
+    promise: makeUserRequest('get', null, '/me')
+  };
 }
 
 export function manualLogin(data) {
