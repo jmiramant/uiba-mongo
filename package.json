@@ -20,8 +20,7 @@
     "test:watch": "cross-env NODE_ENV=test npm test -- --watch --no-single-run",
     "postinstall": "npm run build"
   },
-  "author": "Choon Ken Ding",
-  "license": "MIT",
+  "author": "Josh Miramant",
   "devDependencies": {
     "enzyme": "^2.4.1",
     "eslint": "^3.0.1",
