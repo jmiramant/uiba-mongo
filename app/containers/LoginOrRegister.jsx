@@ -9,11 +9,6 @@ import hourGlassSvg from 'images/hourglass.svg';
 const cx = classNames.bind(styles);
 
 class LoginOrRegister extends Component {
-  /*
-   * This replaces getInitialState. Likewise getDefaultProps and propTypes are just
-   * properties on the constructor
-   * Read more here: https://facebook.github.io/react/blog/2015/01/27/react-v0.13.0-beta-1.html#es6-classes
-   */
   constructor(props) {
     super(props);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
@@ -38,11 +33,10 @@ class LoginOrRegister extends Component {
     if (isLogin) {
       return (
         <div className={cx('header')}>
-          <h1 className={cx('heading')}>Login with Email</h1>
           <div className={cx('alternative')}>
-            Not what you want?
+            New User?
             <a className={cx('alternative-link')}
-              onClick={toggleLoginMode}> Register an Account</a>
+              onClick={toggleLoginMode}> Sign up Here</a>
           </div>
         </div>
       );
@@ -50,7 +44,6 @@ class LoginOrRegister extends Component {
 
     return (
       <div className={cx('header')}>
-      <h1 className={cx('heading')}>Register with Email</h1>
         <div className={cx('alternative')}>
           Already have an account?
           <a className={cx('alternative-link')}
@@ -80,10 +73,6 @@ class LoginOrRegister extends Component {
               type="password"
               ref="password"
               placeholder="password" />
-              <div className={cx('hint')}>
-              <div>Hint</div>
-              <div>email: example@ninja.com password: ninja</div>
-              </div>
               <p className={cx('message', {
                 'message-show': message && message.length > 0
               })}>{message}</p>
@@ -91,11 +80,6 @@ class LoginOrRegister extends Component {
                 type="submit"
                 value={isLogin ? 'Login' : 'Register'} />
             </form>
-          </div>
-          <div className={cx('google-container')}>
-            <h1 className={cx('heading')}>Google Login Demo</h1>
-            <a className={cx('button')}
-          href="/auth/google">Login with Google</a>
           </div>
         </div>
       </div>

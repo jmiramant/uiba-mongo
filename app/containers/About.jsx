@@ -14,7 +14,7 @@ const About = () => {
     <div className={cx('about')}>
       <h1 className={cx('header')}>About Uiba</h1>
       <div className={cx('description')}>
-        <p>We are an easy resume storage.</p>
+        <p>We are an easy resume storage. Super cool stuff here.</p>
       </div>
     </div>
   );

@@ -2,10 +2,10 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
 import App from 'containers/App';
-import Vote from 'containers/Vote';
+import Splash from 'containers/Splash';
 import About from 'containers/About';
 import LoginOrRegister from 'containers/LoginOrRegister';
-import Dashboard from 'containers/Dashboard';
+import Profile from 'containers/Profile';
 
 /*
  * @param {Redux Store}
@@ -35,9 +35,9 @@ export default (store) => {
   };
   return (
     <Route path="/" component={App}>
-      <IndexRoute component={Vote} />
+      <IndexRoute component={Splash} />
       <Route path="login" component={LoginOrRegister} onEnter={redirectAuth} />
-      <Route path="dashboard" component={Dashboard} onEnter={requireAuth} />
+      <Route path="profile" component={Profile} onEnter={requireAuth} />
       <Route path="about" component={About} />
     </Route>
   );
