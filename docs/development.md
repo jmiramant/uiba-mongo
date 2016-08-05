@@ -1,8 +1,3 @@
-## Prerequisites
-
-> If you wish to run this app **without installing/running a database**, you can easily do so. Read more [here](https://github.com/choonkending/react-webpack-node/blob/master/docs/databases.md).
-
-
 ## MongoDB
 
 #### Install MongoDB as your database
