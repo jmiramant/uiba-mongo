@@ -7,7 +7,6 @@ public
 compiled
 .swp
 .vscode
-
 # Runtime data
 pids
 *.pid

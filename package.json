@@ -1,7 +1,7 @@
 {
   "name": "Uiba",
   "version": "1.0.0",
-  "description": "A simple Node.js app using Express 4 with Webpack, React, alt, ImmutableJS",
+  "description": "A seamless resume collector.",
   "repository": "https://github.com/jmiramant/uiba-web.git",
   "main": "index.js",
   "scripts": {
