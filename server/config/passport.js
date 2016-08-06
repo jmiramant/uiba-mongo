@@ -19,7 +19,7 @@ export default () => {
     passport.serializeUser((user, done) => {
       done(null, user.id);
     });
-
+    
     passport.deserializeUser(dbPassport.deserializeUser);
   } else {
     console.warn(unsupportedMessage('(de)serialize User'));

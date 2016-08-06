@@ -37,7 +37,7 @@ export default (req, accessToken, refreshToken, profile, done) => {
             _profile: _profile.save,
             user: user.save
           }, function(err, res){
-            done(err, res)
+            done(err, res.user[0])
           });
         });
       });
@@ -56,14 +56,13 @@ export default (req, accessToken, refreshToken, profile, done) => {
       user.email = profile._json.emailAddress;
 
       setDefaultUserFields(user, profile, accessToken)
-
       setDefaultProfileFields(_profile, profile);
       
       return async.series({
         _profile: _profile.save,
         user: user.save
       }, function(err, res){
-        done(err, res)
+        done(err, res.user[0])
       });
 
     });
