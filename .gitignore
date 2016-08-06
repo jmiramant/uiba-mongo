@@ -12,4 +12,3 @@ pids
 *.pid
 *.seed
 
-server/config/secrets.js
