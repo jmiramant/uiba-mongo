@@ -1,4 +1,6 @@
+import async from 'async'
 import User from '../models/user';
+import Profile from '../models/profile'
 
 /* eslint-disable no-param-reassign */
 export default (req, accessToken, refreshToken, profile, done) => {
@@ -33,7 +35,9 @@ export default (req, accessToken, refreshToken, profile, done) => {
       user.profile.gender = profile._json.gender;
       user.profile.picture = profile._json.picture;
       return user.save((err) => {
-        done(err, user);
+        done(err, (resp) => {
+          console.log(resp) 
+        });
       });
     });
   });

@@ -51,6 +51,7 @@
     "node": "5.x"
   },
   "dependencies": {
+    "async": "^2.0.1",
     "autoprefixer": "^6.3.3",
     "axios": "^0.13.1",
     "babel-cli": "^6.7.5",
