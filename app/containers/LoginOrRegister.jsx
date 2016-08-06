@@ -82,6 +82,11 @@ class LoginOrRegister extends Component {
             </form>
           </div>
           <div className={cx('google-container')}>
+            <h1 className={cx('heading')}>Google Login</h1>
+            <a className={cx('button')}
+          href="/auth/google">Login with Google</a>
+          </div>
+          <div className={cx('google-container')}>
             <h1 className={cx('heading')}>Linkedin Login</h1>
             <a className={cx('button')}
           href="/auth/linkedin">Login with Linkedin</a>
