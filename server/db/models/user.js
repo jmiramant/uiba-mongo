@@ -17,6 +17,9 @@ const UserSchema = new mongoose.Schema({
   tokens: Array,
   profile: {
     name: { type: String, default: '' },
+    firstName: { type: String, default: '' },
+    lastName: { type: String, default: '' },
+    headline: { type: String, default: '' },
     gender: { type: String, default: '' },
     location: { type: String, default: '' },
     website: { type: String, default: '' },
@@ -24,7 +27,8 @@ const UserSchema = new mongoose.Schema({
   },
   resetPasswordToken: String,
   resetPasswordExpires: Date,
-  google: {}
+  google: {},
+  linkedin: {}
 });
 
 function encryptPassword(next) {

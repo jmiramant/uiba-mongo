@@ -2,6 +2,7 @@
 import passport from 'passport';
 import local from './passport/local';
 import google from './passport/google';
+import linkedin from './passport/linkedin';
 import { passport as dbPassport } from '../db';
 import unsupportedMessage from '../db/unsupportedMessage';
 
@@ -27,4 +28,5 @@ export default () => {
   // use the following strategies
   local(passport);
   google(passport);
+  linkedin(passport);
 };
