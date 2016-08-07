@@ -21,13 +21,8 @@ const currentUser = (
   action
 ) => {
   switch (action.type) {
-    case types.GET_CURRENT_USERS:
-      debugger
+    case types.GET_CURRENT_USER_SUCCESS:
       return action.res.data;
-    case types.GET_CURRENT_USERS_REQUEST:
-      return [...state, USER(undefined, action)];
-    case types.GET_CURRENT_USERS_FAILURE:
-      return state.filter(t => t.id !== action.id);
     default:
       return state;
   }
@@ -105,6 +100,8 @@ const authenticated = (
 };
 
 const userReducer = combineReducers({
+  isFetching,
+  currentUser,
   isLogin,
   isWaiting,
   authenticated,

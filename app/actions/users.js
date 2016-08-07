@@ -13,10 +13,10 @@ const getMessage = res => res.response && res.response.data && res.response.data
  * /fetch API.
  * @param Object Data you wish to pass to the server
  * @param String HTTP method, e.g. post, get, put, delete
- * @param String endpoint - defaults to /login
+ * @param String endpoint - defaults to /users
  * @return Promise
  */
-function makeUserRequest(method, data, api = '/login') {
+function makeUserRequest(method, data, api = '/me') {
   return request[method](api, data);
 }
 
@@ -79,7 +79,7 @@ export function toggleLoginMode() {
 export function fetchCurrentUser() {
   return {
     type: types.GET_CURRENT_USER,
-    promise: makeUserRequest('get', null, '/me')
+    promise: makeUserRequest('get')
   };
 }
 

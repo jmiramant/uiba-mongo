@@ -9,7 +9,6 @@ import styles from 'css/components/navigation';
 const cx = classNames.bind(styles);
 
 const Navigation = ({ user, logOut }) => {
-    console.log(user)
     return (
       <nav className={cx('navigation')} role="navigation">
         <Link to="/"

@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { fetchCurrentUser } from 'actions/users';
+import { fetchCurrentProfile } from 'actions/profiles';
 import { connect } from 'react-redux';
 
 import classNames from 'classnames/bind';
@@ -10,15 +11,18 @@ const cx = classNames.bind(styles);
 class Profile extends Component {
   
   static need = [  // eslint-disable-line
-    fetchCurrentUser
+    fetchCurrentUser,
+    fetchCurrentProfile
   ]
 
   render() {
+    const { profile, user } = this.props;
     return (
       <div className={cx('about')}>
         <h1 className={cx('header')}>Uiba Profile</h1>
         <div className={cx('description')}>
-          <p>Checkout all this cool information.</p>
+          <p>Current User: { user.email }</p>
+          <p>Current Profile: { profile.headline }</p>
         </div>
       </div>
     );
@@ -27,7 +31,8 @@ class Profile extends Component {
 
 function mapStateToProps(state) {
   return {
-    currentUser: state.user,
+    user: state.user.currentUser,
+    profile: state.profile.currentProfile,
   };
 }
 
