@@ -14,7 +14,7 @@ const Navigation = ({ user, logOut }) => {
         <Link to="/"
           className={cx('item', 'logo')}
           activeClassName={cx('active')}>Uiba</Link>
-          <Link className={cx('item')} to="/profile">Profile</Link>
+          { user.authenticated ? ( <Link className={cx('item')} to="/profile">Profile</Link> ) : (<span />)}
           <Link to="/about" className={cx('item')} activeClassName={cx('active')}>About</Link>
           { user.authenticated ? (
             <Link onClick={logOut}
