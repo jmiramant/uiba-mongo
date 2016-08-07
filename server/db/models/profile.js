@@ -1,11 +1,11 @@
-import mongoose from 'mongoose';
-
+import mongoose, { Schema } from 'mongoose';
+import { User } from './user';
 /*
  Profile Schema
  */
 
 const ProfileSchema = new mongoose.Schema({
-  user_id: {type: String}, 
+  user_id: {type: Schema.Types.ObjectId, ref: 'User'},
   name: { type: String, default: '' },
   firstName: { type: String, default: '' },
   lastName: { type: String, default: '' },

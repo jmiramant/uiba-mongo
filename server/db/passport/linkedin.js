@@ -2,8 +2,8 @@ import async from 'async'
 import User from '../models/user';
 import Profile from '../models/profile'
 
-const setDefaultProfileFields = (prof, profile) => {
-  prof.user_id = profile.id;
+const setDefaultProfileFields = (prof, profile, userId) => {
+  prof.user_id = userId;
   prof.name = profile.displayName;
   prof.picture = profile._json.pictureUrl;
   prof.firstName = profile.name.givenName;
@@ -30,8 +30,8 @@ export default (req, accessToken, refreshToken, profile, done) => {
         setDefaultUserFields(user, profile, accessToken)
 
         Profile.find({"user_id": req.user.id}, (findByProfErr, _profile) => {
-          
-          setDefaultProfileFields(_profile, profile);
+
+          setDefaultProfileFields(_profile, profile, user._id);
           
           return async.series({
             _profile: _profile.save,
@@ -56,7 +56,7 @@ export default (req, accessToken, refreshToken, profile, done) => {
       user.email = profile._json.emailAddress;
 
       setDefaultUserFields(user, profile, accessToken)
-      setDefaultProfileFields(_profile, profile);
+      setDefaultProfileFields(_profile, profile, user._id);
       
       return async.series({
         _profile: _profile.save,
