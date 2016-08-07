@@ -59,7 +59,8 @@ export default (req, accessToken, refreshToken, profile, done) => {
         _profile: _profile.save,
         user: user.save
       }, function(err, res){
-        done(err, res.user[0])
+        console.log(res)
+        done(err, res)
       });
 
     });

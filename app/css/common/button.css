@@ -20,12 +20,12 @@
   --greenButton {
     @apply --button;
     color: var(--colorWhite);
-    background: var(--colorSalem);
-    border-color: var(--colorSalem);
+    background: var(--colorDodgerBlue);
+    border-color: var(--colorDodgerBlue);
 
     &:hover {
-      background: var(--colorDarkerSalem);
-      border-color: var(--colorDarkerSalem);
+      background: var(--colorDarkerBlue);
+      border-color: var(--colorDarkerBlue);
     }
   }
 }

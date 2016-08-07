@@ -11,6 +11,10 @@ export const linkedin = {
   callbackURL: process.env.GOOGLE_CALLBACK || '/auth/linkedin/callback'
 };
 
+export const postmark = {
+  token: process.env.POSTMARK_TOKEN || 'b2bc362e-fcc3-41c7-b4da-16327c121bec'
+}
+
 export default {
   sessionSecret,
   google,

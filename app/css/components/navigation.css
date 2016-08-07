@@ -12,6 +12,11 @@
   color: var(--colorBlack);
 }
 
+.item-right {
+  margin-top: 12px;
+  float: right;
+}
+
 .logo {
   font-size: var(--fontHuge);
 }

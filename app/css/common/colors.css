@@ -1,8 +1,8 @@
 :root {
-
   --colorBlack:               #000;
   --colorWhite:               #fff;
   --colorDodgerBlue:          #2196F3;
+  --colorDarkerBlue:          color(var(--colorDodgerBlue) blackness(+20%));
   --colorSalem:               #0F9D58;
   --colorDarkerSalem:         #0b6e3e;
   --colorPunch:               #db4437;

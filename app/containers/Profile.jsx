@@ -8,13 +8,20 @@ import styles from 'css/components/message';
 
 const cx = classNames.bind(styles);
 
-class Profile extends Component {
-  
-  static need = [  // eslint-disable-line
-    fetchCurrentUser,
-    fetchCurrentProfile
-  ]
+const loadData = (props) => {
+  props.fetchCurrentUser()
+  props.fetchCurrentProfile()
+}
 
+class Profile extends Component {
+  constructor(props) {
+    super(props)
+  }
+
+  componentWillMount() {
+    loadData(this.props)
+  }
+  
   render() {
     const { profile, user } = this.props;
     return (
@@ -37,4 +44,7 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps, {
+  fetchCurrentUser,
+  fetchCurrentProfile
+})(Profile);

@@ -6,7 +6,7 @@ import passport from 'passport';
  */
 export function me(req, res) {
     if (!req.user) {
-      console.log('Error in first query');
+      console.log('Error in user /me query');
       return res.status(500).send('Something went wrong getting the data');
     }
 
