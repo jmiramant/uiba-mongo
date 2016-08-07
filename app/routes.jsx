@@ -4,6 +4,8 @@ import { Route, IndexRoute } from 'react-router';
 import App from 'containers/App';
 import Splash from 'containers/Splash';
 import About from 'containers/About';
+import Terms from 'containers/Terms';
+import Privacy from 'containers/Privacy';
 import LoginOrRegister from 'containers/LoginOrRegister';
 import Profile from 'containers/Profile';
 
@@ -39,6 +41,8 @@ export default (store) => {
       <Route path="login" component={LoginOrRegister} onEnter={redirectAuth} />
       <Route path="profile" component={Profile} onEnter={requireAuth} />
       <Route path="about" component={About} />
+      <Route path="terms" component={Terms} />
+      <Route path="privacy" component={Privacy} />
     </Route>
   );
 };
