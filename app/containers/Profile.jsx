@@ -21,6 +21,7 @@ class Profile extends Component {
       <div className={cx('about')}>
         <h1 className={cx('header')}>Uiba Profile</h1>
         <div className={cx('description')}>
+          <img src={profile.picture} />
           <p>Current User: { user.email }</p>
           <p>Current Profile: { profile.headline }</p>
         </div>
