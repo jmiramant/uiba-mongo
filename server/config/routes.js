@@ -39,7 +39,7 @@ export default (app) => {
     // Otherwise, the authentication has failed.
     app.get('/auth/google/callback',
       passport.authenticate('google', {
-        successRedirect: '/',
+        successRedirect: '/profile',
         failureRedirect: '/login'
       })
     );
@@ -56,8 +56,8 @@ export default (app) => {
 
     app.get('/auth/linkedin/callback', 
       passport.authenticate('linkedin', {
-        successRedirect: '/',
-        failureRedirect: '/profile'
+        successRedirect: '/profile',
+        failureRedirect: '/login'
       })
     );
 
