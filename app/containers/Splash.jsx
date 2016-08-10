@@ -11,7 +11,7 @@ const Splash = () => {
       
       <section className={cx('hero', 'section--darkBlue')}>
         <div className={cx('hero--left') + ' col-md-6'}>
-          <h1 className={cx('hero--title')}>Launch<br/>your<br/>Career Path</h1>
+          <h1 className={cx('hero--title')}>Launch your<br/>Career Path</h1>
           <p className={cx('hero--sub-title')}>Understand your Capabilities.<br/>Start building your future today.</p>
           <div className={cx('button')}>Get Started</div>
         </div>

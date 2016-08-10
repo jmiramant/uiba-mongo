@@ -6,7 +6,7 @@ const cx = classNames.bind(styles);
 
 const Rocket = () => {
   return (
-    <svg version="1.1" x="0px" y="0px" width="307px" height="283px" id="rocket">
+    <svg version="1.1" x="0px" y="0px" width="307px" height="283px">
       <g className={cx('rocket_wrap')}>
         <circle cx="147.5" cy="138.6" r="105.5" className={cx('icon_circle')}/>
         <g className={cx('rocket_inner')}>

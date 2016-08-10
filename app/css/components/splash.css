@@ -23,6 +23,7 @@ section {
 }
 
 .hero--left {
+  margin-top: 30px;
   padding-left: 8%;
 }
 
@@ -46,4 +47,13 @@ section {
   width: 75%;
   margin: 0 2%;
   font-size: 1.3em;
+}
+
+.example-appear {
+   opacity: 0.01;
+}
+
+.example-appear.example-appear-active {
+   opacity: 1;
+   transition: opacity 500ms ease-in;
 }
