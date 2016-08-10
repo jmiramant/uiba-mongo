@@ -4,7 +4,6 @@
 
 @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
 
-
 * { box-sizing: border-box; }
 
 body {
@@ -18,15 +17,3 @@ body {
   font-weight: normal;
   font-smoothing: antialiased;
 }
-
-
-/* Add your global styles below... */
-
-/* ex:
-
-:global {
-  & .red { color: red; }
-  & .blue { color: blue; }
-}
-
-*/

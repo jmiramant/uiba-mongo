@@ -13,5 +13,8 @@
   --colorBombay:              #b4bac1;
   --colorCrimson:             #ed193a;
   --colorDarkerCrimson:       color(var(--colorCrimson) blackness(+20%));
-
+  --colorBackground-tan:      rgb(233,234,234);
+  --colorBackground-darkBlue: rgb(52,73,94);  
+  --colorLightText:           #FDFDFD;
+  
 }

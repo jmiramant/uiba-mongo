@@ -12,7 +12,7 @@ const Footer = ({ user, logOut }) => {
         <Link className={cx('item') } to="/terms">Terms</Link>
         <Link className={cx('item') } to="/privacy">Privacy</Link>
       </nav>
-    );
+    )
 };
 
 export default Footer;

@@ -3,7 +3,17 @@
 
 .navigation {
   background-color: #FAFAFA;
-  padding: 0 28px;
+  padding: 0 80px;
+}
+
+.navbar--overwrites {
+  margin-bottom: 0px;
+  height: 75px;
+  padding-top: 10px;
+}
+
+.navbar-header--overwrites {
+  margin-top: 5px;
 }
 
 .item {
@@ -13,12 +23,8 @@
   color: var(--colorBlack);
 }
 
-.item-right {
-  margin-top: 12px;
-  float: right;
-}
-
 .logo {
+  margin-top: 4px;
   font-size: var(--fontHuge);
 }
 

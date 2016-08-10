@@ -64,25 +64,29 @@ class LoginOrRegister extends Component {
             <a className={cx('button')}
           href="/auth/linkedin">Login with Linkedin</a>
           </div>
-        <div className={cx('container')}>
+        <div>
           { this.renderHeader() }
           <img className={cx('loading')} src={hourGlassSvg} />
           <div className={cx('email-container')}>
-            <form onSubmit={this.handleOnSubmit}>
-              <input className={cx('input')}
-              type="email"
-              ref="email"
-              placeholder="email" />
-              <input className={cx('input')}
-              type="password"
-              ref="password"
-              placeholder="password" />
-              <p className={cx('message', {
-                'message-show': message && message.length > 0
-              })}>{message}</p>
-              <input className={cx('button')}
-                type="submit"
-                value={isLogin ? 'Login' : 'Register'} />
+            <form onSubmit={this.handleOnSubmit} className="pure-form pure-form-aligned">
+              <fieldset>
+                <div className="pure-control-group">
+                  <label for="name">Email</label>
+                  <input type="email" ref="email" placeholder="Email" />
+                </div>
+
+                <div className="pure-control-group">
+                  <label for="password">Password</label>
+                  <input type="password" ref="password" placeholder="Password" />
+                  <p className={cx('message', {
+                    'message-show': message && message.length > 0
+                  })}>{message}</p>
+                </div>
+
+                <div className="pure-controls">
+                  <button type="submit" value={isLogin ? 'Login' : 'Register'} className="pure-button pure-button-primary">Submit</button>
+                </div>
+              </fieldset>
             </form>
           </div>
         </div>

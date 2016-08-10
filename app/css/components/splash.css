@@ -1,0 +1,49 @@
+@import '../common/typography';
+@import '../common/colors';
+@import '../common/button';
+
+section {
+  text-align: center;
+  min-height: 500px;
+  padding: 7% 10% 0;
+}
+
+.section--tan {
+  background-color: var(--colorBackground-tan);
+}
+
+.section--darkBlue {
+  background-color: var(--colorBackground-darkBlue);
+  color: var(--colorLightText);
+}
+
+.hero {
+  padding: 5% 10% 0;
+  text-align: left;
+}
+
+.hero--left {
+  padding-left: 8%;
+}
+
+.hero--right {
+  text-align: center;
+  margin-top: 3%;
+}
+
+.hero--title {
+  font-size: 4.5em;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.hero--sub-title {
+  font-size: 1.7em;
+}
+
+.button {
+  @apply --drkBlueButton;
+  width: 75%;
+  margin: 0 2%;
+  font-size: 1.3em;
+}

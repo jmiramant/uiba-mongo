@@ -10,7 +10,7 @@
     @apply --small;
     text-decoration: none;
     text-align: center;
-    border-radius: 4px;
+    border-radius: 25px;
     border-style: solid;
     border-width: 2px;
     cursor: pointer;
@@ -26,6 +26,17 @@
     &:hover {
       background: var(--colorDarkerBlue);
       border-color: var(--colorDarkerBlue);
+    }
+  }
+  --drkBlueButton {
+    @apply --button;
+    color: var(--colorWhite);
+    background: var(--colorBackground-darkBlue);
+    border-color: var(--colorLightText);
+
+    &:hover {
+      background: var(--colorLightText);
+      border-color: var(--colorBackground-darkBlue);
     }
   }
 }
