@@ -22,17 +22,17 @@ const Splash = () => {
       </section>
 
       <section className={"pure-g"}>
-        <h1 className={cx('section--title' + ' pure-u-1')}>How You'll Succeed</h1>
+        <h1 className={cx('section--title' + ' col-md-12')}>How You'll Succeed</h1>
         <div className='column-box'>
-          <div className={cx('column-box--item' + ' pure-u-1-3 pure-u-md-1')}>
+          <div className={cx('column-box--item' + ' pure-u-1-3 col-md-12')}>
             <div className={cx('column-box--title')}>Introduce Yourself</div>
             <div className={cx('column-box--description')}>First, let's make sure we understand your expierence, knowledge, abilities - everything that makes you so unique and amazing!</div>
           </div>
-          <div className={cx('column-box--item' + ' pure-u-1-3 pure-u-md-1')}>
+          <div className={cx('column-box--item' + ' pure-u-1-3 col-md-12')}>
             <div className={cx('column-box--title')}>Understand Yourself</div>
             <div className={cx('column-box--description')}>Next, let's use that information to access the full extent of your capabilities.</div>
           </div>
-          <div className={cx('column-box--item' + ' pure-u-1-3 pure-u-md-1')}>
+          <div className={cx('column-box--item' + ' pure-u-1-3 col-md-12')}>
             <div className={cx('column-box--title')}>Find Your Path</div>
             <div className={cx('column-box--description')}>Then let's see how your capabilities compare with the requirements of various roles along differenct career paths.</div>
           </div>

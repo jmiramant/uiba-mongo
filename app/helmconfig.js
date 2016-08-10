@@ -12,7 +12,6 @@ const config = {
     { rel: 'apple-touch-icon', sizes: '152x152', applecon },
     { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto+Condensed', type: 'text/css' },
     { rel: 'stylesheet', href: '/assets/styles/main.css' },
-    { rel: 'stylesheet', href: 'http://yui.yahooapis.com/pure/0.6.0/pure-min.css' },
     { rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css' }
   ],
   meta: [
