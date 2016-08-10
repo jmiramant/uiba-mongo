@@ -1,8 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 import { User } from './user';
-/*
- Profile Schema
- */
+import { Job } from './job';
 
 const ProfileSchema = new mongoose.Schema({
   user_id: {type: Schema.Types.ObjectId, ref: 'User'},
@@ -13,7 +11,8 @@ const ProfileSchema = new mongoose.Schema({
   gender: { type: String, default: '' },
   location: { type: String, default: '' },
   website: { type: String, default: '' },
-  picture: { type: String, default: '' }
+  picture: { type: String, default: '' }, 
+  jobs: [{type: mongoose.Schema.Types.ObjectId, ref: 'Job'}]
 }, {timestamps: true});
 
 ProfileSchema.statics = {};
