@@ -16,6 +16,10 @@
   margin-top: 5px;
 }
 
+.nav--items-right {
+  margin-top: 12px;
+}
+
 .item {
   display: inline-block;
   text-decoration: none;
