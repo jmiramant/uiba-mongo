@@ -1,7 +1,7 @@
 
 :root {
 
-  --fontMontserrat:           'Montserrat', Helvetica, Arial, sans-serif;
+  --fontMontserrat:           'Montserrat', Helvetica, Arial, sans-serif !important;
 
   --fontSmall:                12px;
   --fontMedium:               16px;
