@@ -2,7 +2,6 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import styles from 'css/components/splash';
 import Rocket from 'components/Rocket';
-import { Button } from 'react-bootstrap';
 
 const cx = classNames.bind(styles);
 
@@ -14,7 +13,7 @@ const Splash = () => {
         <div className={cx('hero--left') + ' col-md-6'}>
           <h1 className={cx('hero--title')}>Launch<br/>your<br/>Career Path</h1>
           <p className={cx('hero--sub-title')}>Understand your Capabilities.<br/>Start building your future today.</p>
-          <Button className={cx('button')}>Get Started</Button>
+          <div className={cx('button')}>Get Started</div>
         </div>
         <div className={cx('hero--right') + ' col-md-6'}>
           <Rocket />
