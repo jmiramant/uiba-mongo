@@ -24,11 +24,15 @@ class Profile extends Component {
     const { jobs, profile } = this.props;
     return (
       <div className={cx('about') + ' container'}>
-        <h1 className={cx('header')}>Uiba Profile</h1>
-        <div className={cx('description')}>
-        <div>{profile.name}</div>
+
         <Jobs jobs={jobs}/>
+
+        <div className={'col-md-4 text-center'}>      
+          <img src={profile.picture}/>
+          <div>{profile.name}</div>
+          <div>{profile.headline}</div>
         </div>
+
       </div>
     );
   }
