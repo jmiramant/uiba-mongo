@@ -7,7 +7,7 @@ import { controllers, passport as passportConfig } from '../db';
 
 const usersController = controllers && controllers.users;
 const profilesController = controllers && controllers.profiles;
-//const topicsController = controllers && controllers.topics;
+const jobsController = controllers && controllers.jobs;
 
 export default (app) => {
 
@@ -64,14 +64,7 @@ export default (app) => {
   }
   
   app.get('/profile/me', profilesController.me);
+  app.get('/jobs/me', jobsController.me);
+  app.post('/jobs/:id', jobsController.get);
 
-  // topic routes
-  // if (topicsController) {
-  //   app.get('/topic', topicsController.all);
-  //   app.post('/topic/:id', topicsController.add);
-  //   app.put('/topic/:id', topicsController.update);
-  //   app.delete('/topic/:id', topicsController.remove);
-  // } else {
-  //   console.warn(unsupportedMessage('topics routes'));
-  // }
 };

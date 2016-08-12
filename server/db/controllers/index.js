@@ -1,11 +1,11 @@
-import topics from './topics';
 import users from './users';
 import profiles from './profiles';
+import jobs from './jobs';
 
-export { topics, users, profiles };
+export { users, profiles, jobs };
 
 export default {
-  topics,
   users,
-  profiles
+  profiles,
+  jobs
 };

@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema({
   resetPasswordExpires: Date,
   google: {},
   linkedin: {}
-});
+}, {timestamp: true});
 
 function encryptPassword(next) {
   const user = this;

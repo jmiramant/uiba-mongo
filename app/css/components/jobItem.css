@@ -1,0 +1,37 @@
+@import '../common/colors';
+@import '../common/button';
+
+.jobItem--header {
+  padding-top: 0;
+  padding-bottom: 0;
+  display: inline-block;
+  width: 70%;
+}
+
+.jobItem--title {
+  color: #999;
+  width: 75%;
+}
+
+.jobItem--name { 
+  font-size: 17px; 
+  width: 25%;
+}
+
+.jobItem--date {
+  display: inline-block;
+  width: 30%;
+  padding: 0;
+}
+
+.jobItem--description {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--colorLightGreyText);
+}
+
+.jobItem--spacer {
+  width: 75%;
+  border-top: 1px solid #eee;
+  margin: 0 auto 30px;
+}

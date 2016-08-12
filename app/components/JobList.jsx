@@ -1,35 +1,36 @@
 import React, { PropTypes } from 'react';
-import TopicTextInput from 'components/TopicTextInput';
 import classNames from 'classnames/bind';
-import styles from 'css/components/JobList';
+import styles from 'css/components/jobList';
+import moment from 'moment';
+import JobItem from 'components/JobItem';
 
 const cx = classNames.bind(styles);
 
-class PostBox extends React.Component {
+export default class JobBox extends React.Component {
   
   static propTypes = {
-    posts: PropTypes.array
+    jobs: PropTypes.array,
+    onAddJob: PropTypes.func
+  }
+  
+  handleAddJob = (id) => {
+    this.props.onAddJob(id);
   }
 
-  return (
-    <div styleName="wrapper">
-      {this.props.posts
-        //.filter(item => item.start_date)
-        .map(post => {
-          return (
-            <div key={post.id}>
-              <h2 className="job--title">{post.title}</h2>
-            </div>
-          );
+  render () {
+    let { jobs } = this.props;
+    let lengthIndex = jobs.length - 1;
+
+    return (
+      (<div className={cx('jobList--container') + ' col-md-8'}>
+        {jobs.map((job, i) => {
+            return (<JobItem key={job._id} job={job} isntLast={lengthIndex !== i} />);
         })}
-    </div>
-  );
+        <div>
+          <div onClick={this.handleAddJob} className='pull-left'>Add Job</div>
+          <div className='pull-right'>Edit Job</div>
+        </div>
+      </div>)
+    )
+  }
 };
-
-EntryBox.propTypes = {
-  topic: PropTypes.string,
-  onEntryChange: PropTypes.func.isRequired,
-  onEntrySave: PropTypes.func.isRequired
-};
-
-export default PostBox;

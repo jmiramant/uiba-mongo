@@ -1,36 +1,33 @@
 import React, { Component, PropTypes } from 'react';
-import { fetchCurrentUser } from 'actions/users';
 import { fetchCurrentProfile } from 'actions/profiles';
+import { fetchCurrentJobs } from 'actions/jobs';
 import { connect } from 'react-redux';
+import Jobs from 'components/JobList';
 
 import classNames from 'classnames/bind';
 import styles from 'css/components/message';
 
 const cx = classNames.bind(styles);
 
-const loadData = (props) => {
-  props.fetchCurrentUser()
-  props.fetchCurrentProfile()
-}
-
 class Profile extends Component {
+  
+  static need = [  // eslint-disable-line
+    fetchCurrentProfile,
+    fetchCurrentJobs,
+  ]
+
   constructor(props) {
     super(props)
   }
 
-  componentWillMount() {
-    loadData(this.props)
-  }
-  
   render() {
-    const { profile, user } = this.props;
+    const { jobs, profile } = this.props;
     return (
-      <div className={cx('about')}>
+      <div className={cx('about') + ' container'}>
         <h1 className={cx('header')}>Uiba Profile</h1>
         <div className={cx('description')}>
-          <img src={profile.picture} />
-          <p>Current User: { user.email }</p>
-          <p>Current Profile: { profile.headline }</p>
+        <div>{profile.name}</div>
+        <Jobs jobs={jobs}/>
         </div>
       </div>
     );
@@ -39,12 +36,12 @@ class Profile extends Component {
 
 function mapStateToProps(state) {
   return {
-    user: state.user.currentUser,
+    jobs: state.job.currentJobs,
     profile: state.profile.currentProfile,
   };
 }
 
 export default connect(mapStateToProps, {
-  fetchCurrentUser,
-  fetchCurrentProfile
+  fetchCurrentProfile,
+  fetchCurrentJobs,
 })(Profile);

@@ -1,4 +1,5 @@
 import User from '../models/user';
+import Jobs from '../models/job';
 import passport from 'passport';
 
 /**
@@ -12,6 +13,7 @@ export function me(req, res) {
 
     return res.json(req.user);
 }
+
 /**
  * POST /login
  */

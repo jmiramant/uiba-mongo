@@ -7,6 +7,7 @@ const ProfileSchema = new mongoose.Schema({
   name: { type: String, default: '' },
   firstName: { type: String, default: '' },
   lastName: { type: String, default: '' },
+  email: { type: String, default: '' },
   headline: { type: String, default: '' },
   gender: { type: String, default: '' },
   location: { type: String, default: '' },
