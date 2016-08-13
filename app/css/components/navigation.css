@@ -21,10 +21,23 @@
 }
 
 .item {
+  transition: all 0.25s ease;
   display: inline-block;
   text-decoration: none;
   padding: 16px 32px;
   color: var(--colorBlack);
+}
+
+.item:link,
+.item:hover,
+.item:active,
+.item:visited {
+  color: var(--colorBlack);
+  text-decoration: none;
+}
+
+.item:hover {
+  color: var(--colorGreen);
 }
 
 .logo {

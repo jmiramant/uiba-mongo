@@ -1,11 +1,11 @@
-@import '../common/colors';
-@import '../common/button';
+@import '../../common/colors';
+@import '../../common/button';
 
 .jobItem--header {
   padding-top: 0;
   padding-bottom: 0;
   display: inline-block;
-  width: 70%;
+  width: 60%;
 }
 
 .jobItem--title {
@@ -20,7 +20,7 @@
 
 .jobItem--date {
   display: inline-block;
-  width: 30%;
+  width: 40%;
   padding: 0;
 }
 

@@ -71,12 +71,12 @@ class LoginOrRegister extends Component {
             <form onSubmit={this.handleOnSubmit} className="pure-form pure-form-aligned">
               <fieldset>
                 <div className="pure-control-group">
-                  <label for="name">Email</label>
+                  <label htmlFor="name">Email</label>
                   <input type="email" ref="email" placeholder="Email" />
                 </div>
 
                 <div className="pure-control-group">
-                  <label for="password">Password</label>
+                  <label htmlFor="password">Password</label>
                   <input type="password" ref="password" placeholder="Password" />
                   <p className={cx('message', {
                     'message-show': message && message.length > 0

@@ -1,0 +1,28 @@
+@import '../../common/colors';
+@import '../../common/card';
+
+.userCard--container {
+  @apply --card;
+  background: #fff;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 30px;
+}
+
+.userCard--picture-container {
+  overflow: hidden; 
+  border-radius: 100px;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+}
+
+.userCard--picture-img {
+  width: 100%;
+  height: 100%;
+}
+
+.userCard--name {
+  font-size: 20px;
+  margin: 15px 0;
+}

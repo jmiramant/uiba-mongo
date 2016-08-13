@@ -1,0 +1,19 @@
+@import '../../common/colors';
+@import '../../common/button';
+@import '../../common/card';
+
+.button {
+  @apply --drkBlueButton;
+  width: 75%;
+  margin: 0 2%;
+  font-size: 1.3em;
+}
+
+
+.jobList--container {
+  @apply --card;
+  background: #fff;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 30px;
+}

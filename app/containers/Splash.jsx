@@ -2,6 +2,10 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import styles from 'css/components/splash';
 import Rocket from 'components/Rocket';
+import { Link } from 'react-router';
+import imgDialed from '../images/splash/dialed.svg';
+import imgRadar from '../images/splash/Radar.svg';
+import imgMap from '../images/splash/Map.svg';
 
 const cx = classNames.bind(styles);
 
@@ -13,7 +17,7 @@ const Splash = () => {
         <div className={cx('hero--left') + ' col-md-6'}>
           <h1 className={cx('hero--title')}>Launch your<br/>Career Path</h1>
           <p className={cx('hero--sub-title')}>Understand your Capabilities.<br/>Start building your future today.</p>
-          <div className={cx('button')}>Get Started</div>
+          <Link to="/login" className={cx('button')}>Get Started</Link>
         </div>
         <div className={cx('hero--right') + ' col-md-6'}>
           <Rocket />
@@ -23,15 +27,18 @@ const Splash = () => {
       <section className={"pure-g"}>
         <h1 className={cx('section--title' + ' col-md-12')}>How You'll Succeed</h1>
         <div className='column-box'>
-          <div className={cx('column-box--item' + ' pure-u-1-3 col-md-12')}>
+          <div className={cx('column-box--item' + ' col-md-4')}>
+            <img src={imgDialed} />
             <div className={cx('column-box--title')}>Introduce Yourself</div>
             <div className={cx('column-box--description')}>First, let's make sure we understand your expierence, knowledge, abilities - everything that makes you so unique and amazing!</div>
           </div>
-          <div className={cx('column-box--item' + ' pure-u-1-3 col-md-12')}>
+          <div className={cx('column-box--item' + ' col-md-4')}>
+            <img src={imgRadar} />
             <div className={cx('column-box--title')}>Understand Yourself</div>
             <div className={cx('column-box--description')}>Next, let's use that information to access the full extent of your capabilities.</div>
           </div>
-          <div className={cx('column-box--item' + ' pure-u-1-3 col-md-12')}>
+          <div className={cx('column-box--item' + ' col-md-4')}>
+            <img src={imgMap} />
             <div className={cx('column-box--title')}>Find Your Path</div>
             <div className={cx('column-box--description')}>Then let's see how your capabilities compare with the requirements of various roles along differenct career paths.</div>
           </div>
