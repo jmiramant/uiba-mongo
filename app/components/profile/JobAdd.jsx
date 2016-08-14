@@ -30,7 +30,7 @@ export default class JobAdd extends React.Component {
   handleSubmit = e => {
 
     e.preventDefault();
-    this.props.saveNewJob(this.state.job);
+    this.props.onJobSave(this.state.job);
 
     this.setState({
       job: _.clone(intialJobState),

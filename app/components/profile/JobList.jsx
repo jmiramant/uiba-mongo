@@ -11,11 +11,12 @@ export default class JobList extends React.Component {
   
   static propTypes = {
     jobs: PropTypes.array,
-    saveNewJob: PropTypes.func
+    onJobSave: PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props);
+    this.handleSave = this.handleSave.bind(this);
     this.state = { addVisibile: false } ;
   }
   
@@ -23,8 +24,9 @@ export default class JobList extends React.Component {
     this.setState({addVisibile: true})
   }
 
-  saveNewJob = (data) => {
-    this.props.saveNewJob(data)
+  handleSave = (data) => {
+    const { onJobSave } = this.props;
+    onJobSave(data);
     this.setState({addVisibile: false})
   }
 
@@ -40,7 +42,7 @@ export default class JobList extends React.Component {
         })}
 
         { this.state.addVisibile ? (
-          <JobAdd addVisibile={addVisibile} saveNewJob={this.saveNewJob} />
+          <JobAdd addVisibile={addVisibile} onJobSave={this.handleSave} />
         ) : (
           <div>
             <div onClick={this.showAddJob} className='pull-left'>Add Job</div>

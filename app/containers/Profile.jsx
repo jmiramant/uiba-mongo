@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { fetchCurrentProfile } from 'actions/profiles';
-import { fetchCurrentJobs, saveNewJob } from 'actions/jobs';
+import { fetchJobs, createJob } from 'actions/jobs';
 import { connect } from 'react-redux';
 import Jobs from 'components/profile/JobList';
 import UserCard from 'components/profile/userCard';
@@ -14,21 +14,25 @@ class Profile extends Component {
   
   static need = [  // eslint-disable-line
     fetchCurrentProfile,
-    fetchCurrentJobs,
+    fetchJobs,
   ]
 
   constructor(props) {
     super(props)
   }
 
+  saveJob (data) {
+    console.log(this.props.createJob(data)())
+  }
+
   render() {
-    const { saveNewJob, 
+    const { createJob,
             jobs,
-            profile 
+            profile
           } = this.props;
     return (
       <div className={cx('about') + ' container'}>
-        <Jobs jobs={jobs} saveNewJob={saveNewJob} />
+        <Jobs jobs={jobs} onJobSave={this.saveJob.bind(this)} />
         <UserCard profile={profile} />
       </div>
     );
@@ -37,16 +41,16 @@ class Profile extends Component {
 
 function mapStateToProps(state) {
   return {
-    jobs: state.job.currentJobs,
+    jobs: state.job.jobs,
     profile: state.profile.currentProfile,
   };
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    saveNewJob,
-    fetchCurrentProfile,
-    fetchCurrentJobs
+    createJob: createJob.bind(dispatch),
+    fetchCurrentProfile: fetchCurrentProfile,
+    fetchJobs: fetchJobs
   }
 }
 

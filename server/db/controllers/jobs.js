@@ -48,7 +48,7 @@ export function create(req, res) {
     return new Date(split[0], split[1], split[2])
   };
 
-  Company.create({
+  return Company.create({
     name: req.body.company
   }, function (err, company) {
 
