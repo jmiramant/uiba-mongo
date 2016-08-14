@@ -1,5 +1,6 @@
 import * as types from 'types';
 import { combineReducers } from 'redux';
+import _ from 'lodash';
 
 const jobOrder = (jobs, order = 'asc') => {
   if (order === 'asc') {
@@ -23,6 +24,10 @@ const jobs = (
     case types.CREATE_JOB_SUCCESS:
       const newJobs = state.concat(action.data);
       return jobOrder(newJobs)
+    case types.UPDATE_JOB_SUCCESS:
+      const updatedJob = state.slice()
+      updatedJob[_.findIndex(state, function(j) { return j._id === action.data._id; })] = action.data
+      return jobOrder(updatedJob)
     case types.CREATE_JOB_REQUEST:
       return {
         data: action.res.data,

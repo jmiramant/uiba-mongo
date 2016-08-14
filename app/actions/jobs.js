@@ -37,12 +37,19 @@ export function createTopicFailure(data) {
   };
 }
 
-// export function createJobWorking(jobData) {
-//   return {
-//     type: types.CREATE_JOB,
-    // promise: makeJobsRequest('post', jobData, '/jobs')
-//   }
-// }
+export function updateJobRequest(data) {
+  return {
+    type: types.UPDATE_JOB,
+    data: data
+  }
+}
+
+export function updateJobSuccess(data) {
+  return {
+    type: types.UPDATE_JOB_SUCCESS,
+    data: data
+  }
+}
 
 export function createJob(jobData) {
   let dispatch = this;
@@ -61,3 +68,23 @@ export function createJob(jobData) {
       });
   }
 }
+
+export function updateJob(jobData) {
+  let dispatch = this;
+  return () => {
+
+    dispatch(updateJobRequest(jobData));
+    
+    return makeJobsRequest('put', jobData, '/jobs')
+      .then(res => {
+        if (res.status === 200) {
+          return dispatch(updateJobSuccess(res.data));
+        }
+      })
+      .catch(() => {
+        return dispatch(createTopicFailure({ error: 'Oops! Something went wrong and we couldn\'t create your job.'}));
+      });
+  }
+
+}
+

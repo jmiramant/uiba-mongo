@@ -11,7 +11,7 @@ const JobSchema = new mongoose.Schema({
   description: String, 
   startDate: Date,
   endDate: Date,
-  active: Boolean,
+  current: Boolean,
 }, {timestamps: true});
 
 export default mongoose.model('Job', JobSchema);

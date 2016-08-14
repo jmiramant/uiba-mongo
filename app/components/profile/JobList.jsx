@@ -25,9 +25,12 @@ export default class JobList extends React.Component {
   }
 
   handleSave = (data) => {
-    const { onJobSave } = this.props;
-    onJobSave(data);
+    this.props.onJobSave(data);
     this.setState({addVisibile: false})
+  }
+
+  handleEditSave = (data) => {
+    this.props.onEditSave(data);
   }
 
   render () {
@@ -38,15 +41,14 @@ export default class JobList extends React.Component {
     return (
       <div className={cx('jobList--container') + ' col-md-7'}>
         {jobs.map((job, i) => {
-            return (<JobItem key={job._id} job={job} isntLast={lengthIndex !== i} />);
+            return (<JobItem key={job._id} saveJobEdit={this.handleEditSave} job={job} isntLast={lengthIndex !== i} />);
         })}
 
         { this.state.addVisibile ? (
           <JobAdd addVisibile={addVisibile} onJobSave={this.handleSave} />
         ) : (
           <div>
-            <div onClick={this.showAddJob} className='pull-left'>Add Job</div>
-            <div className='pull-right'>Edit Job</div>
+            <div onClick={this.showAddJob} className='pull-right'>Add Job</div>
           </div>
         ) }
       </div>
