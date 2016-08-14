@@ -9,37 +9,6 @@ import styles from 'css/components/navigation';
 
 const cx = classNames.bind(styles);
 
-// const old = (
-//       <Navbar className={cx('navbar--overwrites')}>
-//         <Navbar.Header>
-//           <Link to="/"
-//             className={cx('logo')}
-//             activeClassName={cx('active')}>Uiba</Link>
-//         </Navbar.Header>
-//         <Nav pullRight>
-//           { user.authenticated ? ( 
-//             <LinkContainer to="/profile">
-//               <NavItem eventKey={1}>Profile</NavItem>
-//             </LinkContainer>
-//           ) : (
-//              <span />
-//           )}
-//           <LinkContainer to="/about">
-//             <NavItem eventKey={1}>About</NavItem>
-//           </LinkContainer>
-//            { user.authenticated ? (
-//             <LinkContainer to="/" onClick={logOut}>
-//               <NavItem className={cx('item-right')} eventKey={1}>Logout</NavItem>
-//             </LinkContainer>
-//            ) : (
-//             <LinkContainer to="/login">
-//               <NavItem className={cx('item-right')} eventKey={1}>Log In</NavItem>
-//             </LinkContainer>
-//            )}
-//         </Nav>
-//       </Navbar>
-// )
-
 const Navigation = ({ user, logOut }) => {
     return (
 

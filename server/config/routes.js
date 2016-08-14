@@ -64,7 +64,8 @@ export default (app) => {
   }
   
   app.get('/profile/me', profilesController.me);
+
   app.get('/jobs/me', jobsController.me);
-  app.post('/jobs/:id', jobsController.get);
+  app.post('/jobs', jobsController.create);
 
 };

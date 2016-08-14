@@ -107,6 +107,7 @@
     "react": "^15.3.0",
     "react-addons-css-transition-group": "^15.3.0",
     "react-bootstrap": "^0.30.2",
+    "react-datepicker": "^0.29.0",
     "react-dom": "^15.3.0",
     "react-helmet": "^3.1.0",
     "react-redux": "^4.4.1",

@@ -15,3 +15,10 @@ export function fetchCurrentJobs() {
     promise: makeJobsRequest('get')
   };
 }
+
+export function saveNewJob(jobData) {
+  return {
+    type: types.SAVE_JOB,
+    promise: makeJobsRequest('post', jobData, '/jobs')
+  }
+}

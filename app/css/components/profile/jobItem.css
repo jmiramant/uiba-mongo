@@ -5,7 +5,7 @@
   padding-top: 0;
   padding-bottom: 0;
   display: inline-block;
-  width: 60%;
+  width: 75%;
 }
 
 .jobItem--title {
@@ -20,7 +20,7 @@
 
 .jobItem--date {
   display: inline-block;
-  width: 40%;
+  width: 25%;
   padding: 0;
 }
 

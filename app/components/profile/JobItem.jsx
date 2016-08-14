@@ -17,7 +17,7 @@ export default class JobItem extends React.Component {
     return (
       <div className={cx('jobItem--container')}>
         <p className={cx("jobItem--header")}><span className={ cx('jobItem--name')}>{job.companyName}</span> | <span className={cx('jobItem--title')}>{job.title}</span></p>
-        <p className={cx("jobItem--date")}>{moment(job.startDate).format('MMMM, YYYY')} - {moment(job.endDate).format('MMMM, YYYY')}</p>
+        <p className={cx("jobItem--date")}>{moment(job.startDate).format('MMM, YYYY')} - {moment(job.endDate).format('MMM, YYYY')}</p>
         <p className={cx("jobItem--description")}>{job.description}</p>
         <div className={cx('jobItem--spacer')}></div>
       </div>

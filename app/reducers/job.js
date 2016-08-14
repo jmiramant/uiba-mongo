@@ -8,6 +8,8 @@ const currentJobs = (
   switch (action.type) {
     case types.GET_CURRENT_JOBS_SUCCESS:
       return action.res.data;
+    case types.SAVE_JOB_SUCCESS:
+      return action.res.data;
     default:
       return state;
   }
