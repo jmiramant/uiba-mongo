@@ -45,3 +45,17 @@
   border-top: 1px solid #eee;
   margin: 0 auto 30px;
 }
+
+.jobEdit--controls {
+  height: 40px;
+  padding-top: 12px;
+}
+
+.jobEdit--buttons {
+  cursor: pointer;
+  transition: 0.25s color ease;
+}
+
+.jobEdit--buttons:hover {
+  color: var(--colorGreen);
+}

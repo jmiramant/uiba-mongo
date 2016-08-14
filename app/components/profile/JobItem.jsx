@@ -17,17 +17,22 @@ export default class JobItem extends React.Component {
 
   state = {
     job: { ...this.props.job }, 
+    persistedJob: { ...this.props.job }, 
     edit: false,
   }
 
   toggleEdit () {
-    
     if (this.state.edit) {
-      this.props.saveJobEdit(this.state.job)
+      this.setState({job: this.state.persistedJob})
     }
 
     this.setState({edit: !this.state.edit})
 
+  }
+
+  saveEdit () {
+    this.props.saveJobEdit(this.state.job)
+    this.toggleEdit()
   }
   
   handleChange = field => e => {
@@ -40,9 +45,11 @@ export default class JobItem extends React.Component {
         [field] : e.target.value
       },
     });
-
   }
 
+  formatDateString(date) {
+    return moment(new Date(date)).format('YYYY-MM-DD')
+  };
 
 
   render () {
@@ -52,10 +59,6 @@ export default class JobItem extends React.Component {
 
       return (
         <div className={cx('jobItem--container')}>
-          <div 
-            onClick={this.toggleEdit.bind(this)} 
-            className={cx('jobItem--edit')}>
-          </div>
           <div>
             <input 
               type='text'
@@ -71,12 +74,12 @@ export default class JobItem extends React.Component {
           </div>
           <input 
             type="date"
-            value={moment(this.state.job.startDate).format('YYYY-MM-DD')} 
+            value={this.formatDateString(this.state.job.startDate)} 
             onChange={this.handleChange('startDate')} 
             id="startDate" />
           <input 
             type="date"
-            value={moment(this.state.job.endDate).format('YYYY-MM-DD')} 
+            value={this.formatDateString(this.state.job.endDate)} 
             onChange={this.handleChange('endDate')} 
             id="endDate" />
           <textarea 
@@ -84,6 +87,10 @@ export default class JobItem extends React.Component {
             value={this.state.job.description}
             onChange={this.handleChange('description')} 
             id='description' />
+          <div className={ cx('jobEdit--controls') }>
+            <div className={ cx('jobEdit--buttons') + ' pull-left'} onClick={this.toggleEdit.bind(this)}>Close</div>
+            <div className={ cx('jobEdit--buttons') + ' pull-right'} onClick={this.saveEdit.bind(this)}>Save</div>
+          </div>
           <div className={cx('jobItem--spacer')}></div>
         </div>
       )

@@ -1,6 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 import Job from '../models/job';
 import Company from '../models/company';
+import moment from 'moment';
 
 const handleError = (err) => {
   console.log(err)
@@ -15,10 +16,6 @@ export function me(req, res) {
       console.log('Error in "jobs/me" query');
       return res.status(500).send('Something went wrong getting the data');
     }
-    
-    jobs.sort(function(a,b){
-      return new Date(b.startDate) + new Date(a.endDate);
-    });
 
     return res.status(200).json(jobs);
   });
@@ -75,16 +72,18 @@ export function create(req, res) {
 
 export function update(req, res) {
   
-  function createDateObj (date) {
-    const split = date.split('-');
-    return new Date(split[0], split[1], split[2])
-  };
   return Job.findOne({"_id": req.body._id}).exec((err, job) => {
     
     job.description = req.body.description;
     job.title = req.body.title;
-    job.startDate = createDateObj(req.body.startDate);
-    job.endDate = createDateObj(req.body.endDate);
+    
+    if (req.body.startDate) {
+      job.startDate = new Date(req.body.startDate);
+    }
+    
+    if (req.body.endDate) {
+      job.endDate = new Date(req.body.endDate);
+    }
 
     if (job.companyName !== req.body.companyName) {
 
