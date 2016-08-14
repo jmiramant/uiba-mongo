@@ -91,7 +91,7 @@ export default class JobItem extends React.Component {
     } else {
 
       return (
-        <div className={cx('jobItem--container')}>
+        <div className={cx('jobItem--container')} onDoubleClick={this.toggleEdit.bind(this)}>
           <div onClick={this.toggleEdit.bind(this)} className={cx('jobItem--edit')}></div>
           <p className={cx("jobItem--header")}><span className={ cx('jobItem--name')}>{job.companyName}</span> | <span className={cx('jobItem--title')}>{job.title}</span></p>
           <p className={cx("jobItem--date")}>{moment(job.startDate).format('MMM, YYYY')} - {moment(job.endDate).format('MMM, YYYY')}</p>
