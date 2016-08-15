@@ -121,8 +121,8 @@ export function deleteJob(job) {
   return () => {
 
     dispatch(deleteJobRequest(job));
-    
-    return makeJobsRequest('delete', job, '/jobs')
+
+    return makeJobsRequest('delete', job, '/jobs/' + job._id)
       .then(res => {
         if (res.status === 200) {
           return dispatch(deleteJobSuccess(res.data));

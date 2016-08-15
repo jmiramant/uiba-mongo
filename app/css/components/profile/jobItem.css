@@ -80,7 +80,7 @@
 
 .jobEdit--startDate { 
   width: 40%;
-  margin: 10px 10px 0;
+  margin: 10px 10px 0 0;
 }
 
 .jobEdit--endDate { 
@@ -105,6 +105,11 @@
 .jobEdit--buttons {
   cursor: pointer;
   transition: 0.25s color ease;
+}
+
+.jobEdit--button-delete {
+  float: left;
+  margin-left: 10px;
 }
 
 .jobEdit--buttons:hover {

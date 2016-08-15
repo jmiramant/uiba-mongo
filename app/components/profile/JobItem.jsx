@@ -99,7 +99,7 @@ export default class JobItem extends React.Component {
             id='description' />
           <div className={ cx('jobEdit--controls') }>
             <div className={ cx('jobEdit--buttons') + ' pull-left'} onClick={this.toggleEdit.bind(this)}>Close</div>
-            <div className={ cx('jobEdit--buttons')} onClick={this.handleDelete.bind(this)}>Delete</div>
+            <div className={ cx('jobEdit--buttons', 'jobEdit--button-delete')} onClick={this.handleDelete.bind(this)}>Delete</div>
             <div className={ cx('jobEdit--buttons') + ' pull-right'} onClick={this.saveEdit.bind(this)}>Save</div>
           </div>
           <div className={cx('jobItem--spacer')}></div>

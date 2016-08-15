@@ -70,10 +70,6 @@ p {
   border: solid 5px #eee;
 }
 
-.aboutTime--title {
-  background-color: var(--colorBackground-darkBlue);
-}
-
 .aboutTime--item {
   height: 500px;
   padding-top: 100px;

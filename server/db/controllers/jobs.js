@@ -127,11 +127,10 @@ export function update(req, res) {
 }
 
 export function remove (req, res) {
-
-  Job.remove({ _id: req.body._id }, function (err, job) {
-    if (err) { handleError(err); }
-    return res.status(200).json({message: 'This job has been deleted.'})
-  })
+    Job.findByIdAndRemove(req.params.id, function (err,offer){
+      if(err) { throw err; }
+      return res.status(200).json({id: req.params.id, message: 'This job has been deleted.'})// ...
+    })
 }
 
 

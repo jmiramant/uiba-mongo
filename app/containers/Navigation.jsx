@@ -13,19 +13,27 @@ const Navigation = ({ user, logOut }) => {
     return (
 
       <nav className={cx('navigation')} role="navigation">
-        <Link to="/"
-          className={cx('item', 'logo')}
-          activeClassName={cx('active')}>Uiba</Link>
-          <div className={cx('nav--items-right') + ' pull-right'}>
-            { user.authenticated ? ( <Link className={cx('item')} to="/profile">Profile</Link> ) : (<span />)}
-            <Link to="/about" className={cx('item')} activeClassName={cx('active')}>About</Link>
-            { user.authenticated ? (
-              <Link onClick={logOut}
-                className={cx('item')} to="/">Logout</Link>
-            ) : (
-              <Link className={cx('item')} to="/login">Log in</Link>
-            )}
-          </div>
+        { user.authenticated ? (
+          <Link to="/profile"
+            className={cx('item', 'logo')}
+            activeClassName={cx('active')}>Uiba
+          </Link>
+        ) : (
+          <Link to="/"
+            className={cx('item', 'logo')}
+            activeClassName={cx('active')}>Uiba
+          </Link>
+        )}
+        <div className={cx('nav--items-right') + ' pull-right'}>
+          { user.authenticated ? ( <Link className={cx('item')} to="/profile">Profile</Link> ) : (<span />)}
+          <Link to="/about" className={cx('item')} activeClassName={cx('active')}>About</Link>
+          { user.authenticated ? (
+            <Link onClick={logOut}
+              className={cx('item')} to="/">Logout</Link>
+          ) : (
+            <Link className={cx('item')} to="/login">Log in</Link>
+          )}
+        </div>
       </nav>
 
     );
