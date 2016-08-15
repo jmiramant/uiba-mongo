@@ -13,9 +13,10 @@
   --colorBombay:              #b4bac1;
   --colorCrimson:             #ed193a;
   --colorDarkerCrimson:       color(var(--colorCrimson) blackness(+20%));
-  --colorBackground-tan:      rgb(233,234,234);
+  --colorBackground-tan:      #f9fafb;
   --colorBackground-darkBlue: rgb(52,73,94);
   --colorLightText:           #FDFDFD;
   --colorGreen:               rgb(45,203,115);
   --colorLightGreyText:       #66747F;
+  --colorBrightPink:          #e91e63;
 }
