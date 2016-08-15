@@ -8,11 +8,6 @@
 .description { @apply --normal; }
 .contribute { @apply --small; }
 
-.timeline--column {
-  background-color: #fff;
-  border: solid 5px #eee;
-}
-
 .row-flex, .row-flex > div[class*='col-'] {
   display: -webkit-box;
   display: -moz-box;
@@ -71,4 +66,28 @@ h3 {
 
 p {
   padding: 15px 0;
+}
+
+.timeline--column {
+  background-color: #fff;
+  border: solid 5px #eee;
+}
+
+.aboutTime--item {
+  height: 500px;
+  padding-top: 100px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.aboutTime--column-left {
+  display: inline-block;
+  width: 60% !important;
+  padding: 0 10px;
+}
+
+.aboutTime--column-right {
+  padding: 0 10px;
+  display: inline-block;
+  width: 40%
 }

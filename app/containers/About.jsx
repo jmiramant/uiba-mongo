@@ -4,6 +4,7 @@ import styles from 'css/components/about';
 import _ from 'lodash';
 import { StickyContainer, Sticky } from 'react-sticky';
 import { Grid, Col } from 'react-bootstrap';
+import xkcd from '../images/extrapolating.png';
 
 const cx = classNames.bind(styles);
 
@@ -47,7 +48,21 @@ let timeline = date.map( (title, i) => {
         <Sticky>
           <h3>{title}</h3>
         </Sticky>
-        <p>{statement[i]}</p>
+          { i%2 === 0 ? (
+            <div className={cx('aboutTime--item')}>
+              <div className={cx('aboutTime--column-left')}>
+                <img src={xkcd} />
+              </div>
+              <p className={cx('aboutTime--column-right')} >{statement[i]}</p>
+            </div>
+          ) : (
+            <div className={cx('aboutTime--item')}>
+              <p className={cx('aboutTime--column-right')} >{statement[i]}</p>
+              <div className={cx('aboutTime--column-left')}>
+                <img src={xkcd} />
+              </div>
+            </div>
+          )}
       </StickyContainer>
     )
   }
