@@ -30,7 +30,7 @@ export function createJobSuccess(data) {
   };
 }
 
-export function createTopicFailure(data) {
+export function createJobFailure(data) {
   return {
     type: types.CREATE_JOB_FAILURE,
     error: data.error
@@ -51,6 +51,13 @@ export function updateJobSuccess(data) {
   }
 }
 
+export function updateJobFailure(data) {
+  return {
+    type: types.UPDATE_JOB_FAILURE,
+    error: data.error
+  };
+}
+
 export function createJob(jobData) {
   let dispatch = this;
 
@@ -64,7 +71,7 @@ export function createJob(jobData) {
         }
       })
       .catch(() => {
-        return dispatch(createTopicFailure({ error: 'Oops! Something went wrong and we couldn\'t create your job.'}));
+        return dispatch(createJobFailure({ error: 'Oops! Something went wrong and we couldn\'t create your job.'}));
       });
   }
 }
@@ -82,9 +89,48 @@ export function updateJob(jobData) {
         }
       })
       .catch(() => {
-        return dispatch(createTopicFailure({ error: 'Oops! Something went wrong and we couldn\'t create your job.'}));
+        return dispatch(updateJobFailure({ error: 'Oops! Something went wrong and we couldn\'t create your job.'}));
       });
   }
 
 }
 
+export function deleteJobRequest (data) {
+  return {
+    type: types.DELETE_JOB_REQUEST,
+    data: data
+  }
+}
+
+export function deleteJobSuccess (data) {
+  return {
+    type: types.DELETE_JOB_SUCCESS,
+    data: data
+  }
+}
+
+export function deleteJobFailure (data) {
+  return {
+    type: types.DELETE_JOB_FAILURE,
+    error: data.error
+  }
+}
+
+export function deleteJob(job) {
+  let dispatch = this;
+  return () => {
+
+    dispatch(deleteJobRequest(job));
+    
+    return makeJobsRequest('delete', job, '/jobs')
+      .then(res => {
+        if (res.status === 200) {
+          return dispatch(deleteJobSuccess(res.data));
+        }
+      })
+      .catch(() => {
+        return dispatch(deleteJobFailure({ error: 'Oops! Something went wrong and we couldn\'t delete your job.'}));
+      });
+  }
+
+}

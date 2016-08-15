@@ -1,10 +1,25 @@
 @import '../../common/colors';
 @import '../../common/button';
 
+:root {
+  --item--header {
+    padding-top: 0;
+    padding-bottom: 0;
+    display: inline-block;
+  }
+
+  --item--name {
+    font-size: 17px; 
+  }
+  
+  --item--title {
+    color: #999;
+  }
+
+}
+
 .jobItem--header {
-  padding-top: 0;
-  padding-bottom: 0;
-  display: inline-block;
+  @apply --item--header;
   width: 75%;
 }
 
@@ -24,7 +39,7 @@
 }
 
 .jobItem--name { 
-  font-size: 17px; 
+  font-size: 17px;
   width: 25%;
 }
 
@@ -44,6 +59,42 @@
   width: 75%;
   border-top: 1px solid #eee;
   margin: 0 auto 30px;
+}
+
+.jobEdit--header {
+  @apply --item--header;
+  width: 100%;
+}
+
+.jobEdit--title {
+  color: #999;
+  width: 59%;
+  margin-left: 6px;
+}
+
+.jobEdit--name { 
+  font-size: 17px;
+  width: 35%;
+  margin-right: 6px;
+}
+
+.jobEdit--startDate { 
+  width: 40%;
+  margin: 10px 10px 0;
+}
+
+.jobEdit--endDate { 
+  width: 40%;
+  margin: 10px 0;
+}
+
+.jobEdit--description {
+  width: 97%;
+  height: 130px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--colorLightGreyText);
+  margin-top: 0;
 }
 
 .jobEdit--controls {

@@ -8,7 +8,8 @@ const cx = classNames.bind(styles);
 export default class JobItem extends React.Component {
   
   static propTypes = {
-    saveJobEdit: PropTypes.func
+    saveJobEdit: PropTypes.func,
+    handleDelete: PropTypes.func
   }
 
   constructor(props) {
@@ -33,6 +34,10 @@ export default class JobItem extends React.Component {
   saveEdit () {
     this.props.saveJobEdit(this.state.job)
     this.toggleEdit()
+  }
+
+  handleDelete () {
+    this.props.handleDelete(this.state.job)
   }
   
   handleChange = field => e => {
@@ -59,36 +64,42 @@ export default class JobItem extends React.Component {
 
       return (
         <div className={cx('jobItem--container')}>
-          <div>
+          <div className={cx('jobEdit--header')}>
             <input 
               type='text'
               value={this.state.job.companyName}
-              onChange={this.handleChange('companyName')} 
+              onChange={this.handleChange('companyName')}
+              className={ cx('jobEdit--name')}
               id="companyName"  />
               | 
             <input 
               type='text'
               value={this.state.job.title} 
               onChange={this.handleChange('title')} 
+              className={ cx('jobEdit--title')}
               id='title' />
           </div>
           <input 
             type="date"
             value={this.formatDateString(this.state.job.startDate)} 
-            onChange={this.handleChange('startDate')} 
+            onChange={this.handleChange('startDate')}
+            className={cx('jobEdit--startDate')}
             id="startDate" />
           <input 
             type="date"
             value={this.formatDateString(this.state.job.endDate)} 
             onChange={this.handleChange('endDate')} 
+            className={cx('jobEdit--endDate')}
             id="endDate" />
           <textarea 
             type='text'
             value={this.state.job.description}
+            className={cx('jobEdit--description')}
             onChange={this.handleChange('description')} 
             id='description' />
           <div className={ cx('jobEdit--controls') }>
             <div className={ cx('jobEdit--buttons') + ' pull-left'} onClick={this.toggleEdit.bind(this)}>Close</div>
+            <div className={ cx('jobEdit--buttons')} onClick={this.handleDelete.bind(this)}>Delete</div>
             <div className={ cx('jobEdit--buttons') + ' pull-right'} onClick={this.saveEdit.bind(this)}>Save</div>
           </div>
           <div className={cx('jobItem--spacer')}></div>

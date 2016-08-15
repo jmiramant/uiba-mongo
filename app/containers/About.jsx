@@ -7,32 +7,51 @@ import { Grid, Col } from 'react-bootstrap';
 
 const cx = classNames.bind(styles);
 
-let timeline = [2000, 2010].map((decade) => {
-  return (
-    <StickyContainer key={decade} style={{zIndex: 4}}>
-      <Sticky style={{zIndex: 3}}>
-        <h2>{decade}s</h2>
-      </Sticky>
-      { _.range(0,10).map((i) => {
-        return (
-          <StickyContainer key={i} style={{zIndex: 2}}>
-            <Sticky>
-              <h3>{decade + i}</h3>
-            </Sticky>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-              in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-              in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-          </StickyContainer>
-        );
-      })  }
-    </StickyContainer>
-  );
-})
+let date = [
+  'Around 15000 BCE hunter-gathers roam the world.',
+  'Around 14999 BCE the first career decision is made without data.',
+  'Around 10000 BCE Agriculture is invented.',
+  'Around 3000 BCE the first king shows up.',
+  'Around 500 BCE the division of labor happens.',
+  'Around 499 BC the first instance of career anxiety occurs.',
+  'Around 1700 the industrial revolution happens.',
+  'Around 1701 the first skills shortage occurs.',
+  'Around 1946 the first computer is built.',
+  'Around 1946 the first bug is found.',
+  'Around 2015 two friends get together and build the world’s finest machine learning platform for career planning.',
+  'Around 2016 the first company uses Uiba to increase productivity.',
+  'Around 2016 the first person uses Uiba to build a career map and take control of their future.',
+  '2017 and beyond'
+]
+
+let statement = [
+  "Woo Hoo! I’m the first entrepreneur!",
+  "Pfft I’ve had it with gathering! Hunting is where it’s at!",
+  "Woo hoo! Bread!",
+  "Thanks for the bread!",
+  "OMFG! Career choices!",
+  "So many choices, what’s my path?!",
+  "I need to hire workers!",
+  "What do you mean I have to pay them?!",
+  "I, for one, welcome our new computer overlords.",
+  "I, for one, welcome our new insect overlords.",
+  "Suck it, career anxiety!",
+  "Hey you did it! This is amazing! So listen, we have this bug…",
+  "I want to be a hunter-gatherer!",
+  "Bread for everyone!"
+]
+
+let timeline = date.map( (title, i) => {
+    return (
+      <StickyContainer key={1111 + i} style={{zIndex: 2}}>
+        <Sticky>
+          <h3>{title}</h3>
+        </Sticky>
+        <p>{statement[i]}</p>
+      </StickyContainer>
+    )
+  }
+)
 
 const About = () => {
   return (

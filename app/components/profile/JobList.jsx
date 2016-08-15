@@ -33,6 +33,10 @@ export default class JobList extends React.Component {
     this.props.onEditSave(data);
   }
 
+  handleDelete = (job) => {
+    this.props.onJobDelete(job);
+  }
+
   render () {
     let { jobs } = this.props;
     let lengthIndex = jobs.length - 1;
@@ -41,7 +45,12 @@ export default class JobList extends React.Component {
     return (
       <div className={cx('jobList--container') + ' col-md-7'}>
         {jobs.map((job, i) => {
-            return (<JobItem key={job._id} saveJobEdit={this.handleEditSave} job={job} isntLast={lengthIndex !== i} />);
+            return (<JobItem 
+                      key={job._id} 
+                      saveJobEdit={this.handleEditSave} 
+                      handleDelete={this.handleDelete}
+                      job={job} 
+                      isntLast={lengthIndex !== i} />);
         })}
 
         { this.state.addVisibile ? (

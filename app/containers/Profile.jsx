@@ -1,6 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { fetchCurrentProfile } from 'actions/profiles';
-import { fetchJobs, createJob, updateJob } from 'actions/jobs';
+import { fetchJobs, 
+         createJob,
+         updateJob,
+         deleteJob } from 'actions/jobs';
 import { connect } from 'react-redux';
 import Jobs from 'components/profile/JobList';
 import UserCard from 'components/profile/userCard';
@@ -25,6 +28,10 @@ class Profile extends Component {
     this.props.createJob(data)()
   }
 
+  onJobDelete (job) {
+    this.props.deleteJob(job)()
+  }
+
   saveEdit (data) {
     this.props.updateJob(data)()
   }
@@ -35,7 +42,12 @@ class Profile extends Component {
           } = this.props;
     return (
       <div className={cx('about') + ' container'}>
-        <Jobs jobs={jobs} onEditSave={this.saveEdit.bind(this)} onJobSave={this.saveJob.bind(this)} />
+        <Jobs 
+          jobs={jobs} 
+          onEditSave={this.saveEdit.bind(this)} 
+          onJobSave={this.saveJob.bind(this)} 
+          onJobDelete={this.onJobDelete.bind(this)} 
+        />
         <UserCard profile={profile} />
       </div>
     );
@@ -52,6 +64,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps (dispatch) {
   return {
     createJob: createJob.bind(dispatch),
+    deleteJob: deleteJob.bind(dispatch),
     updateJob: updateJob.bind(dispatch),
     fetchCurrentProfile: fetchCurrentProfile,
     fetchJobs: fetchJobs

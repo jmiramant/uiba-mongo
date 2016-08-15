@@ -28,6 +28,10 @@ const jobs = (
       const updatedJob = state.slice()
       updatedJob[_.findIndex(state, function(j) { return j._id === action.data._id; })] = action.data
       return jobOrder(updatedJob)
+    case types.DELETE_JOB_SUCCESS:
+      return state.filter( j => {
+        return j._id === action.data._id;
+      })
     case types.CREATE_JOB_REQUEST:
       return {
         data: action.res.data,
