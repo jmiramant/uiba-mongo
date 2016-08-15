@@ -46,7 +46,7 @@ let timeline = date.map( (title, i) => {
     return (
       <StickyContainer key={1111 + i} style={{zIndex: 2}}>
         <Sticky>
-          <h3>{title}</h3>
+          <h3 className={cx('aboutTime--title')}>{title}</h3>
         </Sticky>
           { i%2 === 0 ? (
             <div className={cx('aboutTime--item')}>
