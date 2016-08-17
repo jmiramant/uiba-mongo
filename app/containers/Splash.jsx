@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Carousel, CItem } from 'react-bootstrap';
 import classNames from 'classnames/bind';
 import styles from 'css/components/splash';
 import Rocket from 'components/Rocket';
@@ -11,7 +11,6 @@ import imgMap from '../images/splash/Map.svg';
 const cx = classNames.bind(styles);
 
 const Splash = () => {
-
 
   return (
     <div className={cx('splash-container')}>
@@ -28,6 +27,8 @@ const Splash = () => {
 
       <section className={cx('section--no-padding')}>
         <h1 className={cx('spalsh--section-title') + ' col-md-12'}>How You'll Succeed <hr className={cx('section--title-underline')}/> </h1>
+        <Carousel className={cx('splash--carousel')}>
+        </Carousel>
       </section>
 
       <section className={cx('section--tan', 'section--works')}>

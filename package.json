@@ -5,8 +5,8 @@
   "repository": "https://github.com/jmiramant/uiba-web.git",
   "main": "index.js",
   "scripts": {
-    "babel": "babel --presets es2015,stage-0 --ignore node_modules,public",
-    "babel-node": "babel-node --presets es2015,stage-0 --ignore node_modules,public",
+    "babel": "babel --presets es2015,react,stage-0 --ignore node_modules,public",
+    "babel-node": "babel-node --presets es2015,react,stage-0 --ignore node_modules,public",
     "sequelize": "node_modules/.bin/sequelize",
     "lint": "eslint app server",
     "clean": "rimraf public && rimraf compiled",
