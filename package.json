@@ -107,6 +107,7 @@
     "react": "^15.3.0",
     "react-addons-css-transition-group": "^15.3.0",
     "react-addons-update": "^15.3.0",
+    "react-boostrap-carousel": "^2.0.2",
     "react-bootstrap": "^0.30.2",
     "react-datepicker": "^0.29.0",
     "react-dom": "^15.3.0",

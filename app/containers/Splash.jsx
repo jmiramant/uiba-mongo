@@ -1,5 +1,5 @@
 import React from 'react';
-import { Carousel, CItem } from 'react-bootstrap';
+import {React_Boostrap_Carousel} from 'react-boostrap-carousel';
 import classNames from 'classnames/bind';
 import styles from 'css/components/splash';
 import Rocket from 'components/Rocket';
@@ -7,6 +7,7 @@ import { Link } from 'react-router';
 import imgDialed from '../images/splash/dialed.svg';
 import imgRadar from '../images/splash/Radar.svg';
 import imgMap from '../images/splash/Map.svg';
+require('../css/components/carousel');
 
 const cx = classNames.bind(styles);
 
@@ -27,8 +28,29 @@ const Splash = () => {
 
       <section className={cx('section--no-padding')}>
         <h1 className={cx('spalsh--section-title') + ' col-md-12'}>How You'll Succeed <hr className={cx('section--title-underline')}/> </h1>
-        <Carousel className={cx('splash--carousel')}>
-        </Carousel>
+         <React_Boostrap_Carousel animation={true}>
+            <div className={cx('carousel--item')}>
+              <div className={cx('carousel--img-border')}><img className={cx('spalsh--carousel-img')} width={175} height={175} alt="175X175" src={imgDialed} /></div>
+              <div className={cx('carousel--caption')}>
+              <h3 className={cx('carousel--item-title')}>1. Introduce Yourself</h3>
+              <p className={cx('carousel--item-sub')}>First, let's make sure we understand your expierence, knowledge, abilities - everything that makes you so unique and amazing!</p>
+              </div>
+            </div>
+            <div className={cx('carousel--item')}>
+              <div className={cx('carousel--img-border')}><img className={cx('spalsh--carousel-img')} width={175} height={175} alt="175X175" src={imgRadar} /></div>
+              <div className={cx('carousel--caption')}>
+                <h3 className={cx('carousel--item-title')}>2. Understand Yourself</h3>
+                <p className={cx('carousel--item-sub')}>Next, let's use that information to access the full extent of your capabilities.</p>
+              </div>
+            </div>
+            <div className={cx('carousel--item')}>
+              <div className={cx('carousel--img-border')}><img className={cx('spalsh--carousel-img')} width={175} height={175} alt="175X175" src={imgMap} /></div>
+              <div className={cx('carousel--caption')}>
+                <h3 className={cx('carousel--item-title')}>3. Find Your Path</h3>
+                <p className={cx('carousel--item-sub')}>Then let's see how your capabilities compare with the requirements of various roles along differenct career paths.</p>
+              </div>
+            </div>
+          </React_Boostrap_Carousel>
       </section>
 
       <section className={cx('section--tan', 'section--works')}>

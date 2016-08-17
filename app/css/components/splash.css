@@ -93,11 +93,6 @@ section {
   border-radius: 176px;
 }
 
-.carousel-control.left,
-.carousel-control.right {
-  background-image: none;
-}
-
 .hero {
   padding: 5% 10% 0;
   text-align: left;
