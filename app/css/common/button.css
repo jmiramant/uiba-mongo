@@ -12,6 +12,7 @@
     text-align: center;
     border-radius: 25px;
     border-style: solid;
+    text-decoration: none;
     border-width: 2px;
     cursor: pointer;
     transition: 0.1s background-color ease;

@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import update from 'react-addons-update'
 import classNames from 'classnames/bind';
 import styles from 'css/components/profile/jobItem';
 import moment from 'moment';
@@ -18,6 +19,7 @@ export default class JobItem extends React.Component {
 
   state = {
     job: { ...this.props.job }, 
+    current: this.props.job.current,
     persistedJob: { ...this.props.job }, 
     edit: false,
   }
@@ -42,14 +44,24 @@ export default class JobItem extends React.Component {
   
   handleChange = field => e => {
 
-    e.preventDefault();
-
-    this.setState({
-      job: {
-        ...this.state.job,
-        [field] : e.target.value
-      },
-    });
+    var value = e.target.value
+    if (e.target.type === 'checkbox') {
+      value = this.state.current
+      this.setState({
+        current: !this.state.current,
+        job: {
+            ...this.state.job,
+          [field] : !this.state.current
+        }
+      })
+    } else {
+      this.setState({
+          job: {
+            ...this.state.job,
+          [field] : value
+          }
+      });
+    }
   }
 
   formatDateString(date) {
@@ -85,12 +97,19 @@ export default class JobItem extends React.Component {
             onChange={this.handleChange('startDate')}
             className={cx('jobEdit--startDate')}
             id="startDate" />
+          { !this.state.current ? (
+            <input 
+              type="date"
+              value={this.formatDateString(this.state.job.endDate)} 
+              onChange={this.handleChange('endDate')} 
+              className={cx('jobEdit--endDate')}
+              id="endDate" />
+            ) : (<span />)
+          }
           <input 
-            type="date"
-            value={this.formatDateString(this.state.job.endDate)} 
-            onChange={this.handleChange('endDate')} 
-            className={cx('jobEdit--endDate')}
-            id="endDate" />
+            type="checkbox"
+            checked={this.state.current}
+            onChange={this.handleChange('current')} />
           <textarea 
             type='text'
             value={this.state.job.description}

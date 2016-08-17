@@ -58,11 +58,11 @@ const Splash = () => {
 
       <section className={cx('section--tan', 'section--works')}>
         <h1 className={cx('section--title', 'spalsh--section-title')}>How It Works <hr className={cx('section--title-underline')} /></h1>
-        <div className='column-box'>
+        <div className={cx('works--column-container')}>
           <div className={cx('works--item-container')}>
             <div className={cx('works--icon-container')}>
               <div className={cx('works--border')}>
-                <div className={cx('works--icon-scientist')}></div>
+                <div className={cx('works--icon-coding')}></div>
               </div>
             </div>
             <div className={cx('works--text-container')}>
@@ -84,7 +84,7 @@ const Splash = () => {
           <div className={cx('works--item-container')}>
             <div className={cx('works--icon-container')}>
               <div className={cx('works--border')}>
-                <div className={cx('works--icon-scientist')}></div>
+                <div className={cx('works--icon-globe')}></div>
               </div>
             </div>
             <div className={cx('works--text-container')}>
@@ -97,26 +97,40 @@ const Splash = () => {
       </section>
 
       <section className={cx('section--companies')}>
-        <h1 className={cx('section--title')}>Companies and Orangization</h1>
-        <p className={cx('section--sub-text')}>We help organizations around the world achieve peak productivity by providing the most accurate and informative workforce analytics available.</p>
-        <p className={cx('section--sub-text')}>while increasing employee engagement by offering organizational career path planning and development recommendations to achieve career goals.</p>
-        <div className='column-box'>
-          <div className={cx('column-box--item')}>
-            <div className={cx('column-box--title')}>Productivity Analytics</div>
+        <h1 className={cx('spalsh--section-title')}>Companies and Orangization  <hr className={cx('section--title-underline', 'section--title-underline-dark')}/> </h1>
+        <p className={cx('companies--sub-text')}>We help organizations around the world achieve peak productivity by providing the most accurate and informative workforce analytics available. while increasing employee engagement by offering organizational career path planning and development recommendations to achieve career goals.</p>
+        
+        <div className={cx('companies--box')}>
+          <div className='col-md-4'>
+            <div className={cx('companies--box-item', 'companies--box-item-red')}>
+              <div className={cx('companies--item-icon-computer')}></div>
+              <div className={cx('companies--box-title')}>Productivity Analytics</div>
+            </div>
           </div>
-          <div className={cx('column-box--item')}>
-            <div className={cx('column-box--title')}>Workforce Optimization</div>
+          <div className='col-md-4'>
+            <div className={cx('companies--box-item', 'companies--box-item-yellow')}>
+              <div className={cx('companies--item-icon-flowchart')}></div>
+              <div className={cx('companies--box-title')}>Workforce Optimization</div>
+            </div>
           </div>
-          <div className={cx('column-box--item')}>
-            <div className={cx('column-box--title')}>Employee Development</div>
+          <div className='col-md-4'>
+            <div className={cx('companies--box-item', 'companies--box-item-blue')}>
+              <div className={cx('companies--item-icon-computer')}></div>
+              <div className={cx('companies--box-title')}>Employee Development</div>
+            </div>
           </div>
         </div>
+
       </section>
-      <section className={cx('section--tan')}>
-        <h1 className={cx('section--title')}>LET’S SUCCEED, TOGETHER</h1>
-        <p className={cx('section--sub-text')}>Our goal is to make your dreams as reachable as possible by bringing the entire world and all its opportunities to you, then building the paths to make those opportunities a reality.</p>
-        <p className={cx('section--sub-text')}>Our pledge is to travel those paths with you, to always be there for you, from wherever you start to wherever you finish, because everyone should have a companion on the most important journey of their life.</p>
-        <div className={cx('button')}>Let's Get Started</div>
+      <section className={cx('section--tan', 'section--together')}>
+        <h1 className={cx('spalsh--section-title', 'together--title')}>Let’s Succeed, Together <hr className={cx('section--title-underline')}/> </h1>
+        <div className={cx('together--left') + ' col-md-8'}>
+          <p className={cx('together--sub-text')}>Our goal is to make your dreams as reachable as possible by bringing the entire world and all its opportunities to you, then building the paths to make those opportunities a reality.</p>
+          <p className={cx('together--sub-text')}>Our pledge is to travel those paths with you, to always be there for you, from wherever you start to wherever you finish, because everyone should have a companion on the most important journey of their life.</p>
+        </div>
+        <div className={cx('together--right') + ' col-md-4'}>
+          <div className={cx('together-icon')}></div>
+        </div>
       </section>
     </div>
   );

@@ -53,6 +53,7 @@ db.companies.find().snapshot().forEach(function (company) {
       {
         company_id: company._id,
         user_id: user._id,
+        current: false,
         companyName: companyData[0].name,
         title: 'Software Engineer',
         description: "Vinyl swag actually mixtape authentic. Vinyl swag actually mixtape authentic. Vinyl swag actually mixtape authentic. Quinoa brooklyn echo park, trust fund meh viral pork belly XOXO. Banh mi blue bottle tattooed pug, keffiyeh pabst craft beer biodiesel neutra try-hard VHS waistcoat polaroid portland cold-pressed. Before they sold out polaroid ennui vinyl schlitz.",
