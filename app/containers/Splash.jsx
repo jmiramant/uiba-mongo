@@ -1,5 +1,5 @@
 import React from 'react';
-import { Carousel } from 'react-bootstrap';
+
 import classNames from 'classnames/bind';
 import styles from 'css/components/splash';
 import Rocket from 'components/Rocket';
@@ -12,31 +12,6 @@ const cx = classNames.bind(styles);
 
 const Splash = () => {
 
-  const carouselInstance = (
-    <Carousel className={cx('splash--carousel')}>
-      <Carousel.Item className={cx('carousel--item')}>
-        <div className={cx('carousel--img-border')}><img className={cx('spalsh--carousel-img')} width={175} height={175} alt="175X175" src={imgDialed}/></div>
-        <Carousel.Caption className={cx('carousel--caption')}>
-          <h3 className={cx('carousel--item-title')}>1. Introduce Yourself</h3>
-          <p className={cx('carousel--item-sub')}>First, let's make sure we understand your expierence, knowledge, abilities - everything that makes you so unique and amazing!</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item className={cx('carousel--item')}>
-        <div className={cx('carousel--img-border')}><img className={cx('spalsh--carousel-img')} width={175} height={175} alt="175X175" src={imgRadar} /></div>
-        <Carousel.Caption className={cx('carousel--caption')}>
-          <h3 className={cx('carousel--item-title')}>2. Understand Yourself</h3>
-          <p className={cx('carousel--item-sub')}>Next, let's use that information to access the full extent of your capabilities.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item className={cx('carousel--item')}>
-        <div className={cx('carousel--img-border')}><img className={cx('spalsh--carousel-img')} width={175} height={175} alt="175X175" src={imgMap} /></div>
-        <Carousel.Caption className={cx('carousel--caption')}>
-          <h3 className={cx('carousel--item-title')}>3. Find Your Path</h3>
-          <p className={cx('carousel--item-sub')}>Then let's see how your capabilities compare with the requirements of various roles along differenct career paths.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-    </Carousel>
-  );
 
   return (
     <div className={cx('splash-container')}>
@@ -53,7 +28,6 @@ const Splash = () => {
 
       <section className={cx('section--no-padding')}>
         <h1 className={cx('spalsh--section-title') + ' col-md-12'}>How You'll Succeed <hr className={cx('section--title-underline')}/> </h1>
-        {carouselInstance}
       </section>
 
       <section className={cx('section--tan', 'section--works')}>
