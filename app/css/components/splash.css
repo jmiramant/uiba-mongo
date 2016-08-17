@@ -86,7 +86,6 @@ section {
 }
 
 .carousel--img-border {
-  border: 7px solid var(--colorGreen);
   width: 189px;
   margin: 0 auto;
   height: 189px;
@@ -149,23 +148,23 @@ section {
 
 .works--icon-scientist {
   background-repeat: no-repeat;
-  height: 90px;
-  background-position: -3px -8px;
-  background-image: url('../../images/splash/scientist-blue.svg'); 
+  height: 99px;
+  background-size: 100%;
+  background-image: url('../../images/splash/Scientist-2.svg'); 
 }
 
 .works--icon-coding {
   background-repeat: no-repeat;
-  height: 90px;
-  background-position: -3px -8px;
-  background-image: url('../../images/splash/Windows-Search-Coding-blue.svg'); 
+  height: 99px;
+  background-size: 100%;
+  background-image: url('../../images/splash/Windows-Search-Coding.svg'); 
 }
 
 .works--icon-globe {
   background-repeat: no-repeat;
-  height: 90px;
-  background-position: -5px;
-  background-image: url('../../images/splash/Communication-Globe-blue.svg'); 
+  background-size: 100%;
+  height: 99px;
+  background-image: url('../../images/splash/Communication-Globe.svg'); 
 }
 .works--text-container {
   display: inline-block;
@@ -180,8 +179,7 @@ section {
 }
 
 .works--description {
-  font-family: 'Open Sans Condensed', sans-serif;
-  font-size: 19px;
+  font-size: 15px;
 }
 
 .works--sub-text {
@@ -234,6 +232,14 @@ section {
   background-position: 50%;
   background-size: 79%;
   background-image: url('../../images/splash/Flowchart.svg');
+}
+
+.companies--item-icon-cog {
+  background-repeat: no-repeat;
+  height: 175px;
+  background-position: 50%;
+  background-size: 79%;
+  background-image: url('../../images/splash/Thinking.svg');
 }
 
 .section--together {

@@ -28,29 +28,59 @@ const Splash = () => {
 
       <section className={cx('section--no-padding')}>
         <h1 className={cx('spalsh--section-title') + ' col-md-12'}>How You'll Succeed <hr className={cx('section--title-underline')}/> </h1>
-         <React_Boostrap_Carousel animation={true}>
-            <div className={cx('carousel--item')}>
-              <div className={cx('carousel--img-border')}><img className={cx('spalsh--carousel-img')} width={175} height={175} alt="175X175" src={imgDialed} /></div>
-              <div className={cx('carousel--caption')}>
-              <h3 className={cx('carousel--item-title')}>1. Introduce Yourself</h3>
-              <p className={cx('carousel--item-sub')}>First, let's make sure we understand your expierence, knowledge, abilities - everything that makes you so unique and amazing!</p>
+        <div className="carousel slide">
+          <div className="carousel-inner" role="listbox">
+            <div className="item prev left">
+              <div className={cx('carousel--item')}>
+                <div className={cx('carousel--img-border')}>
+                  <img className={cx('spalsh--carousel-img')} width="125" height="125" alt="125X125" src={imgDialed}/>
+                </div>
+                <div className={cx('carousel--caption')}>
+                  <h3 className={cx('carousel--item-title')}>1. Introduce Yourself
+                  </h3>
+                  <p className={cx('carousel--item-sub')}>First, let's make sure we understand your expierence, knowledge, abilities - everything that makes you so unique and amazing!
+                  </p>
+                </div>
               </div>
             </div>
-            <div className={cx('carousel--item')}>
-              <div className={cx('carousel--img-border')}><img className={cx('spalsh--carousel-img')} width={175} height={175} alt="175X175" src={imgRadar} /></div>
-              <div className={cx('carousel--caption')}>
-                <h3 className={cx('carousel--item-title')}>2. Understand Yourself</h3>
-                <p className={cx('carousel--item-sub')}>Next, let's use that information to access the full extent of your capabilities.</p>
+            <div className="item active">
+              <div className={cx('carousel--item')}>
+                <div className={cx('carousel--img-border')}>
+                  <img className={cx('spalsh--carousel-img')} width="125" height="125" alt="125X125" src={imgRadar} />
+                </div>
+                <div className={cx('carousel--caption')}>
+                  <h3 className={cx('carousel--item-title')}>2. Understand Yourself
+                  </h3>
+                  <p className={cx('carousel--item-sub')}>Next, let's use that information to access the full extent of your capabilities.
+                  </p>
+                </div>
               </div>
             </div>
-            <div className={cx('carousel--item')}>
-              <div className={cx('carousel--img-border')}><img className={cx('spalsh--carousel-img')} width={175} height={175} alt="175X175" src={imgMap} /></div>
-              <div className={cx('carousel--caption')}>
-                <h3 className={cx('carousel--item-title')}>3. Find Your Path</h3>
-                <p className={cx('carousel--item-sub')}>Then let's see how your capabilities compare with the requirements of various roles along differenct career paths.</p>
+            <div className="item next right">
+              <div className={cx('carousel--item')}>
+                <div className={cx('carousel--img-border')}>
+                  <img className={cx('spalsh--carousel-img')} width="125" height="125" alt="125X125" src={imgMap} />
+                </div>
+                <div className={cx('carousel--caption')}>
+                  <h3 className={cx('carousel--item-title')}>3. Find Your Path
+                  </h3>
+                  <p className={cx('carousel--item-sub')}>Then let's see how your capabilities compare with the requirements of various roles along differenct career paths.
+                  </p>
+                </div>
               </div>
             </div>
-          </React_Boostrap_Carousel>
+          </div>
+          <div>
+            <a className="left carousel-control">
+              <span className="glyphicon glyphicon-chevron-left">
+              </span>
+            </a>
+            <a className="right carousel-control">
+              <span className="glyphicon glyphicon-chevron-right">
+              </span>
+            </a>
+          </div>
+        </div>
       </section>
 
       <section className={cx('section--tan', 'section--works')}>
@@ -64,7 +94,7 @@ const Splash = () => {
             </div>
             <div className={cx('works--text-container')}>
               <div className={cx('works--title')}>It starts with Data</div>
-              <div className={cx('works--description')}>We gather almost a century's worth of global labor data from governments, universities, think tanks, private companies, and more.</div>
+              <div className={cx('works--description')}>We gathered almost a century's worth of global labor data from governments, universities, think tanks, private companies, and more.</div>
             </div>
           </div>
           <div className={cx('works--item-container')}>
@@ -94,7 +124,7 @@ const Splash = () => {
       </section>
 
       <section className={cx('section--companies')}>
-        <h1 className={cx('spalsh--section-title')}>Companies and Orangization  <hr className={cx('section--title-underline', 'section--title-underline-dark')}/> </h1>
+        <h1 className={cx('spalsh--section-title')}>Companies and Organizations  <hr className={cx('section--title-underline', 'section--title-underline-dark')}/> </h1>
         <p className={cx('companies--sub-text')}>We help organizations around the world achieve peak productivity by providing the most accurate and informative workforce analytics available. while increasing employee engagement by offering organizational career path planning and development recommendations to achieve career goals.</p>
         
         <div className={cx('companies--box')}>
@@ -112,7 +142,7 @@ const Splash = () => {
           </div>
           <div className='col-md-4'>
             <div className={cx('companies--box-item', 'companies--box-item-blue')}>
-              <div className={cx('companies--item-icon-computer')}></div>
+              <div className={cx('companies--item-icon-cog')}></div>
               <div className={cx('companies--box-title')}>Employee Development</div>
             </div>
           </div>

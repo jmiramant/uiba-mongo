@@ -31,8 +31,3 @@ input:focus {
   font-smoothing: antialiased;
 }
 
-.carousel-control.left,
-.carousel-control.right {
-  background-image: none !important;
-} 
-
