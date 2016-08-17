@@ -6,7 +6,7 @@ import { fetchJobs,
          deleteJob } from 'actions/jobs';
 import { connect } from 'react-redux';
 import Jobs from 'components/profile/JobList';
-import UserCard from 'components/profile/userCard';
+import UserCard from 'components/profile/UserCard';
 
 import classNames from 'classnames/bind';
 import styles from 'css/components/message';
