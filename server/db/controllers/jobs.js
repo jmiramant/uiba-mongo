@@ -57,6 +57,7 @@ export function create(req, res) {
       companyName: req.body.companyName,
       description: req.body.description,
       title: req.body.title,
+      current: req.body.current,
       startDate: createDateObj(req.body.startDate),
       endDate: createDateObj(req.body.endDate),
     }, function (err, job) {
@@ -92,7 +93,8 @@ export function update(req, res) {
       return Company.findOne({"name": company_id}).exec((err, company) => { 
       
         if (err) {
-      
+          
+          job.current = company.current;
           job.companyName = company.name;
           job.company_id = company.company_id;
           job.save( err => {

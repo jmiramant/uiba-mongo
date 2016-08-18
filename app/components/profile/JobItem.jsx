@@ -60,7 +60,6 @@ export default class JobItem extends React.Component {
   }
   
   handleChange = field => e => {
-
     var value = e.target.value
     if (e.target.type === 'checkbox') {
       value = this.state.current
@@ -88,7 +87,7 @@ export default class JobItem extends React.Component {
 
   render () {
     const { isntLast, job } = this.props;
-    const { validate } = this.state;
+    const { validate, current } = this.state;
 
     const errorMsgs = _.reject(validate, (v,k) => {
       return v === '';
@@ -120,7 +119,7 @@ export default class JobItem extends React.Component {
             onChange={this.handleChange('startDate')}
             className={cx('jobEdit--startDate')}
             id="startDate" />
-          { !this.state.current ? (
+          { !current ? (
             <input 
               type="date"
               value={this.formatDateString(this.state.job.endDate)} 
@@ -131,7 +130,7 @@ export default class JobItem extends React.Component {
           }
           <input 
             type="checkbox"
-            checked={this.state.current}
+            checked={current}
             onChange={this.handleChange('current')} />
           <textarea 
             type='text'
@@ -154,7 +153,7 @@ export default class JobItem extends React.Component {
         <div className={cx('jobItem--container')} onDoubleClick={this.toggleEdit.bind(this)}>
           <div onClick={this.toggleEdit.bind(this)} className={cx('jobItem--edit')}></div>
           <p className={cx("jobItem--header")}><span className={ cx('jobItem--name')}>{job.companyName}</span> | <span className={cx('jobItem--title')}>{job.title}</span></p>
-          <p className={cx("jobItem--date")}>{moment(job.startDate).format('MMM, YYYY')} - {moment(job.endDate).format('MMM, YYYY')}</p>
+          <p className={cx("jobItem--date")}>{moment(job.startDate).format('MMM, YYYY')} - { current ? ( 'Current' ) : ( moment(job.endDate).format('MMM, YYYY')) } </p>
           <p className={cx("jobItem--description")}>{job.description}</p>
           <div className={cx('jobItem--spacer')}></div>
         </div>

@@ -12,7 +12,7 @@ const intialJobState = {
     startDate: '',
     endDate: '',
     description: '',
-    current: true
+    current: false
   }
 
 export default class JobAdd extends React.Component {
@@ -27,12 +27,12 @@ export default class JobAdd extends React.Component {
 
   state = {
     job: { ...this.props.job }, 
-    validate: _.clone(intialJobState)
+    validate: _.clone(intialJobState),
+    current: this.props.job.current
   }
   
   handleSubmit = e => {
     e.preventDefault();
-
     if (!this.validate()) {
 
       this.props.onJobSave(this.state.job);
@@ -52,27 +52,28 @@ export default class JobAdd extends React.Component {
 
   handleChange = field => e => {
     let value = e.target.value;
-    
+
     if (e.target.type === 'checkbox') {
-      e.target.value === 'on' ? value = false : value = true
-    } 
-    console.log(value)
-    console.log({
-        ...this.state.job,
-        [field] : value
+      value = this.state.current
+      this.setState({
+        current: !this.state.current,
+        job: {
+            ...this.state.job,
+          [field] : !this.state.current
+        }
       })
-
-    this.setState({
-      job: {
-        ...this.state.job,
-        [field] : value
-      },
-    });
-
+    } else {
+      this.setState({
+          job: {
+            ...this.state.job,
+          [field] : value
+          }
+      });
+    }
   }
 
   render () {
-    const { validate } = this.state;
+    const { validate, current } = this.state;
     return (
       <div>
         <form
@@ -104,7 +105,7 @@ export default class JobAdd extends React.Component {
               </div>
             </div>
 
-            { !this.state.job.current ? (
+            { !current ? (
               <div className="form-group row">
                 <label htmlFor="endDate" className="col-xs-2 col-form-label">End Date</label>
                 <div className="col-xs-5">
@@ -116,7 +117,7 @@ export default class JobAdd extends React.Component {
   
             <input 
               type="checkbox"
-              checked={this.state.job.current}
+              checked={current}
               onChange={this.handleChange('current')} />
 
             <div className="form-group">

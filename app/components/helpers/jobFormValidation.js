@@ -34,6 +34,6 @@ export function validateJobFormHelper (errorStore, state) {
 
 export function containsErrors (errorStore) {
   return _.reject(errorStore, (k, v) => {
-    return k === '';
+    return k === '' || k === false || k === true;
   }).length > 0
 }
