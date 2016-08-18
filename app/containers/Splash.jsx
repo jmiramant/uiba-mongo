@@ -6,10 +6,20 @@ import { Link } from 'react-router';
 import imgDialed from '../images/splash/dialed.svg';
 import imgRadar from '../images/splash/Radar.svg';
 import imgMap from '../images/splash/Map.svg';
-
 import Carousel , { Item as CItem, Caption as CCaption }from 'react-bootstrap/lib/Carousel';
 
 const cx = classNames.bind(styles);
+
+const carouselControlOverride = "\
+    .carousel-control.left,.carousel-control.right{\
+      background-image:none !important;\
+      opacity: 1;\
+      text-shadow: none;\
+    }\
+    .carousel-control .glyphicon {\
+      color: rgba(242, 2, 83, 0.7);\
+    }\
+  "
 
 const Splash = () => {
 
@@ -28,7 +38,7 @@ const Splash = () => {
 
       <section className={cx('section--no-padding')}>
         <h1 className={cx('spalsh--section-title') + ' col-md-12'}>How You'll Succeed <hr className={cx('section--title-underline')}/> </h1>
-        <Carousel>
+        <Carousel indicators={false}>
           <CItem className={cx('carousel--item')}>
             <div className={cx('carousel--img-border')}><img className={cx('spalsh--carousel-img')} width={125} height={125} alt="125X125" src={imgDialed}/></div>
             <CCaption className={cx('carousel--caption')}>
@@ -51,6 +61,7 @@ const Splash = () => {
             </CCaption>
           </CItem>
         </Carousel>
+        <style>{carouselControlOverride}</style>
 
       </section>
 

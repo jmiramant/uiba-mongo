@@ -38,7 +38,7 @@ section {
 
 .section--title-underline {
   width: 113px;
-  border: 2px solid rgba(51,51,51, 0.7);
+  border: 2px solid rgba(242, 2, 83, 0.7);
   margin-top: -7px;
 }
 
@@ -52,8 +52,10 @@ section {
 
 .carousel--caption {
   color: #000;
+  margin-top: -26px;
   text-shadow: none;
   top: 210px;
+  padding-top: 0;
 }
 
 .carousel--item {
