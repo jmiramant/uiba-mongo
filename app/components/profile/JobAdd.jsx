@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames/bind';
+import { containsErrors, validateJobFormHelper } from '../helpers/jobFormValidation';
 import styles from 'css/components/profile/jobItem';
 import moment from 'moment';
 import _ from 'lodash';
@@ -16,7 +17,7 @@ const intialJobState = {
 export default class JobAdd extends React.Component {
 
   static defaultProps = {
-    jobs: _.clone(intialJobState)
+    job: _.clone(intialJobState)
   }
 
   constructor(props) {
@@ -25,17 +26,27 @@ export default class JobAdd extends React.Component {
 
   state = {
     job: { ...this.props.job }, 
+    validate: _.clone(intialJobState)
   }
   
   handleSubmit = e => {
-
     e.preventDefault();
-    this.props.onJobSave(this.state.job);
 
-    this.setState({
-      job: _.clone(intialJobState),
-    })
+    if (!this.validate()) {
 
+      this.props.onJobSave(this.state.job);
+
+      this.setState({
+        job: _.clone(intialJobState),
+      })
+    
+    }
+  }
+
+  validate() {
+    const validationResp = validateJobFormHelper(_.clone(intialJobState), this.state);
+    this.setState({validate: validationResp.error});
+    return containsErrors(validationResp.error)
   }
 
   handleChange = field => e => {
@@ -52,6 +63,7 @@ export default class JobAdd extends React.Component {
   }
 
   render () {
+    const { validate } = this.state;
     return (
       <div>
         <form
@@ -63,16 +75,18 @@ export default class JobAdd extends React.Component {
             <div className="form-group row">
               <label htmlFor="company" className="col-xs-2 col-form-label">Company Name</label>
               <div className="col-xs-10">
-                <input onChange={this.handleChange('company')} className="form-control" type="text" id="company" />
+                <input placeholder={ validate.company } onChange={this.handleChange('company')} className="form-control" type="text" id="company" />
               </div>
             </div>
 
             <div className="form-group row">
               <label htmlFor="title" className="col-xs-2 col-form-label">Title</label>
               <div className="col-xs-10">
-                <input onChange={this.handleChange('title')} className="form-control" type="text" id="title" />
+                <input placeholder={ validate.title } onChange={this.handleChange('title')} className="form-control" type="text" id="title" />
               </div>
             </div>
+
+            <div>{ validate.date }</div>
 
             <div className="form-group row">
               <label htmlFor="startDate" className="col-xs-2 col-form-label">Start Date</label>
@@ -90,7 +104,7 @@ export default class JobAdd extends React.Component {
 
             <div className="form-group">
               <label htmlFor="description">Description</label>
-              <textarea onChange={this.handleChange('description')}  className="form-control" id="description" rows="3"></textarea>
+              <textarea placeholder={ validate.description } onChange={this.handleChange('description')}  className="form-control" id="description" rows="3"></textarea>
             </div>
 
             <button
