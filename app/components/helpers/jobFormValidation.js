@@ -1,8 +1,8 @@
 import moment from 'moment';
 import _ from 'lodash';
 
-export function validateJobFormHelper (errorStore, state, set) {
-  const cantBeNull = ['company', 'title']
+export function validateJobFormHelper (errorStore, state) {
+  const cantBeNull = ['companyName', 'title']
   const { job } = state;
   var error = errorStore;
   

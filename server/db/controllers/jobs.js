@@ -54,7 +54,7 @@ export function create(req, res) {
     Job.create({
       user_id: req.user._id,
       company_id: company._id,
-      companyName: req.body.company,
+      companyName: req.body.companyName,
       description: req.body.description,
       title: req.body.title,
       startDate: createDateObj(req.body.startDate),

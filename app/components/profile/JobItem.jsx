@@ -2,9 +2,17 @@ import React, { PropTypes } from 'react';
 import update from 'react-addons-update'
 import classNames from 'classnames/bind';
 import styles from 'css/components/profile/jobItem';
+import { containsErrors, validateJobFormHelper } from '../helpers/jobFormValidation';
 import moment from 'moment';
 
 const cx = classNames.bind(styles);
+const intialJobState = {
+    company: '', 
+    title: '', 
+    startDate: '',
+    endDate: '',
+    description: '',
+  }
 
 export default class JobItem extends React.Component {
   
@@ -22,6 +30,7 @@ export default class JobItem extends React.Component {
     current: this.props.job.current,
     persistedJob: { ...this.props.job }, 
     edit: false,
+    validate: _.clone(intialJobState)
   }
 
   toggleEdit () {
@@ -34,12 +43,20 @@ export default class JobItem extends React.Component {
   }
 
   saveEdit () {
-    this.props.saveJobEdit(this.state.job)
-    this.toggleEdit()
+    if (!this.validate()) {
+      this.props.saveJobEdit(this.state.job)
+      this.toggleEdit()
+    }
   }
 
   handleDelete () {
     this.props.handleDelete(this.state.job)
+  }
+
+  validate() {
+    const validationResp = validateJobFormHelper(_.clone(intialJobState), this.state);
+    this.setState({validate: validationResp.error});
+    return containsErrors(validationResp.error)
   }
   
   handleChange = field => e => {
@@ -70,12 +87,18 @@ export default class JobItem extends React.Component {
 
 
   render () {
-    let { isntLast, job } = this.props;
-    
+    const { isntLast, job } = this.props;
+    const { validate } = this.state;
+
+    const errorMsgs = _.reject(validate, (v,k) => {
+      return v === '';
+    })
+
     if (this.state.edit) {
 
       return (
         <div className={cx('jobItem--container')}>
+          {errorMsgs}
           <div className={cx('jobEdit--header')}>
             <input 
               type='text'

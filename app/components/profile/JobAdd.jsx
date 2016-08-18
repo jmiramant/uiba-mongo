@@ -7,7 +7,7 @@ import _ from 'lodash';
 
 const cx = classNames.bind(styles);
 const intialJobState = {
-    company: '', 
+    companyName: '', 
     title: '', 
     startDate: '',
     endDate: '',
@@ -73,9 +73,9 @@ export default class JobAdd extends React.Component {
           <div className="panel">
 
             <div className="form-group row">
-              <label htmlFor="company" className="col-xs-2 col-form-label">Company Name</label>
+              <label htmlFor="companyName" className="col-xs-2 col-form-label">Company Name</label>
               <div className="col-xs-10">
-                <input placeholder={ validate.company } onChange={this.handleChange('company')} className="form-control" type="text" id="company" />
+                <input placeholder={ validate.companyName } onChange={this.handleChange('companyName')} className="form-control" type="text" id="companyName" />
               </div>
             </div>
 
