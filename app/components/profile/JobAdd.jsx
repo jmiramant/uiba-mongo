@@ -12,6 +12,7 @@ const intialJobState = {
     startDate: '',
     endDate: '',
     description: '',
+    current: true
   }
 
 export default class JobAdd extends React.Component {
@@ -42,7 +43,7 @@ export default class JobAdd extends React.Component {
     
     }
   }
-
+  
   validate() {
     const validationResp = validateJobFormHelper(_.clone(intialJobState), this.state);
     this.setState({validate: validationResp.error});
@@ -50,13 +51,21 @@ export default class JobAdd extends React.Component {
   }
 
   handleChange = field => e => {
-
-    e.preventDefault();
+    let value = e.target.value;
+    
+    if (e.target.type === 'checkbox') {
+      e.target.value === 'on' ? value = false : value = true
+    } 
+    console.log(value)
+    console.log({
+        ...this.state.job,
+        [field] : value
+      })
 
     this.setState({
       job: {
         ...this.state.job,
-        [field] : e.target.value
+        [field] : value
       },
     });
 
@@ -95,12 +104,20 @@ export default class JobAdd extends React.Component {
               </div>
             </div>
 
-            <div className="form-group row">
-              <label htmlFor="endDate" className="col-xs-2 col-form-label">End Date</label>
-              <div className="col-xs-5">
-                <input onChange={this.handleChange('endDate')} className="form-control" type="date" id="endDate" />
+            { !this.state.job.current ? (
+              <div className="form-group row">
+                <label htmlFor="endDate" className="col-xs-2 col-form-label">End Date</label>
+                <div className="col-xs-5">
+                  <input onChange={this.handleChange('endDate')} className="form-control" type="date" id="endDate" />
+                </div>
               </div>
-            </div>
+              ) : (<span />)
+            }
+  
+            <input 
+              type="checkbox"
+              checked={this.state.job.current}
+              onChange={this.handleChange('current')} />
 
             <div className="form-group">
               <label htmlFor="description">Description</label>
