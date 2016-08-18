@@ -7,9 +7,9 @@
 .login {
   width: 420px;
   margin: 0 auto;
-  background-color: var(--colorAthensGray);
-  border: 2px solid var(--colorMercury);
-  border-radius: var(--globalRadius);
+  background-color: var(--colorBackground-tan);
+  border: 2px solid var(--colorBackground-tan);
+  border-radius: var(--colorLightGray);
 }
 
 .waiting {
@@ -26,7 +26,7 @@
 }
 
 .alternative-link {
-  color: var(--colorDodgerBlue);
+  color: var(--colorLightBlue);
   font-weight: bold;
   cursor: pointer;
 }
@@ -39,7 +39,7 @@
 
 .email-container {
   padding: 16px 12px;
-  border-bottom: 2px solid var(--colorMercury);
+  border-bottom: 2px solid var(--colorLightGray);
 }
 
 .google-container {
@@ -59,15 +59,15 @@
 }
 
 .message {
-  color: var(--colorCrimson);
+  color: var(--colorBrightPink);
   font-size: var(--fontSmall);
 }
 
 .button {
-  @apply --greenButton;
+  @apply --drkBlueButton;
 }
 
 .hint {
   @apply --small;
-  color: var(--colorBombay);
+  color: var(--colorDarkGray);
 }

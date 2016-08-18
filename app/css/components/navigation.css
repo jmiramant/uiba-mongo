@@ -16,6 +16,11 @@
   margin-top: 5px;
 }
 
+.navbar--header-logo {
+  height: 40px;
+  margin-top: -10px;
+}
+
 .nav--items-right {
   margin-top: 12px;
 }

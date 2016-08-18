@@ -1,5 +1,4 @@
 import React from 'react';
-import {React_Boostrap_Carousel} from 'react-boostrap-carousel';
 import classNames from 'classnames/bind';
 import styles from 'css/components/splash';
 import Rocket from 'components/Rocket';
@@ -7,7 +6,8 @@ import { Link } from 'react-router';
 import imgDialed from '../images/splash/dialed.svg';
 import imgRadar from '../images/splash/Radar.svg';
 import imgMap from '../images/splash/Map.svg';
-require('../css/components/carousel');
+
+import Carousel , { Item as CItem, Caption as CCaption }from 'react-bootstrap/lib/Carousel';
 
 const cx = classNames.bind(styles);
 
@@ -28,59 +28,30 @@ const Splash = () => {
 
       <section className={cx('section--no-padding')}>
         <h1 className={cx('spalsh--section-title') + ' col-md-12'}>How You'll Succeed <hr className={cx('section--title-underline')}/> </h1>
-        <div className="carousel slide">
-          <div className="carousel-inner" role="listbox">
-            <div className="item prev left">
-              <div className={cx('carousel--item')}>
-                <div className={cx('carousel--img-border')}>
-                  <img className={cx('spalsh--carousel-img')} width="125" height="125" alt="125X125" src={imgDialed}/>
-                </div>
-                <div className={cx('carousel--caption')}>
-                  <h3 className={cx('carousel--item-title')}>1. Introduce Yourself
-                  </h3>
-                  <p className={cx('carousel--item-sub')}>First, let's make sure we understand your expierence, knowledge, abilities - everything that makes you so unique and amazing!
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="item active">
-              <div className={cx('carousel--item')}>
-                <div className={cx('carousel--img-border')}>
-                  <img className={cx('spalsh--carousel-img')} width="125" height="125" alt="125X125" src={imgRadar} />
-                </div>
-                <div className={cx('carousel--caption')}>
-                  <h3 className={cx('carousel--item-title')}>2. Understand Yourself
-                  </h3>
-                  <p className={cx('carousel--item-sub')}>Next, let's use that information to access the full extent of your capabilities.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="item next right">
-              <div className={cx('carousel--item')}>
-                <div className={cx('carousel--img-border')}>
-                  <img className={cx('spalsh--carousel-img')} width="125" height="125" alt="125X125" src={imgMap} />
-                </div>
-                <div className={cx('carousel--caption')}>
-                  <h3 className={cx('carousel--item-title')}>3. Find Your Path
-                  </h3>
-                  <p className={cx('carousel--item-sub')}>Then let's see how your capabilities compare with the requirements of various roles along differenct career paths.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div>
-            <a className="left carousel-control">
-              <span className="glyphicon glyphicon-chevron-left">
-              </span>
-            </a>
-            <a className="right carousel-control">
-              <span className="glyphicon glyphicon-chevron-right">
-              </span>
-            </a>
-          </div>
-        </div>
+        <Carousel>
+          <CItem className={cx('carousel--item')}>
+            <div className={cx('carousel--img-border')}><img className={cx('spalsh--carousel-img')} width={125} height={125} alt="125X125" src={imgDialed}/></div>
+            <CCaption className={cx('carousel--caption')}>
+              <h3 className={cx('carousel--item-title')}>1. Introduce Yourself</h3>
+              <p className={cx('carousel--item-sub')}>First, let's make sure we understand your expierence, knowledge, abilities - everything that makes you so unique and amazing!</p>
+            </CCaption>
+          </CItem>
+          <CItem className={cx('carousel--item')}>
+            <div className={cx('carousel--img-border')}><img className={cx('spalsh--carousel-img')} width={125} height={125} alt="125X125" src={imgRadar} /></div>
+            <CCaption className={cx('carousel--caption')}>
+              <h3 className={cx('carousel--item-title')}>2. Understand Yourself</h3>
+              <p className={cx('carousel--item-sub')}>Next, let's use that information to access the full extent of your capabilities.</p>
+            </CCaption>
+          </CItem>
+          <CItem className={cx('carousel--item')}>
+            <div className={cx('carousel--img-border')}><img className={cx('spalsh--carousel-img')} width={125} height={125} alt="125X125" src={imgMap} /></div>
+            <CCaption className={cx('carousel--caption')}>
+              <h3 className={cx('carousel--item-title')}>3. Find Your Path</h3>
+              <p className={cx('carousel--item-sub')}>Then let's see how your capabilities compare with the requirements of various roles along differenct career paths.</p>
+            </CCaption>
+          </CItem>
+        </Carousel>
+
       </section>
 
       <section className={cx('section--tan', 'section--works')}>
@@ -125,28 +96,34 @@ const Splash = () => {
 
       <section className={cx('section--companies')}>
         <h1 className={cx('spalsh--section-title')}>Companies and Organizations  <hr className={cx('section--title-underline', 'section--title-underline-dark')}/> </h1>
-        <p className={cx('companies--sub-text')}>We help organizations around the world achieve peak productivity by providing the most accurate and informative workforce analytics available. while increasing employee engagement by offering organizational career path planning and development recommendations to achieve career goals.</p>
+        <p className={cx('companies--sub-text')}>In the 21st-century organization, employees own most of the assets because they are most of the assets. Uiba uses math, data science, and machine learning to forge this wisdom into a virtuous circle for our clients by:</p>
         
         <div className={cx('companies--box')}>
           <div className='col-md-4'>
             <div className={cx('companies--box-item', 'companies--box-item-red')}>
+              <div className={cx('companies--box-title')}>Precision Hiring</div>
               <div className={cx('companies--item-icon-computer')}></div>
-              <div className={cx('companies--box-title')}>Productivity Analytics</div>
+              <div className={cx('companies--box-text')}>Uiba’s platform learns all aspects of any role while absorbing each team’s needs and the organization’s unique character to identify the ideal people for hiring, compressing the hiring cycle, and achieving full productivity sooner.</div>
+
             </div>
           </div>
           <div className='col-md-4'>
             <div className={cx('companies--box-item', 'companies--box-item-yellow')}>
-              <div className={cx('companies--item-icon-flowchart')}></div>
               <div className={cx('companies--box-title')}>Workforce Optimization</div>
+              <div className={cx('companies--item-icon-flowchart')}></div>
+              <div className={cx('companies--box-text')}>Uiba’s prescriptive analysis uses event-driven activity and achieved results to identify future investment requirements by understanding the business drivers and making predictive improvements to those investments.</div>
             </div>
           </div>
           <div className='col-md-4'>
             <div className={cx('companies--box-item', 'companies--box-item-blue')}>
+              <div className={cx('companies--box-title')}>Career Guidance</div>
               <div className={cx('companies--item-icon-cog')}></div>
-              <div className={cx('companies--box-title')}>Employee Development</div>
+              <div className={cx('companies--box-text')}>Uiba’s ability to understand the roles, teams, and organization empower your employees to manage their careers and develop their capabilities thus raising engagement, retention, and productivity.</div>
             </div>
           </div>
+
         </div>
+        <h4 className={cx('companies-contact')}>Contact us today to find out how to drive your organization’s productivity to peak performance.</h4>
 
       </section>
       <section className={cx('section--tan', 'section--together')}>

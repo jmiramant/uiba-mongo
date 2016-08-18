@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { logOut } from 'actions/users';
 import { LinkContainer } from 'react-router-bootstrap';
-
+import logoImg from '../images/logo/uiba.png';
 import classNames from 'classnames/bind';
 import styles from 'css/components/navigation';
 
@@ -16,12 +16,14 @@ const Navigation = ({ user, logOut }) => {
         { user.authenticated ? (
           <Link to="/profile"
             className={cx('item', 'logo')}
-            activeClassName={cx('active')}>Uiba
+            activeClassName={cx('active')}>
+              <img className={cx('navbar--header-logo')} src={logoImg} />
           </Link>
         ) : (
           <Link to="/"
             className={cx('item', 'logo')}
-            activeClassName={cx('active')}>Uiba
+            activeClassName={cx('active')}>
+              <img className={cx('navbar--header-logo')} src={logoImg} />
           </Link>
         )}
         <div className={cx('nav--items-right') + ' pull-right'}>

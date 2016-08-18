@@ -18,17 +18,6 @@
     transition: 0.1s background-color ease;
   }
 
-  --greenButton {
-    @apply --button;
-    color: var(--colorWhite);
-    background: var(--colorDodgerBlue);
-    border-color: var(--colorDodgerBlue);
-
-    &:hover {
-      background: var(--colorDarkerBlue);
-      border-color: var(--colorDarkerBlue);
-    }
-  }
   --drkBlueButton {
     @apply --button;
     color: var(--colorWhite);

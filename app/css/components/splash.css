@@ -22,15 +22,8 @@ section {
 
 .section--darkBlue, 
 .section--companies {
-  background-color: var(--colorBackground-darkBlue);
   color: var(--colorLightText);
-  background: rgba(52,73,94,1);
-  background: -moz-linear-gradient(left, rgba(52,73,94,1) 0%, rgba(52,73,94,1) 23%, rgba(29,44,65,1) 100%);
-  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(52,73,94,1)), color-stop(23%, rgba(52,73,94,1)), color-stop(100%, rgba(29,44,65,1)));
-  background: -webkit-linear-gradient(left, rgba(52,73,94,1) 0%, rgba(52,73,94,1) 23%, rgba(29,44,65,1) 100%);
-  background: -o-linear-gradient(left, rgba(52,73,94,1) 0%, rgba(52,73,94,1) 23%, rgba(29,44,65,1) 100%);
-  background: -ms-linear-gradient(left, rgba(52,73,94,1) 0%, rgba(52,73,94,1) 23%, rgba(29,44,65,1) 100%);
-  background: linear-gradient(to right, rgba(52,73,94,1) 0%, rgba(52,73,94,1) 23%, rgba(29,44,65,1) 100%);
+  background: var(--colorBackground-darkBlue);
 }
 
 /* carosel edits */
@@ -198,8 +191,11 @@ section {
 }
 
 .companies--box-item {
-  margin: 0 50px;
-  border-radius: 17px;
+  margin: 0 10px;
+  padding: 20px;
+  color: #363636;
+  height: 350px;
+  border-radius: 3px;
 }
 
 .companies--box-item-red {
@@ -220,26 +216,30 @@ section {
 
 .companies--item-icon-computer {
   background-repeat: no-repeat;
-  height: 175px;
+  height: 125px;
   background-position: 50%;
   background-image: url('../../images/splash/Computer-Graph.svg');
-  background-size: 79%;
+  background-size: 50%;
 }
 
 .companies--item-icon-flowchart {
   background-repeat: no-repeat;
-  height: 175px;
+  height: 125px;
   background-position: 50%;
-  background-size: 79%;
+  background-size: 50%;
   background-image: url('../../images/splash/Flowchart.svg');
 }
 
 .companies--item-icon-cog {
   background-repeat: no-repeat;
-  height: 175px;
+  height: 125px;
   background-position: 50%;
-  background-size: 79%;
+  background-size: 50%;
   background-image: url('../../images/splash/Thinking.svg');
+}
+
+.companies-contact {
+  margin: 50px 0;
 }
 
 .section--together {
@@ -256,14 +256,6 @@ section {
 
 .together--left {
   margin: 46px 0;
-}
-
-.companies--item-icon-computer {
-  background-repeat: no-repeat;
-  height: 175px;
-  background-position: 50%;
-  background-image: url('../../images/splash/Computer-Graph.svg');
-  background-size: 79%;
 }
 
 .together-icon {
