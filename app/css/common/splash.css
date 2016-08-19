@@ -1,0 +1,13 @@
+@import '../common/colors';
+
+:root {
+  --splashSectionTitle {
+    font-size: 34px;
+    margin: 50px 0;
+  }
+  --splashTitleUnderline {
+    width: 113px;
+    border: 2px solid var(--colorBrightPink);
+    margin-top: -7px;
+  }
+}

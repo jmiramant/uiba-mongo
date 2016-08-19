@@ -1,0 +1,66 @@
+@import '../../common/colors';
+@import '../../common/splash';
+
+.spalsh--section-title {
+  @apply --splashSectionTitle
+}
+
+.section--title-underline {
+  @apply --splashTitleUnderline
+}
+
+.spalsh--carousel-img {
+  margin: 0 auto;
+}
+
+.splash--carousel {
+  min-height: 570px;
+}
+
+.carousel--caption {
+  color: #000;
+  margin-top: -26px;
+  text-shadow: none;
+  top: 210px;
+  padding-top: 0;
+}
+
+.carousel--item {
+  height: 350px;
+}
+
+.carousel--item-sub {
+  font-size: 19px;
+  color: #333;
+  opacity: 0.5;
+}
+
+.carousel--item-title {
+  text-align: center;
+  color: var(--colorBrightPink);
+  background-color: transparent;
+  padding: 0;
+}
+
+.carousel-inner img {
+  margin: 0 auto;
+}
+
+.carousel--img-border {
+  width: 126px;
+  margin: 0 auto;
+  height: 126px;
+  border-radius: 126px;
+}
+
+.carousel--img-border-red {
+  background-color: var(--colorBrightPink)
+}
+
+.carousel--img-border-yellow {
+  background-color: var(--colorYellow)
+}
+
+.carousel--img-border-blue {
+  background-color: var(--colorLightBlue)
+}

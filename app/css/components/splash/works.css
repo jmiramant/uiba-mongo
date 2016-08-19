@@ -1,0 +1,76 @@
+@import '../../common/colors';
+@import '../../common/splash';
+
+:root {
+  --worksIconImgBase {
+    background-repeat: no-repeat;
+    height: 99px;
+    background-size: 100%;
+  }
+}
+
+.spalsh--section-title {
+  @apply --splashSectionTitle
+}
+
+.section--title-underline {
+  @apply --splashTitleUnderline
+}
+
+.works--column-container {
+  margin-bottom: 40px;
+}
+
+.works--item-container {
+  margin: 20px 0;
+}
+
+.works--icon-container {
+  display: inline-block;
+  width: 30%;
+}
+
+.works--border {
+  width: 103px;
+  height: 103px;
+  background-color: #fff;
+  border: 2px solid rgb(210,221,226);
+  border-radius: 90px;
+  float: right;
+  background-color: var(--colorBrightPink);
+}
+
+.works--icon-scientist {
+  @apply --worksIconImgBase;
+  background-image: url('images/splash/Scientist-2.svg'); 
+}
+
+.works--icon-coding {
+  @apply --worksIconImgBase;
+  background-image: url('images/splash/Windows-Search-Coding.svg'); 
+}
+
+.works--icon-globe {
+  @apply --worksIconImgBase;
+  background-image: url('images/splash/Communication-Globe.svg'); 
+}
+.works--text-container {
+  display: inline-block;
+  vertical-align: top;
+  text-align: left;
+  padding: 10px 125px 0 50px;
+  width: 70%;
+}
+
+.works--title {
+  font-size: 22px;
+}
+
+.works--description {
+  font-size: 15px;
+}
+
+.works--sub-text {
+  padding-bottom: 70px;
+  font-size: 22px;
+}

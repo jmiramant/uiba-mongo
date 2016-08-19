@@ -1,14 +1,6 @@
-@import '../common/typography';
+@import '../common/splash';
 @import '../common/colors';
 @import '../common/button';
-
-:root {
-  --worksIconImgBase {
-    background-repeat: no-repeat;
-    height: 99px;
-    background-size: 100%;
-  }
-}
 
 section {
   text-align: center;
@@ -34,76 +26,16 @@ section {
   background: var(--colorBackground-darkBlue);
 }
 
-/* carosel edits */
-.spalsh--carousel-img {
-  margin: 0 auto;
-}
-
 .spalsh--section-title {
-  font-size: 34px;
-  margin: 50px 0;
+  @apply --splashSectionTitle
 }
 
 .section--title-underline {
-  width: 113px;
-  border: 2px solid var(--colorBrightPink);
-  margin-top: -7px;
+  @apply --splashTitleUnderline
 }
 
 .section--title-underline-dark {
   border: 2px solid rgba(253, 253, 253, 0.7);
-}
-
-.splash--carousel {
-  min-height: 570px;
-}
-
-.carousel--caption {
-  color: #000;
-  margin-top: -26px;
-  text-shadow: none;
-  top: 210px;
-  padding-top: 0;
-}
-
-.carousel--item {
-  height: 350px;
-}
-
-.carousel--item-sub {
-  font-size: 19px;
-  color: #333;
-  opacity: 0.5;
-}
-
-.carousel--item-title {
-  text-align: center;
-  color: var(--colorBrightPink);
-  background-color: transparent;
-  padding: 0;
-}
-
-.carousel-inner img {
-  margin: 0 auto;
-}
-
-.carousel--img-border {
-  width: 126px;
-  margin: 0 auto;
-  height: 126px;
-  border-radius: 126px;
-}
-
-.carousel--img-border-red {
-  background-color: var(--colorBrightPink)
-}
-
-.carousel--img-border-yellow {
-  background-color: var(--colorYellow)
-}
-
-.carousel--img-border-blue {
-  background-color: var(--colorLightBlue)
 }
 
 .hero {
@@ -111,178 +43,6 @@ section {
   text-align: left;
 }
 
-.hero--left {
-  margin-top: 30px;
-  padding-left: 8%;
-}
-
-.hero--right {
-  text-align: center;
-  margin-top: 3%;
-}
-
-.hero--title {
-  font-size: 4.5em;
-  font-weight: 700;
-  line-height: 1.1;
-}
-
-.hero--sub-title {
-  font-size: 1.7em;
-}
-
-.button {
-  @apply --drkBlueButton;
-  width: 75%;
-  margin: 0 2%;
-  font-size: 1.3em;
-}
-
-.works--column-container {
-  margin-bottom: 40px;
-}
-
-.works--item-container {
-  margin: 20px 0;
-}
-
-.works--icon-container {
-  display: inline-block;
-  width: 30%;
-}
-
-.works--border {
-  width: 103px;
-  height: 103px;
-  background-color: #fff;
-  border: 2px solid rgb(210,221,226);
-  border-radius: 90px;
-  float: right;
-  background-color: var(--colorBrightPink);
-}
-
-
-
-.works--icon-scientist {
-  @apply --worksIconImgBase;
-  background-image: url('../../images/splash/Scientist-2.svg'); 
-}
-
-.works--icon-coding {
-  @apply --worksIconImgBase;
-  background-image: url('../../images/splash/Windows-Search-Coding.svg'); 
-}
-
-.works--icon-globe {
-  @apply --worksIconImgBase;
-  background-image: url('../../images/splash/Communication-Globe.svg'); 
-}
-.works--text-container {
-  display: inline-block;
-  vertical-align: top;
-  text-align: left;
-  padding: 10px 125px 0 50px;
-  width: 70%;
-}
-
-.works--title {
-  font-size: 22px;
-}
-
-.works--description {
-  font-size: 15px;
-}
-
-.works--sub-text {
-  padding-bottom: 70px;
-  font-size: 22px;
-}
-
-.companies--sub-text {
-  font-size: 19px;
-  padding: 0px 4%;
-}
-
-.companies--box {
-  height: 400px;
-  padding-top: 50px;
-}
-
-.companies--box-item {
-  margin: 0 10px;
-  padding: 20px;
-  color: var(--colorDarkGray);
-  height: 350px;
-  border-radius: 7px;
-  background-color: #f9fafb;
-  border: 3px solid;
-  box-shadow: 0px 0px 15px #677480;
-}
-
-.companies--box-item-red {
-  border-color: var(--colorBrightPink);
-}
-.companies--box-item-yellow {
-  border-color: var(--colorYellow);
-}
-.companies--box-item-blue {
-  border-color: var(--colorLightBlue)
-}
-
-.companies--box-title {
-  font-size: 22px;
-  color: #363636;
-  padding: 0 10px 25px;
-}
-
-.companies--item-icon-computer {
-  background-repeat: no-repeat;
-  height: 125px;
-  background-position: 50%;
-  background-image: url('../../images/splash/Computer-Graph.svg');
-  background-size: 50%;
-}
-
-.companies--item-icon-flowchart {
-  background-repeat: no-repeat;
-  height: 125px;
-  background-position: 50%;
-  background-size: 50%;
-  background-image: url('../../images/splash/Flowchart.svg');
-}
-
-.companies--item-icon-cog {
-  background-repeat: no-repeat;
-  height: 125px;
-  background-position: 50%;
-  background-size: 50%;
-  background-image: url('../../images/splash/Thinking.svg');
-}
-
-.companies-contact {
-  margin: 50px 0;
-}
-
 .section--together {
   min-height: 580px;
-}
-
-.together--title {
-  margin: 50px 0 30px;
-}
-
-.together--sub-text {
-  font-size: 17px;
-}
-
-.together--left {
-  margin: 46px 0;
-}
-
-.together-icon {
-  background-repeat: no-repeat;
-  height: 300px;
-  background-position: 50%;
-  background-image: url('../../images/splash/Astronaut.svg');
-  background-size: 79%;
 }
