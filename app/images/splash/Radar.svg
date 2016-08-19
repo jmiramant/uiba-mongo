@@ -6,9 +6,9 @@
 <g id="Artboard" style="display:none;">
 	<rect x="-863" y="-327" style="display:inline;fill:#8C8C8C;" width="1412" height="743"/>
 </g>
-<g id="R-Multicolor">
-	<circle style="fill:#E04F5F;" cx="55" cy="55" r="55"/>
-	<g>
+<g id="R-Multicolor" style="display:none;">
+	<circle style="display:inline;fill:#E04F5F;" cx="55" cy="55" r="55"/>
+	<g style="display:inline;">
 		<g>
 			<ellipse style="fill:#0484AB;" cx="55.492" cy="55" rx="29.538" ry="30"/>
 		</g>
@@ -107,8 +107,8 @@
 		</g>
 	</g>
 </g>
-<g id="Blue" style="display:none;">
-	<g style="display:inline;">
+<g id="Blue">
+	<g>
 		<g>
 			<g>
 				<ellipse style="fill:#0081A1;" cx="55.495" cy="55" rx="29.539" ry="30"/>

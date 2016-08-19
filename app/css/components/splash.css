@@ -2,6 +2,14 @@
 @import '../common/colors';
 @import '../common/button';
 
+:root {
+  --worksIconImgBase {
+    background-repeat: no-repeat;
+    height: 99px;
+    background-size: 100%;
+  }
+}
+
 section {
   text-align: center;
   min-height: 500px;
@@ -38,7 +46,7 @@ section {
 
 .section--title-underline {
   width: 113px;
-  border: 2px solid rgba(242, 2, 83, 0.7);
+  border: 2px solid var(--colorBrightPink);
   margin-top: -7px;
 }
 
@@ -70,7 +78,6 @@ section {
 
 .carousel--item-title {
   text-align: center;
-  opacity: 0.7;
   color: var(--colorBrightPink);
   background-color: transparent;
   padding: 0;
@@ -81,10 +88,22 @@ section {
 }
 
 .carousel--img-border {
-  width: 189px;
+  width: 126px;
   margin: 0 auto;
-  height: 189px;
-  border-radius: 176px;
+  height: 126px;
+  border-radius: 126px;
+}
+
+.carousel--img-border-red {
+  background-color: var(--colorBrightPink)
+}
+
+.carousel--img-border-yellow {
+  background-color: var(--colorYellow)
+}
+
+.carousel--img-border-blue {
+  background-color: var(--colorLightBlue)
 }
 
 .hero {
@@ -139,26 +158,23 @@ section {
   border: 2px solid rgb(210,221,226);
   border-radius: 90px;
   float: right;
+  background-color: var(--colorBrightPink);
 }
 
+
+
 .works--icon-scientist {
-  background-repeat: no-repeat;
-  height: 99px;
-  background-size: 100%;
+  @apply --worksIconImgBase;
   background-image: url('../../images/splash/Scientist-2.svg'); 
 }
 
 .works--icon-coding {
-  background-repeat: no-repeat;
-  height: 99px;
-  background-size: 100%;
+  @apply --worksIconImgBase;
   background-image: url('../../images/splash/Windows-Search-Coding.svg'); 
 }
 
 .works--icon-globe {
-  background-repeat: no-repeat;
-  background-size: 100%;
-  height: 99px;
+  @apply --worksIconImgBase;
   background-image: url('../../images/splash/Communication-Globe.svg'); 
 }
 .works--text-container {
@@ -195,19 +211,19 @@ section {
 .companies--box-item {
   margin: 0 10px;
   padding: 20px;
-  color: #363636;
+  color: var(--colorLightText);
   height: 350px;
   border-radius: 3px;
 }
 
 .companies--box-item-red {
-  background-color: rgba(224,79,95, 1);
+  background-color: var(--colorBrightPink);
 }
 .companies--box-item-yellow {
-  background-color: rgba(250,188,61, 1);
+  background-color: var(--colorYellow);
 }
 .companies--box-item-blue {
-  background-color: rgba(37,183,211, 1);
+  background-color: var(--colorLightBlue)
 }
 
 .companies--box-title {
