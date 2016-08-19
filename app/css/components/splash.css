@@ -211,19 +211,22 @@ section {
 .companies--box-item {
   margin: 0 10px;
   padding: 20px;
-  color: var(--colorLightText);
+  color: var(--colorDarkGray);
   height: 350px;
-  border-radius: 3px;
+  border-radius: 7px;
+  background-color: #f9fafb;
+  border: 3px solid;
+  box-shadow: 0px 0px 15px #677480;
 }
 
 .companies--box-item-red {
-  background-color: var(--colorBrightPink);
+  border-color: var(--colorBrightPink);
 }
 .companies--box-item-yellow {
-  background-color: var(--colorYellow);
+  border-color: var(--colorYellow);
 }
 .companies--box-item-blue {
-  background-color: var(--colorLightBlue)
+  border-color: var(--colorLightBlue)
 }
 
 .companies--box-title {
