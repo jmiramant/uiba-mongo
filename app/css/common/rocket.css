@@ -8,7 +8,9 @@
 }
 .icon_circle {
   transition: .2s;
-  fill: var(--colorBrightPink);
+  fill: #282e3a;
+  stroke: #fff !important;
+  stroke-width: 7px !important;
 }
 .large_window_path {
   transition: .2s;
@@ -18,16 +20,16 @@
   fill: rgb(45,203,115);
 }
 .wing_shadow {
-  fill: #34495e;
+  fill: #FC9252;
 }
 .rocket_bottom { fill: #34495e; }
-.rocket_base { fill: #34495e; }
-.rocket_shadow { fill: #34495e; }
+.rocket_base { fill: #FFFFFF; }
+.rocket_shadow { fill: #EDEDED; }
 .window_grandient { stop-color: #2DCB73; }
 .window_grandient1 { stop-color: #2AC16D; }
 .window_grandient2 { stop-color: #29B968; }
 .window_grandient3 { stop-color: #28B767; }
-.wing_base { fill: #34495e; }
+.wing_base { fill: #E16E36; }
 .fire_path { fill: #FC0; }
 
 /*=============================================
@@ -66,7 +68,7 @@
   fill: url(#SVGID_2_) !important;
   stroke-width: 0px !important;
 }
-.rocket_wrap:hover .rocket_inner { transform: translateY(0px) translateX(-3px) !important; }
+.rocket_wrap:hover .rocket_inner { transform: rotate(45deg) translateY(-142px) translateX(52px) !important; }
 
 /*=============================================
 [ Animation Classes ]
