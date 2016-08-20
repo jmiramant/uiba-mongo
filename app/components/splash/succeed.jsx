@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactDom from 'react-dom';
+import Waypoint from 'react-waypoint';
 import classNames from 'classnames/bind';
 import Carousel , { Item as CItem, Caption as CCaption } from 'react-bootstrap/lib/Carousel';
 
@@ -20,10 +22,23 @@ const carouselControlOverride = "\
 "
 
 export default class SplashSucceed extends React.Component {
+  
+  componentDidMount() {
+    var elem = ReactDom.findDOMNode(this);
+    elem.style.opacity = 0;
+  }
+
+  handleWaypointEnter() {
+    var elem = ReactDom.findDOMNode(this);
+    window.requestAnimationFrame(function() {
+      elem.style.transition = "opacity 1500ms";
+      elem.style.opacity = 1;
+    });
+  }
 
   render() {
     return (
-      <span>
+      <div>
         <h1 className={cx('spalsh--section-title') + ' col-md-12'}>How You'll Succeed <hr className={cx('section--title-underline')}/> </h1>
         <Carousel indicators={false}>
           <CItem className={cx('carousel--item')}>
@@ -31,6 +46,7 @@ export default class SplashSucceed extends React.Component {
             <CCaption className={cx('carousel--caption')}>
               <h3 className={cx('carousel--item-title')}>1. Introduce Yourself</h3>
               <p className={cx('carousel--item-sub')}>First, let's make sure we understand your expierence, knowledge, abilities - everything that makes you so unique and amazing!</p>
+            <Waypoint onEnter={this.handleWaypointEnter.bind(this)}/>
             </CCaption>
           </CItem>
           <CItem className={cx('carousel--item')}>
@@ -49,7 +65,7 @@ export default class SplashSucceed extends React.Component {
           </CItem>
         </Carousel>
         <style>{carouselControlOverride}</style>
-      </span>
+      </div>
     )
   }
   

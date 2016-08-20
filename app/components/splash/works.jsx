@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactDom from 'react-dom';
+import Waypoint from 'react-waypoint';
 import { Link } from 'react-router';
 import classNames from 'classnames/bind';
 import styles from 'css/components/splash/works';
@@ -6,10 +8,23 @@ import styles from 'css/components/splash/works';
 const cx = classNames.bind(styles);
 
 export default class SplashWorks extends React.Component {
+  
+  componentDidMount() {
+    var elem = ReactDom.findDOMNode(this);
+    elem.style.opacity = 0;
+  }
 
+  handleWaypointEnter() {
+    var elem = ReactDom.findDOMNode(this);
+    window.requestAnimationFrame(function() {
+      elem.style.transition = "opacity 1500ms";
+      elem.style.opacity = 1;
+    });
+  }
+  
   render() {
     return (
-      <span>
+      <div>
         <h1 className={cx('section--title', 'spalsh--section-title')}>How It Works <hr className={cx('section--title-underline')} /></h1>
         <div className={cx('works--column-container')}>
           <div className={cx('works--item-container')}>
@@ -37,6 +52,8 @@ export default class SplashWorks extends React.Component {
             </div>
           </div>
           
+          <Waypoint onEnter={this.handleWaypointEnter.bind(this)}/>
+          
           <div className={cx('works--item-container')}>
             <div className={cx('works--icon-container') + ' col-md-3 hidden-sm hidden-xs'}>
               <div className={cx('works--border', 'blue')}>
@@ -51,7 +68,7 @@ export default class SplashWorks extends React.Component {
         </div>
 
         <p className={cx('works--sub-text')}>What you see now is just the first phase of Uiba. We’re looking forward to our journey together.</p>
-      </span>
+      </div>
     )
   }
   

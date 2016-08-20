@@ -1,15 +1,33 @@
 import React from 'react';
+import ReactDom from 'react-dom';
+import Waypoint from 'react-waypoint';
 import classNames from 'classnames/bind';
 import styles from 'css/components/splash/numbers';
 
 const cx = classNames.bind(styles);
 
 export default class SplashNumbers extends React.Component {
+  
+  componentDidMount() {
+    var elem = ReactDom.findDOMNode(this);
+    elem.style.opacity = 0;
+  }
 
+  handleWaypointEnter() {
+    var elem = ReactDom.findDOMNode(this);
+    window.requestAnimationFrame(function() {
+      elem.style.transition = "opacity 1000ms";
+      elem.style.opacity = 1;
+    });
+  }
+  
   render() {
     return (
-      <span>
-        <h1 className={cx('spalsh--section-title', 'together--title')}>The Numbers Tell the Story <hr className={cx('section--title-underline')}/> </h1>
+      <div>
+        <h1 className={cx('spalsh--section-title', 'together--title')}>
+          The Numbers Tell the Story 
+          <hr className={cx('section--title-underline')}/>
+        </h1>
         
         <div className={cx('numbers--item') + " col-md-offset-2 col-md-8"}>
           <div className={cx('numbers--left') + ' hidden-xs'}>
@@ -23,7 +41,9 @@ export default class SplashNumbers extends React.Component {
             <div>Uiba’s result: 100% - 10 candidates recommended, 10 offers to hire.</div>
           </div>
         </div>
-        
+
+        <Waypoint onEnter={this.handleWaypointEnter.bind(this)}/>
+
         <div className={cx('numbers--item') + " col-md-offset-2 col-md-8"}>
           <div className={cx('numbers--left')}>
             <h3 className={cx('numbers--num-title', 'red')}>40,000</h3>
@@ -61,7 +81,7 @@ export default class SplashNumbers extends React.Component {
           </div>
         </div>
 
-      </span>
+      </div>
     )
   }
   

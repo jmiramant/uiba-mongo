@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactDom from 'react-dom';
+import Waypoint from 'react-waypoint';
 import classNames from 'classnames/bind';
 import styles from 'css/components/splash/companies';
 
@@ -6,12 +8,27 @@ const cx = classNames.bind(styles);
 
 export default class SplashCompanies extends React.Component {
 
+  componentDidMount() {
+    var elem = ReactDom.findDOMNode(this);
+    elem.style.opacity = 0;
+  }
+
+  handleWaypointEnter() {
+    var elem = ReactDom.findDOMNode(this);
+    window.requestAnimationFrame(function() {
+      elem.style.transition = "opacity 1500ms";
+      elem.style.opacity = 1;
+    });
+  }
+
   render() {
     return (
-      <span>
+      <div>
         <h1 className={cx('spalsh--section-title')}>Companies and Organizations  <hr className={cx('section--title-underline', 'section--title-underline-dark')}/> </h1>
         <p className={cx('companies--sub-text')}>In the 21st-century organization, employees own most of the assets because they are most of the assets. Uiba uses math, data science, and machine learning to forge this wisdom into a virtuous circle for our clients by:</p>
-        
+
+        <Waypoint onEnter={this.handleWaypointEnter.bind(this)}/>
+
         <div className={cx('companies--box')}>
           <div className='col-md-4 col-sm-24'>
             <div className={cx('companies--box-item', 'companies--box-item-red')}>
@@ -37,7 +54,7 @@ export default class SplashCompanies extends React.Component {
 
         </div>
         <h4 className={cx('companies-contact')}>Contact us today to find out how to drive your organization’s productivity to peak performance.</h4>
-      </span>
+      </div>
     )
   }
   

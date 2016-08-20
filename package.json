@@ -117,6 +117,7 @@
     "react-router-redux": "^4.0.0",
     "react-sticky": "^5.0.4",
     "react-transform-hmr": "^1.0.4",
+    "react-waypoint": "^3.1.1",
     "redux": "^3.3.1",
     "redux-form": "^5.3.2",
     "redux-logger": "^2.6.1",
