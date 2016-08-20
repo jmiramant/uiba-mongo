@@ -5,6 +5,7 @@
 .hero--left {
   margin-top: 30px;
   padding-left: 8%;
+  text-align: left;
 }
 
 .hero--right {
