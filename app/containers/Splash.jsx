@@ -6,6 +6,7 @@ import Hero from 'components/splash/hero';
 import Succeed from 'components/splash/succeed';
 import Works from 'components/splash/works';
 import Companies from 'components/splash/companies';
+import Numbers from 'components/splash/numbers';
 import Together from 'components/splash/together';
 
 const cx = classNames.bind(styles);
@@ -15,7 +16,7 @@ const Splash = () => {
   return (
     <div className={cx('splash-container')}>
       
-      <section className={cx('hero', 'section--darkBlue')}> 
+      <section className={cx('section--darkBlue', 'seciton--hero')}> 
         <Hero/>
       </section>
 
@@ -27,8 +28,12 @@ const Splash = () => {
         <Works/>
       </section>
 
-      <section className={cx('section--companies')}>
+      <section className={cx('section--darkBlue')}>
         <Companies/>
+      </section>
+
+      <section className={cx('section--numbers')}>
+        <Numbers/>
       </section>
       
       <section className={cx('section--tan', 'section--together')}>

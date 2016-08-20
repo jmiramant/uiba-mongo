@@ -20,8 +20,7 @@ section {
   background-color: var(--colorBackground-tan);
 }
 
-.section--darkBlue, 
-.section--companies {
+.section--darkBlue {
   color: var(--colorLightText);
   background: var(--colorBackground-darkBlue);
 }
@@ -38,9 +37,13 @@ section {
   border: 2px solid rgba(253, 253, 253, 0.7);
 }
 
-.hero {
+.section--hero {
   padding: 5% 10% 0;
   text-align: left;
+}
+
+.section--numbers {
+  min-height: 1050px;
 }
 
 .section--together {

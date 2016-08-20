@@ -5,7 +5,7 @@ import styles from 'css/components/splash/works';
 
 const cx = classNames.bind(styles);
 
-export default class SplashHero extends React.Component {
+export default class SplashWorks extends React.Component {
 
   render() {
     return (

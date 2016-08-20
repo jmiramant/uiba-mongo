@@ -1,0 +1,72 @@
+@import '../../common/colors';
+@import '../../common/splash';
+
+:root {
+  --sideBySide {
+    display: inline-block;
+    width: 50%;
+    vertical-align: top;
+  }
+  --iconBgPosition {
+    margin-top: 15px;
+    background-repeat: no-repeat;
+    height: 150px;
+    background-position: 50%;
+    background-size: 95%;
+  }
+}
+
+.spalsh--section-title {
+  font-size: 34px;
+  margin: 30px 0;
+}
+
+.section--title-underline {
+  @apply --splashTitleUnderline
+}
+
+.numbers--left {
+  @apply --sideBySide;
+}
+
+.numbers--right {
+  @apply --sideBySide;
+}
+
+.numbers--num-title {
+  text-align: center;
+  font-size: 44px;
+}
+
+.numbers--item {
+  height: 180px;
+  margin-bottom: 40px;
+}
+
+.numbers--icon-bg {
+  background-color: var(--colorBackground-tan);
+  border-radius: 5px;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+}
+
+.numbers--icon-first {
+  @apply --iconBgPosition;
+  background-image: url('images/splash/Test.svg');
+}
+
+.numbers--icon-second {
+  @apply --iconBgPosition;
+  background-image: url('images/splash/Target.svg');
+}
+
+.numbers--icon-third {
+  @apply --iconBgPosition;
+  background-image: url('images/splash/Graph-Decrease.svg');
+}
+
+.numbers--icon-forth {
+  @apply --iconBgPosition;
+  background-image: url('images/splash/Graph-Increase.svg');
+}
