@@ -54,3 +54,8 @@
 .active {
   color: var(--colorGreen);
 }
+
+.navbar--resp-nav {
+  list-style: none;
+  margin: 26px -26px 0 0;
+}

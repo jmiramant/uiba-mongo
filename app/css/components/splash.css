@@ -27,11 +27,11 @@ section {
 }
 
 .spalsh--section-title {
-  @apply --splashSectionTitle
+  @apply --splashSectionTitle;
 }
 
 .section--title-underline {
-  @apply --splashTitleUnderline
+  @apply --splashTitleUnderline;
 }
 
 .section--title-underline-dark {
@@ -46,4 +46,3 @@ section {
 .section--numbers {
   min-height: 1050px;
 }
-

@@ -1,11 +1,11 @@
 @import '../../common/splash';
 
 .spalsh--section-title {
-  @apply --splashSectionTitle
+  @apply --splashSectionTitle;
 }
 
 .section--title-underline {
-  @apply --splashTitleUnderline
+  @apply --splashTitleUnderline;
 }
 
 .together--title {
@@ -26,4 +26,15 @@
   background-position: 50%;
   background-image: url('images/splash/Astronaut.svg');
   background-size: 79%;
+}
+
+.together--highlight {
+  text-transform: uppercase;
+  color: var(--colorBrightPink);
+}
+
+@media (max-width: 992px) {
+  .together-icon {
+    background-size: 35%;
+  }
 }

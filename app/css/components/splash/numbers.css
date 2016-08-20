@@ -8,7 +8,7 @@
     vertical-align: top;
   }
   --iconBgPosition {
-    margin-top: 15px;
+    margin-top: 30px;
     background-repeat: no-repeat;
     height: 150px;
     background-position: 50%;
@@ -22,7 +22,7 @@
 }
 
 .section--title-underline {
-  @apply --splashTitleUnderline
+  @apply --splashTitleUnderline;
 }
 
 .numbers--left {
@@ -36,10 +36,16 @@
 .numbers--num-title {
   text-align: center;
   font-size: 44px;
+  &.red {
+    color: var(--colorBrightPink);
+  }
+  &.blue {
+    color: var(--colorLightBlue);
+  }
 }
 
 .numbers--item {
-  height: 180px;
+  min-height: 180px;
   margin-bottom: 40px;
 }
 
@@ -58,7 +64,7 @@
 
 .numbers--icon-second {
   @apply --iconBgPosition;
-  background-image: url('images/splash/Target.svg');
+  background-image: url('images/splash/Target-Arrow.svg');
 }
 
 .numbers--icon-third {
@@ -69,4 +75,11 @@
 .numbers--icon-forth {
   @apply --iconBgPosition;
   background-image: url('images/splash/Graph-Increase.svg');
+}
+
+@media (max-width: 768px) {
+  .numbers--right,
+  .numbers--left {
+    width: 75%;
+  }
 }

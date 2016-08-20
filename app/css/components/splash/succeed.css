@@ -2,11 +2,11 @@
 @import '../../common/splash';
 
 .spalsh--section-title {
-  @apply --splashSectionTitle
+  @apply --splashSectionTitle;
 }
 
 .section--title-underline {
-  @apply --splashTitleUnderline
+  @apply --splashTitleUnderline;
 }
 
 .spalsh--carousel-img {
@@ -54,13 +54,19 @@
 }
 
 .carousel--img-border-red {
-  background-color: var(--colorBrightPink)
+  background-color: var(--colorBrightPink);
 }
 
 .carousel--img-border-yellow {
-  background-color: var(--colorYellow)
+  background-color: var(--colorYellow);
 }
 
 .carousel--img-border-blue {
-  background-color: var(--colorLightBlue)
+  background-color: var(--colorLightBlue);
+}
+
+@media (max-width: 508px) {
+  .carousel--item-sub {
+    font-size: 16px;
+  }
 }

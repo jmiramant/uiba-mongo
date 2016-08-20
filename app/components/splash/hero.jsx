@@ -12,11 +12,11 @@ export default class SplashHero extends React.Component {
     return (
       <span>
         <div className={cx('hero--left') + ' col-md-6'}>
-          <h1 className={cx('hero--title')}>Launch your<br/>Career Path</h1>
-          <p className={cx('hero--sub-title')}>Understand your Capabilities.<br/>Start building your future today.</p>
-          <Link to="/login" className={cx('button')}>Get Started</Link>
+          <h1 className={cx('hero--title') + ' animated fadeInLeft'}>Launch your<br/>Career Path</h1>
+          <p className={cx('hero--sub-title')+ ' animated fadeInLeft'}>Understand your Capabilities.<br/>Start building your future today.</p>
+          <Link to="/login" className={cx('button')+ ' animated fadeInLeft'}>Get Started</Link>
         </div>
-        <div className={cx('hero--right') + ' col-md-6'}>
+        <div className={cx('hero--right') + ' col-md-6 animated fadeInRight'}>
           <Rocket />
         </div>
       </span>

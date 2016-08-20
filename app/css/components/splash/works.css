@@ -10,11 +10,11 @@
 }
 
 .spalsh--section-title {
-  @apply --splashSectionTitle
+  @apply --splashSectionTitle;
 }
 
 .section--title-underline {
-  @apply --splashTitleUnderline
+  @apply --splashTitleUnderline;
 }
 
 .works--column-container {
@@ -23,21 +23,24 @@
 
 .works--item-container {
   margin: 20px 0;
-}
-
-.works--icon-container {
-  display: inline-block;
-  width: 30%;
+  min-height: 110px;
 }
 
 .works--border {
   width: 103px;
   height: 103px;
-  background-color: #fff;
   border: 2px solid rgb(210,221,226);
   border-radius: 90px;
   float: right;
-  background-color: var(--colorBrightPink);
+  &.red {
+    background-color: var(--colorBrightPink);
+  }
+  &.yellow {
+    background-color: var(--colorYellow);
+  }
+  &.blue {
+    background-color: var(--colorLightBlue);
+  }
 }
 
 .works--icon-scientist {
@@ -55,11 +58,9 @@
   background-image: url('images/splash/Communication-Globe.svg'); 
 }
 .works--text-container {
-  display: inline-block;
   vertical-align: top;
   text-align: left;
   padding: 10px 125px 0 50px;
-  width: 70%;
 }
 
 .works--title {
@@ -73,4 +74,10 @@
 .works--sub-text {
   padding-bottom: 70px;
   font-size: 22px;
+}
+
+@media (max-width: 922px) {
+  .works--text-container {
+    padding: 10px 0 0;
+  }
 }

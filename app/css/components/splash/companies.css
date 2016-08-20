@@ -2,11 +2,11 @@
 @import '../../common/splash';
 
 .spalsh--section-title {
-  @apply --splashSectionTitle
+  @apply --splashSectionTitle;
 }
 
 .section--title-underline {
-  @apply --splashTitleUnderline
+  @apply --splashTitleUnderline;
 }
 
 .companies--sub-text {
@@ -15,15 +15,15 @@
 }
 
 .companies--box {
-  height: 400px;
-  padding-top: 50px;
+  min-height: 400px;
+  padding-top: 20px;
 }
 
 .companies--box-item {
-  margin: 0 10px;
+  margin: 25px 10px;
   padding: 20px;
   color: var(--colorDarkGray);
-  height: 350px;
+  min-height: 350px;
   border-radius: 7px;
   background-color: #f9fafb;
   border: 3px solid;
@@ -37,7 +37,7 @@
   border-color: var(--colorYellow);
 }
 .companies--box-item-blue {
-  border-color: var(--colorLightBlue)
+  border-color: var(--colorLightBlue);
 }
 
 .companies--box-title {
@@ -46,30 +46,44 @@
   padding: 0 10px 25px;
 }
 
-.companies--item-icon-computer {
-  background-repeat: no-repeat;
-  height: 125px;
-  background-position: 50%;
-  background-image: url('images/splash/Computer-Graph.svg');
-  background-size: 50%;
-}
-
-.companies--item-icon-flowchart {
+.companies--item-icon {
   background-repeat: no-repeat;
   height: 125px;
   background-position: 50%;
   background-size: 50%;
-  background-image: url('images/splash/Flowchart.svg');
-}
-
-.companies--item-icon-cog {
-  background-repeat: no-repeat;
-  height: 125px;
-  background-position: 50%;
-  background-size: 50%;
-  background-image: url('images/splash/Thinking.svg');
+  &.computer {
+    background-image: url('images/splash/Computer-Graph.svg');
+  }
+  &.flowchart {
+    background-image: url('images/splash/Flowchart.svg');
+  }
+  &.cog {
+    background-image: url('images/splash/Thinking.svg');
+  }
 }
 
 .companies-contact {
   margin: 50px 0;
+}
+
+@media (max-width: 1392px) {
+  .companies--box {
+    min-height: 500px;
+  }
+}
+
+@media (max-width: 992px) {
+  .companies--item-icon {
+    background-size: 40%;
+  }
+  .companies--box-text {
+    padding: 10% 10% 5%;
+  }
+}
+
+@media (max-width: 508px) { 
+  .companies--item-icon {
+    background-size: 80%;
+  }
+
 }

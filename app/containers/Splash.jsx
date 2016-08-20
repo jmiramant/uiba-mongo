@@ -20,7 +20,7 @@ const Splash = () => {
         <Hero/>
       </section>
 
-      <section className={cx('section--no-padding')}>
+      <section className={cx('section--no-padding') + ' animated fadeInSlow'}>
         <Succeed/>
       </section>
 
@@ -28,7 +28,7 @@ const Splash = () => {
         <Works/>
       </section>
 
-      <section className={cx('section--darkBlue')}>
+      <section className={cx('section--darkBlue', 'section--companies')}>
         <Companies/>
       </section>
 
