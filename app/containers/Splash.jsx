@@ -16,7 +16,7 @@ const Splash = () => {
   return (
     <div className={cx('splash-container')}>
       
-      <section className={cx('section--darkBlue', 'seciton--hero')}> 
+      <section className={cx('section--darkBlue', 'section--hero')}> 
         <Hero/>
       </section>
 

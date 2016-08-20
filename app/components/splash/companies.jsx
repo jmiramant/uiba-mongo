@@ -13,7 +13,7 @@ export default class SplashCompanies extends React.Component {
         <p className={cx('companies--sub-text')}>In the 21st-century organization, employees own most of the assets because they are most of the assets. Uiba uses math, data science, and machine learning to forge this wisdom into a virtuous circle for our clients by:</p>
         
         <div className={cx('companies--box')}>
-          <div className='col-md-4'>
+          <div className='col-md-4 col-sm-24'>
             <div className={cx('companies--box-item', 'companies--box-item-red')}>
               <div className={cx('companies--box-title')}>Precision Hiring</div>
               <div className={cx('companies--item-icon-computer')}></div>
@@ -21,14 +21,14 @@ export default class SplashCompanies extends React.Component {
 
             </div>
           </div>
-          <div className='col-md-4'>
+          <div className='col-md-4 col-sm-24'>
             <div className={cx('companies--box-item', 'companies--box-item-yellow')}>
               <div className={cx('companies--box-title')}>Workforce Optimization</div>
               <div className={cx('companies--item-icon-flowchart')}></div>
               <div className={cx('companies--box-text')}>Uiba’s prescriptive analysis uses event-driven activity and achieved results to identify future investment requirements by understanding the business drivers and making predictive improvements to those investments.</div>
             </div>
           </div>
-          <div className='col-md-4'>
+          <div className='col-md-4 col-sm-24'>
             <div className={cx('companies--box-item', 'companies--box-item-blue')}>
               <div className={cx('companies--box-title')}>Career Guidance</div>
               <div className={cx('companies--item-icon-cog')}></div>
