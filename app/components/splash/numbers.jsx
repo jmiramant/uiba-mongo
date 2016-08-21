@@ -47,8 +47,8 @@ export default class SplashNumbers extends React.Component {
         <div className={cx('numbers--item') + " col-md-offset-2 col-md-8"}>
           <div className={cx('numbers--left')}>
             <h3 className={cx('numbers--num-title', 'red')}>40,000</h3>
-            <div>At another client, 40,000 applications were received for a single position. Over 99% weren’t reviewed. No one was deemed qualified.</div>
-            <div>Uiba’s result: all 40,000 reviewed, dozens of ideal candidates identified, 5 recommended, 1 hired.</div>
+            <div>At another client, 40,000 applications were received for a single position. Over 99% weren’t reviewed. Of those that were none were considered qualified.</div>
+            <div>Uiba’s result: all 40,000 reviewed in seconds, dozens of ideal candidates identified, 5 recommended, 1 hired.</div>
           </div>
           <div className={cx('numbers--right') + ' hidden-xs'}>
             <div className={cx('numbers--icon-bg')}>
@@ -65,14 +65,14 @@ export default class SplashNumbers extends React.Component {
           </div>
           <div className={cx('numbers--right')}>
             <h3 className={cx('numbers--num-title', 'red')}>50%</h3>
-            <div>With most clients, 50% reduction in turnover resulting in millions of dollars saved.</div>
+            <div>With most clients, Uiba delivers a 50% reduction in turnover resulting in millions of dollars saved.</div>
           </div>
         </div>
 
         <div className={cx('numbers--item') + " col-md-offset-2 col-md-8"}>
           <div className={cx('numbers--left')}>
             <h3 className={cx('numbers--num-title', 'red')}>30%</h3>
-            <div>With most clients, 30% productivity gains resulting in millions of dollars earned.</div>
+            <div>With most clients, Uiba delivers a 30% productivity gain resulting in millions of dollars earned.</div>
           </div>
           <div className={cx('numbers--right') + ' hidden-xs'}>
               <div className={cx('numbers--icon-bg')}>

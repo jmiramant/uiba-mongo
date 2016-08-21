@@ -35,8 +35,8 @@ export default class SplashWorks extends React.Component {
               </div>
             </div>
             <div className={cx('works--text-container') + ' col-md-9'}>
-              <div className={cx('works--title')}>It starts with Data</div>
-              <div className={cx('works--description')}>We gathered almost a century's worth of global labor data from governments, universities, think tanks, private companies, and more.</div>
+              <div className={cx('works--title')}>It Starts with Data</div>
+              <div className={cx('works--description')}>We’ve gathered almost a century's worth of global labor data from governments, universities, think tanks, private companies, and more.</div>
             </div>
           </div>
           
@@ -47,7 +47,7 @@ export default class SplashWorks extends React.Component {
               </div>
             </div>
             <div className={cx('works--text-container') + ' col-md-9'}>
-              <div className={cx('works--title')}>Then the Nature of Work</div>
+              <div className={cx('works--title')}>Then a Lot of Data Science</div>
               <div className={cx('works--description')}>Using that data, we applied data science and machine learning to deleve into the nature of how work is performed: knowledge, skills, activities, teamwork, etc.</div>
             </div>
           </div>
@@ -61,8 +61,20 @@ export default class SplashWorks extends React.Component {
               </div>
             </div>
             <div className={cx('works--text-container') + ' col-md-9'}>
-              <div className={cx('works--title')}>Find Your Path</div>
-              <div className={cx('works--description')}>Once the model was proven accurate we built a platform for people to assess their capabilities and use that wisdom to create their career paths and achieve their goals.</div>
+              <div className={cx('works--title')}>To Achieve a Breakthrough</div>
+              <div className={cx('works--description')}>The Uiba platform is capable of understanding the very nature of work itself in any role from dishwasher to physicist, intern to CEO.</div>
+            </div>
+          </div>
+
+          <div className={cx('works--item-container')}>
+            <div className={cx('works--icon-container') + ' col-md-3 hidden-sm hidden-xs'}>
+              <div className={cx('works--border', 'blue')}>
+                <div className={cx('works--icon-globe')}></div>
+              </div>
+            </div>
+            <div className={cx('works--text-container') + ' col-md-9'}>
+              <div className={cx('works--title')}>That Benefits All of Us, Together</div>
+              <div className={cx('works--description')}>Once the platform learns your capabilities, regardless of background or experience, Uiba applies its model to help you achieve any career goal and connect you with fellow travelers.</div>
             </div>
           </div>
         </div>
