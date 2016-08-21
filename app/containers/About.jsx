@@ -2,9 +2,6 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import styles from 'css/components/about';
 import _ from 'lodash';
-import { StickyContainer, Sticky } from 'react-sticky';
-import { Grid, Col } from 'react-bootstrap';
-import xkcd from '../images/extrapolating.png';
 
 const cx = classNames.bind(styles);
 

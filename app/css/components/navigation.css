@@ -1,9 +1,18 @@
 @import '../common/colors';
 @import '../common/typography';
 
+.sticky-nav {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
 .navigation {
-  background-color: #FAFAFA;
+  background-color: rgba(250,250,250,0.9);
   padding: 0 80px;
+  border-bottom: 1px solid rgba(255,255,255,0.5);
 }
 
 .navbar--overwrites {
