@@ -9,7 +9,7 @@ const cx = classNames.bind(styles);
 const Footer = ({ user, logOut }) => {
     return (
       <nav className={cx('footer')} role="footer">
-        <img className={cx('footer--logo')} src={logoImg} />
+        <Link to='/'><img className={cx('footer--logo')} src={logoImg} /></Link>
         <Link className={cx('item') } to="/terms">Terms</Link>
         <Link className={cx('item') } to="/privacy">Privacy</Link>
       </nav>

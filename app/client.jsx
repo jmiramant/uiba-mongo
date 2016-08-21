@@ -1,7 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, browserHistory } from 'react-router';
+import { Router, browserHistory, applyRouterMiddleware } from 'react-router';
+import useScroll from 'react-router-scroll/lib/useScroll';
 import { syncHistoryWithStore } from 'react-router-redux';
 import createRoutes from 'routes';
 import configureStore from 'store/configureStore';
@@ -35,12 +36,27 @@ function onUpdate() {
   preRenderMiddleware(store.dispatch, components, params);
 }
 
+useScroll((prevRouterProps, { location }) => (
+  prevRouterProps && location.pathname !== prevRouterProps.location.pathname
+));
+
+useScroll((prevRouterProps, { routes }) => {
+  if (routes.some(route => route.ignoreScrollBehavior)) {
+    return false;
+  }
+
+  if (routes.some(route => route.scrollToTop)) {
+    return [0, 0];
+  }
+
+  return true;
+});
 
 // Router converts <Route> element hierarchy to a route config:
 // Read more https://github.com/rackt/react-router/blob/latest/docs/Glossary.md#routeconfig
 render(
   <Provider store={store}>
-    <Router history={history} onUpdate={onUpdate}>
+    <Router history={history} onUpdate={onUpdate} render={applyRouterMiddleware(useScroll())}>
       {routes}
     </Router>
   </Provider>, document.getElementById('app'));
