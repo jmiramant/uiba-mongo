@@ -26,7 +26,7 @@ export default class SplashNumbers extends React.Component {
       <div>
         <h1 className={cx('spalsh--section-title', 'together--title')}>
           The Numbers Tell the Story 
-          <hr className={cx('section--title-underline')}/>
+          <hr className={cx('section--title-underline') + ' hidden-xs'}/>
         </h1>
         
         <div className={cx('numbers--item') + " col-md-offset-2 col-md-8"}>
@@ -40,7 +40,7 @@ export default class SplashNumbers extends React.Component {
             <div>At one client, 1% was the norm: 100 interview candidates were rejected for each person hired.</div>
             <div>Uiba’s result: 100% - 10 candidates recommended, 10 offers to hire.</div>
           </div>
-        </div>
+        </div>        
 
         <Waypoint onEnter={this.handleWaypointEnter.bind(this)}/>
 
@@ -56,7 +56,8 @@ export default class SplashNumbers extends React.Component {
             </div>
           </div>
         </div>
-        
+
+
         <div className={cx('numbers--item') + " col-md-offset-2 col-md-8"}>
           <div className={cx('numbers--left') + ' hidden-xs'}>
             <div className={cx('numbers--icon-bg')}>

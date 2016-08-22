@@ -25,7 +25,7 @@ export default class SplashWorks extends React.Component {
   render() {
     return (
       <div>
-        <h1 className={cx('section--title', 'spalsh--section-title')}>How It Works <hr className={cx('section--title-underline')} /></h1>
+        <h1 className={cx('section--title', 'spalsh--section-title')}>How It Works <hr className={cx('section--title-underline') + " hidden-xs"} /></h1>
         <div className={cx('works--column-container')}>
           <div className={cx('works--item-container')}>
             

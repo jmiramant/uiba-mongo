@@ -10,4 +10,11 @@
     border: 2px solid var(--colorBrightPink);
     margin-top: -7px;
   }
+  --splashTitleMedia {
+    @media (max-width: 508px) {
+      .spalsh--section-title {
+        line-height: 34px;
+      }
+    }
+  }
 }

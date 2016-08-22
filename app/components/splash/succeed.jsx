@@ -39,7 +39,7 @@ export default class SplashSucceed extends React.Component {
   render() {
     return (
       <div>
-        <h1 className={cx('spalsh--section-title') + ' col-md-12'}>Let's Find Your Path <hr className={cx('section--title-underline')}/> </h1>
+        <h1 className={cx('spalsh--section-title') + ' col-md-12'}>Let's Find Your Path <hr className={cx('section--title-underline') + ' hidden-xs'}/> </h1>
         <Carousel indicators={false}>
           <CItem className={cx('carousel--item')}>
             <div className={cx('carousel--img-border', 'carousel--img-border-yellow')}><img className={cx('spalsh--carousel-img')} width={125} height={125} alt="125X125" src={imgDialed}/></div>

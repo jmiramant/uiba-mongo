@@ -46,7 +46,25 @@
 
 .numbers--item {
   min-height: 180px;
-  margin-bottom: 40px;
+  &:nth-of-type(1) {
+    border-left: 2px solid var(--colorLightBlue);
+    border-bottom: 2px solid var(--colorLightBlue);
+    padding: 20px 0 70px;
+  }
+  &:nth-of-type(2) {
+    border-right: 2px solid var(--colorLightBlue);
+    border-bottom: 2px solid var(--colorLightBlue);
+    padding: 40px 0 60px;
+  }
+  &:nth-of-type(3) {
+    border-left: 2px solid var(--colorLightBlue);
+    border-bottom: 2px solid var(--colorLightBlue);
+    padding: 40px 0 60px;
+  }
+  &:nth-of-type(4) {
+    border-right: 2px solid var(--colorLightBlue);
+    padding: 40px 0 60px;
+  }
 }
 
 .numbers--icon-bg {
@@ -76,6 +94,14 @@
   @apply --iconBgPosition;
   background-image: url('images/splash/Graph-Increase.svg');
 }
+
+.numbers--item-underline {
+  width: 33%;
+  border: 2px solid var(--colorDarkGray);
+  margin-top: 36px;
+}
+
+@apply --splashTitleMedia;
 
 @media (max-width: 768px) {
   .numbers--right,
