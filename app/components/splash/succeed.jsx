@@ -60,14 +60,14 @@ export default class SplashSucceed extends React.Component {
             <div className={cx('carousel--img-border', 'carousel--img-border-blue')}><img className={cx('spalsh--carousel-img')} width={125} height={125} alt="125X125" src={imgMap} /></div>
             <CCaption className={cx('carousel--caption')}>
               <h3 className={cx('carousel--item-title')}>3. Find Your Path</h3>
-              <p className={cx('carousel--item-sub')}>Then let's see how your capabilities compare with the requirements of various roles along differenct career paths.</p>
+              <p className={cx('carousel--item-sub')}>Then let's see how your capabilities compare with the requirements of various roles along different career paths.</p>
             </CCaption>
           </CItem>
           <CItem className={cx('carousel--item')}>
             <div className={cx('carousel--img-border', 'carousel--img-border-blue')}><img className={cx('spalsh--carousel-img')} width={125} height={125} alt="125X125" src={imgMap} /></div>
             <CCaption className={cx('carousel--caption')}>
               <h3 className={cx('carousel--item-title')}>4. Let's Journey Together</h3>
-              <p className={cx('carousel--item-sub')}>Now join a community that shares the wisdom and insight of experience to help you achieve your goals and help others achieve theirs.</p>
+              <p className={cx('carousel--item-sub')}>Now join a community that shares the wisdom and insight of experience to help you achieve your goals while helping others achieve theirs.</p>
             </CCaption>
           </CItem>
         </Carousel>
