@@ -8,7 +8,6 @@ const handleError = (err) => {
 }
 
 const setUid = (req) => {
-  console.log(req.session)
   if (req.user && req.user._id) {
     return req.user._id;
   } else {

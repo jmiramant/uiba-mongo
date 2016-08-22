@@ -5,6 +5,7 @@ import * as types from 'types';
 describe('Users reducer', () => {
   const initialState = {
     isLogin: true,
+    currentUser: [],
     message: '',
     isWaiting: false,
     authenticated: false
