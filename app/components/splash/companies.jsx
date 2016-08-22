@@ -24,7 +24,7 @@ export default class SplashCompanies extends React.Component {
   render() {
     return (
       <div>
-        <h1 className={cx('spalsh--section-title')}>Companies and Organizations  <hr className={cx('section--title-underline', 'section--title-underline-dark')}/> </h1>
+        <h1 className={cx('spalsh--section-title')}>Companies and Organizations  <hr className={cx('section--title-underline', 'section--title-underline-dark') + ' hidden-xs'}/> </h1>
         <p className={cx('companies--sub-text')}>In the 21st-century organization, employees own most of the assets because they are most of the assets. Uiba uses math, data science, and machine learning to forge this wisdom into a virtuous circle for our clients by:</p>
 
         <Waypoint onEnter={this.handleWaypointEnter.bind(this)}/>

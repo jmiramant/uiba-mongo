@@ -81,3 +81,5 @@
     padding: 10px 0 0;
   }
 }
+
+@apply --splashTitleMedia;
