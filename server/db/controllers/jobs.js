@@ -7,11 +7,21 @@ const handleError = (err) => {
   console.log(err)
 }
 
+const setUid = (req) => {
+  console.log(req.session)
+  if (req.user && req.user._id) {
+    return req.user._id;
+  } else {
+    return req.session.passport.user;
+  }
+}
+
 /**
  * List
  */
 export function me(req, res) {
-  Job.find({"user_id": mongoose.Types.ObjectId(req.user._id)}).exec((err, jobs) => {
+  var uid = setUid(req);
+  Job.find({"user_id": mongoose.Types.ObjectId(uid)}).exec((err, jobs) => {
     if (err) {
       console.log('Error in "jobs/me" query');
       return res.status(500).send('Something went wrong getting the data');
@@ -25,7 +35,8 @@ export function me(req, res) {
  * Get
  */
 export function get(req, res) {
-  Job.find({"user_id": mongoose.Types.ObjectId(req.user._id)}).exec((err, jobs) => {
+  var uid = setUid(req);
+  Job.find({"user_id": mongoose.Types.ObjectId(uid)}).exec((err, jobs) => {
     if (err) {
       console.log('Error in "jobs/me" query');
       return res.status(500).send('Something went wrong getting the data');

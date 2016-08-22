@@ -14,7 +14,6 @@ import styles from 'css/components/message';
 const cx = classNames.bind(styles);
 
 class Profile extends Component {
-  
   static need = [  // eslint-disable-line
     fetchCurrentProfile,
     fetchJobs,
