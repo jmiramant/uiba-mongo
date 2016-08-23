@@ -25,3 +25,13 @@ npm test:watch
 ```
 
 Unit tests for async (redux) actions, reducers, and stateless components with [enzyme](http://airbnb.io/enzyme).
+
+## Environment
+
+We are using heroku for our live staging and production instances; 
+
+Staging: [cryptic-temple-34724](https://cryptic-temple-34724.herokuapp.com)
+Production: [uiba-production](https://uiba-production.herokuapp.com)
+
+Master branch deploys to production. Staging deploys to staging. 
+
