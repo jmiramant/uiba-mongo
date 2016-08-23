@@ -58,12 +58,6 @@ const Navigation = ({ user, logOut }) => {
             <div className={cx('nav--items-right') + ' pull-right hidden-xs'}>
               { user.authenticated ? ( <Link className={cx('item')} to="/profile">Profile</Link> ) : (<span />)}
               <Link to="/about" className={cx('item')} activeClassName={cx('active')}>About</Link>
-              { user.authenticated ? (
-                <Link onClick={logOut}
-                  className={cx('item')} to="/">Logout</Link>
-              ) : (
-                <Link className={cx('item')} to="/login">Get Started</Link>
-              )}
             </div>
 
             <NavDropdown title='' className={cx('navbar--resp-nav') + ' hidden-sm pull-right hidden-md hidden-lg'} id="responsive-nav-dropdown">
@@ -83,19 +77,6 @@ const Navigation = ({ user, logOut }) => {
                 </MenuItem>
               </LinkContainer>
 
-              { user.authenticated ? (
-                <LinkContainer onClick={logOut} to="/#">
-                  <MenuItem>
-                    Logout
-                  </MenuItem>
-                </LinkContainer>
-              ) : (
-                <LinkContainer to="/login">
-                  <MenuItem>
-                    Get Started
-                  </MenuItem>
-                </LinkContainer>
-              )}
             </NavDropdown>
             <style>{caretStyle}</style>
           </nav>
