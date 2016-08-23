@@ -8,8 +8,12 @@ import moment from 'moment';
 const cx = classNames.bind(styles);
 const intialSchoolState = {
     name: '', 
+    major: [],
+    minor: [],
+    degree: [],
     startDate: '',
     endDate: '',
+    current: false
   }
 
 export default class SchoolItem extends React.Component {
@@ -138,6 +142,8 @@ export default class SchoolItem extends React.Component {
       return (
         <div className={cx('schoolItem--container')} onDoubleClick={this.toggleEdit.bind(this)}>
           <div onClick={this.toggleEdit.bind(this)} className={cx('schoolItem--edit')}></div>
+          <p className={cx("jobItem--header")}><span className={ cx('jobItem--name')}>{school.name}</span></p>
+          <p className={cx("schoolItem--date")}>{school.degree.map( (d) => { return d })} - {school.major.map( (d) => { return d })}</p>
           <p className={cx("schoolItem--date")}>{moment(school.startDate).format('MMM, YYYY')} - { current ? ( 'Current' ) : ( moment(school.endDate).format('MMM, YYYY')) } </p>
           <div className={cx('schoolItem--spacer')}></div>
         </div>

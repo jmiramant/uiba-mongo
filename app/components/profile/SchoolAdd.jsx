@@ -8,6 +8,9 @@ import _ from 'lodash';
 const cx = classNames.bind(styles);
 const intialSchoolState = {
     name: '', 
+    major: [],
+    minor: [],
+    degree: [],
     startDate: '',
     endDate: '',
     current: false
