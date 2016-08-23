@@ -4,6 +4,7 @@ import topic from 'reducers/topic';
 import profile from 'reducers/profile';
 import message from 'reducers/message';
 import job from 'reducers/job';
+import school from 'reducers/school';
 import { routerReducer as routing } from 'react-router-redux';
 
 // Combine reducers with routeReducer which keeps track of
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   message,
   job,
   routing,
-  profile
+  profile,
+  school
 });
 
 export default rootReducer;

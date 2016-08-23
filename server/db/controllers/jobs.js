@@ -8,26 +8,15 @@ const handleError = (err) => {
 }
 
 const setUid = (req) => {
-  if (req.user && req.user._id) {
+
+  if (req.params && req.params.id) {
+    return req.params.id 
+  } else if (req.user && req.user._id) {
     return req.user._id;
   } else {
     return req.session.passport.user;
   }
-}
 
-/**
- * List
- */
-export function me(req, res) {
-  var uid = setUid(req);
-  Job.find({"user_id": mongoose.Types.ObjectId(uid)}).exec((err, jobs) => {
-    if (err) {
-      console.log('Error in "jobs/me" query');
-      return res.status(500).send('Something went wrong getting the data');
-    }
-
-    return res.status(200).json(jobs);
-  });
 }
 
 /**
@@ -35,12 +24,13 @@ export function me(req, res) {
  */
 export function get(req, res) {
   var uid = setUid(req);
+
   Job.find({"user_id": mongoose.Types.ObjectId(uid)}).exec((err, jobs) => {
     if (err) {
       console.log('Error in "jobs/me" query');
       return res.status(500).send('Something went wrong getting the data');
     }
-    return res.json(jobs);
+    return res.status(200).json(jobs);
   });
 }
 
@@ -147,7 +137,6 @@ export function remove (req, res) {
 
 
 export default {
-  me,
   get,
   create,
   update,

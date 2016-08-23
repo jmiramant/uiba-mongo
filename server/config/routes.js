@@ -8,6 +8,7 @@ import { controllers, passport as passportConfig } from '../db';
 const usersController = controllers && controllers.users;
 const profilesController = controllers && controllers.profiles;
 const jobsController = controllers && controllers.jobs;
+const schoolsController = controllers && controllers.schools;
 
 export default (app) => {
 
@@ -18,6 +19,24 @@ export default (app) => {
     app.post('/logout', usersController.logout);
   } else {
     console.warn(unsupportedMessage('users routes'));
+  }
+
+  if (jobsController) {
+    app.get('/jobs', jobsController.get);
+    app.post('/jobs', jobsController.create);
+    app.put('/jobs', jobsController.update);
+    app.delete('/jobs/:id', jobsController.remove);
+  } else {
+    console.warn(unsupportedMessage('job routes'));
+  }
+
+  if (schoolsController) {
+    app.get('/schools', schoolsController.get);
+    app.post('/schools', schoolsController.create);
+    app.put('/schools', schoolsController.update);
+    app.delete('/schools/:id', schoolsController.remove);
+  } else {
+    console.warn(unsupportedMessage('schools routes'));
   }
 
   if (passportConfig && passportConfig.google) {
@@ -64,11 +83,5 @@ export default (app) => {
   }
   
   app.get('/profile/me', profilesController.me);
-
-  //Jobs Controller
-  app.get('/jobs/me', jobsController.me);
-  app.post('/jobs', jobsController.create);
-  app.put('/jobs', jobsController.update);
-  app.delete('/jobs/:id', jobsController.remove);
 
 };

@@ -66,3 +66,31 @@ db.companies.find().snapshot().forEach(function (company) {
 })
 
 ```
+
+##### Schools
+
+
+```
+var schools = [{name: 'Dev Bootcamp', start: new Date(2014, 6, 20), end: new Date(2015, 1, 20)},
+               {name: 'Duke University', start: new Date(2012, 1, 20), end: new Date(2013, 1, 20)}]
+
+var user = db.users.findOne();
+
+schools.forEach(function (school) {
+    
+  db.schools.insertOne(
+    {
+      user_id: user._id,
+      name: school.name,
+      startDate: school.start,
+      endDate: school.end,
+      current: false,
+      major: ['Computer Science'],
+      minor: ['Theater'],
+      degree: ['Baccalaureate']
+    }
+  )
+
+});
+
+```

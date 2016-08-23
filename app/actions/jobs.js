@@ -5,7 +5,7 @@ import * as types from 'types';
 
 polyfill();
 
-function makeJobsRequest(method, data, api = '/jobs/me') {
+function makeJobsRequest(method, data, api = '/jobs') {
   return request[method](api, data);
 }
 
