@@ -57,7 +57,7 @@ export default class SplashWorks extends React.Component {
           <div className={cx('works--item-container')}>
             <div className={cx('works--icon-container') + ' col-md-3 hidden-sm hidden-xs'}>
               <div className={cx('works--border', 'blue')}>
-                <div className={cx('works--icon-globe')}></div>
+                <div className={cx('works--icon-dna')}></div>
               </div>
             </div>
             <div className={cx('works--text-container') + ' col-md-9'}>
@@ -68,8 +68,8 @@ export default class SplashWorks extends React.Component {
 
           <div className={cx('works--item-container')}>
             <div className={cx('works--icon-container') + ' col-md-3 hidden-sm hidden-xs'}>
-              <div className={cx('works--border', 'blue')}>
-                <div className={cx('works--icon-globe')}></div>
+              <div className={cx('works--border', 'red')}>
+                <div className={cx('works--icon-jigsaw')}></div>
               </div>
             </div>
             <div className={cx('works--text-container') + ' col-md-9'}>

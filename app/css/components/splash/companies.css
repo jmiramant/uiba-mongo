@@ -25,7 +25,7 @@
   color: var(--colorDarkGray);
   min-height: 350px;
   border-radius: 7px;
-  background-color: #f9fafb;
+  background-color: color(#f9fafb blackness(+8%));
   border: 3px solid;
   box-shadow: 0px 0px 15px #677480;
 }

@@ -53,10 +53,16 @@
   background-image: url('images/splash/Windows-Search-Coding.svg'); 
 }
 
-.works--icon-globe {
+.works--icon-dna {
   @apply --worksIconImgBase;
-  background-image: url('images/splash/Communication-Globe.svg'); 
+  background-image: url('images/splash/Dna.svg'); 
 }
+
+.works--icon-jigsaw {
+  @apply --worksIconImgBase;
+  background-image: url('images/splash/Jigsaw.svg'); 
+}
+
 .works--text-container {
   vertical-align: top;
   text-align: left;

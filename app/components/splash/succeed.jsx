@@ -5,8 +5,9 @@ import classNames from 'classnames/bind';
 import Carousel , { Item as CItem, Caption as CCaption } from 'react-bootstrap/lib/Carousel';
 
 import imgDialed from 'images/splash/Settings-2.svg';
-import imgRadar from 'images/splash/Radar.svg';
+import imgGrid from 'images/splash/3D-Grid.svg';
 import imgMap from 'images/splash/Map.svg';
+import imgYing from 'images/splash/Yin-Yang.svg';
 
 import styles from 'css/components/splash/succeed';
 const cx = classNames.bind(styles);
@@ -44,13 +45,13 @@ export default class SplashSucceed extends React.Component {
           <CItem className={cx('carousel--item')}>
             <div className={cx('carousel--img-border', 'carousel--img-border-yellow')}><img className={cx('spalsh--carousel-img')} width={125} height={125} alt="125X125" src={imgDialed}/></div>
             <CCaption className={cx('carousel--caption')}>
-              <h3 className={cx('carousel--item-title')}>1. Introduce Yourself</h3>
+              <h3 className={cx('carousel--item-title')}>1. Let's Get to Know You</h3>
               <p className={cx('carousel--item-sub')}>First, let's make sure we understand your experience, knowledge, abilities - everything that makes you so unique and amazing!</p>
             <Waypoint onEnter={this.handleWaypointEnter.bind(this)}/>
             </CCaption>
           </CItem>
           <CItem className={cx('carousel--item')}>
-            <div className={cx('carousel--img-border', 'carousel--img-border-red')}><img className={cx('spalsh--carousel-img')} width={125} height={125} alt="125X125" src={imgRadar} /></div>
+            <div className={cx('carousel--img-border', 'carousel--img-border-red')}><img className={cx('spalsh--carousel-img')} width={125} height={125} alt="125X125" src={imgGrid} /></div>
             <CCaption className={cx('carousel--caption')}>
               <h3 className={cx('carousel--item-title')}>2. Let's Understand Your Capabilities</h3>
               <p className={cx('carousel--item-sub')}>Next, let's use that information to assess the full extent of your capabilities.</p>
@@ -64,7 +65,7 @@ export default class SplashSucceed extends React.Component {
             </CCaption>
           </CItem>
           <CItem className={cx('carousel--item')}>
-            <div className={cx('carousel--img-border', 'carousel--img-border-blue')}><img className={cx('spalsh--carousel-img')} width={125} height={125} alt="125X125" src={imgMap} /></div>
+            <div className={cx('carousel--img-border', 'carousel--img-border-red')}><img className={cx('spalsh--carousel-img')} width={125} height={125} alt="125X125" src={imgYing} /></div>
             <CCaption className={cx('carousel--caption')}>
               <h3 className={cx('carousel--item-title')}>4. Let's Journey Together</h3>
               <p className={cx('carousel--item-sub')}>Now join a community that shares the wisdom and insight of experience to help you achieve your goals while helping others achieve theirs.</p>
