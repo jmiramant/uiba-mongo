@@ -1,6 +1,6 @@
 @import '../../common/colors';
 @import '../../common/button';
-@import '../../common/card';
+@import '../profile';
 
 .button {
   @apply --drkBlueButton;
@@ -11,9 +11,5 @@
 
 
 .jobList--container {
-  @apply --card;
-  background: #fff;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  padding: 30px;
+  @apply --profile--container;
 }

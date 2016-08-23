@@ -46,14 +46,18 @@ export default class SchoolAdd extends React.Component {
   }
   
   validate() {
-    const validationResp = validateSchoolFormHelper(_.clone(intialSchoolState), this.state);
-    this.setState({validate: validationResp.error});
-    return containsErrors(validationResp.error)
+    // const validationResp = validateJobFormHelper(_.clone(intialSchoolState), this.state);
+    // this.setState({validate: validationResp.error});
+    //return containsErrors(validationResp.error);
+    return false;
+  }
+
+  parseMultipleItemsByComma = () => {
+
   }
 
   handleChange = field => e => {
     let value = e.target.value;
-
     if (e.target.type === 'checkbox') {
       value = this.state.current
       this.setState({
@@ -64,6 +68,11 @@ export default class SchoolAdd extends React.Component {
         }
       })
     } else {
+      
+      if (['major', 'minor', 'degree'].includes(field)) {
+        value = value.split(',');
+      }
+
       this.setState({
           school: {
             ...this.state.school,
@@ -113,10 +122,24 @@ export default class SchoolAdd extends React.Component {
               type="checkbox"
               checked={current}
               onChange={this.handleChange('current')} />
-
-            <div className="form-group">
-              <label htmlFor="description">Description</label>
-              <textarea placeholder={ validate.description } onChange={this.handleChange('description')}  className="form-control" id="description" rows="3"></textarea>
+            
+            <div className="form-group row">
+              <label htmlFor="major" className="col-xs-2 col-form-label">Major</label>
+              <div className="col-xs-10">
+                <input placeholder={ validate.major } onChange={this.handleChange('major')} className="form-control" type="text" id="major" />
+              </div>
+            </div>
+            <div className="form-group row">
+              <label htmlFor="minor" className="col-xs-2 col-form-label">Minor</label>
+              <div className="col-xs-10">
+                <input placeholder={ validate.minor } onChange={this.handleChange('minor')} className="form-control" type="text" id="minor" />
+              </div>
+            </div>
+            <div className="form-group row">
+              <label htmlFor="degree" className="col-xs-2 col-form-label">Degree</label>
+              <div className="col-xs-10">
+                <input placeholder={ validate.degree } onChange={this.handleChange('degree')} className="form-control" type="text" id="degree" />
+              </div>
             </div>
 
             <button

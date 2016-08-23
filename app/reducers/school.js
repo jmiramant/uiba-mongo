@@ -42,6 +42,19 @@ const schools = (
   }
 };
 
+// const message = (
+//   state = '',
+//   action
+// ) => {
+//   switch (action.type) {
+//     case types.DELETE_SCHOOL_SUCCESS:
+//     case types.DELETE_SCHOOL_FAILURE:
+//       return action.message;
+//     default:
+//       return state;
+//   }
+// };
+
 const schoolReducer = combineReducers({
   schools,
 });

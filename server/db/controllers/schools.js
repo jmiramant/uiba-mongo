@@ -67,14 +67,17 @@ export function update(req, res) {
   return School.findOne({"_id": req.body._id}).exec((err, school) => {
     
     school.name = req.body.name;
-    // school.major = [req.body.major];
-    // school.minor: [req.body.minor];
+    school.current = req.body.current;
+
+    if (req.body.major) school.major = req.body.major;
+    if (req.body.minor) school.minor = req.body.minor;
+    if (req.body.degree) school.degree = req.body.degree;
     if (req.body.startDate) school.startDate = new Date(req.body.startDate);
     if (req.body.endDate) school.endDate = new Date(req.body.endDate);
 
     school.save( err => {
       if (err) return handleError(err);
-      return res.json(job);
+      return res.json(school);
     });
 
   })
@@ -82,8 +85,8 @@ export function update(req, res) {
 
 export function remove (req, res) {
     School.findByIdAndRemove(req.params.id, function (err,offer){
-      if(err) { throw err; }
-      return res.status(200).json({id: req.params.id, message: 'This educational institute has been deleted.'})// ...
+      if(err) { return res.status(401).json({ message: err }); }
+      return res.status(200).json({id: req.params.id, message: 'This institution has been deleted.'})
     })
 }
 

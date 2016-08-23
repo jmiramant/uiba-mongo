@@ -71,8 +71,10 @@ db.companies.find().snapshot().forEach(function (company) {
 
 
 ```
-var schools = [{name: 'Dev Bootcamp', start: new Date(2014, 6, 20), end: new Date(2015, 1, 20)},
-               {name: 'Duke University', start: new Date(2012, 1, 20), end: new Date(2013, 1, 20)}]
+var schools = [
+              {name: 'Dev Bootcamp', start: new Date(2014, 6, 20), end: new Date(2015, 1, 20), major: ['Computer Science', 'Philosophy'], minor: ['Theater'], degree: ['Baccalaureate', 'Masters']},
+               {name: 'Duke University', start: new Date(2012, 1, 20), end: new Date(2013, 1, 20), major: ['Art History'], minor: [], degree: ['Baccalaureate']}
+               ]
 
 var user = db.users.findOne();
 
@@ -85,9 +87,9 @@ schools.forEach(function (school) {
       startDate: school.start,
       endDate: school.end,
       current: false,
-      major: ['Computer Science'],
-      minor: ['Theater'],
-      degree: ['Baccalaureate']
+      major: school.major,
+      minor: school.minor,
+      degree: school.degree
     }
   )
 

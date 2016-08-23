@@ -42,15 +42,19 @@ class Profile extends Component {
   }
 
   saveSchool (data) {
-    this.props.createJob(data)()
+    this.props.createSchool(data)()
   }
 
   onSchoolDelete (job) {
-    this.props.deleteJob(job)()
+    this.props.deleteSchool(job)()
   }
 
-  saveEdit (data) {
+  saveJobEdit (data) {
     this.props.updateJob(data)()
+  }
+
+  saveSchoolEdit (data) {
+    this.props.updateSchool(data)()
   }
 
   render() {
@@ -62,13 +66,13 @@ class Profile extends Component {
       <div className={cx('about') + ' container'}>
         <Jobs 
           jobs={jobs} 
-          onEditSave={this.saveEdit.bind(this)} 
+          onEditSave={this.saveJobEdit.bind(this)} 
           onJobSave={this.saveJob.bind(this)} 
           onJobDelete={this.onJobDelete.bind(this)} 
         />
         <Schools 
           schools={schools} 
-          onEditSave={this.saveEdit.bind(this)} 
+          onEditSave={this.saveSchoolEdit.bind(this)} 
           onSchoolSave={this.saveSchool.bind(this)} 
           onSchoolDelete={this.onSchoolDelete.bind(this)} 
         />

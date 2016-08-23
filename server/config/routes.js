@@ -34,7 +34,7 @@ export default (app) => {
     app.get('/schools', schoolsController.get);
     app.post('/schools', schoolsController.create);
     app.put('/schools', schoolsController.update);
-    app.delete('/schools/:id', schoolsController.remove);
+    app.delete('/school/:id', schoolsController.remove);
   } else {
     console.warn(unsupportedMessage('schools routes'));
   }

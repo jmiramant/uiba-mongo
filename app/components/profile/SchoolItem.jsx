@@ -45,7 +45,7 @@ export default class SchoolItem extends React.Component {
   }
 
   saveEdit () {
-    if (!this.validate()) {
+    if (!this.isDataValid()) {
       this.props.saveSchoolEdit(this.state.school)
       this.toggleEdit()
     }
@@ -55,10 +55,11 @@ export default class SchoolItem extends React.Component {
     this.props.handleDelete(this.state.school)
   }
 
-  validate() {
-    const validationResp = validateSchoolFormHelper(_.clone(intialSchoolState), this.state);
-    this.setState({validate: validationResp.error});
-    return containsErrors(validationResp.error)
+  isDataValid() {
+    // const validationResp = validateSchoolFormHelper(_.clone(intialSchoolState), this.state);
+    // this.setState({validate: validationResp.error});
+    // return containsErrors(validationResp.error)
+    return false
   }
   
   handleChange = field => e => {
@@ -73,6 +74,11 @@ export default class SchoolItem extends React.Component {
         }
       })
     } else {
+
+      if (['major', 'minor', 'degree'].includes(field)) {
+        value = value.split(',');
+      }
+
       this.setState({
           school: {
             ...this.state.school,
@@ -95,6 +101,14 @@ export default class SchoolItem extends React.Component {
       return v === '';
     })
 
+    const addComma = (v, i, ct) => {
+      if ((i+1) === ct.length) {
+        return v;
+      } else {
+        return v + ', ';
+      }
+    }
+
     if (this.state.edit) {
 
       return (
@@ -107,7 +121,6 @@ export default class SchoolItem extends React.Component {
               onChange={this.handleChange('name')}
               className={ cx('schoolEdit--name')}
               id="name"  />
-              | 
           </div>
           <input 
             type="date"
@@ -128,6 +141,27 @@ export default class SchoolItem extends React.Component {
             type="checkbox"
             checked={current}
             onChange={this.handleChange('current')} />
+
+          <input 
+            type='text'
+            value={this.state.school.major}
+            onChange={this.handleChange('major')}
+            className={ cx('schoolEdit--name')}
+            id="major"  />
+
+          <input 
+            type='text'
+            value={this.state.school.minor}
+            onChange={this.handleChange('minor')}
+            className={ cx('schoolEdit--name')}
+            id="minor"  />
+          <input 
+            type='text'
+            value={this.state.school.degree}
+            onChange={this.handleChange('degree')}
+            className={ cx('schoolEdit--name')}
+            id="degree"  />
+
           <div className={ cx('schoolEdit--controls') }>
             <div className={ cx('schoolEdit--buttons') + ' pull-left'} onClick={this.toggleEdit.bind(this)}>Close</div>
             <div className={ cx('schoolEdit--buttons', 'schoolEdit--button-delete')} onClick={this.handleDelete.bind(this)}>Delete</div>
@@ -143,7 +177,25 @@ export default class SchoolItem extends React.Component {
         <div className={cx('schoolItem--container')} onDoubleClick={this.toggleEdit.bind(this)}>
           <div onClick={this.toggleEdit.bind(this)} className={cx('schoolItem--edit')}></div>
           <p className={cx("jobItem--header")}><span className={ cx('jobItem--name')}>{school.name}</span></p>
-          <p className={cx("schoolItem--date")}>{ school.degree.map( (d) => { return d }) } - {school.major.map( (d) => { return d })}</p>
+          
+          { school.degree.length ? (
+          <div>
+            <h4>Degree{school.degree.length > 1 ? "s" : ''}:</h4>
+            <p className={cx("schoolItem--date")}>{ school.degree.map( (d, i) => { return addComma(d, i, school.degree) }) } </p>
+          </div>
+          ) : (<span/>)}
+          { school.major.length ? (
+          <div>
+            <h4>Major{school.major.length > 1 ? "s" : ''}:</h4>
+            <p className={cx("schoolItem--date")}>{ school.major.map( (d, i) => { return addComma(d, i, school.major)  }) } </p>
+          </div>
+          ) : (<span/>)}
+          { school.minor.length ? (
+            <div>
+              <h4>Minor{school.minor.length > 1 ? "s" : ''}:</h4>
+              <p className={cx("schoolItem--date")}>{ school.minor.map( (d, i) => { return addComma(d, i, school.minor)  }) } </p>
+            </div>
+          ) : (<span/>)}
           <p className={cx("schoolItem--date")}>{moment(school.startDate).format('MMM, YYYY')} - { current ? ( 'Current' ) : ( moment(school.endDate).format('MMM, YYYY')) } </p>
           <div className={cx('schoolItem--spacer')}></div>
         </div>
