@@ -16,7 +16,7 @@ export default class SplashTogether extends React.Component {
   handleWaypointEnter() {
     var elem = ReactDom.findDOMNode(this);
     window.requestAnimationFrame(function() {
-      elem.style.transition = "opacity 1500ms";
+      elem.style.transition = "opacity 800ms";
       elem.style.opacity = 1;
     });
   }
