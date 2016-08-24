@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames/bind';
+import Select from 'react-select';
 import { containsErrors, validateJobFormHelper } from '../helpers/jobFormValidation';
 import styles from 'css/components/profile/jobItem';
 import moment from 'moment';
@@ -15,6 +16,20 @@ const intialSchoolState = {
     endDate: '',
     current: false
   }
+const degrees = [
+  {label: 'Associate',value: 'Associate'},
+  {label: 'Bachelor',value: 'Bachelor'},
+  {label: 'Graduate',value: 'Graduate'},
+  {label: 'Master',value: 'Master'},
+  {label: 'Doctorate',value: 'Doctorate'},
+  {label: 'First Professional Certificate',value: 'First Professional Certificate'},
+  {label: 'Postbaccalaureate Certificate',value: 'Postbaccalaureate Certificate'},
+  {label: "Post Master's Certificate", value: "Post Master's Certificate"},
+  {label: 'Certificate',value: 'Certificate'},
+  {label: 'Coursework',value: 'Coursework'},
+  {label: 'High School Diploma',value: 'High School Diploma'},
+  {label: 'Other',value: 'other'}
+];  
 
 export default class SchoolAdd extends React.Component {
 
@@ -52,13 +67,16 @@ export default class SchoolAdd extends React.Component {
     return false;
   }
 
-  parseMultipleItemsByComma = () => {
-
-  }
-
   handleChange = field => e => {
-    let value = e.target.value;
-    if (e.target.type === 'checkbox') {
+    let value;
+
+    if (e.value) {
+      value  = e.value[0];
+    } else {
+      value = e.target.value;
+    }
+   
+    if (e.target && e.target.type === 'checkbox') {
       value = this.state.current
       this.setState({
         current: !this.state.current,
@@ -138,7 +156,13 @@ export default class SchoolAdd extends React.Component {
             <div className="form-group row">
               <label htmlFor="degree" className="col-xs-2 col-form-label">Degree</label>
               <div className="col-xs-10">
-                <input placeholder={ validate.degree } onChange={this.handleChange('degree')} className="form-control" type="text" id="degree" />
+
+                <Select
+                    name="degree"
+                    value="one"
+                    options={degrees}
+                    onChange={this.handleChange('degree')}
+                />
               </div>
             </div>
 
