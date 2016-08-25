@@ -1,80 +1,51 @@
 import React, { Component, PropTypes } from 'react';
-import { fetchCurrentProfile } from 'actions/profiles';
-
-import { fetchJobs, 
-         createJob,
-         updateJob,
-         deleteJob } from 'actions/jobs';
-
-import { fetchSchools, 
-         createSchool,
-         updateSchool,
-         deleteSchool } from 'actions/schools';
-
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
+import * as jobsActionCreators from 'actions/jobs';
+import * as schoolsActionCreators from 'actions/schools';
+import * as profileActionCreators from 'actions/profiles';
 
 import Jobs from 'components/profile/JobList';
 import Schools from 'components/profile/SchoolList';
 import UserCard from 'components/profile/UserCard';
 
 import classNames from 'classnames/bind';
-import styles from 'css/components/message';
 
 const cx = classNames.bind(styles);
 
 class Profile extends Component {
   static need = [  // eslint-disable-line
-    fetchCurrentProfile,
-    fetchSchools,
-    fetchJobs,
+    profileActionCreators.fetchCurrentProfile,
+    schoolsActionCreators.fetchSchools,
+    jobsActionCreators.fetchJobs,
   ]
 
   constructor(props) {
     super(props)
   }
 
-  saveJob (data) {
-    this.props.createJob(data)()
-  }
-
-  onJobDelete (job) {
-    this.props.deleteJob(job)()
-  }
-
-  saveSchool (data) {
-    this.props.createSchool(data)()
-  }
-
-  onSchoolDelete (job) {
-    this.props.deleteSchool(job)()
-  }
-
-  saveJobEdit (data) {
-    this.props.updateJob(data)()
-  }
-
-  saveSchoolEdit (data) {
-    this.props.updateSchool(data)()
-  }
-
   render() {
     const { jobs,
             profile,
-            schools
+            schools,
+            jobActions,
+            schoolActions,
           } = this.props;
+
     return (
       <div className={cx('about') + ' container'}>
         <Jobs 
           jobs={jobs} 
-          onEditSave={this.saveJobEdit.bind(this)} 
-          onJobSave={this.saveJob.bind(this)} 
-          onJobDelete={this.onJobDelete.bind(this)} 
+          onEditSave={jobActions.updateJob} 
+          onJobSave={jobActions.createJob} 
+          onJobDelete={jobActions.deleteJob} 
         />
         <Schools 
           schools={schools} 
-          onEditSave={this.saveSchoolEdit.bind(this)} 
-          onSchoolSave={this.saveSchool.bind(this)} 
-          onSchoolDelete={this.onSchoolDelete.bind(this)} 
+          onEditSave={schoolActions.updateSchool} 
+          onSchoolSave={schoolActions.createSchool} 
+          onSchoolDelete={schoolActions.deleteSchool} 
         />
         <UserCard profile={profile} />
       </div>
@@ -86,21 +57,18 @@ function mapStateToProps(state) {
   return {
     schools: state.school.schools,
     jobs: state.job.jobs,
-    profile: state.profile.currentProfile,
+    profile: state.profile.currentProfile
   };
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    createJob: createJob.bind(dispatch),
-    deleteJob: deleteJob.bind(dispatch),
-    updateJob: updateJob.bind(dispatch),
-    createSchool: createSchool.bind(dispatch),
-    deleteSchool: deleteSchool.bind(dispatch),
-    updateSchool: updateSchool.bind(dispatch),
-    fetchSchools: fetchSchools,
-    fetchCurrentProfile: fetchCurrentProfile
+    schoolActions: bindActionCreators(schoolsActionCreators, dispatch),
+    jobActions: bindActionCreators(jobsActionCreators, dispatch),
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Profile);

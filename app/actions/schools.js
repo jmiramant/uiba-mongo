@@ -59,9 +59,7 @@ export function updateSchoolFailure(data) {
 }
 
 export function createSchool(schoolData) {
-  let dispatch = this;
-
-  return () => {
+  return (dispatch) => {
     dispatch(createSchoolRequest(schoolData));
     
     return makeSchoolsRequest('post', schoolData)
@@ -77,8 +75,7 @@ export function createSchool(schoolData) {
 }
 
 export function updateSchool(schoolData) {
-  let dispatch = this;
-  return () => {
+  return (dispatch) => {
 
     dispatch(updateSchoolRequest(schoolData));
     
@@ -117,8 +114,7 @@ export function deleteSchoolFailure (data) {
 }
 
 export function deleteSchool(school) {
-  let dispatch = this;
-  return () => {
+  return (dispatch) => {
 
     dispatch(deleteSchoolRequest(school));
 

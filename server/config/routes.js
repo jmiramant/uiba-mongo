@@ -10,6 +10,7 @@ const profilesController = controllers && controllers.profiles;
 const jobsController = controllers && controllers.jobs;
 const schoolsController = controllers && controllers.schools;
 const schoolNamesController = controllers && controllers.schoolNames;
+const skillsController = controllers && controllers.skills;
 
 export default (app) => {
 
@@ -39,12 +40,22 @@ export default (app) => {
   } else {
     console.warn(unsupportedMessage('schools routes'));
   }
-  
+
+  if (skillsController) {
+    app.get('/schools', schoolsController.get);
+    app.post('/schools', schoolsController.create);
+    app.put('/schools', schoolsController.update);
+    app.delete('/school/:id', schoolsController.remove);
+  } else {
+    console.warn(unsupportedMessage('skills routes'));
+  }
+
   if (schoolNamesController) {
     app.get('/schoolNames/search', schoolNamesController.search);
   } else {
     console.warn(unsupportedMessage('schoolNames routes'));
   }
+
 
   if (passportConfig && passportConfig.google) {
     // google auth

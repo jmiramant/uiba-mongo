@@ -59,9 +59,7 @@ export function updateJobFailure(data) {
 }
 
 export function createJob(jobData) {
-  let dispatch = this;
-
-  return () => {
+  return (dispatch) => {
     dispatch(createJobRequest(jobData));
     
     return makeJobsRequest('post', jobData, '/jobs')
@@ -77,8 +75,7 @@ export function createJob(jobData) {
 }
 
 export function updateJob(jobData) {
-  let dispatch = this;
-  return () => {
+  return (dispatch) => {
 
     dispatch(updateJobRequest(jobData));
     
@@ -117,8 +114,7 @@ export function deleteJobFailure (data) {
 }
 
 export function deleteJob(job) {
-  let dispatch = this;
-  return () => {
+  return (dispatch) => {
 
     dispatch(deleteJobRequest(job));
 
