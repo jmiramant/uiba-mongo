@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import update from 'react-addons-update'
 import classNames from 'classnames/bind';
 import styles from 'css/components/profile/jobItem';
+import SchoolNameTypeahead from '../../containers/Typeahead';
 import { containsErrors, validateJobFormHelper } from '../helpers/jobFormValidation';
 import moment from 'moment';
 
@@ -62,6 +63,15 @@ export default class SchoolItem extends React.Component {
     return false
   }
   
+  handleSchoolName = e => {
+    this.setState({
+        school: {
+          ...this.state.school,
+          name : e
+        }
+    });
+  }
+
   handleChange = field => e => {
     var value = e.target.value
     if (e.target.type === 'checkbox') {
@@ -115,12 +125,7 @@ export default class SchoolItem extends React.Component {
         <div className={cx('schoolItem--container')}>
           {errorMsgs}
           <div className={cx('schoolEdit--header')}>
-            <input 
-              type='text'
-              value={this.state.school.name}
-              onChange={this.handleChange('name')}
-              className={ cx('schoolEdit--name')}
-              id="name"  />
+            <SchoolNameTypeahead handleChange={this.handleSchoolName} />
           </div>
           <input 
             type="date"

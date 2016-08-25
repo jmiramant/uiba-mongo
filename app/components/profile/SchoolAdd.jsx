@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames/bind';
 import Select from 'react-select';
+import SchoolNameTypeahead from '../../containers/Typeahead';
 import { containsErrors, validateJobFormHelper } from '../helpers/jobFormValidation';
 import styles from 'css/components/profile/jobItem';
 import moment from 'moment';
@@ -67,6 +68,15 @@ export default class SchoolAdd extends React.Component {
     return false;
   }
 
+  handleSchoolName = e => {
+    this.setState({
+        school: {
+          ...this.state.school,
+          name : e
+        }
+    });
+  }
+
   handleChange = field => e => {
     let value;
 
@@ -113,7 +123,7 @@ export default class SchoolAdd extends React.Component {
             <div className="form-group row">
               <label htmlFor="name" className="col-xs-2 col-form-label">Name</label>
               <div className="col-xs-10">
-                <input placeholder={ validate.name } onChange={this.handleChange('name')} className="form-control" type="text" id="name" />
+                <SchoolNameTypeahead handleChange={this.handleSchoolName}/>
               </div>
             </div>
 

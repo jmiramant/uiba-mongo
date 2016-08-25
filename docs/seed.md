@@ -96,3 +96,21 @@ schools.forEach(function (school) {
 });
 
 ```
+
+#### School Names
+
+First [download the seed list](https://inventory.data.gov/dataset/032e19b4-5a90-41dc-83ff-6e4cd234f565/resource/38625c3d-5388-4c16-a30f-d105432553a4/download/postscndryunivsrvy2013dirinfo.csv)
+
+Then set the dir path in the line below:
+
+From Command Line: 
+
+```
+mongoimport -d uiba -c schoolnames --type csv --file ~/<DIR PATH>/postscndryunivsrvy2013dirinfo.csv --headerline
+
+From Database, run the next two commands.
+```
+db.schoolnames.update({}, { $unset: { UNITID: '', ADDR: '', CITY: '', STABBR: '', ZIP: '', FIPS: '', OBEREG: '', CHFNM: '', CHFTITLE: '', GENTELE: '', FAXTELE: '', EIN: '', OPEID: '', OPEFLAG: '', WEBADDR: '', ADMINURL: '', FAIDURL: '', APPLURL: '', NPRICURL: '', SECTOR: '', ICLEVEL: '', CONTROL: '', HLOFFER: '', UGOFFER: '', GROFFER: '', HDEGOFR1: '', DEGGRANT: '', HBCU: '', HOSPITAL: '', MEDICAL: '', TRIBAL: '', LOCALE: '', OPENPUBL: '', ACT: '', NEWID: '', DEATHYR: '', CLOSEDAT: '', CYACTIVE: '', POSTSEC: '', PSEFLAG: '', PSET4FLG: '', RPTMTH: '', IALIAS: '', INSTCAT: '', CCBASIC: '', CCIPUG: '', CCIPGRAD: '', CCUGPROF: '', CCENRPRF: '', CCSIZSET: '', CARNEGIE: '', LANDGRNT: '', INSTSIZE: '', CBSA: '', CBSATYPE: '', CSA: '', NECTA: '', F1SYSTYP: '', F1SYSNAM: '', F1SYSCOD: '', COUNTYCD: '', COUNTYNM: '', CNGDSTCD: '', LONGITUD: '', LATITUDE: '' } } , {multi: true});
+db.schoolnames.update({}, { $rename: { 'INSTNM': 'name' } } , {multi: true})
+
+```

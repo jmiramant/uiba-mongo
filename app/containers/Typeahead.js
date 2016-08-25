@@ -1,0 +1,37 @@
+import React, { Component, PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import TypeAhead from '../components/typeahead/typeahead';
+import * as actionCreators from 'actions/typeahead';
+
+@connect((state) => {
+  return {
+    results: state.typeahead.typeahead,
+    selection: state.typeahead.selection
+  }
+})
+
+class TypeaheadApp extends Component {
+  static propTypes = {
+    handleChange: PropTypes.func.isRequired,
+  };
+
+  constructor() {
+    super();
+  }
+
+  render() {
+    const actions = bindActionCreators(actionCreators, this.props.dispatch);
+    return (
+      <TypeAhead 
+        onChange={this.props.handleChange}
+        fetchResults={actions.fetchTypeaheadData} 
+        setSelection={actions.setTypeaheadData} 
+        results={this.props.results} 
+        selection={this.props.selection}
+      />
+    );
+  }
+}
+
+export default TypeaheadApp;

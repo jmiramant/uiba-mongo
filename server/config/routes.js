@@ -9,6 +9,7 @@ const usersController = controllers && controllers.users;
 const profilesController = controllers && controllers.profiles;
 const jobsController = controllers && controllers.jobs;
 const schoolsController = controllers && controllers.schools;
+const schoolNamesController = controllers && controllers.schoolNames;
 
 export default (app) => {
 
@@ -30,13 +31,19 @@ export default (app) => {
     console.warn(unsupportedMessage('job routes'));
   }
 
-  if (schoolsController) {
+  if (schoolNamesController) {
     app.get('/schools', schoolsController.get);
     app.post('/schools', schoolsController.create);
     app.put('/schools', schoolsController.update);
     app.delete('/school/:id', schoolsController.remove);
   } else {
     console.warn(unsupportedMessage('schools routes'));
+  }
+  
+  if (schoolNamesController) {
+    app.get('/schoolNames/search', schoolNamesController.search);
+  } else {
+    console.warn(unsupportedMessage('schoolNames routes'));
   }
 
   if (passportConfig && passportConfig.google) {
