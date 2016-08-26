@@ -59,9 +59,7 @@ export function updateSkillFailure(data) {
 }
 
 export function createSkill(skillData) {
-  let dispatch = this;
-
-  return () => {
+  return (dispatch) => {
     dispatch(createSkillRequest(skillData));
     
     return makeSkillsRequest('post', skillData)
@@ -77,8 +75,7 @@ export function createSkill(skillData) {
 }
 
 export function updateSkill(skillData) {
-  let dispatch = this;
-  return () => {
+  return (dispatch) => {
 
     dispatch(updateSkillRequest(skillData));
     
@@ -117,8 +114,7 @@ export function deleteSkillFailure (data) {
 }
 
 export function deleteSkill(skill) {
-  let dispatch = this;
-  return () => {
+  return (dispatch) => {
 
     dispatch(deleteSkillRequest(skill));
 

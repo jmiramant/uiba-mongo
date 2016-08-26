@@ -42,10 +42,10 @@ export default (app) => {
   }
 
   if (skillsController) {
-    app.get('/schools', schoolsController.get);
-    app.post('/schools', schoolsController.create);
-    app.put('/schools', schoolsController.update);
-    app.delete('/school/:id', schoolsController.remove);
+    app.get('/skills', skillsController.get);
+    app.post('/skills', skillsController.create);
+    app.put('/skills', skillsController.update);
+    app.delete('/skill/:id', skillsController.remove);
   } else {
     console.warn(unsupportedMessage('skills routes'));
   }

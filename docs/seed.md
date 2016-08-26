@@ -67,6 +67,36 @@ db.companies.find().snapshot().forEach(function (company) {
 
 ```
 
+##### Skills
+
+```
+var skills = [
+  {type: 'Node.JS', proficiency: 'expert', lengthOfUse: 5, frequency: 'daily'},
+  {type: 'Ruby', proficiency: 'expert', lengthOfUse: 1, frequency: 'daily'},
+  {type: 'WebGL', proficiency: 'learning', lengthOfUse: 0, frequency: 'weekly'},
+  {type: 'EMACS', proficiency: 'intermdiate', lengthOfUse: 5, frequency: 'monthly'},
+]
+
+var user = db.users.findOne();
+
+skills.forEach(function (skill) {
+    
+  db.skills.insertOne(
+    {
+      user_id: user._id,
+      type: skill.type,
+      proficiency: skill.proficiency,
+      lengthOfUse: skill.lengthOfUse,
+      frequency: skill.frequency
+    }
+  )
+
+});
+
+
+```
+
+
 ##### Schools
 
 

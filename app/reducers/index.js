@@ -6,6 +6,7 @@ import message from 'reducers/message';
 import job from 'reducers/job';
 import school from 'reducers/school';
 import typeahead from 'reducers/typeahead';
+import skill from 'reducers/skill';
 import { routerReducer as routing } from 'react-router-redux';
 
 // Combine reducers with routeReducer which keeps track of
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   routing,
   profile,
   school,
-  typeahead
+  typeahead,
+  skill
 });
 
 export default rootReducer;

@@ -2,7 +2,7 @@ import mongoose, { Schema } from 'mongoose';
 import Skill from '../models/skill';
 import moment from 'moment';
 
-const handleError = (err) => {
+const handleError = (res, err) => {
   console.log(err);
   return res.status(401).json({ message: err });
 }
@@ -40,15 +40,15 @@ export function get(req, res) {
 
 export function create(req, res) {
   
-  School.create({
+  Skill.create({
     user_id: req.user._id,
-    type: req.body.name,
+    type: req.body.type,
     proficiency: req.body.proficiency,
     lengthOfUse: req.body.lengthOfUse,
     frequency: req.body.frequency,
   }, function (err, skill) {
 
-    if (err) return handleError(err);
+    if (err) return handleError(res, err);
   
     return res.json(skill);
 
@@ -58,14 +58,14 @@ export function create(req, res) {
 export function update(req, res) {
   
   return Skill.findOne({"_id": req.body._id}).exec((err, skill) => {
-    
+
     skill.type = req.body.type;
     skill.proficiency = req.body.proficiency;
     skill.lengthOfUse = req.body.lengthOfUse;
     skill.frequency = req.body.frequency;
 
     skill.save( err => {
-      if (err) return handleError(err);
+      if (err) return handleError(res, err);
       return res.json(skill);
     });
 
