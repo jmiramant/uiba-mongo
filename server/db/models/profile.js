@@ -12,8 +12,7 @@ const ProfileSchema = new mongoose.Schema({
   gender: { type: String, default: '' },
   location: { type: String, default: '' },
   website: { type: String, default: '' },
-  picture: { type: String, default: '' }, 
-  jobs: [{type: mongoose.Schema.Types.ObjectId, ref: 'Job'}]
+  picture: { type: String, default: '' }
 }, {timestamps: true});
 
 ProfileSchema.statics = {};

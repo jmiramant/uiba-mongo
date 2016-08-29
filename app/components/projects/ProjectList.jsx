@@ -4,6 +4,7 @@ import styles from 'css/components/profile/schoolList';
 import moment from 'moment';
 import ProjectItem from 'components/projects/ProjectItem';
 import ProjectAdd from 'components/projects/ProjectAdd';
+import NullProfItem from 'components/ProfileNull';
 
 const cx = classNames.bind(styles);
 
@@ -11,7 +12,8 @@ export default class ProjectList extends React.Component {
   
   static propTypes = {
     projects: PropTypes.array,
-    onSave: PropTypes.func.isRequired
+    onSave: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -34,33 +36,42 @@ export default class ProjectList extends React.Component {
   }
 
   handleDelete = (project) => {
-    this.props.onProjectDelete(project);
+    this.props.onDelete(project);
   }
 
   render () {
-    let { projects } = this.props;
-    let lengthIndex = projects.length - 1;
+    const { projects } = this.props;
     const { addVisibile } = this.state;
 
-    return (
-      <div className={cx('projectList--container') + ' col-md-5'}>
+    const renderItems = (
+      <div>
         {projects.map((project, i) => {
             return (<ProjectItem 
                       key={project._id} 
                       saveEdit={this.handleEditSave} 
                       handleDelete={this.handleDelete}
-                      project={project} 
-                      isntLast={lengthIndex !== i} />);
+                      project={project} />);
         })}
-
-        { this.state.addVisibile ? (
-          <ProjectAdd addVisibile={addVisibile} onSave={this.handleSave} />
-        ) : (
-          <div>
-            <div onClick={this.showAddProject} className='pull-right'>Add Project</div>
-          </div>
-        ) }
       </div>
     )
+    
+    return ( <div className={cx('projectList--container') + ' col-md-5'}>
+      { projects.length ? (
+        <div>
+          {renderItems}
+        </div>
+      ) : (
+        <span>
+          <NullProfItem target="project" />
+        </span>
+      )}
+      { this.state.addVisibile ? (
+        <ProjectAdd addVisibile={addVisibile} onSave={this.handleSave} />
+      ) : (
+        <div>
+          <div onClick={this.showAddProject} className='pull-right'>Add Project</div>
+        </div>
+      ) }
+    </div>)
   }
 };

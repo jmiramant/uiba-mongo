@@ -45,7 +45,7 @@ export default class LanguageAdd extends React.Component {
     e.preventDefault();
     if (!this.validate()) {
 
-      lhis.props.onSave(this.state.language);
+      this.props.onSave(this.state.language);
 
       this.setState({
         language: _.clone(intialLanguageState),

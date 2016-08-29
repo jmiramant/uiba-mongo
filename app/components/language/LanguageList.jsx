@@ -4,6 +4,7 @@ import styles from 'css/components/profile/schoolList';
 import moment from 'moment';
 import LanguageItem from 'components/language/LanguageItem';
 import LanguageAdd from 'components/language/LanguageAdd';
+import NullProfItem from 'components/ProfileNull';
 
 const cx = classNames.bind(styles);
 
@@ -41,20 +42,32 @@ export default class LanguageList extends React.Component {
 
   render () {
     let { languages } = this.props;
-    let lengthIndex = languages.length - 1;
     const { addVisibile } = this.state;
+
+    const renderItems = (
+      <div>
+        {languages.map((language, i) => {
+          return (<LanguageItem 
+                    key={language._id} 
+                    onEditSave={this.handleEditSave} 
+                    handleDelete={this.handleDelete}
+                    language={language}
+                  />)
+        })}
+      </div>
+    )
 
     return (
       <div className={cx('languageList--container') + ' col-md-5'}>
-        {languages.map((language, i) => {
-            return (<LanguageItem 
-                      key={language._id} 
-                      onEditSave={this.handleEditSave} 
-                      handleDelete={this.handleDelete}
-                      language={language}
-                    />)
-        })}
-
+        { languages.length ? (
+          <div>
+            {renderItems}
+          </div>
+        ) : (
+          <span>
+            <NullProfItem target="language" />
+          </span>
+        )}
         { this.state.addVisibile ? (
           <LanguageAdd addVisibile={addVisibile} onSave={this.handleSave} />
         ) : (

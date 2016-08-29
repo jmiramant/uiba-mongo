@@ -2,6 +2,40 @@
 
 Here are some test seed mongo db inserst. 
 
+
+##### Profile
+
+```
+db.profiles.on(
+   [
+    {
+      name: "Blue Orange Digital",
+      location: "The World",
+      description: "Quinoa brooklyn echo park, trust fund meh viral pork belly.",
+      foundedDate: new Date(2010, 1, 20),
+      size: 100,
+      logoImg: "http://diylogodesigns.com/blog/wp-content/uploads/2016/04/google-logo-icon-PNG-Transparent-Background.png"
+    }, 
+    {
+      name: "Good.Co",
+      location: "San Francisco",
+      description: "Quinoa brooklyn echo park, trust fund meh viral pork belly.",
+      foundedDate: new Date(2010, 1, 20),
+      size: 100,
+      logoImg: "http://diylogodesigns.com/blog/wp-content/uploads/2016/04/google-logo-icon-PNG-Transparent-Background.png"
+    },
+    {
+      name: "EverFi, Inc",
+      location: "Washington D.C.",
+      description: "Quinoa brooklyn echo park, trust fund meh viral pork belly.",
+      foundedDate: new Date(2010, 1, 20),
+      size: 100,
+      logoImg: "http://diylogodesigns.com/blog/wp-content/uploads/2016/04/google-logo-icon-PNG-Transparent-Background.png"
+    }
+   ]
+)
+```
+
 ##### Companies
 
 ```
