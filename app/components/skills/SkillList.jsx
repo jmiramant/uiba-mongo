@@ -2,16 +2,16 @@ import React, { PropTypes } from 'react';
 import classNames from 'classnames/bind';
 import styles from 'css/components/profile/schoolList';
 import moment from 'moment';
-import SchoolItem from 'components/profile/SchoolItem';
-import SchoolAdd from './SchoolAdd';
+import SkillItem from 'components/skills/SkillItem';
+import SkillAdd from 'components/skills/SkillAdd';
 
 const cx = classNames.bind(styles);
 
-export default class SchoolList extends React.Component {
+export default class SkillList extends React.Component {
   
   static propTypes = {
-    schools: PropTypes.array,
-    onSchoolSave: PropTypes.func.isRequired
+    skills: PropTypes.array,
+    onSkillSave: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -20,12 +20,12 @@ export default class SchoolList extends React.Component {
     this.state = { addVisibile: false } ;
   }
   
-  showAddSchool = () => {
+  showAddSkill = () => {
     this.setState({addVisibile: true})
   }
 
   handleSave = (data) => {
-    this.props.onSchoolSave(data);
+    this.props.onSkillSave(data);
     this.setState({addVisibile: false})
   }
 
@@ -33,31 +33,31 @@ export default class SchoolList extends React.Component {
     this.props.onEditSave(data);
   }
 
-  handleDelete = (school) => {
-    this.props.onSchoolDelete(school);
+  handleDelete = (skill) => {
+    this.props.onSkillDelete(skill);
   }
 
   render () {
-    let { schools } = this.props;
-    let lengthIndex = schools.length - 1;
+    let { skills } = this.props;
+    let lengthIndex = skills.length - 1;
     const { addVisibile } = this.state;
 
     return (
-      <div className={cx('schoolList--container') + ' col-md-7'}>
-        {schools.map((school, i) => {
-            return (<SchoolItem 
-                      key={school._id} 
-                      saveSchoolEdit={this.handleEditSave} 
+      <div className={cx('skillList--container') + ' col-md-5'}>
+        {skills.map((skill, i) => {
+            return (<SkillItem 
+                      key={skill._id} 
+                      saveSkillEdit={this.handleEditSave} 
                       handleDelete={this.handleDelete}
-                      school={school} 
+                      skill={skill} 
                       isntLast={lengthIndex !== i} />);
         })}
 
         { this.state.addVisibile ? (
-          <SchoolAdd addVisibile={addVisibile} onSchoolSave={this.handleSave} />
+          <SkillAdd addVisibile={addVisibile} onSkillSave={this.handleSave} />
         ) : (
           <div>
-            <div onClick={this.showAddSchool} className='pull-right'>Add School</div>
+            <div onClick={this.showAddSkill} className='pull-right'>Add Skill</div>
           </div>
         ) }
       </div>

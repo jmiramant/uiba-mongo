@@ -7,7 +7,7 @@ const CompanySchema = new mongoose.Schema({
   foundedDate: Date,
   size: Number,
   logoImg: String
-});
+}, {timestamps: true});
 
 export default mongoose.model('Company', CompanySchema);
 

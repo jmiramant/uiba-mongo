@@ -14,7 +14,7 @@ export default class UserCard extends React.Component {
   render () {
     const { profile } = this.props;
     return (
-      <div className={cx('userCard--container') + ' col-md-4 col-md-offset-1 text-center'}>      
+      <div className={cx('userCard--container') + ' col-md-4 text-center'}>      
         <div className={cx('userCard--picture-container')}>
           <img className={cx('userCard--picture-img')} src={profile.picture}/>
         </div>

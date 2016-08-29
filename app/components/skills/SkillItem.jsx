@@ -132,13 +132,6 @@ export default class SkillItem extends React.Component {
             className={ cx('skillEdit--name')}
             id="type"  />
 
-          <input 
-            type='text'
-            value={this.state.skill.minor}
-            onChange={this.handleChange('minor')}
-            className={ cx('skillEdit--name')}
-            id="minor"  />
-
           <Select
               name="proficiency"
               value="one"

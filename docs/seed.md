@@ -96,6 +96,59 @@ skills.forEach(function (skill) {
 
 ```
 
+##### Languages
+
+
+```
+var languages = [
+                {language: 'English', proficiency: 'elementary proficiency', experience: 2},
+                {language: 'French', proficiency: 'minimum professional proficiency', experience: 2},
+              ]
+
+var user = db.users.findOne();
+
+languages.forEach(function (school) {
+    
+  db.languages.insertOne(
+    {
+      user_id: user._id,
+      language: school.language,
+      proficiency: school.proficiency,
+      experience: school.experience,
+    }
+  )
+
+});
+
+```
+##### Projects
+
+
+```
+var projects = [
+                {projectUrl: 'www.google.com', name: 'Whitepaper', start: new Date(2013, 2, 20), end: new Date(2014, 5, 20)},
+                {projectUrl: 'www.google.com', name: "Website", start: new Date(2012, 1, 20), end: new Date(2013, 1, 20)}]
+              ]
+
+var user = db.users.findOne();
+
+projects.forEach(function (project) {
+    
+  db.projects.insertOne(
+    {
+      user_id: user._id,
+      name: project.name,
+      projectUrl: project.projectUrl,
+      startDate: project.start,
+      endDate: project.end,
+      current: false,
+    }
+  )
+
+});
+
+```
+
 
 ##### Schools
 

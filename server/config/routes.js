@@ -11,6 +11,8 @@ const jobsController = controllers && controllers.jobs;
 const schoolsController = controllers && controllers.schools;
 const schoolNamesController = controllers && controllers.schoolNames;
 const skillsController = controllers && controllers.skills;
+const projectsController = controllers && controllers.projects;
+const languagesController = controllers && controllers.languages;
 
 export default (app) => {
 
@@ -48,6 +50,24 @@ export default (app) => {
     app.delete('/skill/:id', skillsController.remove);
   } else {
     console.warn(unsupportedMessage('skills routes'));
+  }
+
+  if (languagesController) {
+    app.get('/languages', languagesController.get);
+    app.post('/languages', languagesController.create);
+    app.put('/languages', languagesController.update);
+    app.delete('/language/:id', languagesController.remove);
+  } else {
+    console.warn(unsupportedMessage('languages routes'));
+  }
+
+  if (projectsController) {
+    app.get('/projects', projectsController.get);
+    app.post('/projects', projectsController.create);
+    app.put('/projects', projectsController.update);
+    app.delete('/project/:id', projectsController.remove);
+  } else {
+    console.warn(unsupportedMessage('projects routes'));
   }
 
   if (schoolNamesController) {
