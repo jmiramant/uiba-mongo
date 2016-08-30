@@ -4,6 +4,7 @@ import styles from 'css/components/profile/jobList';
 import moment from 'moment';
 import JobItem from 'components/jobs/JobItem';
 import JobAdd from 'components/jobs/JobAdd';
+import NullProfItem from 'components/ProfileNull';
 
 const cx = classNames.bind(styles);
 
@@ -42,8 +43,8 @@ export default class JobList extends React.Component {
     let lengthIndex = jobs.length - 1;
     const { addVisibile } = this.state;
 
-    return (
-      <div className={cx('jobList--container') + ' col-md-7 col-md-offset-1'}>
+    const renderItem = (
+      <div>
         {jobs.map((job, i) => {
             return (<JobItem 
                       key={job._id} 
@@ -52,6 +53,21 @@ export default class JobList extends React.Component {
                       job={job} 
                       isntLast={lengthIndex !== i} />);
         })}
+      </div>
+    )
+
+    return (
+      <div className={cx('jobList--container') + ' col-md-7 col-md-offset-1'}>
+        
+        { jobs.length ? (
+          <div>
+            {renderItems}
+          </div>
+        ) : (
+          <span>
+            <NullProfItem target="job" />
+          </span>
+        )}
 
         { this.state.addVisibile ? (
           <JobAdd addVisibile={addVisibile} onJobSave={this.handleSave} />

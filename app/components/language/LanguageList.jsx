@@ -58,7 +58,7 @@ export default class LanguageList extends React.Component {
     )
 
     return (
-      <div className={cx('languageList--container') + ' col-md-5'}>
+      <div className={cx('languageList--container') + ' col-md-4'}>
         { languages.length ? (
           <div>
             {renderItems}

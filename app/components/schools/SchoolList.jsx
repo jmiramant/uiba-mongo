@@ -4,6 +4,7 @@ import styles from 'css/components/profile/schoolList';
 import moment from 'moment';
 import SchoolItem from 'components/schools/SchoolItem';
 import SchoolAdd from 'components/schools/SchoolAdd';
+import NullProfItem from 'components/ProfileNull';
 
 const cx = classNames.bind(styles);
 
@@ -42,8 +43,8 @@ export default class SchoolList extends React.Component {
     let lengthIndex = schools.length - 1;
     const { addVisibile } = this.state;
 
-    return (
-      <div className={cx('schoolList--container') + ' col-md-7'}>
+    const renderItems = (
+      <div>
         {schools.map((school, i) => {
             return (<SchoolItem 
                       key={school._id} 
@@ -52,6 +53,21 @@ export default class SchoolList extends React.Component {
                       school={school} 
                       isntLast={lengthIndex !== i} />);
         })}
+      </div>
+    )
+
+    return (
+      <div className={cx('schoolList--container') + ' col-md-7 col-md-offset-1'}>
+
+        { schools.length ? (
+          <div>
+            {renderItems}
+          </div>
+        ) : (
+          <span>
+            <NullProfItem target="school" />
+          </span>
+        )}
 
         { this.state.addVisibile ? (
           <SchoolAdd addVisibile={addVisibile} onSchoolSave={this.handleSave} />

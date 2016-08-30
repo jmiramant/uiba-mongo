@@ -52,6 +52,7 @@ class Profile extends Component {
           onJobSave={jobActions.createJob} 
           onJobDelete={jobActions.deleteJob} 
         />
+        <div className="clearfix"></div>
         <Skills 
           skills={skills} 
           onEditSave={skillActions.updateSkill} 
@@ -64,6 +65,7 @@ class Profile extends Component {
           onSchoolSave={schoolActions.createSchool} 
           onSchoolDelete={schoolActions.deleteSchool} 
         />
+        <div className="clearfix"></div>
         <Languages
           languages={languages} 
           onEditSave={languageActions.updateLanguage} 
