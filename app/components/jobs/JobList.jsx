@@ -43,7 +43,7 @@ export default class JobList extends React.Component {
     let lengthIndex = jobs.length - 1;
     const { addVisibile } = this.state;
 
-    const renderItem = (
+    const renderItems = (
       <div>
         {jobs.map((job, i) => {
             return (<JobItem 
@@ -57,7 +57,7 @@ export default class JobList extends React.Component {
     )
 
     return (
-      <div className={cx('jobList--container') + ' col-md-7 col-md-offset-1'}>
+      <div className={cx('jobList--container') + ' col-md-8 col-md-offset-2'}>
         
         { jobs.length ? (
           <div>

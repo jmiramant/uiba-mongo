@@ -55,7 +55,7 @@ export default class ProjectList extends React.Component {
       </div>
     )
     
-    return ( <div className={cx('projectList--container') + ' col-md-7 col-md-offset-1'}>
+    return ( <div className={cx('projectList--container') + ' col-md-5'}>
       { projects.length ? (
         <div>
           {renderItems}

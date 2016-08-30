@@ -57,7 +57,7 @@ export default class SchoolList extends React.Component {
     )
 
     return (
-      <div className={cx('schoolList--container') + ' col-md-7 col-md-offset-1'}>
+      <div className={cx('schoolList--container') + ' col-md-5'}>
 
         { schools.length ? (
           <div>
