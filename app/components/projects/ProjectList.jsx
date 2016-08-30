@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames/bind';
-import styles from 'css/components/profile/schoolList';
+import styles from 'css/components/profile/projectList';
 import moment from 'moment';
 import ProjectItem from 'components/projects/ProjectItem';
 import ProjectAdd from 'components/projects/ProjectAdd';

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames/bind';
-import styles from 'css/components/profile/schoolList';
+import styles from 'css/components/profile/languageList';
 import moment from 'moment';
 import LanguageItem from 'components/language/LanguageItem';
 import LanguageAdd from 'components/language/LanguageAdd';

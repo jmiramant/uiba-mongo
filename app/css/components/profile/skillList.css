@@ -1,0 +1,7 @@
+@import '../../common/colors';
+@import '../../common/button';
+@import '../profile';
+
+.skillList--container {
+  @apply --profile--container;
+}
