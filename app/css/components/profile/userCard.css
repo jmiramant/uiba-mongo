@@ -2,7 +2,6 @@
 @import '../../common/card';
 
 .userCard--container {
-  @apply --card;
   background: #fff;
   margin-top: 20px;
   margin-bottom: 20px;

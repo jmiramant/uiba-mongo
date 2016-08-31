@@ -14,6 +14,7 @@ import * as actionCreators from 'actions/typeahead';
 class TypeaheadApp extends Component {
   static propTypes = {
     handleChange: PropTypes.func.isRequired,
+    error: PropTypes.string
   };
 
   constructor() {
@@ -29,6 +30,7 @@ class TypeaheadApp extends Component {
         setSelection={actions.setTypeaheadData} 
         results={this.props.results} 
         selection={this.props.selection}
+        error={this.props.error}
       />
     );
   }

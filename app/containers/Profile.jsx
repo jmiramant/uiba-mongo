@@ -1,6 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import * as jobsActionCreators from 'actions/jobs';
 import * as schoolsActionCreators from 'actions/schools';
@@ -44,39 +48,46 @@ class Profile extends Component {
           } = this.props;
 
     return (
-      <div className={cx('about') + ' container'}>
-        <UserCard profile={profile} />
-        <Jobs 
-          jobs={jobs} 
-          onEditSave={jobActions.updateJob} 
-          onJobSave={jobActions.createJob} 
-          onJobDelete={jobActions.deleteJob} 
-        />
-        <Schools 
-          schools={schools} 
-          onEditSave={schoolActions.updateSchool} 
-          onSchoolSave={schoolActions.createSchool} 
-          onSchoolDelete={schoolActions.deleteSchool} 
-        />
-        <Skills 
-          skills={skills} 
-          onEditSave={skillActions.updateSkill} 
-          onSkillSave={skillActions.createSkill} 
-          onSkillDelete={skillActions.deleteSkill} 
-        />
-        <Languages
-          languages={languages} 
-          onEditSave={languageActions.updateLanguage} 
-          onSave={languageActions.createLanguage} 
-          onDelete={languageActions.deleteLanguage} 
-        />
-        <Projects
-          projects={projects} 
-          onEditSave={projectActions.updateProject} 
-          onSave={projectActions.createProject} 
-          onDelete={projectActions.deleteProject} 
-        />
-      </div>
+      <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
+        <div className={cx('about') + ' container'}>
+          <Card>
+            <CardHeader title="Profile" />
+            <CardText>
+              <UserCard profile={profile} />
+            </CardText>
+          </Card>
+          <Jobs 
+            jobs={jobs} 
+            onEditSave={jobActions.updateJob} 
+            onJobSave={jobActions.createJob} 
+            onJobDelete={jobActions.deleteJob} 
+          />
+          <Schools 
+            schools={schools} 
+            onEditSave={schoolActions.updateSchool} 
+            onSchoolSave={schoolActions.createSchool} 
+            onSchoolDelete={schoolActions.deleteSchool} 
+          />
+          <Skills 
+            skills={skills} 
+            onEditSave={skillActions.updateSkill} 
+            onSkillSave={skillActions.createSkill} 
+            onSkillDelete={skillActions.deleteSkill} 
+          />
+          <Languages
+            languages={languages} 
+            onEditSave={languageActions.updateLanguage} 
+            onSave={languageActions.createLanguage} 
+            onDelete={languageActions.deleteLanguage} 
+          />
+          <Projects
+            projects={projects} 
+            onEditSave={projectActions.updateProject} 
+            onSave={projectActions.createProject} 
+            onDelete={projectActions.deleteProject} 
+          />
+        </div>
+      </MuiThemeProvider>
     );
   }
 };

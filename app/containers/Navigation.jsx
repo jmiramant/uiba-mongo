@@ -11,13 +11,7 @@ import classNames from 'classnames/bind';
 import styles from 'css/components/navigation';
 
 const cx = classNames.bind(styles);
-const caretStyle = "\
-  .caret {\
-    border-top: 10px dashed #2185c5;\
-    border-top: 10px solid #2185c5;\
-    border-right: 10px solid transparent;\
-    border-left: 10px solid transparent;\
-  }\
+const caretStyle = "\.caret {border-top: 10px dashed #2185c5;border-top: 10px solid #2185c5;\border-right: 10px solid transparent;border-left: 10px solid transparent;}\
   .dropdown ul.dropdown-menu {\
     margin-top: 29px;\
     right: -55px;\

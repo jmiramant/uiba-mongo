@@ -9,7 +9,6 @@
 .about {
   background-color: #7ecefd;
   background-image: -webkit-linear-gradient(-387deg, #f9fafb 0, #7ecefd 100%);
-  background-image: -webkit-linear-gradient(333deg, #f9fafb 0, #7ecefd 100%);
   background-image: linear-gradient(117deg, #f9fafb 0, #7ecefd 100%);
   color: #363636;
 }

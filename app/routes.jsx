@@ -8,7 +8,6 @@ import Terms from 'containers/Terms';
 import Privacy from 'containers/Privacy';
 import LoginOrRegister from 'containers/LoginOrRegister';
 import Profile from 'containers/Profile';
-
 /*
  * @param {Redux Store}
  * We require store as an argument here because we wish to get

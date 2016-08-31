@@ -1,46 +1,51 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import TypeaheadResults from './TypeaheadResults';
+import AutoComplete from 'material-ui/AutoComplete';
 
 class Typeahead extends Component {
-  static defaultProps = { results: []};
+  static defaultProps = { results: [], error: ''};
+  
   static propTypes = {
     results: PropTypes.array,
     fetchResults: PropTypes.func.isRequired,
     setSelection: PropTypes.func.isRequired,
     selection: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired,
+    error: PropTypes.string,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+  }
+  
+  state = {
+    results: [] 
   }
 
-
-  triggerSearch = (e) => {
-    if (e.target.value.length > 0) {
-      this.props.fetchResults(e.target.value);
-    }
-    this.props.setSelection(e.target.value);
-    this.props.onChange(e.target.value);
+  componentWillReceiveProps(nextProps) {
+    this.setState({results: nextProps.results.map((i) => {return i.name})})
   }
 
-  updateSelection (e) {
-    this.props.setSelection(e.currentTarget.innerText);
-    this.props.onChange(e.currentTarget.innerText);
+  triggerSearch = (value) => {
+    this.props.fetchResults(value);
+    this.props.onChange(value);
+  }
+
+  onMenuSelect = (value) => {
+    this.props.onChange(value);
   }
 
   render() {
     return (
       <div>
-        <input
-            type="text"
-            placeholder="Search..."
-            ref="searchTermInput"
-            value={this.props.selection}
-            onChange={this.triggerSearch}
+        <AutoComplete
+          errorText={this.props.error}
+          filter={AutoComplete.caseInsensitiveFilter}
+          floatingLabelText="Enter school name"
+          dataSource={this.state.results}
+          onUpdateInput={this.triggerSearch}
+          onNewRequest={this.onMenuSelect}
         />
-          <TypeaheadResults selectionUpdate={this.updateSelection.bind(this)} results={this.props.results} />
       </div>
     );
   }

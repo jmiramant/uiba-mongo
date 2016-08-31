@@ -8,6 +8,10 @@ import configureStore from 'store/configureStore';
 import preRenderMiddleware from 'middlewares/preRenderMiddleware';
 import header from 'components/Meta';
 import ssrAuth from 'api/preRenderAuthentication.js';
+import injectTapEventPlugin from 'react-tap-event-plugin'
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+injectTapEventPlugin()
 
 const clientConfig = {
   host: process.env.HOSTNAME || 'localhost',
@@ -17,6 +21,8 @@ const clientConfig = {
 // configure baseURL for axios requests (for serverside API calls)
 axios.defaults.baseURL = `http://${clientConfig.host}:${clientConfig.port}`;
 
+global.navigator = global.navigator || {};
+global.navigator.userAgent = global.navigator.userAgent || 'all';
 
 const analtyicsScript =
   typeof trackingID === "undefined" ? ``

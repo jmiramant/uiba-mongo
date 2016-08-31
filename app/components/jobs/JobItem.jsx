@@ -2,7 +2,8 @@ import React, { PropTypes } from 'react';
 import update from 'react-addons-update'
 import classNames from 'classnames/bind';
 import styles from 'css/components/profile/jobItem';
-import { containsErrors, validateJobFormHelper } from '../helpers/jobFormValidation';
+import { containsErrors } from '../helpers/CommonFormValidations';
+import { validateJobFormHelper } from '../helpers/jobFormValidation';
 import moment from 'moment';
 
 const cx = classNames.bind(styles);

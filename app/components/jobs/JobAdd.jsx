@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames/bind';
-import { containsErrors, validateJobFormHelper } from '../helpers/jobFormValidation';
+import { containsErrors } from '../helpers/CommonFormValidations';
+import { validateJobFormHelper } from '../helpers/jobFormValidation';
 import styles from 'css/components/profile/jobItem';
 import moment from 'moment';
 import _ from 'lodash';

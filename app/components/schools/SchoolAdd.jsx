@@ -2,40 +2,40 @@ import React, { PropTypes } from 'react';
 import classNames from 'classnames/bind';
 import Select from 'react-select';
 import SchoolNameTypeahead from '../../containers/Typeahead';
-import { containsErrors, validateJobFormHelper } from '../helpers/jobFormValidation';
+
+import { containsErrors, setValidationErrorObject } from '../helpers/CommonFormValidations';
+import { validateSchoolFormHelper } from '../helpers/schoolFormValidations';
+
 import styles from 'css/components/profile/jobItem';
+import areIntlLocalesSupported from 'intl-locales-supported';
+
+import TextField from 'material-ui/TextField';
+import DatePicker from 'material-ui/DatePicker';
+import AutoComplete from 'material-ui/AutoComplete';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import Checkbox from 'material-ui/Checkbox';
+import RaisedButton from 'material-ui/RaisedButton';
+
 import moment from 'moment';
 import _ from 'lodash';
 
 const cx = classNames.bind(styles);
+
 const intialSchoolState = {
     name: '', 
-    major: [],
-    minor: [],
-    degree: [],
+    major: '',
+    minor: '',
+    degree: '',
     startDate: '',
     endDate: '',
     current: false
   }
-const degrees = [
-  {label: 'Associate',value: 'Associate'},
-  {label: 'Bachelor',value: 'Bachelor'},
-  {label: 'Graduate',value: 'Graduate'},
-  {label: 'Master',value: 'Master'},
-  {label: 'Doctorate',value: 'Doctorate'},
-  {label: 'First Professional Certificate',value: 'First Professional Certificate'},
-  {label: 'Postbaccalaureate Certificate',value: 'Postbaccalaureate Certificate'},
-  {label: "Post Master's Certificate", value: "Post Master's Certificate"},
-  {label: 'Certificate',value: 'Certificate'},
-  {label: 'Coursework',value: 'Coursework'},
-  {label: 'High School Diploma',value: 'High School Diploma'},
-  {label: 'Other',value: 'other'}
-];  
 
 export default class SchoolAdd extends React.Component {
 
   static defaultProps = {
-    school: _.clone(intialSchoolState)
+    school: _.cloneDeep(intialSchoolState)
   }
 
   constructor(props) {
@@ -44,28 +44,29 @@ export default class SchoolAdd extends React.Component {
 
   state = {
     school: { ...this.props.school }, 
-    validate: _.clone(intialSchoolState),
+    validationErrors: setValidationErrorObject(intialSchoolState),
     current: this.props.school.current
   }
   
   handleSubmit = e => {
     e.preventDefault();
+
     if (!this.validate()) {
 
       this.props.onSchoolSave(this.state.school);
 
       this.setState({
-        school: _.clone(intialSchoolState),
+        school: _.cloneDeep(intialSchoolState),
       })
     
     }
   }
   
   validate() {
-    // const validationResp = validateJobFormHelper(_.clone(intialSchoolState), this.state);
-    // this.setState({validate: validationResp.error});
-    //return containsErrors(validationResp.error);
-    return false;
+    const validationResp = validateSchoolFormHelper(_.cloneDeep(intialSchoolState), this.state);
+    this.setState({validationErrors: validationResp.error});
+    console.log(validationResp.error)
+    return containsErrors(validationResp.error);
   }
 
   handleSchoolName = e => {
@@ -77,16 +78,27 @@ export default class SchoolAdd extends React.Component {
     });
   }
 
-  handleChange = field => e => {
+  handleDegree = (e, i, val) => {
+    this.setState({
+        school: {
+          ...this.state.school,
+          degree : val
+        }
+    });
+  }
+
+  handleChange = field => (e, uiVal) => {
     let value;
 
-    if (e.value) {
+    if (uiVal) {
+      value = uiVal
+    } else if (e.value) {
       value  = e.value[0];
     } else {
       value = e.target.value;
     }
-   
-    if (e.target && e.target.type === 'checkbox') {
+
+    if (e && e.target && e.target.type === 'checkbox') {
       value = this.state.current
       this.setState({
         current: !this.state.current,
@@ -97,7 +109,7 @@ export default class SchoolAdd extends React.Component {
       })
     } else {
       
-      if (['major', 'minor', 'degree'].includes(field)) {
+      if (['major', 'minor'].includes(field)) {
         value = value.split(',');
       }
 
@@ -111,7 +123,8 @@ export default class SchoolAdd extends React.Component {
   }
 
   render () {
-    const { validate, current } = this.state;
+    const { validationErrors, current } = this.state;
+
     return (
       <div>
         <form
@@ -121,67 +134,81 @@ export default class SchoolAdd extends React.Component {
           <div className="panel">
 
             <div className="form-group row">
-              <label htmlFor="name" className="col-xs-2 col-form-label">Name</label>
               <div className="col-xs-10">
-                <SchoolNameTypeahead handleChange={this.handleSchoolName}/>
+                <SchoolNameTypeahead error={validationErrors.name} handleChange={this.handleSchoolName}/>
               </div>
             </div>
-
-            <div>{ validate.date }</div>
-
+            <div className='error'>{validationErrors.date}</div>
             <div className="form-group row">
-              <label htmlFor="startDate" className="col-xs-2 col-form-label">Start Date</label>
-              <div className="col-xs-5">
-                <input onChange={this.handleChange('startDate')}  className="form-control" type="date" id="startDate" />
-              </div>
+              <DatePicker
+                errorText={validationErrors.startDate}
+                className="col-sm-5"
+                hintText="Start Date"
+                onChange={this.handleChange('startDate')}
+              />
             </div>
+            <div className="form-group row">
 
-            { !current ? (
-              <div className="form-group row">
-                <label htmlFor="endDate" className="col-xs-2 col-form-label">End Date</label>
-                <div className="col-xs-5">
-                  <input onChange={this.handleChange('endDate')} className="form-control" type="date" id="endDate" />
-                </div>
-              </div>
-              ) : (<span />)
-            }
+              { !current ? (
+                <DatePicker
+                  errorText={validationErrors.endDate}
+                  className="col-sm-5"
+                  hintText="End Date"
+                  onChange={this.handleChange('endDate')}
+                />
+              ) : (<span />)}
+            </div>
   
-            <input 
-              type="checkbox"
-              checked={current}
-              onChange={this.handleChange('current')} />
-            
-            <div className="form-group row">
-              <label htmlFor="major" className="col-xs-2 col-form-label">Major</label>
-              <div className="col-xs-10">
-                <input placeholder={ validate.major } onChange={this.handleChange('major')} className="form-control" type="text" id="major" />
-              </div>
-            </div>
-            <div className="form-group row">
-              <label htmlFor="minor" className="col-xs-2 col-form-label">Minor</label>
-              <div className="col-xs-10">
-                <input placeholder={ validate.minor } onChange={this.handleChange('minor')} className="form-control" type="text" id="minor" />
-              </div>
-            </div>
-            <div className="form-group row">
-              <label htmlFor="degree" className="col-xs-2 col-form-label">Degree</label>
-              <div className="col-xs-10">
+            <Checkbox
+              label="Current"
+              onCheck={this.handleChange('current')}
+            />
 
-                <Select
-                    name="degree"
-                    value="one"
-                    options={degrees}
-                    onChange={this.handleChange('degree')}
+            <div className="form-group row">
+              <div className="col-xs-10">
+                <TextField
+                  errorText={validationErrors.major}
+                  hintText="Seperate multiple by comma"
+                  floatingLabelText="Major"
+                  onChange={this.handleChange('major')}
                 />
               </div>
             </div>
+            <div className="form-group row">
+              <div className="col-xs-10">
+                <TextField
+                  errorText={validationErrors.minor}
+                  hintText="Seperate multiple by comma"
+                  floatingLabelText="Minor"
+                  onChange={this.handleChange('minor')}
+                />
+              </div>
+            </div>
+            <div className="form-group row">
+              <div className="col-xs-10">
+                <SelectField
+                  errorText={validationErrors.degree}
+                  value={this.state.school.degree}
+                  onChange={this.handleDegree}
+                  hintText='Degree'
+                >
+                  <MenuItem value={1} primaryText="Associate" />
+                  <MenuItem value={2} primaryText="Bachelor" />
+                  <MenuItem value={3} primaryText="Graduate" />
+                  <MenuItem value={4} primaryText="Master" />
+                  <MenuItem value={5} primaryText="Doctorate" />
+                  <MenuItem value={6} primaryText="Postbaccalaureate Certificate" />
+                  <MenuItem value={7} primaryText="Post Master's Certificate" />
+                  <MenuItem value={8} primaryText="Certificate" />
+                  <MenuItem value={9} primaryText="Coursework" />
+                  <MenuItem value={10} primaryText="High School Diploma" />
+                  <MenuItem value={11} primaryText="First Professional Certificate" />
+                  <MenuItem value={12} primaryText="other" />
+                </SelectField>
+              </div>
+            </div>
 
-            <button
-              className="btn"
-              type="submit"
-            >
-             Save
-            </button>
+            <RaisedButton type="submit" label="Save" primary={true} />
 
           </div>
         </form>
