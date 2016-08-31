@@ -57,7 +57,7 @@ export default class SkillList extends React.Component {
     )
 
     return (
-      <div className={cx('skillList--container') + ' col-md-5 col-md-offset-2'}>
+      <div className={cx('skillList--container') + ' col-md-8 col-md-offset-2'}>
         { skills.length ? (
           <div>
             {renderItems}

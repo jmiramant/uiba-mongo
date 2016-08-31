@@ -17,12 +17,12 @@ export default class SchoolList extends React.Component {
 
   constructor(props) {
     super(props);
-    this.handleSave = this.handleSave.bind(this);
+    //this.handleSave = this.handleSave.bind(this);
     this.state = { addVisibile: false } ;
   }
   
-  showAddSchool = () => {
-    this.setState({addVisibile: true})
+  toggleAddVisible = () => {
+    this.setState({addVisibile: !this.state.addVisibile})
   }
 
   handleSave = (data) => {
@@ -32,6 +32,7 @@ export default class SchoolList extends React.Component {
 
   handleEditSave = (data) => {
     this.props.onEditSave(data);
+    this.setState({addVisibile: false})
   }
 
   handleDelete = (school) => {
@@ -57,7 +58,7 @@ export default class SchoolList extends React.Component {
     )
 
     return (
-      <div className={cx('schoolList--container') + ' col-md-5'}>
+      <div className={cx('schoolList--container') + ' col-md-8 col-md-offset-2'}>
 
         { schools.length ? (
           <div>
@@ -70,10 +71,10 @@ export default class SchoolList extends React.Component {
         )}
 
         { this.state.addVisibile ? (
-          <SchoolAdd addVisibile={addVisibile} onSchoolSave={this.handleSave} />
+          <SchoolAdd toggleEdit={this.toggleAddVisible.bind(this)} addVisibile={addVisibile} onSchoolSave={this.handleSave} />
         ) : (
           <div>
-            <div onClick={this.showAddSchool} className='pull-right'>Add School</div>
+            <div onClick={this.toggleAddVisible} className='pull-right'>Add School</div>
           </div>
         ) }
       </div>

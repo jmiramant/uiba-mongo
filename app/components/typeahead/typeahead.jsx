@@ -26,6 +26,10 @@ class Typeahead extends Component {
     this.setState({results: nextProps.results.map((i) => {return i.name})})
   }
 
+  componentWillMount(){
+    this.triggerSearch(this.props.initial)
+  }
+
   triggerSearch = (value) => {
     this.props.fetchResults(value);
     this.props.onChange(value);

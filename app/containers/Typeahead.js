@@ -18,14 +18,15 @@ class TypeaheadApp extends Component {
     selection: PropTypes.string
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
 
   render() {
     const actions = bindActionCreators(actionCreators, this.props.dispatch);
     return (
-      <TypeAhead 
+      <TypeAhead
+        initial={this.props.initial}
         onChange={this.props.handleChange}
         fetchResults={actions.fetchTypeaheadData} 
         setSelection={actions.setTypeaheadData} 

@@ -11,12 +11,11 @@ import areIntlLocalesSupported from 'intl-locales-supported';
 
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
-import AutoComplete from 'material-ui/AutoComplete';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
-import Snackbar from 'material-ui/Snackbar';
+import FlatButton from 'material-ui/FlatButton';
 
 import moment from 'moment';
 import _ from 'lodash';
@@ -30,7 +29,7 @@ const intialSchoolState = {
     degree: '',
     startDate: '',
     endDate: '',
-    current: ''
+    current: false
   }
 
 export default class SchoolAdd extends React.Component {
@@ -53,13 +52,7 @@ export default class SchoolAdd extends React.Component {
     e.preventDefault();
 
     if (!this.validate()) {
-
       this.props.onSchoolSave(this.state.school);
-
-      this.setState({
-        school: JSON.parse(JSON.stringify(intialSchoolState))
-      })
-    
     }
   }
   
@@ -89,7 +82,6 @@ export default class SchoolAdd extends React.Component {
 
   handleChange = field => (e, uiVal) => {
     let value;
-
     if (uiVal) {
       if (typeof(Object.getPrototypeOf(uiVal).getTime) === 'function') {
         value = moment(new Date(uiVal)).format("YYYY-MM-DD");
@@ -127,7 +119,33 @@ export default class SchoolAdd extends React.Component {
   }
 
   render () {
-    const { validationErrors, current } = this.state;
+    const { 
+            validationErrors,
+            current, 
+            school
+          } = this.state;
+    
+    const datePicker = (data, name)  => {
+      if (data !== '') {
+        return (
+          <DatePicker
+            value={new Date(school[name + 'Date'])}
+            errorText={validationErrors[name + "Date"]}
+            className="col-sm-5"
+            hintText={(name.charAt(0).toUpperCase() + name.slice(1)) + " Date"}
+            onChange={this.handleChange(name + 'Date')}
+          />
+      )} else {
+        return (
+          <DatePicker
+            errorText={validationErrors[name + "Date"]}
+            className="col-sm-5"
+            hintText={(name.charAt(0).toUpperCase() + name.slice(1)) + " Date"}
+            onChange={this.handleChange(name + 'Date')}
+          />
+        )
+      }
+    }
 
     return (
       <div>
@@ -139,38 +157,30 @@ export default class SchoolAdd extends React.Component {
 
             <div className="form-group row">
               <div className="col-xs-10">
-                <SchoolNameTypeahead error={validationErrors.name} handleChange={this.handleSchoolName}/>
+                <SchoolNameTypeahead initial={school.name} error={validationErrors.name} handleChange={this.handleSchoolName.bind(this)}/>
               </div>
             </div>
             <div className='error'>{validationErrors.date}</div>
             <div className="form-group row">
-              <DatePicker
-                errorText={validationErrors.startDate}
-                className="col-sm-5"
-                hintText="Start Date"
-                onChange={this.handleChange('startDate')}
-              />
+              {datePicker(school.startDate, 'start')}
             </div>
             <div className="form-group row">
 
               { !current ? (
-                <DatePicker
-                  errorText={validationErrors.endDate}
-                  className="col-sm-5"
-                  hintText="End Date"
-                  onChange={this.handleChange('endDate')}
-                />
+                  datePicker(school.endDate, 'end')
               ) : (<span />)}
             </div>
   
             <Checkbox
               label="Current"
+              checked={school.current}
               onCheck={this.handleChange('current')}
             />
 
             <div className="form-group row">
               <div className="col-xs-10">
                 <TextField
+                  value={school.major}
                   errorText={validationErrors.major}
                   hintText="Seperate multiple by comma"
                   floatingLabelText="Major"
@@ -192,8 +202,8 @@ export default class SchoolAdd extends React.Component {
               <div className="col-xs-10">
                 <SelectField
                   errorText={validationErrors.degree}
-                  value={this.state.school.degree}
                   onChange={this.handleDegree}
+                  value={school.degree}
                   hintText='Degree'
                 >
                   <MenuItem value={'Associate'} primaryText="Associate" />
@@ -212,7 +222,11 @@ export default class SchoolAdd extends React.Component {
               </div>
             </div>
 
-            <RaisedButton type="submit" label="Save" primary={true} />
+            <RaisedButton className='pull-right' type="submit" label="Save" primary={true} />
+            {this.props.handleDelete ? (
+              <FlatButton className='pull-left' label="Delete" onClick={this.props.handleDelete} primary={true} />
+            ) : (<span />)}
+            <FlatButton className='pull-left' label="Close" onClick={this.props.toggleEdit} primary={true} />
 
           </div>
         </form>
