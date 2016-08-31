@@ -16,6 +16,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
+import Snackbar from 'material-ui/Snackbar';
 
 import moment from 'moment';
 import _ from 'lodash';
@@ -29,13 +30,13 @@ const intialSchoolState = {
     degree: '',
     startDate: '',
     endDate: '',
-    current: false
+    current: ''
   }
 
 export default class SchoolAdd extends React.Component {
 
   static defaultProps = {
-    school: _.cloneDeep(intialSchoolState)
+    school: JSON.parse(JSON.stringify(intialSchoolState))
   }
 
   constructor(props) {
@@ -56,16 +57,15 @@ export default class SchoolAdd extends React.Component {
       this.props.onSchoolSave(this.state.school);
 
       this.setState({
-        school: _.cloneDeep(intialSchoolState),
+        school: JSON.parse(JSON.stringify(intialSchoolState))
       })
     
     }
   }
   
   validate() {
-    const validationResp = validateSchoolFormHelper(_.cloneDeep(intialSchoolState), this.state);
+    const validationResp = validateSchoolFormHelper(intialSchoolState, this.state);
     this.setState({validationErrors: validationResp.error});
-    console.log(validationResp.error)
     return containsErrors(validationResp.error);
   }
 
@@ -91,7 +91,11 @@ export default class SchoolAdd extends React.Component {
     let value;
 
     if (uiVal) {
-      value = uiVal
+      if (typeof(Object.getPrototypeOf(uiVal).getTime) === 'function') {
+        value = moment(new Date(uiVal)).format("YYYY-MM-DD");
+      } else {
+        value = uiVal
+      }
     } else if (e.value) {
       value  = e.value[0];
     } else {
@@ -192,18 +196,18 @@ export default class SchoolAdd extends React.Component {
                   onChange={this.handleDegree}
                   hintText='Degree'
                 >
-                  <MenuItem value={1} primaryText="Associate" />
-                  <MenuItem value={2} primaryText="Bachelor" />
-                  <MenuItem value={3} primaryText="Graduate" />
-                  <MenuItem value={4} primaryText="Master" />
-                  <MenuItem value={5} primaryText="Doctorate" />
-                  <MenuItem value={6} primaryText="Postbaccalaureate Certificate" />
-                  <MenuItem value={7} primaryText="Post Master's Certificate" />
-                  <MenuItem value={8} primaryText="Certificate" />
-                  <MenuItem value={9} primaryText="Coursework" />
-                  <MenuItem value={10} primaryText="High School Diploma" />
-                  <MenuItem value={11} primaryText="First Professional Certificate" />
-                  <MenuItem value={12} primaryText="other" />
+                  <MenuItem value={'Associate'} primaryText="Associate" />
+                  <MenuItem value={'Bachelor'} primaryText="Bachelor" />
+                  <MenuItem value={'Graduate'} primaryText="Graduate" />
+                  <MenuItem value={'Master'} primaryText="Master" />
+                  <MenuItem value={'Doctorate'} primaryText="Doctorate" />
+                  <MenuItem value={'Postbaccalaureate Certificate'} primaryText="Postbaccalaureate Certificate" />
+                  <MenuItem value={'Post Masters Certificate'} primaryText="Post Master's Certificate" />
+                  <MenuItem value={'Certificate'} primaryText="Certificate" />
+                  <MenuItem value={'Coursework'} primaryText="Coursework" />
+                  <MenuItem value={'High School Diploma'} primaryText="High School Diploma" />
+                  <MenuItem value={'First Professional Certificate'} primaryText="First Professional Certificate" />
+                  <MenuItem value={'other'} primaryText="Other" />
                 </SelectField>
               </div>
             </div>

@@ -16,6 +16,8 @@ export default function message(state = {
       return {...state, message: action.message, type: 'SUCCESS'};
     case types.DISMISS_MESSAGE:
       return {...state, message: '', type: 'SUCCESS'};
+    case types.CREATE_SCHOOL_FAILURE:
+      return {...state, message: action.error, type: "SUCCESS"}
     default:
       return state;
   }

@@ -2,8 +2,8 @@ import mongoose, { Schema } from 'mongoose';
 import School from '../models/school';
 import moment from 'moment';
 
-const handleError = (err) => {
-  console.log(err)
+const handleError = (res, err) => {
+  return res.status(401).json({ message: err }); 
 }
 
 const setUid = (req) => {
@@ -55,7 +55,7 @@ export function create(req, res) {
     current: req.body.current
   }, function (err, school) {
 
-    if (err) return handleError(err);
+    if (err) return handleError(res, err);
   
     return res.json(school);
 
@@ -76,7 +76,7 @@ export function update(req, res) {
     if (req.body.endDate) school.endDate = new Date(req.body.endDate);
 
     school.save( err => {
-      if (err) return handleError(err);
+      if (err) return handleError(res, err);
       return res.json(school);
     });
 

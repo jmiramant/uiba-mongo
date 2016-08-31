@@ -102,7 +102,6 @@ export default class SchoolItem extends React.Component {
     return moment(new Date(date)).format('YYYY-MM-DD')
   };
 
-
   render () {
     const { isntLast, school } = this.props;
     const { validate, current } = this.state;
@@ -125,7 +124,7 @@ export default class SchoolItem extends React.Component {
         <div className={cx('schoolItem--container')}>
           {errorMsgs}
           <div className={cx('schoolEdit--header')}>
-            <SchoolNameTypeahead handleChange={this.handleSchoolName} />
+            <SchoolNameTypeahead selection={this.state.school.name} handleChange={this.handleSchoolName} />
           </div>
           <input 
             type="date"

@@ -2,13 +2,13 @@ import moment from 'moment';
 import _ from 'lodash';
 
 export function validateSchoolFormHelper (errorStore, state) {
-  const cantBeNull = ['name', 'major', 'startDate', 'degree', 'current']
+  const cantBeNull = ['name', 'major', 'startDate', 'degree']
   const { school } = state;
-  var error = errorStore;
+  var error = JSON.parse(JSON.stringify(errorStore));
   
   _.forEach(error, (v, k) => {
     if (cantBeNull.includes(k)) {
-      if (!school[k] || school[k] === '') {
+      if (!school[k] || school[k] === '' || school[k][0] === '') {
         error[k] = 'Please add a ' + k + '.';
       } 
     } else if (['startDate', 'endDate'].includes(k)) {

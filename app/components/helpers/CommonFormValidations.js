@@ -9,6 +9,7 @@ export function containsErrors (errorStore) {
 
 export function setValidationErrorObject(target) {
   const clone = {};
-  _.forEach(_.cloneDeep(target), (v, k) => { clone[k] = '';} )
+  let _newCopy = JSON.parse(JSON.stringify(target));
+  _.forEach(_newCopy, (v, k) => { clone[k] = '';} )
   return clone
 }

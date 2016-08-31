@@ -39,6 +39,7 @@ class Typeahead extends Component {
     return (
       <div>
         <AutoComplete
+          searchText={this.props.selection}
           errorText={this.props.error}
           filter={AutoComplete.caseInsensitiveFilter}
           floatingLabelText="Enter school name"
