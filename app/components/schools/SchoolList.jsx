@@ -79,7 +79,7 @@ export default class SchoolList extends React.Component {
           <div>
             <FloatingActionButton 
               onClick={this.toggleAddVisible}
-              className='pull-right'
+              className={cx('schoolItem--add') + ' pull-right'}
               mini={true}
             >
               <AddIcon />

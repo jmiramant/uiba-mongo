@@ -14,7 +14,26 @@
 }
 
 .schoolItem--container {
-  padding: 20px 0;
+  padding: 12px 0;
+}
+
+.schoolItem--header {
+  border-left: 2px solid var(--colorBrightPink);
+  padding-left: 10px;
+}
+
+.schoolItem--subHeader {
+  margin: 0;
+  color: var(--colorLightGreyText);
+  padding: 0 0 0px 12px;
+}
+
+.schoolItem--edit {
+  height: 20px !important;
+  width: 20px !important;
+}
+
+.schoolItem--add {
 }
 
 .profile-btn-group {

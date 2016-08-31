@@ -86,12 +86,10 @@ export default class SchoolItem extends React.Component {
             color="#66747F"
             hoverColor="#f20253"
             onClick={this.toggleEdit.bind(this)}
-            className='pull-right'
+            className={cx("schoolItem--edit") + ' pull-right'}
           />
-          <div onClick={this.toggleEdit.bind(this)} className={cx('schoolItem--edit')}></div>
-          <p className={cx("jobItem--header")}>{school.name} | { current ? ( 'Current' ) : ( moment(school.endDate).format('YYYY')) }</p>
-          <p className={cx("schoolItem--date")}>{ school.major[0] } | { school.degree }</p>
-          <Divider />
+          <h4 className={cx("schoolItem--header")}>{school.name} | { current ? ( 'Current' ) : ( moment(school.endDate).format('YYYY')) }</h4>
+          <p className={cx("schoolItem--subHeader")}>{ school.major[0] } | { school.degree }</p>
         </div>
       )
 
