@@ -1,12 +1,14 @@
 import React, { PropTypes } from 'react';
 import update from 'react-addons-update'
 import classNames from 'classnames/bind';
-import styles from 'css/components/profile/jobItem';
+import styles from 'css/components/profile/school';
 import SchoolNameTypeahead from '../../containers/Typeahead';
 import { containsErrors, validateJobFormHelper } from '../helpers/jobFormValidation';
 import moment from 'moment';
 import SchoolAdd from 'components/schools/SchoolAdd';
 
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import Divider from 'material-ui/Divider';
 
 const cx = classNames.bind(styles);
@@ -80,6 +82,12 @@ export default class SchoolItem extends React.Component {
 
       return (
         <div className={cx('schoolItem--container')} onDoubleClick={this.toggleEdit.bind(this)}>
+          <EditIcon
+            color="#66747F"
+            hoverColor="#f20253"
+            onClick={this.toggleEdit.bind(this)}
+            className='pull-right'
+          />
           <div onClick={this.toggleEdit.bind(this)} className={cx('schoolItem--edit')}></div>
           <p className={cx("jobItem--header")}>{school.name} | { current ? ( 'Current' ) : ( moment(school.endDate).format('YYYY')) }</p>
           <p className={cx("schoolItem--date")}>{ school.major[0] } | { school.degree }</p>

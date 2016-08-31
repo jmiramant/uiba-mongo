@@ -6,7 +6,7 @@ import SchoolNameTypeahead from '../../containers/Typeahead';
 import { containsErrors, setValidationErrorObject } from '../helpers/CommonFormValidations';
 import { validateSchoolFormHelper } from '../helpers/schoolFormValidations';
 
-import styles from 'css/components/profile/jobItem';
+import styles from 'css/components/profile/school';
 import areIntlLocalesSupported from 'intl-locales-supported';
 
 import TextField from 'material-ui/TextField';
@@ -16,6 +16,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
+import Divider from 'material-ui/Divider';
 
 import moment from 'moment';
 import _ from 'lodash';
@@ -150,26 +151,17 @@ export default class SchoolAdd extends React.Component {
     return (
       <div>
         <form
-          className="wrapper"
           onSubmit={this.handleSubmit}
         >
-          <div className="panel">
-
-            <div className="form-group row">
-              <div className="col-xs-10">
-                <SchoolNameTypeahead initial={school.name} error={validationErrors.name} handleChange={this.handleSchoolName.bind(this)}/>
-              </div>
-            </div>
+          <div>
+            <SchoolNameTypeahead initial={school.name} error={validationErrors.name} handleChange={this.handleSchoolName.bind(this)}/>
             <div className='error'>{validationErrors.date}</div>
-            <div className="form-group row">
-              {datePicker(school.startDate, 'start')}
-            </div>
-            <div className="form-group row">
 
-              { !current ? (
-                  datePicker(school.endDate, 'end')
-              ) : (<span />)}
-            </div>
+            {datePicker(school.startDate, 'start')}
+
+            { !current ? (
+                datePicker(school.endDate, 'end')
+            ) : (<span />)}
   
             <Checkbox
               label="Current"
@@ -177,57 +169,46 @@ export default class SchoolAdd extends React.Component {
               onCheck={this.handleChange('current')}
             />
 
-            <div className="form-group row">
-              <div className="col-xs-10">
-                <TextField
-                  value={school.major}
-                  errorText={validationErrors.major}
-                  hintText="Seperate multiple by comma"
-                  floatingLabelText="Major"
-                  onChange={this.handleChange('major')}
-                />
-              </div>
+            <TextField
+              value={school.major}
+              errorText={validationErrors.major}
+              hintText="Seperate multiple by comma"
+              floatingLabelText="Major"
+              onChange={this.handleChange('major')}
+            />
+            <TextField
+              errorText={validationErrors.minor}
+              hintText="Seperate multiple by comma"
+              floatingLabelText="Minor"
+              onChange={this.handleChange('minor')}
+            />
+            <SelectField
+              errorText={validationErrors.degree}
+              onChange={this.handleDegree}
+              value={school.degree}
+              hintText='Degree'
+            >
+              <MenuItem value={'Associate'} primaryText="Associate" />
+              <MenuItem value={'Bachelor'} primaryText="Bachelor" />
+              <MenuItem value={'Graduate'} primaryText="Graduate" />
+              <MenuItem value={'Master'} primaryText="Master" />
+              <MenuItem value={'Doctorate'} primaryText="Doctorate" />
+              <MenuItem value={'Postbaccalaureate Certificate'} primaryText="Postbaccalaureate Certificate" />
+              <MenuItem value={'Post Masters Certificate'} primaryText="Post Master's Certificate" />
+              <MenuItem value={'Certificate'} primaryText="Certificate" />
+              <MenuItem value={'Coursework'} primaryText="Coursework" />
+              <MenuItem value={'High School Diploma'} primaryText="High School Diploma" />
+              <MenuItem value={'First Professional Certificate'} primaryText="First Professional Certificate" />
+              <MenuItem value={'other'} primaryText="Other" />
+            </SelectField>
+            <div className={cx('profile-btn-group')}>
+              <RaisedButton className='pull-right' type="submit" label="Save" primary={true} />
+              {this.props.handleDelete ? (
+                <FlatButton className='pull-left' label="Delete" onClick={this.props.handleDelete} primary={true} />
+              ) : (<span />)}
+              <FlatButton className='pull-left' label="Close" onClick={this.props.toggleEdit} primary={true} />
             </div>
-            <div className="form-group row">
-              <div className="col-xs-10">
-                <TextField
-                  errorText={validationErrors.minor}
-                  hintText="Seperate multiple by comma"
-                  floatingLabelText="Minor"
-                  onChange={this.handleChange('minor')}
-                />
-              </div>
-            </div>
-            <div className="form-group row">
-              <div className="col-xs-10">
-                <SelectField
-                  errorText={validationErrors.degree}
-                  onChange={this.handleDegree}
-                  value={school.degree}
-                  hintText='Degree'
-                >
-                  <MenuItem value={'Associate'} primaryText="Associate" />
-                  <MenuItem value={'Bachelor'} primaryText="Bachelor" />
-                  <MenuItem value={'Graduate'} primaryText="Graduate" />
-                  <MenuItem value={'Master'} primaryText="Master" />
-                  <MenuItem value={'Doctorate'} primaryText="Doctorate" />
-                  <MenuItem value={'Postbaccalaureate Certificate'} primaryText="Postbaccalaureate Certificate" />
-                  <MenuItem value={'Post Masters Certificate'} primaryText="Post Master's Certificate" />
-                  <MenuItem value={'Certificate'} primaryText="Certificate" />
-                  <MenuItem value={'Coursework'} primaryText="Coursework" />
-                  <MenuItem value={'High School Diploma'} primaryText="High School Diploma" />
-                  <MenuItem value={'First Professional Certificate'} primaryText="First Professional Certificate" />
-                  <MenuItem value={'other'} primaryText="Other" />
-                </SelectField>
-              </div>
-            </div>
-
-            <RaisedButton className='pull-right' type="submit" label="Save" primary={true} />
-            {this.props.handleDelete ? (
-              <FlatButton className='pull-left' label="Delete" onClick={this.props.handleDelete} primary={true} />
-            ) : (<span />)}
-            <FlatButton className='pull-left' label="Close" onClick={this.props.toggleEdit} primary={true} />
-
+            <Divider />
           </div>
         </form>
       </div>

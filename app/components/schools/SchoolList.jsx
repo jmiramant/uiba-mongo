@@ -1,10 +1,13 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames/bind';
-import styles from 'css/components/profile/schoolList';
+import styles from 'css/components/profile/school';
 import moment from 'moment';
 import SchoolItem from 'components/schools/SchoolItem';
 import SchoolAdd from 'components/schools/SchoolAdd';
 import NullProfItem from 'components/ProfileNull';
+
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import AddIcon from 'material-ui/svg-icons/content/add';
 
 const cx = classNames.bind(styles);
 
@@ -47,7 +50,7 @@ export default class SchoolList extends React.Component {
     const renderItems = (
       <div>
         {schools.map((school, i) => {
-            return (<SchoolItem 
+            return (<SchoolItem
                       key={school._id} 
                       saveSchoolEdit={this.handleEditSave} 
                       handleDelete={this.handleDelete}
@@ -74,7 +77,13 @@ export default class SchoolList extends React.Component {
           <SchoolAdd toggleEdit={this.toggleAddVisible.bind(this)} addVisibile={addVisibile} onSchoolSave={this.handleSave} />
         ) : (
           <div>
-            <div onClick={this.toggleAddVisible} className='pull-right'>Add School</div>
+            <FloatingActionButton 
+              onClick={this.toggleAddVisible}
+              className='pull-right'
+              mini={true}
+            >
+              <AddIcon />
+            </FloatingActionButton>
           </div>
         ) }
       </div>
