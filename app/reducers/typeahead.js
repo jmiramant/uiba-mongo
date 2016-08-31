@@ -19,6 +19,7 @@ const selection = (
   action
 ) => {
   switch (action.type) {
+    case types.SET_INITIAL_SELECTION:
     case types.UPDATE_SELECTION:
       return action.selection
     default:

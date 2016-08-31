@@ -7,6 +7,8 @@ import { containsErrors, validateJobFormHelper } from '../helpers/jobFormValidat
 import moment from 'moment';
 import SchoolAdd from 'components/schools/SchoolAdd';
 
+import Divider from 'material-ui/Divider';
+
 const cx = classNames.bind(styles);
 const intialSchoolState = {
     name: '', 
@@ -79,28 +81,9 @@ export default class SchoolItem extends React.Component {
       return (
         <div className={cx('schoolItem--container')} onDoubleClick={this.toggleEdit.bind(this)}>
           <div onClick={this.toggleEdit.bind(this)} className={cx('schoolItem--edit')}></div>
-          <p className={cx("jobItem--header")}><span className={ cx('jobItem--name')}>{school.name}</span></p>
-          
-          { school.degree.length ? (
-          <div>
-            <h4>Degree{school.degree.length > 1 ? "s" : ''}:</h4>
-            <p className={cx("schoolItem--date")}>{ school.degree } </p>
-          </div>
-          ) : (<span/>)}
-          { school.major.length ? (
-          <div>
-            <h4>Major{school.major.length > 1 ? "s" : ''}:</h4>
-            <p className={cx("schoolItem--date")}>{ school.major.map( (d, i) => { return addComma(d, i, school.major)  }) } </p>
-          </div>
-          ) : (<span/>)}
-          { school.minor.length ? (
-            <div>
-              <h4>Minor{school.minor.length > 1 ? "s" : ''}:</h4>
-              <p className={cx("schoolItem--date")}>{ school.minor.map( (d, i) => { return addComma(d, i, school.minor)  }) } </p>
-            </div>
-          ) : (<span/>)}
-          <p className={cx("schoolItem--date")}>{moment(school.startDate).format('MMM, YYYY')} - { current ? ( 'Current' ) : ( moment(school.endDate).format('MMM, YYYY')) } </p>
-          <div className={cx('schoolItem--spacer')}></div>
+          <p className={cx("jobItem--header")}>{school.name} | { current ? ( 'Current' ) : ( moment(school.endDate).format('YYYY')) }</p>
+          <p className={cx("schoolItem--date")}>{ school.major[0] } | { school.degree }</p>
+          <Divider />
         </div>
       )
 

@@ -18,6 +18,14 @@ export function setTypeaheadData(selection) {
   };
 }
 
+
+export function setInitialTypeaheadData(selection) {
+  return {
+    type: types.SET_INITIAL_SELECTION,
+    selection
+  };
+}
+
 export function makeTypeaheadRequest(method, data, api = '/schoolnames') {
   return request[method](api, data);
 }

@@ -22,14 +22,22 @@ class TypeaheadApp extends Component {
     super(props);
   }
 
+  actions = bindActionCreators(actionCreators, this.props.dispatch);
+  
+  componentDidMount() {
+    if (this.props.initial !== "") {
+      this.actions.setInitialTypeaheadData(this.props.initial)
+    }    
+  }
+
+    
+
   render() {
-    const actions = bindActionCreators(actionCreators, this.props.dispatch);
     return (
       <TypeAhead
-        initial={this.props.initial}
         onChange={this.props.handleChange}
-        fetchResults={actions.fetchTypeaheadData} 
-        setSelection={actions.setTypeaheadData} 
+        fetchResults={this.actions.fetchTypeaheadData} 
+        setSelection={this.actions.setTypeaheadData} 
         results={this.props.results} 
         selection={this.props.selection}
         error={this.props.error}
