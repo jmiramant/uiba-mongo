@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames/bind';
-import styles from 'css/components/profile/jobItem';
+import styles from 'css/components/profile/null';
 
 const cx = classNames.bind(styles);
 
@@ -20,7 +20,7 @@ export default class ProfileNull extends React.Component {
           } = this.props;
     return (
       <div className={cx('profileNull--container')}>
-        <h3>You have no {target}s loaded.</h3>
+        <h4 className={cx('profileNull--text')}>You have no {target}s loaded.</h4>
       </div>
     )
 

@@ -85,7 +85,7 @@ export default class SchoolAdd extends React.Component {
     let value;
     if (uiVal) {
       if (typeof(Object.getPrototypeOf(uiVal).getTime) === 'function') {
-        value = moment(new Date(uiVal)).format("YYYY-MM-DD");
+        value = moment(new Date(uiVal)).format();
       } else {
         value = uiVal
       }
@@ -130,6 +130,10 @@ export default class SchoolAdd extends React.Component {
       if (data !== '') {
         return (
           <DatePicker
+            autoOk={true}
+            formatDate={ (obj) => {
+              return moment(new Date(obj)).format("MMMM YYYY")
+            }}
             value={new Date(school[name + 'Date'])}
             errorText={validationErrors[name + "Date"]}
             className="col-sm-5"
@@ -139,6 +143,10 @@ export default class SchoolAdd extends React.Component {
       )} else {
         return (
           <DatePicker
+            autoOk={true}
+            formatDate={ (obj) => {
+              return moment(new Date(obj)).format("MMMM YYYY")
+            }}
             errorText={validationErrors[name + "Date"]}
             className="col-sm-5"
             hintText={(name.charAt(0).toUpperCase() + name.slice(1)) + " Date"}
@@ -154,7 +162,11 @@ export default class SchoolAdd extends React.Component {
           onSubmit={this.handleSubmit}
         >
           <div>
-            <SchoolNameTypeahead initial={school.name} error={validationErrors.name} handleChange={this.handleSchoolName.bind(this)}/>
+            <SchoolNameTypeahead 
+              initial={school.name}
+              error={validationErrors.name}
+              handleChange={this.handleSchoolName.bind(this)}
+            />
             <div className='error'>{validationErrors.date}</div>
 
             {datePicker(school.startDate, 'start')}

@@ -39,19 +39,14 @@ export function get(req, res) {
 
 export function create(req, res) {
   
-  function createDateObj (date) {
-    const split = date.split('-');
-    return new Date(split[0], split[1], split[2])
-  };
-
   School.create({
     user_id: req.user._id,
     name: req.body.name,
     major: [req.body.major],
     minor: [req.body.minor],
-    degree: [req.body.degree],
-    startDate: createDateObj(req.body.startDate),
-    endDate: createDateObj(req.body.endDate),
+    degree: req.body.degree,
+    startDate: new Date(req.body.startDate),
+    endDate: new Date(req.body.endDate),
     current: req.body.current
   }, function (err, school) {
 
