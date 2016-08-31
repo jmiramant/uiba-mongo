@@ -1,0 +1,22 @@
+@import '../../common/colors';
+@import '../../common/button';
+@import '../profile';
+
+.skillList--container {
+  @apply --profile--container;
+}
+
+.skillItem--editBg {
+  background: rgb(188,188,188);
+  border-radius: 51px;
+  width: 18px;
+  height: 18px;
+  margin-left: 8px;
+  padding: 3px;
+}
+
+.skillItem--editIcon {
+  color: rgb(124, 124, 124);
+  width: 14px !important;
+  height: 14px !important;
+}

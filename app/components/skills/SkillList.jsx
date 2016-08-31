@@ -1,10 +1,13 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames/bind';
-import styles from 'css/components/profile/skillList';
+import styles from 'css/components/profile/skill';
 import moment from 'moment';
 import SkillItem from 'components/skills/SkillItem';
 import SkillAdd from 'components/skills/SkillAdd';
 import NullProfItem from 'components/ProfileNull';
+
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import AddIcon from 'material-ui/svg-icons/content/add';
 
 const cx = classNames.bind(styles);
 
@@ -21,8 +24,8 @@ export default class SkillList extends React.Component {
     this.state = { addVisibile: false } ;
   }
   
-  showAddSkill = () => {
-    this.setState({addVisibile: true})
+  toggleAddSkill = () => {
+    this.setState({addVisibile: !this.state.addVisibile})
   }
 
   handleSave = (data) => {
@@ -68,11 +71,15 @@ export default class SkillList extends React.Component {
           </span>
         )}
         { this.state.addVisibile ? (
-          <SkillAdd addVisibile={addVisibile} onSkillSave={this.handleSave} />
+          <SkillAdd toggleEdit={this.toggleAddSkill.bind(this)} addVisibile={addVisibile} onSkillSave={this.handleSave} />
         ) : (
-          <div>
-            <div onClick={this.showAddSkill} className='pull-right'>Add Skill</div>
-          </div>
+          <FloatingActionButton 
+            onClick={this.toggleAddSkill}
+            className={cx('schoolItem--add') + ' pull-right'}
+            mini={true}
+          >
+            <AddIcon />
+          </FloatingActionButton>
         ) }
       </div>
     )

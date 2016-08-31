@@ -3,6 +3,13 @@ import classNames from 'classnames/bind';
 import Select from 'react-select';
 import { containsErrors, validateJobFormHelper } from '../helpers/jobFormValidation';
 import styles from 'css/components/profile/jobItem';
+
+import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
+
 import moment from 'moment';
 import _ from 'lodash';
 
@@ -15,32 +22,14 @@ const intialSkillState = {
   frequency: '',
 }
 
-const proficiency = [
-  {label: 'Learning', value: 'learning'},
-  {label: 'Intermediate', value: 'intermediate'},
-  {label: 'Competent', value: 'competent'},
-  {label: 'Expert', value: 'expert'}
-];  
+const newSkillState = () => {
+  return JSON.parse(JSON.stringify(intialSkillState))
+}
 
-const lengthOfUse = [
-  {label: 'Less Than 1 Year', value: 0},
-  {label: '1-3 Years', value: 1},
-  {label: '3-5 Years', value: 3},
-  {label: '5-10 Years', value: 5},
-  {label: 'More Than 10 Years', value: 10}
-];  
-
-const frequency = [
-  {label: 'Daily', value: 'daily'},
-  {label: 'Weekly', value: 'weekly'},
-  {label: 'Monthly', value: 'monthly'},
-  {label: 'Yearly', value: 'yearly'}
-];  
-
-export default class SchoolAdd extends React.Component {
+export default class SkillAdd extends React.Component {
 
   static defaultProps = {
-    skill: _.clone(intialSkillState)
+    skill: newSkillState()
   }
 
   constructor(props) {
@@ -49,17 +38,16 @@ export default class SchoolAdd extends React.Component {
 
   state = {
     skill: { ...this.props.skill }, 
-    validate: _.clone(intialSkillState),
+    validationErrors: newSkillState()
   }
   
   handleSubmit = e => {
     e.preventDefault();
     if (!this.validate()) {
-
       this.props.onSkillSave(this.state.skill);
 
       this.setState({
-        skill: _.clone(intialSkillState),
+        skill: newSkillState()
       })
     
     }
@@ -72,14 +60,9 @@ export default class SchoolAdd extends React.Component {
     return false;
   }
 
-  handleChange = field => e => {
-    let value;
-    if (e.target) {
-      value = e.target.value      
-    } else {
-      value = e.value
-    }
-  
+  handleChange = field => (e, i, val) => {
+    const value = (val ? val : i)
+
     this.setState({
         skill: {
           ...this.state.skill,
@@ -89,71 +72,69 @@ export default class SchoolAdd extends React.Component {
   }
 
   render () {
-    const { validate, current } = this.state;
+    const { validate, 
+            current, 
+            skill,
+            validationErrors
+          } = this.state;
     return (
       <div>
         <form
           className="wrapper"
           onSubmit={this.handleSubmit}
         >
-          <div className="panel">
+          <TextField
+            value={skill.type}
+            errorText={validationErrors.type}
+            floatingLabelText="Skill"
+            onChange={this.handleChange('type')}
+          />
+          
+          <SelectField
+            errorText={validationErrors.proficiency}
+            onChange={this.handleChange('proficiency')}
+            value={skill.proficiency}
+            hintText='Proficiency'
+          >
+            <MenuItem value={'learning'} primaryText="Learning" />
+            <MenuItem value={'intermediate'} primaryText="Intermediate" />
+            <MenuItem value={'competent'} primaryText="Competent" />
+            <MenuItem value={'expert'} primaryText="Expert" />
+          </SelectField>
 
-            <div>{ validate.type }</div>
+          <SelectField
+            errorText={validationErrors.lengthOfUse}
+            onChange={this.handleChange('lengthOfUse')}
+            value={skill.lengthOfUse}
+            hintText='Length of Use'
+          >
+            <MenuItem value={0} primaryText="Less Than 1 Year" />
+            <MenuItem value={1} primaryText="1-3 Years" />
+            <MenuItem value={3} primaryText="3-5 Years" />
+            <MenuItem value={5} primaryText="5-10 Years" />
+            <MenuItem value={10} primaryText="More Than 10 Years" />
+          </SelectField>
 
-            <div className="form-group row">
-              <label htmlFor="type" className="col-xs-2 col-form-label">Skill</label>
-              <div className="col-xs-5">
-                <input onChange={this.handleChange('type')}  className="form-control" type="text" id="type" />
-              </div>
-            </div>
-            
-            <div className="form-group row">
-              <label htmlFor="proficiency" className="col-xs-2 col-form-label">Proficiency</label>
-              <div className="col-xs-10">
-
-                <Select
-                    name="proficiency"
-                    value="one"
-                    options={proficiency}
-                    onChange={this.handleChange('proficiency')}
-                />
-              </div>
-            </div>
-
-            <div className="form-group row">
-              <label htmlFor="lengthOfUse" className="col-xs-2 col-form-label">Length Of Use</label>
-              <div className="col-xs-10">
-
-                <Select
-                    name="lengthOfUse"
-                    value="one"
-                    options={lengthOfUse}
-                    onChange={this.handleChange('lengthOfUse')}
-                />
-              </div>
-            </div>
-
-            <div className="form-group row">
-              <label htmlFor="frequency" className="col-xs-2 col-form-label">Frequency</label>
-              <div className="col-xs-10">
-
-                <Select
-                    name="frequency"
-                    value="one"
-                    options={frequency}
-                    onChange={this.handleChange('frequency')}
-                />
-              </div>
-            </div>
-
-            <button
-              className="btn"
-              type="submit"
-            >
-             Save
-            </button>
-
+          <SelectField
+            errorText={validationErrors.frequency}
+            onChange={this.handleChange('frequency')}
+            value={skill.frequency}
+            hintText='Frequency of Use'
+          >
+            <MenuItem value={'daily'} primaryText="Daily" />
+            <MenuItem value={'weekly'} primaryText="Weekly" />
+            <MenuItem value={'monthly'} primaryText="Monthly" />
+            <MenuItem value={'yearly'} primaryText="Yearly" />
+          </SelectField>
+          
+          <div className={cx('profile-btn-group')}>
+            <RaisedButton className='pull-right' type="submit" label="Save" primary={true} />
+            {this.props.handleDelete ? (
+              <FlatButton className='pull-left' label="Delete" onClick={this.props.handleDelete} primary={true} />
+            ) : (<span />)}
+            <FlatButton className='pull-left' label="Close" onClick={this.props.toggleEdit} primary={true} />
           </div>
+
         </form>
       </div>
     )

@@ -1,9 +1,15 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames/bind';
+
 import Select from 'react-select';
-import styles from 'css/components/profile/jobItem';
+import Chip from 'material-ui/Chip';
+import Popover from 'material-ui/Popover';
+import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
+
+import styles from 'css/components/profile/skill';
 import { containsErrors, validateJobFormHelper } from '../helpers/jobFormValidation';
 import moment from 'moment';
+import SkillAdd from 'components/skills/SkillAdd';
 
 const cx = classNames.bind(styles);
 const intialSkillState = {
@@ -51,7 +57,8 @@ export default class SkillItem extends React.Component {
     current: this.props.skill.current,
     persistedSkill: { ...this.props.skill }, 
     edit: false,
-    validate: _.clone(intialSkillState)
+    validate: _.clone(intialSkillState),
+    open: false
   }
 
   toggleEdit () {
@@ -63,23 +70,29 @@ export default class SkillItem extends React.Component {
 
   }
 
-  saveEdit () {
-    if (!this.isDataValid()) {
-      this.props.saveSkillEdit(this.state.skill)
-      this.toggleEdit()
-    }
+  saveEdit (skill) {
+    this.props.saveSkillEdit(skill)
+    this.toggleEdit()
   }
 
   handleDelete () {
     this.props.handleDelete(this.state.skill)
   }
 
-  isDataValid() {
-    // const validationResp = validateSkillFormHelper(_.clone(intialSkillState), this.state);
-    // this.setState({validate: validationResp.error});
-    // return containsErrors(validationResp.error)
-    return false
-  }
+  handleHover = (event) => {
+    event.preventDefault();
+
+    this.setState({
+      open: true,
+      anchorEl: event.currentTarget,
+    });
+  };
+  
+  handleRequestClose = (e) => {
+    this.setState({
+      open: false,
+    });  
+  };
   
   handleChange = field => e => {
     
@@ -122,69 +135,29 @@ export default class SkillItem extends React.Component {
     if (this.state.edit) {
 
       return (
-        <div className={cx('skillItem--container')}>
-          {errorMsgs}
-
-          <input 
-            type='text'
-            value={this.state.skill.type}
-            onChange={this.handleChange('type')}
-            className={ cx('skillEdit--name')}
-            id="type"  />
-
-          <Select
-              name="proficiency"
-              value="one"
-              options={proficiency}
-              onChange={this.handleChange('proficiency')}
-          />
-
-          <Select
-              name="lengthOfUse"
-              value="one"
-              options={lengthOfUse}
-              onChange={this.handleChange('lengthOfUse')}
-          />
-
-          <Select
-              name="frequency"
-              value="one"
-              options={frequency}
-              onChange={this.handleChange('frequency')}
-          />
-
-          <div className={ cx('skillEdit--controls') }>
-            <div className={ cx('skillEdit--buttons') + ' pull-left'} onClick={this.toggleEdit.bind(this)}>Close</div>
-            <div className={ cx('skillEdit--buttons', 'skillEdit--button-delete')} onClick={this.handleDelete.bind(this)}>Delete</div>
-            <div className={ cx('skillEdit--buttons') + ' pull-right'} onClick={this.saveEdit.bind(this)}>Save</div>
-          </div>
-          <div className={cx('skillItem--spacer')}></div>
-        </div>
+        <SkillAdd
+          onSkillSave={this.saveEdit.bind(this)}
+          skill={this.state.skill}
+          handleDelete={this.handleDelete.bind(this)}
+          toggleEdit={this.toggleEdit.bind(this)}
+        />
       )
     
     } else {
 
       return (
-        <div className={cx('skillItem--container')} onDoubleClick={this.toggleEdit.bind(this)}>
-          <div onClick={this.toggleEdit.bind(this)} className={cx('skillItem--edit')}></div>
-          <p className={cx("jobItem--header")}><span className={ cx('jobItem--name')}>{skill.type}</span></p>
-          
-          <div>
-            <div>Frequency</div>
-            <p className={cx("skillItem--frequency")}>{ skill.frequency } </p>
-          </div>
-
-          <div>
-            <div>Length of Use</div>
-            <p className={cx("skillItem--length")}>{ skill.lengthOfUse } </p>
-          </div>
-          <div>
-            <div>Proficiency</div>
-            <p className={cx("skillItem--proficiency")}>{ skill.proficiency } </p>
-          </div>
-
-          <div className={cx('skillItem--spacer')}></div>
-        </div>
+        <Chip>
+          {skill.type} 
+          <span 
+            onClick={this.toggleEdit.bind(this)}
+            className={cx('skillItem--editBg')}
+          >
+            <EditIcon
+              color='#E0E0E0'
+              className={cx('skillItem--editIcon')}
+            />
+          </span>
+        </Chip>
       )
 
     }
