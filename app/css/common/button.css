@@ -19,13 +19,14 @@
 
   --drkBlueButton {
     @apply --button;
-    color: var(--colorWhite);
-    background: var(--colorBackground-darkBlue);
+    color: var(--colorBackground-darkBlue);
+    background: var(--colorWhite);
     border-color: var(--colorLightText);
 
     &:hover {
-      background: var(--colorLightText);
-      border-color: var(--colorBackground-darkBlue);
+      background: var(--colorBackground-darkBlue);
+      border-color: var(--colorLightText);
+      color: var(--colorWhite);
       text-decoration: none !important;
     }
   }

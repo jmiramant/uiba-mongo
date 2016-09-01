@@ -11,6 +11,7 @@
 
 .spalsh--section-title {
   @apply --splashSectionTitle;
+  color: color(var(--colorLightGray) blackness(+40%));
 }
 
 .section--title-underline {
@@ -70,6 +71,7 @@
 }
 
 .works--title {
+  color: var(--colorDarkBlue);
   font-size: 22px;
 }
 

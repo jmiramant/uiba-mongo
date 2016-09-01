@@ -25,34 +25,27 @@ export default class SplashSucceed extends React.Component {
   render() {
     return (
       <div>
-        <h1 className={cx('spalsh--section-title') + ' col-md-12'}>Let's Find Your Path <hr className={cx('section--title-underline') + ' hidden-xs'}/> </h1>
+        <h1 className={cx('spalsh--section-title') + ' col-md-12'}>FIND YOUR PATH <hr className={cx('section--title-underline') + ' hidden-xs'}/> </h1>
         <Carousel indicators={false}>
           <CItem className={cx('carousel--item')}>
-            <div className={cx('carousel--img-border', 'carousel--img-border-yellow')}><img className={cx('spalsh--carousel-img')} width={125} height={125} alt="125X125" src={imgMicrophone}/></div>
+            <div className={cx('carousel--img-border', 'carousel--img-border-yellow')}><img className={cx('spalsh--carousel-img')} width={109} height={109} alt="109X109" src={imgMicrophone}/></div>
             <CCaption className={cx('carousel--caption')}>
-              <h3 className={cx('carousel--item-title')}>1. Let's Get to Know You</h3>
+              <h3 className={cx('carousel--item-title')}>1. Getting to Know You</h3>
               <p className={cx('carousel--item-sub')}>First, let's make sure we understand your experience, knowledge, abilities - everything that makes you so unique and amazing!</p>
             </CCaption>
           </CItem>
           <CItem className={cx('carousel--item')}>
-            <div className={cx('carousel--img-border', 'carousel--img-border-red')}><img className={cx('spalsh--carousel-img')} width={125} height={125} alt="125X125" src={imgGrid} /></div>
+            <div className={cx('carousel--img-border', 'carousel--img-border-red')}><img className={cx('spalsh--carousel-img')} width={109} height={109} alt="109X109" src={imgGrid} /></div>
             <CCaption className={cx('carousel--caption')}>
-              <h3 className={cx('carousel--item-title')}>2. Let's Understand Your Capabilities</h3>
-              <p className={cx('carousel--item-sub')}>Next, let's use that information to assess the full extent of your capabilities.</p>
+              <h3 className={cx('carousel--item-title')}>2. Understanding Your Capabilities</h3>
+              <p className={cx('carousel--item-sub')}>Now let's compare your capabilities with the requirements of various roles along different career paths to being building your future today.</p>
             </CCaption>
           </CItem>
           <CItem className={cx('carousel--item')}>
-            <div className={cx('carousel--img-border', 'carousel--img-border-blue')}><img className={cx('spalsh--carousel-img')} width={125} height={125} alt="125X125" src={imgMap} /></div>
+            <div className={cx('carousel--img-border', 'carousel--img-border-blue')}><img className={cx('spalsh--carousel-img')} width={109} height={109} alt="109X109" src={imgMap} /></div>
             <CCaption className={cx('carousel--caption')}>
-              <h3 className={cx('carousel--item-title')}>3. Find Your Path</h3>
+              <h3 className={cx('carousel--item-title')}>3. Finding Your Path</h3>
               <p className={cx('carousel--item-sub')}>Then let's see how your capabilities compare with the requirements of various roles along different career paths.</p>
-            </CCaption>
-          </CItem>
-          <CItem className={cx('carousel--item')}>
-            <div className={cx('carousel--img-border', 'carousel--img-border-red')}><img className={cx('spalsh--carousel-img')} width={125} height={125} alt="125X125" src={imgYing} /></div>
-            <CCaption className={cx('carousel--caption')}>
-              <h3 className={cx('carousel--item-title')}>4. Let's Journey Together</h3>
-              <p className={cx('carousel--item-sub')}>Now join a community that shares the wisdom and insight of experience to help you achieve your goals while helping others achieve theirs.</p>
             </CCaption>
           </CItem>
         </Carousel>

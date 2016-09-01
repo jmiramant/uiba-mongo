@@ -36,9 +36,9 @@ export default class SplashNumbers extends React.Component {
             </div>
           </div>
           <div className={cx('numbers--right')}>
-            <h3 className={cx('numbers--num-title', 'red')}>1%</h3>
-            <div>At one client, 1% was the norm: 100 interview candidates were rejected for each person hired.</div>
-            <div>Uiba’s result: 100% - 10 candidates recommended, 10 offers to hire.</div>
+            <h3 className={cx('numbers--num-title', 'red')}>1% to 100%</h3>
+            <div>At one client, 100 interview candidates were rejected per person hired.</div>
+            <div>With Uiba: 10 candidates recommended, 10 offers to hire.</div>
           </div>
         </div>        
 
@@ -46,9 +46,9 @@ export default class SplashNumbers extends React.Component {
 
         <div className={cx('numbers--item') + " col-md-offset-2 col-md-8"}>
           <div className={cx('numbers--left')}>
-            <h3 className={cx('numbers--num-title', 'red')}>40,000</h3>
-            <div>At another client, 40,000 applications were received for a single position. Over 99% weren’t reviewed. Of those that were none were considered qualified.</div>
-            <div>Uiba’s result: all 40,000 reviewed in seconds, dozens of ideal candidates identified, 5 recommended, 1 hired.</div>
+            <h3 className={cx('numbers--num-title', 'red')}>40,000 to 1</h3>
+            <div>At one client, 40,000 applications received for single role, 99% weren’t reviewed, the rest deemed unqualified.</div>
+            <div>With Uiba: all 40,000 reviewed, dozens of ideal candidates identified, 5 recommended, 1 hired.</div>
           </div>
           <div className={cx('numbers--right') + ' hidden-xs'}>
             <div className={cx('numbers--icon-bg')}>
@@ -73,7 +73,7 @@ export default class SplashNumbers extends React.Component {
         <div className={cx('numbers--item') + " col-md-offset-2 col-md-8"}>
           <div className={cx('numbers--left')}>
             <h3 className={cx('numbers--num-title', 'red')}>30%</h3>
-            <div>With most clients, Uiba delivers a 30% productivity gain resulting in millions of dollars earned.</div>
+            <div>With most clients, Uiba delivers a 30% gain in productivity resulting in millions of dollars earned.</div>
           </div>
           <div className={cx('numbers--right') + ' hidden-xs'}>
               <div className={cx('numbers--icon-bg')}>
