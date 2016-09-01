@@ -1,30 +1,22 @@
 import React, { PropTypes } from 'react';
-import update from 'react-addons-update'
-import classNames from 'classnames/bind';
-import styles from 'css/components/profile/school';
-import SchoolNameTypeahead from '../../containers/Typeahead';
-import { containsErrors, validateJobFormHelper } from '../helpers/jobFormValidation';
-import moment from 'moment';
+
 import SchoolAdd from 'components/schools/SchoolAdd';
+import SchoolNameTypeahead from '../../containers/Typeahead';
 
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import Divider from 'material-ui/Divider';
 
+import moment from 'moment';
+import classNames from 'classnames/bind';
+import styles from 'css/components/profile/school';
 const cx = classNames.bind(styles);
-const intialSchoolState = {
-    name: '', 
-    major: '',
-    minor: '',
-    degree: '',
-    startDate: '',
-    endDate: '',
-    current: false
-  }
 
 export default class SchoolItem extends React.Component {
   
   static propTypes = {
+    school: PropTypes.object.isRequired, 
+    schoolChange: PropTypes.object.isRequired,
     saveSchoolEdit: PropTypes.func,
     handleDelete: PropTypes.func
   }
@@ -34,11 +26,8 @@ export default class SchoolItem extends React.Component {
   }
 
   state = {
-    school: { ...this.props.school }, 
-    current: this.props.school.current,
-    persistedSchool: { ...this.props.school }, 
+    validationErrors: {},
     edit: false,
-    validate: _.clone(intialSchoolState)
   }
 
   toggleEdit () {
@@ -51,12 +40,15 @@ export default class SchoolItem extends React.Component {
   }
 
   handleDelete () {
-    this.props.handleDelete(this.state.school)
+    this.props.handleDelete(this.props.school)
   }
 
   render () {
-    const { isntLast, school } = this.props;
-    const { validate, current } = this.state;
+    const { 
+            isntLast, 
+            school, 
+            schoolChange
+          } = this.props;
 
     const addComma = (v, i, ct) => {
       if ((i+1) === ct.length) {
@@ -70,9 +62,10 @@ export default class SchoolItem extends React.Component {
 
       return (
         <SchoolAdd
+          school={school}
+          schoolChange={schoolChange}
           addVisibile={false}
           onSchoolSave={this.saveEdit.bind(this)}
-          school={this.state.school}
           handleDelete={this.handleDelete.bind(this)}
           toggleEdit={this.toggleEdit.bind(this)}
         />
@@ -88,7 +81,7 @@ export default class SchoolItem extends React.Component {
             onClick={this.toggleEdit.bind(this)}
             className={cx("schoolItem--edit") + ' pull-right'}
           />
-          <h4 className={cx("schoolItem--header")}>{school.name} | { current ? ( 'Current' ) : ( moment(school.endDate).format('YYYY')) }</h4>
+          <h4 className={cx("schoolItem--header")}>{school.name} | { school.current ? ( 'Current' ) : ( moment(school.endDate).format('YYYY')) }</h4>
           <p className={cx("schoolItem--subHeader")}>{ school.major[0] } | { school.degree }</p>
         </div>
       )

@@ -1,18 +1,20 @@
-import { setValidationErrorObject } from './CommonFormValidations';
+import { setValidationErrorObject,
+         containsErrors } from './CommonFormValidations';
 import moment from 'moment';
 import _ from 'lodash';
 
-export function validateSkillHelper (obj, state) {
+export function validateSkillHelper (skill, errorStore) {
   const cantBeNull = ['type', 'frequency', 'lengthOfUse', 'proficiency']
-  const { skill } = state;
-  var error = setValidationErrorObject(obj);
+  var errors = setValidationErrorObject(errorStore);
   
   _.forEach(cantBeNull, (v, i) => {
-    if (!obj[v] || obj[v] === '') {
-      error[v] = 'Please add a ' + v + '.';
+    if (!skill[v] || skill[v] === '') {
+      errors[v] = 'Please add a ' + v + '.';
     } 
   }) 
-  return { 
-    error
+  
+  return {
+    errors,
+    containsErrors: containsErrors(errors)
   }
 }

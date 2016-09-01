@@ -1,18 +1,15 @@
 import React, { PropTypes } from 'react';
-import classNames from 'classnames/bind';
-import SkillAdd from 'components/skills/SkillAdd';
 
-import { containsErrors } from '../helpers/CommonFormValidations';
-import { validateSkillHelper } from '../helpers/skillValidations';
+import SkillAdd from 'components/skills/SkillAdd';
 
 import Select from 'react-select';
 import Chip from 'material-ui/Chip';
 import Popover from 'material-ui/Popover';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 
-import styles from 'css/components/profile/skill';
 import moment from 'moment';
-
+import classNames from 'classnames/bind';
+import styles from 'css/components/profile/skill';
 const cx = classNames.bind(styles);
 
 export default class SkillItem extends React.Component {
@@ -36,17 +33,9 @@ export default class SkillItem extends React.Component {
     this.setState({edit: !this.state.edit})
   }
   
-  validate() {
-    const validationResp = validateSkillHelper(this.props.skill, this.state);
-    this.setState({validationErrors: validationResp.error});
-    return containsErrors(validationResp.error);
-  }
-
   saveEdit (skill) {
-    if (!this.validate()) {
-      this.props.saveSkillEdit(skill)
-      this.toggleEdit()
-    }
+    this.props.saveSkillEdit(skill)
+    this.toggleEdit()
   }
 
   handleDelete () {

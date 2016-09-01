@@ -63,7 +63,9 @@ class Profile extends Component {
             onJobDelete={jobActions.deleteJob} 
           />
           <Schools 
-            schools={schools} 
+            schools={schools.schools} 
+            addVisibile={schools.addShow}
+            toggleSchoolAdd={schoolActions.toggleSchoolAdd}
             onEditSave={schoolActions.updateSchool} 
             onSchoolSave={schoolActions.createSchool} 
             onSchoolDelete={schoolActions.deleteSchool} 
@@ -96,7 +98,7 @@ class Profile extends Component {
 
 function mapStateToProps(state) {
   return {
-    schools: state.school.schools,
+    schools: state.school,
     jobs: state.job.jobs,
     profile: state.profile.currentProfile,
     skills: state.skill,

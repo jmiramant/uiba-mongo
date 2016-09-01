@@ -5,6 +5,33 @@ import * as types from 'types';
 
 polyfill();
 
+export function newSchool() {
+  return {
+    type: types.NEW_SCHOOL,
+  };
+}
+
+export function schoolChange(state) {
+  return {
+    type: types.CHANGE_SCHOOL,
+    state
+  };
+}
+
+export function schoolsChange(state) {
+  return {
+    type: types.CHANGE_SCHOOLS,
+    state
+  };
+}
+
+export function toggleSchoolAdd (data) {
+  return {
+    type: types.TOGGLE_SCHOOL_ADD,
+    data: data
+  };
+}
+
 function makeSchoolsRequest(method, data, api = '/schools') {
   return request[method](api, data);
 }

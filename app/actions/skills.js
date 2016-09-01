@@ -5,6 +5,33 @@ import * as types from 'types';
 
 polyfill();
 
+export function newSkill() {
+  return {
+    type: types.NEW_SKILL,
+  };
+}
+
+export function skillChange(state) {
+  return {
+    type: types.CHANGE_SKILL,
+    state
+  };
+}
+
+export function skillsChange(state) {
+  return {
+    type: types.CHANGE_SKILLS,
+    state
+  };
+}
+
+export function toggleSkillAdd (data) {
+  return {
+    type: types.TOGGLE_SKILL_ADD,
+    data: data
+  };
+}
+
 function makeSkillsRequest(method, data, api = '/skills') {
   return request[method](api, data);
 }
@@ -90,34 +117,6 @@ export function updateSkill(skillData) {
       });
   }
 
-}
-
-export function newSkill() {
-  return {
-    type: types.NEW_SKILL,
-  };
-}
-
-export function skillChange(state) {
-  return {
-    type: types.CHANGE_SKILL,
-    state
-  };
-}
-
-export function skillsChange(state) {
-  return {
-    type: types.CHANGE_SKILLS,
-    state
-  };
-}
-
-
-export function toggleSkillAdd (data) {
-  return {
-    type: types.TOGGLE_SKILL_ADD,
-    data: data
-  };
 }
 
 export function deleteSkillRequest (data) {

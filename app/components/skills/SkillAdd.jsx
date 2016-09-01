@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 
-import { containsErrors } from '../helpers/CommonFormValidations';
 import { validateSkillHelper } from '../helpers/skillValidations';
 
 import classNames from 'classnames/bind';
@@ -43,9 +42,9 @@ export default class SkillAdd extends React.Component {
   }
   
   validate() {
-    const validationResp = validateSkillHelper(this.props.skill, this.state);
-    this.setState({validationErrors: validationResp.error});
-    return containsErrors(validationResp.error);
+    const errorStore = validateSkillHelper(this.props.skill, this.state.validationErrors);
+    this.setState({validationErrors: errorStore.errors});
+    return errorStore.containsErrors;
   }
 
   handleChange = field => (e, i, val) => {
@@ -61,7 +60,7 @@ export default class SkillAdd extends React.Component {
 
   render () {
     
-    const { current, 
+    const {
             validationErrors
           } = this.state;
 

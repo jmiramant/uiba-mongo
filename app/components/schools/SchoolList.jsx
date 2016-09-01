@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
-import classNames from 'classnames/bind';
-import styles from 'css/components/profile/school';
-import moment from 'moment';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as schoolsActionCreators from 'actions/schools';
+
 import SchoolItem from 'components/schools/SchoolItem';
 import SchoolAdd from 'components/schools/SchoolAdd';
 import NullProfItem from 'components/ProfileNull';
@@ -9,33 +10,37 @@ import NullProfItem from 'components/ProfileNull';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import AddIcon from 'material-ui/svg-icons/content/add';
 
+import classNames from 'classnames/bind';
+import styles from 'css/components/profile/school';
+import moment from 'moment';
 const cx = classNames.bind(styles);
 
-export default class SchoolList extends React.Component {
+class SchoolList extends React.Component {
   
   static propTypes = {
     schools: PropTypes.array,
-    onSchoolSave: PropTypes.func.isRequired
+    addVisibile: PropTypes.bool.isRequired,
+    onEditSave: PropTypes.func.isRequired,
+    toggleSchoolAdd: PropTypes.func.isRequired,
+    onSchoolSave: PropTypes.func.isRequired,
+    onSchoolDelete: PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props);
-    //this.handleSave = this.handleSave.bind(this);
-    this.state = { addVisibile: false } ;
   }
   
-  toggleAddVisible = () => {
-    this.setState({addVisibile: !this.state.addVisibile})
+  toggleAddSchool = () => {
+    this.props.toggleSchoolAdd(this.props.addVisibile)
   }
 
   handleSave = (data) => {
     this.props.onSchoolSave(data);
-    this.setState({addVisibile: false})
+    this.props.toggleSchoolAdd(this.props.addVisibile)
   }
 
   handleEditSave = (data) => {
     this.props.onEditSave(data);
-    this.setState({addVisibile: false})
   }
 
   handleDelete = (school) => {
@@ -43,18 +48,22 @@ export default class SchoolList extends React.Component {
   }
 
   render () {
-    let { schools } = this.props;
+    let { school,
+          schools,
+          addVisibile,
+          actions
+        } = this.props;
     let lengthIndex = schools.length - 1;
-    const { addVisibile } = this.state;
 
     const renderItems = (
       <div>
         {schools.map((school, i) => {
             return (<SchoolItem
                       key={school._id} 
-                      saveSchoolEdit={this.handleEditSave} 
-                      handleDelete={this.handleDelete}
                       school={school} 
+                      schoolChange={actions.schoolsChange}
+                      handleDelete={this.handleDelete}
+                      saveSchoolEdit={this.handleEditSave} 
                       isntLast={lengthIndex !== i} />);
         })}
       </div>
@@ -73,12 +82,18 @@ export default class SchoolList extends React.Component {
           </span>
         )}
 
-        { this.state.addVisibile ? (
-          <SchoolAdd toggleEdit={this.toggleAddVisible.bind(this)} addVisibile={addVisibile} onSchoolSave={this.handleSave} />
+        { addVisibile ? (
+          <SchoolAdd 
+            school={school}
+            schoolChange={actions.schoolChange}
+            toggleEdit={this.toggleAddSchool.bind(this)} 
+            addVisibile={addVisibile} 
+            onSchoolSave={this.handleSave} 
+          />
         ) : (
           <div>
             <FloatingActionButton 
-              onClick={this.toggleAddVisible}
+              onClick={this.toggleAddSchool}
               className={cx('schoolItem--add') + ' pull-right'}
               mini={true}
             >
@@ -90,3 +105,20 @@ export default class SchoolList extends React.Component {
     )
   }
 };
+
+function mapStateToProps(state) {
+  return {
+    school: state.school.school
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    actions: bindActionCreators(schoolsActionCreators, dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SchoolList);

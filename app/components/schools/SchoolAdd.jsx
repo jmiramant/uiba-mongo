@@ -1,13 +1,8 @@
 import React, { PropTypes } from 'react';
-import classNames from 'classnames/bind';
-import Select from 'react-select';
 import SchoolNameTypeahead from '../../containers/Typeahead';
 
-import { containsErrors, setValidationErrorObject } from '../helpers/CommonFormValidations';
-import { validateSchoolFormHelper } from '../helpers/schoolFormValidations';
-
-import styles from 'css/components/profile/school';
-import areIntlLocalesSupported from 'intl-locales-supported';
+import { containsErrors } from '../helpers/CommonFormValidations';
+import { validateSchoolHelper } from '../helpers/schoolValidations';
 
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
@@ -21,22 +16,18 @@ import Divider from 'material-ui/Divider';
 import moment from 'moment';
 import _ from 'lodash';
 
+import styles from 'css/components/profile/school';
+import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
-
-const intialSchoolState = {
-    name: '', 
-    major: '',
-    minor: '',
-    degree: '',
-    startDate: '',
-    endDate: '',
-    current: false
-  }
 
 export default class SchoolAdd extends React.Component {
 
-  static defaultProps = {
-    school: JSON.parse(JSON.stringify(intialSchoolState))
+  static propTypes = {
+    school: PropTypes.object.isRequired,
+    schoolChange: PropTypes.func.isRequired,
+    toggleEdit: PropTypes.func.isRequired,
+    addVisible: PropTypes.bool,
+    onSchoolSave: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -44,41 +35,36 @@ export default class SchoolAdd extends React.Component {
   }
 
   state = {
-    school: { ...this.props.school }, 
-    validationErrors: setValidationErrorObject(intialSchoolState),
-    current: this.props.school.current
+    validationErrors: {},
   }
   
   handleSubmit = e => {
     e.preventDefault();
-
     if (!this.validate()) {
-      this.props.onSchoolSave(this.state.school);
+      this.props.onSchoolSave(this.props.school);
     }
   }
   
   validate() {
-    const validationResp = validateSchoolFormHelper(intialSchoolState, this.state);
-    this.setState({validationErrors: validationResp.error});
-    return containsErrors(validationResp.error);
+    const validationResp = validateSchoolHelper(this.props.school, this.state.validationErrors);
+    this.setState({validationErrors: validationResp.errors});
+    return validationResp.containsErrors;
   }
 
-  handleSchoolName = e => {
-    this.setState({
-        school: {
-          ...this.state.school,
-          name : e
-        }
-    });
+  handleSchoolName = val => {
+    this.props.schoolChange({
+      field: 'name',
+      value: val,
+      id: this.props.school._id
+    });   
   }
 
   handleDegree = (e, i, val) => {
-    this.setState({
-        school: {
-          ...this.state.school,
-          degree : val
-        }
-    });
+    this.props.schoolChange({
+      field: 'degree',
+      value: val,
+      id: this.props.school._id
+    });  
   }
 
   handleChange = field => (e, uiVal) => {
@@ -96,38 +82,36 @@ export default class SchoolAdd extends React.Component {
     }
 
     if (e && e.target && e.target.type === 'checkbox') {
-      value = this.state.current
-      this.setState({
-        current: !this.state.current,
-        school: {
-            ...this.state.school,
-          [field] : !this.state.current
-        }
-      })
+      this.props.schoolChange({
+        field: 'current',
+        value: !this.props.school.current,
+        id: this.props.school._id
+      });  
     } else {
       
       if (['major', 'minor'].includes(field)) {
         value = value.split(',');
       }
 
-      this.setState({
-          school: {
-            ...this.state.school,
-          [field] : value
-          }
-      });
+      this.props.schoolChange({
+        field: field,
+        value: value,
+        id: this.props.school._id
+      });  
     }
   }
 
   render () {
-    const { 
-            validationErrors,
-            current, 
-            school
+    const {
+            validationErrors
           } = this.state;
+
+    const {
+            school,
+          } = this.props;
     
     const datePicker = (data, name)  => {
-      if (data !== '') {
+      if (data && data !== '') {
         return (
           <DatePicker
             autoOk={true}
@@ -171,7 +155,7 @@ export default class SchoolAdd extends React.Component {
 
             {datePicker(school.startDate, 'start')}
 
-            { !current ? (
+            { !school.current ? (
                 datePicker(school.endDate, 'end')
             ) : (<span />)}
   
