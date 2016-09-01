@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
-import classNames from 'classnames/bind';
-import styles from 'css/components/profile/skill';
-import moment from 'moment';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as skillsActionCreators from 'actions/skills';
+
 import SkillItem from 'components/skills/SkillItem';
 import SkillAdd from 'components/skills/SkillAdd';
 import NullProfItem from 'components/ProfileNull';
@@ -9,28 +10,33 @@ import NullProfItem from 'components/ProfileNull';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import AddIcon from 'material-ui/svg-icons/content/add';
 
+import styles from 'css/components/profile/skill';
+import classNames from 'classnames/bind';
+import moment from 'moment';
 const cx = classNames.bind(styles);
 
-export default class SkillList extends React.Component {
+class SkillList extends React.Component {
   
   static propTypes = {
     skills: PropTypes.array,
-    onSkillSave: PropTypes.func.isRequired
+    onSkillSave: PropTypes.func.isRequired,
+    addVisibile: PropTypes.bool.isRequired,
+    toggleSkillAdd: PropTypes.func.isRequired,
+    onEditSave: PropTypes.func.isRequired,
+    onSkillDelete: PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props);
-    this.handleSave = this.handleSave.bind(this);
-    this.state = { addVisibile: false } ;
   }
   
   toggleAddSkill = () => {
-    this.setState({addVisibile: !this.state.addVisibile})
+    this.props.toggleSkillAdd(this.props.addVisibile)
   }
 
   handleSave = (data) => {
     this.props.onSkillSave(data);
-    this.setState({addVisibile: false})
+    this.props.toggleSkillAdd(this.props.addVisibile)
   }
 
   handleEditSave = (data) => {
@@ -42,19 +48,23 @@ export default class SkillList extends React.Component {
   }
 
   render () {
-    let { skills } = this.props;
-    let lengthIndex = skills.length - 1;
-    const { addVisibile } = this.state;
-
+    const { skill,
+            skills,
+            addVisibile,
+            actions,
+          } = this.props;
+    const lengthIndex = skills.length - 1;
     const renderItems = (
       <div>
         {skills.map((skill, i) => {
-            return (<SkillItem 
-                      key={skill._id} 
-                      saveSkillEdit={this.handleEditSave} 
-                      handleDelete={this.handleDelete}
-                      skill={skill} 
-                      isntLast={lengthIndex !== i} />);
+          return (<SkillItem 
+                    key={skill._id} 
+                    skill={skill} 
+                    skillChange={actions.skillsChange}
+                    handleDelete={this.handleDelete}
+                    saveSkillEdit={this.handleEditSave} 
+                    isntLast={lengthIndex !== i} 
+                  />);
         })}
       </div>
     )
@@ -70,8 +80,14 @@ export default class SkillList extends React.Component {
             <NullProfItem target="skill" />
           </span>
         )}
-        { this.state.addVisibile ? (
-          <SkillAdd toggleEdit={this.toggleAddSkill.bind(this)} addVisibile={addVisibile} onSkillSave={this.handleSave} />
+        { addVisibile ? (
+          <SkillAdd
+            skill={skill}
+            skillChange={actions.skillChange}
+            toggleEdit={this.toggleAddSkill.bind(this)} 
+            addVisibile={addVisibile} 
+            onSkillSave={this.handleSave} 
+          />
         ) : (
           <FloatingActionButton 
             onClick={this.toggleAddSkill}
@@ -85,3 +101,20 @@ export default class SkillList extends React.Component {
     )
   }
 };
+
+function mapStateToProps(state) {
+  return {
+    skill: state.skill.skill
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    actions: bindActionCreators(skillsActionCreators, dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SkillList);

@@ -92,6 +92,34 @@ export function updateSkill(skillData) {
 
 }
 
+export function newSkill() {
+  return {
+    type: types.NEW_SKILL,
+  };
+}
+
+export function skillChange(state) {
+  return {
+    type: types.CHANGE_SKILL,
+    state
+  };
+}
+
+export function skillsChange(state) {
+  return {
+    type: types.CHANGE_SKILLS,
+    state
+  };
+}
+
+
+export function toggleSkillAdd (data) {
+  return {
+    type: types.TOGGLE_SKILL_ADD,
+    data: data
+  };
+}
+
 export function deleteSkillRequest (data) {
   return {
     type: types.DELETE_SKILL_REQUEST,
@@ -115,7 +143,6 @@ export function deleteSkillFailure (data) {
 
 export function deleteSkill(skill) {
   return (dispatch) => {
-
     dispatch(deleteSkillRequest(skill));
 
     return makeSkillsRequest('delete', skill, '/skill/' + skill._id)

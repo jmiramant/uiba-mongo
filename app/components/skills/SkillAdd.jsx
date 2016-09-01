@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react';
+
+import { containsErrors } from '../helpers/CommonFormValidations';
+import { validateSkillHelper } from '../helpers/skillValidations';
+
 import classNames from 'classnames/bind';
-import Select from 'react-select';
-import { containsErrors, validateJobFormHelper } from '../helpers/jobFormValidation';
 import styles from 'css/components/profile/jobItem';
 
 import TextField from 'material-ui/TextField';
@@ -15,21 +17,14 @@ import _ from 'lodash';
 
 const cx = classNames.bind(styles);
 
-const intialSkillState = {
-  type: '', 
-  proficiency: '',
-  lengthOfUse: '',
-  frequency: '',
-}
-
-const newSkillState = () => {
-  return JSON.parse(JSON.stringify(intialSkillState))
-}
-
 export default class SkillAdd extends React.Component {
-
-  static defaultProps = {
-    skill: newSkillState()
+  
+  static propTypes = {
+    skill: PropTypes.object.isRequired,
+    skillChange: PropTypes.func.isRequired,
+    toggleEdit: PropTypes.func.isRequired,
+    addVisible: PropTypes.bool,
+    onSkillSave: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -37,46 +32,43 @@ export default class SkillAdd extends React.Component {
   }
 
   state = {
-    skill: { ...this.props.skill }, 
-    validationErrors: newSkillState()
+    validationErrors: {}
   }
   
   handleSubmit = e => {
     e.preventDefault();
     if (!this.validate()) {
-      this.props.onSkillSave(this.state.skill);
-
-      this.setState({
-        skill: newSkillState()
-      })
-    
+      this.props.onSkillSave(this.props.skill);
     }
   }
   
   validate() {
-    // const validationResp = validateJobFormHelper(_.clone(intialSkillState), this.state);
-    // this.setState({validate: validationResp.error});
-    //return containsErrors(validationResp.error);
-    return false;
+    const validationResp = validateSkillHelper(this.props.skill, this.state);
+    this.setState({validationErrors: validationResp.error});
+    return containsErrors(validationResp.error);
   }
 
   handleChange = field => (e, i, val) => {
     const value = (val ? val : i)
 
-    this.setState({
-        skill: {
-          ...this.state.skill,
-        [field] : value
-        }
+    this.props.skillChange({
+      field: field,
+      value: value,
+      id: this.props.skill._id
     });   
+
   }
 
   render () {
-    const { validate, 
-            current, 
-            skill,
+    
+    const { current, 
             validationErrors
           } = this.state;
+
+    const {
+            skill,
+          } = this.props;
+
     return (
       <div>
         <form

@@ -75,7 +75,7 @@ var skills = [
   {type: 'Node.JS', proficiency: 'expert', lengthOfUse: 5, frequency: 'daily'},
   {type: 'Ruby', proficiency: 'expert', lengthOfUse: 1, frequency: 'daily'},
   {type: 'WebGL', proficiency: 'learning', lengthOfUse: 0, frequency: 'weekly'},
-  {type: 'EMACS', proficiency: 'intermdiate', lengthOfUse: 5, frequency: 'monthly'},
+  {type: 'EMACS', proficiency: 'intermediate', lengthOfUse: 5, frequency: 'monthly'},
 ]
 
 var user = db.users.findOne();

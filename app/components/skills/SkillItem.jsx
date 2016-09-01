@@ -1,5 +1,9 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames/bind';
+import SkillAdd from 'components/skills/SkillAdd';
+
+import { containsErrors } from '../helpers/CommonFormValidations';
+import { validateSkillHelper } from '../helpers/skillValidations';
 
 import Select from 'react-select';
 import Chip from 'material-ui/Chip';
@@ -7,23 +11,17 @@ import Popover from 'material-ui/Popover';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 
 import styles from 'css/components/profile/skill';
-import { containsErrors, validateJobFormHelper } from '../helpers/jobFormValidation';
 import moment from 'moment';
-import SkillAdd from 'components/skills/SkillAdd';
 
 const cx = classNames.bind(styles);
-const intialSkillState = {
-  type: '', 
-  proficiency: '',
-  lengthOfUse: '',
-  frequency: '',
-}
 
 export default class SkillItem extends React.Component {
   
   static propTypes = {
-    saveSkillEdit: PropTypes.func,
-    handleDelete: PropTypes.func
+    skill: PropTypes.object.isRequired,
+    skillChange: PropTypes.func.isRequired,
+    saveSkillEdit: PropTypes.func.isRequired,
+    handleDelete: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -31,91 +29,44 @@ export default class SkillItem extends React.Component {
   }
 
   state = {
-    skill: { ...this.props.skill }, 
-    current: this.props.skill.current,
-    persistedSkill: { ...this.props.skill }, 
-    edit: false,
-    validate: _.clone(intialSkillState),
-    open: false
+    edit: false
   }
 
   toggleEdit () {
-    if (this.state.edit) {
-      this.setState({skill: this.state.persistedSkill})
-    }
-
     this.setState({edit: !this.state.edit})
-
+  }
+  
+  validate() {
+    const validationResp = validateSkillHelper(this.props.skill, this.state);
+    this.setState({validationErrors: validationResp.error});
+    return containsErrors(validationResp.error);
   }
 
   saveEdit (skill) {
-    this.props.saveSkillEdit(skill)
-    this.toggleEdit()
+    if (!this.validate()) {
+      this.props.saveSkillEdit(skill)
+      this.toggleEdit()
+    }
   }
 
   handleDelete () {
-    this.props.handleDelete(this.state.skill)
+    this.props.handleDelete(this.props.skill)
   }
-
-  handleHover = (event) => {
-    event.preventDefault();
-
-    this.setState({
-      open: true,
-      anchorEl: event.currentTarget,
-    });
-  };
-  
-  handleRequestClose = (e) => {
-    this.setState({
-      open: false,
-    });  
-  };
-  
-  handleChange = field => e => {
-    
-    let value;
-    if (e.target) {
-      value = e.target.value      
-    } else {
-      value = e.value
-    }
-
-    this.setState({
-        skill: {
-          ...this.state.skill,
-        [field] : value
-        }
-    });
-  }
-
-  formatDateString(date) {
-    return moment(new Date(date)).format('YYYY-MM-DD')
-  };
-
 
   render () {
-    const { isntLast, skill } = this.props;
-    const { validate } = this.state;
-
-    const errorMsgs = _.reject(validate, (v,k) => {
-      return v === '';
-    })
-
-    const addComma = (v, i, ct) => {
-      if ((i+1) === ct.length) {
-        return v;
-      } else {
-        return v + ', ';
-      }
-    }
+    const { 
+            isntLast, 
+            skill, 
+            skillChange
+          } = this.props;
 
     if (this.state.edit) {
 
       return (
         <SkillAdd
+          skill={skill}
+          skillChange={skillChange}
           onSkillSave={this.saveEdit.bind(this)}
-          skill={this.state.skill}
           handleDelete={this.handleDelete.bind(this)}
           toggleEdit={this.toggleEdit.bind(this)}
         />

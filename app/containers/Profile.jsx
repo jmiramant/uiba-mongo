@@ -69,7 +69,9 @@ class Profile extends Component {
             onSchoolDelete={schoolActions.deleteSchool} 
           />
           <Skills 
-            skills={skills} 
+            skills={skills.skills}
+            addVisibile={skills.add}
+            toggleSkillAdd={skillActions.toggleSkillAdd}
             onEditSave={skillActions.updateSkill} 
             onSkillSave={skillActions.createSkill} 
             onSkillDelete={skillActions.deleteSkill} 
@@ -97,7 +99,7 @@ function mapStateToProps(state) {
     schools: state.school.schools,
     jobs: state.job.jobs,
     profile: state.profile.currentProfile,
-    skills: state.skill.skills,
+    skills: state.skill,
     languages: state.language.languages,
     projects: state.project.projects,
   };
