@@ -6,6 +6,10 @@
   @apply --profile--container;
 }
 
+.skillItem--chip {
+  display: inline-flex !important;
+}
+
 .skillItem--editBg {
   background: rgb(188,188,188);
   border-radius: 51px;

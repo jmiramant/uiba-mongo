@@ -19,28 +19,6 @@ const intialSkillState = {
   frequency: '',
 }
 
-const proficiency = [
-  {label: 'Learning', value: 'learning'},
-  {label: 'Intermediate', value: 'intermediate'},
-  {label: 'Competent', value: 'competent'},
-  {label: 'Expert', value: 'expert'}
-];  
-
-const lengthOfUse = [
-  {label: 'Less Than 1 Year', value: 0},
-  {label: '1-3 Years', value: 1},
-  {label: '3-5 Years', value: 3},
-  {label: '5-10 Years', value: 5},
-  {label: 'More Than 10 Years', value: 10}
-];  
-
-const frequency = [
-  {label: 'Daily', value: 'daily'},
-  {label: 'Weekly', value: 'weekly'},
-  {label: 'Monthly', value: 'monthly'},
-  {label: 'Yearly', value: 'yearly'}
-]; 
-
 export default class SkillItem extends React.Component {
   
   static propTypes = {
@@ -146,7 +124,7 @@ export default class SkillItem extends React.Component {
     } else {
 
       return (
-        <Chip>
+        <Chip className={cx('skillItem--chip')}>
           {skill.type} 
           <span 
             onClick={this.toggleEdit.bind(this)}
