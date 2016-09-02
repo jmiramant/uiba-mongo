@@ -26,6 +26,10 @@ section {
   background: var(--colorBackground-darkBlue);
 }
 
+.section--white {
+  background: var(--colorWhite);
+}
+
 .spalsh--section-title {
   @apply --splashSectionTitle;
 }
