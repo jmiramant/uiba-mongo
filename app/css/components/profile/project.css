@@ -1,0 +1,36 @@
+@import '../../common/colors';
+@import '../../common/button';
+@import '../../components/profile';
+
+.projectList--container {
+  @apply --profile--container;
+}
+
+.projectItem--container {
+  padding: 12px 0;
+}
+
+.projectItem--header {
+  border-left: 2px solid var(--colorBrightPink);
+  padding-left: 10px;
+}
+
+.projectItem--description {
+  margin: 0;
+  color: var(--colorLightGreyText);
+  padding: 0 0 0px 14px;
+}
+
+.projectItem--edit {
+  height: 20px !important;
+  width: 20px !important;
+}
+
+.projectItem--link {
+  margin-bottom: -6px;
+}
+
+.profile-btn-group {
+  height: 55px;
+  padding-top: 10px;
+} 

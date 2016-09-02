@@ -43,21 +43,26 @@ export default class ProjectAdd extends React.Component {
   }
   
   validate() {
-    // const validationResp = validateProjectHelper(this.props.project, this.state.validationErrors);
-    // this.setState({validationErrors: validationResp.errors});
-    // return validationResp.containsErrors;
-    return false;
+    const validationResp = validateProjectHelper(this.props.project, this.state.validationErrors);
+    this.setState({validationErrors: validationResp.errors});
+    return validationResp.containsErrors;
   }
 
-  handleChange = field => e => {
+  handleChange = field => (e, uiVal) => {
     let value;
-    if (e.target) {
+    if (uiVal) {
+      if (typeof(Object.getPrototypeOf(uiVal).getTime) === 'function') {
+        value = moment(new Date(uiVal)).format();
+      } else {
+        value = uiVal
+      }
+    }else if (e.target) {
       value = e.target.value      
     } else {
       value = e.value
     }
 
-    if (e.target.type === 'checkbox') {
+    if (e && e.target && e.target.type === 'checkbox') {
       value = this.state.current
       this.props.projectChange({
         field: 'current',
@@ -131,6 +136,15 @@ export default class ProjectAdd extends React.Component {
             errorText={validationErrors.projectUrl}
             floatingLabelText="URL"
             onChange={this.handleChange('projectUrl')}
+          />
+
+          <TextField
+            value={project.description}
+            errorText={validationErrors.description}
+            floatingLabelText="Description"
+            onChange={this.handleChange('description')}
+            multiLine={true}
+            rows={2}
           />
           
             {datePicker(project.startDate, 'start')}

@@ -7,27 +7,27 @@ polyfill();
 
 export function newProject() {
   return {
-    type: types.NEW_SCHOOL,
+    type: types.NEW_PROJECT,
   };
 }
 
 export function projectChange(state) {
   return {
-    type: types.CHANGE_SCHOOL,
+    type: types.CHANGE_PROJECT,
     state
   };
 }
 
 export function projectsChange(state) {
   return {
-    type: types.CHANGE_SCHOOLS,
+    type: types.CHANGE_PROJECTS,
     state
   };
 }
 
 export function toggleProjectAdd (data) {
   return {
-    type: types.TOGGLE_SCHOOL_ADD,
+    type: types.TOGGLE_PROJECT_ADD,
     data: data
   };
 }

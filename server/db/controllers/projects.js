@@ -40,18 +40,14 @@ export function get(req, res) {
 
 export function create(req, res) {
   
-  function createDateObj (date) {
-    const split = date.split('-');
-    return new Date(split[0], split[1], split[2])
-  };
-
   Project.create({
     user_id: req.user._id,
     name: req.body.name,
     projectUrl: req.body.projectUrl,
+    description: req.body.description,
     current: req.body.current,
-    startDate: createDateObj(req.body.startDate),
-    endDate: createDateObj(req.body.endDate),
+    startDate: new Date(req.body.startDate),
+    endDate: new Date(req.body.endDate),
   }, function (err, project) {
 
     if (err) return handleError(res, err);
@@ -68,6 +64,10 @@ export function update(req, res) {
     project.name = req.body.name;
     project.projectUrl = req.body.projectUrl;
     project.current = req.body.current;
+    
+    if (req.body.description) {
+      project.description = req.body.description;
+    }
     
     if (req.body.startDate) {
       project.startDate = new Date(req.body.startDate);

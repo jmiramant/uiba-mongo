@@ -23,6 +23,7 @@ const project = (
       return {
         profile_id: undefined,
         name: undefined,
+        description: undefined,
         projectUrl: undefined,
         startDate: undefined,
         endDate: undefined,
