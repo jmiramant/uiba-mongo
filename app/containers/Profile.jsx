@@ -79,16 +79,20 @@ class Profile extends Component {
             onSkillDelete={skillActions.deleteSkill} 
           />
           <Languages
-            languages={languages} 
+            languages={languages.languages}
+            addVisibile={languages.addShow}
+            toggleLanguageAdd={languageActions.toggleLanguageAdd}
             onEditSave={languageActions.updateLanguage} 
-            onSave={languageActions.createLanguage} 
-            onDelete={languageActions.deleteLanguage} 
+            onLanguageSave={languageActions.createLanguage} 
+            onLanguageDelete={languageActions.deleteLanguage} 
           />
           <Projects
-            projects={projects} 
+            projects={projects.projects}
+            addVisibile={projects.addShow}
+            toggleProjectAdd={projectActions.toggleProjectAdd}
             onEditSave={projectActions.updateProject} 
-            onSave={projectActions.createProject} 
-            onDelete={projectActions.deleteProject} 
+            onProjectSave={projectActions.createProject} 
+            onProjectDelete={projectActions.deleteProject} 
           />
         </div>
       </MuiThemeProvider>
@@ -102,8 +106,8 @@ function mapStateToProps(state) {
     jobs: state.job.jobs,
     profile: state.profile.currentProfile,
     skills: state.skill,
-    languages: state.language.languages,
-    projects: state.project.projects,
+    languages: state.language,
+    projects: state.project,
   };
 }
 

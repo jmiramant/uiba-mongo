@@ -1,34 +1,43 @@
 import React, { PropTypes } from 'react';
-import classNames from 'classnames/bind';
-import styles from 'css/components/profile/projectList';
-import moment from 'moment';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as projectsActionCreators from 'actions/projects';
+
 import ProjectItem from 'components/projects/ProjectItem';
 import ProjectAdd from 'components/projects/ProjectAdd';
 import NullProfItem from 'components/ProfileNull';
 
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import AddIcon from 'material-ui/svg-icons/content/add';
+
+import classNames from 'classnames/bind';
+import styles from 'css/components/profile/projectList';
+import moment from 'moment';
 const cx = classNames.bind(styles);
 
-export default class ProjectList extends React.Component {
+class ProjectList extends React.Component {
   
   static propTypes = {
     projects: PropTypes.array,
-    onSave: PropTypes.func.isRequired,
-    onDelete: PropTypes.func.isRequired
+    addVisibile: PropTypes.bool.isRequired,
+    onEditSave: PropTypes.func.isRequired,
+    toggleProjectAdd: PropTypes.func.isRequired,
+    onProjectSave: PropTypes.func.isRequired,
+    onProjectDelete: PropTypes.func.isRequired
   }
+
 
   constructor(props) {
     super(props);
-    this.handleSave = this.handleSave.bind(this);
-    this.state = { addVisibile: false } ;
   }
   
-  showAddProject = () => {
-    this.setState({addVisibile: true})
+  toggleAddProject = () => {
+    this.props.toggleProjectAdd(this.props.addVisibile)
   }
 
   handleSave = (data) => {
-    this.props.onSave(data);
-    this.setState({addVisibile: false})
+    this.props.onProjectSave(data);
+    this.props.toggleProjectAdd(this.props.addVisibile)
   }
 
   handleEditSave = (data) => {
@@ -36,21 +45,28 @@ export default class ProjectList extends React.Component {
   }
 
   handleDelete = (project) => {
-    this.props.onDelete(project);
+    this.props.onProjectDelete(project);
   }
 
   render () {
-    const { projects } = this.props;
-    const { addVisibile } = this.state;
+    const { project,
+            projects,
+            addVisibile,
+            actions
+          } = this.props;
+    const lengthIndex = projects.length - 1;
 
     const renderItems = (
       <div>
         {projects.map((project, i) => {
             return (<ProjectItem 
                       key={project._id} 
-                      saveEdit={this.handleEditSave} 
+                      project={project} 
+                      projectChange={actions.projectsChange}
                       handleDelete={this.handleDelete}
-                      project={project} />);
+                      saveProjectEdit={this.handleEditSave} 
+                      isntLast={lengthIndex !== i} 
+                    />);
         })}
       </div>
     )
@@ -65,13 +81,42 @@ export default class ProjectList extends React.Component {
           <NullProfItem target="project" />
         </span>
       )}
-      { this.state.addVisibile ? (
-        <ProjectAdd addVisibile={addVisibile} onSave={this.handleSave} />
+      { addVisibile ? (
+        <ProjectAdd
+          project={project}
+          onProjectSave={this.handleSave} 
+          projectChange={actions.projectChange}
+          toggleEdit={this.toggleAddProject.bind(this)} 
+          addVisibile={addVisibile}
+        />
       ) : (
-        <div>
-          <div onClick={this.showAddProject} className='pull-right'>Add Project</div>
-        </div>
+          <div>
+            <FloatingActionButton 
+              onClick={this.toggleAddProject}
+              className={cx('projectItem--add') + ' pull-right'}
+              mini={true}
+            >
+              <AddIcon />
+            </FloatingActionButton>
+          </div>
       ) }
     </div>)
   }
 };
+
+function mapStateToProps(state) {
+  return {
+    project: state.project.project
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    actions: bindActionCreators(projectsActionCreators, dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProjectList);

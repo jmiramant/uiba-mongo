@@ -21,7 +21,7 @@ const school = (
   switch (action.type) {
     case types.CREATE_NEW_SCHOOL:
       return {
-        user_id: undefined,
+        profile_id: undefined,
         name: undefined,
         major: undefined,
         minor: undefined,

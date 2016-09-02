@@ -1,24 +1,22 @@
 import React, { PropTypes } from 'react';
-import classNames from 'classnames/bind';
-import Select from 'react-select';
-import styles from 'css/components/profile/jobItem';
-import { containsErrors, validateJobFormHelper } from '../helpers/jobFormValidation';
-import moment from 'moment';
 
+import ProjectAdd from 'components/projects/ProjectAdd';
+
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
+
+import moment from 'moment';
+import classNames from 'classnames/bind';
+import styles from 'css/components/profile/jobItem';
 const cx = classNames.bind(styles);
-const intialProjectState = {
-  name: '', 
-  projectUrl: '',
-  startDate: '',
-  endDate: '',
-  current: false
-}
 
 export default class ProjectItem extends React.Component {
   
   static propTypes = {
-    saveEdit: PropTypes.func,
-    handleDelete: PropTypes.func
+    project: PropTypes.object.isRequired, 
+    projectChange: PropTypes.func.isRequired,
+    saveProjectEdit: PropTypes.func.isRequired,
+    handleDelete: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -26,144 +24,48 @@ export default class ProjectItem extends React.Component {
   }
 
   state = {
-    project: { ...this.props.project }, 
-    current: this.props.project.current,
-    persistedProject: { ...this.props.project }, 
+    validationErrors: {},
     edit: false,
-    validate: _.clone(intialProjectState)
   }
 
   toggleEdit () {
-    if (this.state.edit) {
-      this.setState({project: this.state.persistedProject})
-    }
-
     this.setState({edit: !this.state.edit})
-
   }
 
-  saveEdit () {
-    if (!this.isDataValid()) {
-      this.props.saveEdit(this.state.project)
-      this.toggleEdit()
-    }
+  saveEdit (project) {
+    this.props.saveEdit(project)
+    this.toggleEdit()
   }
 
   handleDelete () {
-    this.props.handleDelete(this.state.project)
+    this.props.handleDelete(this.props.project)
   }
-
-  isDataValid() {
-    // const validationResp = validateProjectFormHelper(_.clone(intialProjectState), this.state);
-    // this.setState({validate: validationResp.error});
-    // return containsErrors(validationResp.error)
-    return false
-  }
-  
-  handleChange = field => e => {
-    var value = e.target.value
-    if (e.target.type === 'checkbox') {
-      value = this.state.current
-      this.setState({
-        current: !this.state.current,
-        project: {
-            ...this.state.project,
-          [field] : !this.state.current
-        }
-      })
-    } else {
-      this.setState({
-          project: {
-            ...this.state.project,
-          [field] : value
-          }
-      });
-    }
-  }
-
-  formatDateString(date) {
-    return moment(new Date(date)).format('YYYY-MM-DD')
-  };
-
 
   render () {
-    const { project } = this.props;
-    const { current, validate } = this.state;
-
-    const errorMsgs = _.reject(validate, (v,k) => {
-      return v === '';
-    })
-
-    const addComma = (v, i, ct) => {
-      if ((i+1) === ct.length) {
-        return v;
-      } else {
-        return v + ', ';
-      }
-    }
+    const { 
+            isntLast, 
+            project, 
+            projectChange
+          } = this.props;
 
     if (this.state.edit) {
 
       return (
-        <div className={cx('projectItem--container')}>
-          {errorMsgs}
-
-          <input 
-            type='text'
-            value={this.state.project.name}
-            onChange={this.handleChange('name')}
-            className={ cx('projectEdit--name')}
-            id="name"  />
-          
-          <input 
-            type='text'
-            value={this.state.project.projectUrl}
-            onChange={this.handleChange('projectUrl')}
-            className={ cx('projectEdit--projectUrl')}
-            id="projectUrl"  />
-
-          <input 
-            type="date"
-            value={this.formatDateString(this.state.project.startDate)} 
-            onChange={this.handleChange('startDate')}
-            className={cx('projectEdit--startDate')}
-            id="startDate" />
-          { !current ? (
-            <input 
-              type="date"
-              value={this.formatDateString(this.state.project.endDate)} 
-              onChange={this.handleChange('endDate')} 
-              className={cx('projectEdit--endDate')}
-              id="endDate" />
-            ) : (<span />)
-          }
-
-          <input 
-            type="checkbox"
-            checked={current}
-            onChange={this.handleChange('current')} />
-
-          <div className={ cx('projectEdit--controls') }>
-            <div className={ cx('projectEdit--buttons') + ' pull-left'} onClick={this.toggleEdit.bind(this)}>Close</div>
-            <div className={ cx('projectEdit--buttons', 'projectEdit--button-delete')} onClick={this.handleDelete.bind(this)}>Delete</div>
-            <div className={ cx('projectEdit--buttons') + ' pull-right'} onClick={this.saveEdit.bind(this)}>Save</div>
-          </div>
-          <div className={cx('projectItem--spacer')}></div>
-        </div>
+        <ProjectAdd
+          project={project}
+          projectChange={projectChange}
+          addVisibile={false}
+          onProjectSave={this.saveEdit.bind(this)}
+          handleDelete={this.handleDelete.bind(this)}
+          toggleEdit={this.toggleEdit.bind(this)}
+        />
       )
     
     } else {
 
       return (
         <div className={cx('projectItem--container')} onDoubleClick={this.toggleEdit.bind(this)}>
-          <div onClick={this.toggleEdit.bind(this)} className={cx('projectItem--edit')}></div>
-          <p className={cx("projectItem--header")}><span className={ cx('projectItem--name')}>{project.name}</span></p>
-          <p className={cx("projectItem--projectUrl")}>{project.projectUrl}</p>
-          <p className={cx("projectItem--date")}>{moment(project.startDate).format('MMM, YYYY')} - { current ? ( 'Current' ) : ( moment(project.endDate).format('MMM, YYYY')) } </p>
-          
-
-
-          <div className={cx('projectItem--spacer')}></div>
+          <a href={project.projectUrl} target="_blank"><p className={cx("projectItem--header")}>{project.name} | { project.current ? ( 'Current' ) : ( moment(project.endDate).format('MMM, YYYY')) }</p></a>
         </div>
       )
 

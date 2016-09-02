@@ -14,18 +14,44 @@ const languageOrder = (language, order = 'asc') => {
   }
 }
 
+const language = (
+  state = {},
+  action
+) => {
+  switch (action.type) {
+    case types.CREATE_NEW_LANGUAGE:
+      return {
+        profile_id: undefined,
+        language: undefined,
+        proficiency: undefined,
+        experience: undefined,
+      }
+    case types.CHANGE_LANGUAGE:
+      const newStateOjb = {...state}
+      newStateOjb[action.state.field] = action.state.value
+      return newStateOjb;
+    default:
+      return state;
+  }
+};
+
 const languages = (
   state = [],
   action
 ) => {
+  let updatedLangauge;
   switch (action.type) {
     case types.GET_LANGUAGES_SUCCESS:
       return languageOrder(action.res.data)
     case types.CREATE_LANGUAGE_SUCCESS:
       const newLangauges = state.concat(action.data);
       return languageOrder(newLangauges)
+    case types.CHANGE_LANGUAGES:
+      updatedLangauge = [...state]
+      updatedLangauge[_.findIndex(updatedLangauge, {_id: action.state.id})][action.state.field] = updatedLangauge[_.findIndex(updatedLangauge, {_id: action.state.id})][action.state.field] = action.state.value
+      return updatedLangauge
     case types.UPDATE_LANGUAGE_SUCCESS:
-      const updatedLangauge = state.slice()
+      updatedLangauge = state.slice()
       updatedLangauge[_.findIndex(state, function(j) { return j._id === action.data._id; })] = action.data
       return languageOrder(updatedLangauge)
     case types.DELETE_LANGUAGE_SUCCESS:
@@ -42,8 +68,22 @@ const languages = (
   }
 };
 
+const addShow = (
+  state = false,
+  action
+) => {
+  switch (action.type) {
+    case types.TOGGLE_LANGUAGE_ADD:
+      return !action.data
+    default:
+      return state;
+  }
+};
+
 const languageReducer = combineReducers({
+  language,
   languages,
+  addShow,
 });
 
 export default languageReducer;

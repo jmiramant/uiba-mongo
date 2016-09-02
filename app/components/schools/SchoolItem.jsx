@@ -16,9 +16,9 @@ export default class SchoolItem extends React.Component {
   
   static propTypes = {
     school: PropTypes.object.isRequired, 
-    schoolChange: PropTypes.object.isRequired,
-    saveSchoolEdit: PropTypes.func,
-    handleDelete: PropTypes.func
+    schoolChange: PropTypes.func.isRequired,
+    saveSchoolEdit: PropTypes.func.isRequired,
+    handleDelete: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -26,7 +26,6 @@ export default class SchoolItem extends React.Component {
   }
 
   state = {
-    validationErrors: {},
     edit: false,
   }
 

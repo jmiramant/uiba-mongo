@@ -1,35 +1,42 @@
 import React, { PropTypes } from 'react';
-import classNames from 'classnames/bind';
-import styles from 'css/components/profile/languageList';
-import moment from 'moment';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as languagesActionCreators from 'actions/languages';
+
 import LanguageItem from 'components/language/LanguageItem';
 import LanguageAdd from 'components/language/LanguageAdd';
 import NullProfItem from 'components/ProfileNull';
 
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import AddIcon from 'material-ui/svg-icons/content/add';
+
+import classNames from 'classnames/bind';
+import styles from 'css/components/profile/languageList';
+import moment from 'moment';
 const cx = classNames.bind(styles);
 
-export default class LanguageList extends React.Component {
+class LanguageList extends React.Component {
   
   static propTypes = {
     languages: PropTypes.array,
-    onSave: PropTypes.func.isRequired,
+    addVisibile: PropTypes.bool.isRequired,
     onEditSave: PropTypes.func.isRequired,
-    onDelete: PropTypes.func.isRequired
+    toggleLanguageAdd: PropTypes.func.isRequired,
+    onLanguageSave: PropTypes.func.isRequired,
+    onLanguageDelete: PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props);
-    this.handleSave = this.handleSave.bind(this);
-    this.state = { addVisibile: false } ;
   }
   
-  showAddLanguage = () => {
-    this.setState({addVisibile: true})
+  toggleAddLanguage = () => {
+    this.props.toggleLanguageAdd(this.props.addVisibile)
   }
-
+  
   handleSave = (data) => {
-    this.props.onSave(data);
-    this.setState({addVisibile: false})
+    this.props.onLanguageSave(data);
+    this.props.toggleLanguageAdd(this.props.addVisibile)
   }
 
   handleEditSave = (data) => {
@@ -37,21 +44,25 @@ export default class LanguageList extends React.Component {
   }
 
   handleDelete = (language) => {
-    this.props.onDelete(language);
+    this.props.onLanguageDelete(language);
   }
 
   render () {
-    let { languages } = this.props;
-    const { addVisibile } = this.state;
-
+    let { language,
+          languages,
+          addVisibile,
+          actions
+        } = this.props;
+    let lengthIndex = languages.length - 1;
     const renderItems = (
       <div>
         {languages.map((language, i) => {
           return (<LanguageItem 
                     key={language._id} 
-                    onEditSave={this.handleEditSave} 
-                    handleDelete={this.handleDelete}
                     language={language}
+                    languageChange={actions.languagesChange}
+                    saveLanguageEdit={this.handleEditSave} 
+                    handleDelete={this.handleDelete}
                   />)
         })}
       </div>
@@ -68,14 +79,43 @@ export default class LanguageList extends React.Component {
             <NullProfItem target="language" />
           </span>
         )}
-        { this.state.addVisibile ? (
-          <LanguageAdd addVisibile={addVisibile} onSave={this.handleSave} />
+        { addVisibile ? (
+          <LanguageAdd
+            language={language}
+            languageChange={actions.languageChange}
+            toggleEdit={this.toggleAddLanguage.bind(this)} 
+            addVisibile={addVisibile}
+            onLanguageSave={this.handleSave}
+          />
         ) : (
           <div>
-            <div onClick={this.showAddLanguage} className='pull-right'>Add Language</div>
+            <FloatingActionButton 
+              onClick={this.toggleAddLanguage}
+              className={cx('languageItem--add') + ' pull-right'}
+              mini={true}
+            >
+              <AddIcon />
+            </FloatingActionButton>
           </div>
         ) }
       </div>
     )
   }
 };
+
+function mapStateToProps(state) {
+  return {
+    language: state.language.language
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    actions: bindActionCreators(languagesActionCreators, dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LanguageList);

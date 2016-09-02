@@ -2,9 +2,7 @@ import React, { PropTypes } from 'react';
 
 import SkillAdd from 'components/skills/SkillAdd';
 
-import Select from 'react-select';
 import Chip from 'material-ui/Chip';
-import Popover from 'material-ui/Popover';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 
 import moment from 'moment';

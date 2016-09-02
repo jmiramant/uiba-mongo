@@ -1,29 +1,30 @@
 import React, { PropTypes } from 'react';
-import classNames from 'classnames/bind';
-import Select from 'react-select';
-import { containsErrors, validateJobFormHelper } from '../helpers/jobFormValidation';
-import styles from 'css/components/profile/jobItem';
+
+import { validateProjectHelper } from '../helpers/projectValidations';
+
+import TextField from 'material-ui/TextField';
+import DatePicker from 'material-ui/DatePicker';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import Checkbox from 'material-ui/Checkbox';
+import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
+
 import moment from 'moment';
 import _ from 'lodash';
 
+import classNames from 'classnames/bind';
+import styles from 'css/components/profile/jobItem';
 const cx = classNames.bind(styles);
 
-const intialProjectState = {
-  name: '', 
-  projectUrl: '',
-  startDate: '',
-  endDate: '',
-  current: false
-}
-
-export default class SchoolAdd extends React.Component {
-
-  static defaultProps = {
-    project: _.clone(intialProjectState)
-  }
+export default class ProjectAdd extends React.Component {
 
   static propTypes = {
-    onSave: PropTypes.func.isRequired
+    project: PropTypes.object.isRequired,
+    projectChange: PropTypes.func.isRequired,
+    toggleEdit: PropTypes.func.isRequired,
+    addVisible: PropTypes.bool,
+    onProjectSave: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -31,27 +32,20 @@ export default class SchoolAdd extends React.Component {
   }
 
   state = {
-    project: { ...this.props.project }, 
-    validate: _.clone(intialProjectState),
+    validationErrors: {},
   }
   
   handleSubmit = e => {
     e.preventDefault();
     if (!this.validate()) {
-
-      this.props.onSave(this.state.project);
-
-      this.setState({
-        project: _.clone(intialProjectState),
-      })
-    
+      this.props.onProjectSave(this.props.project);
     }
   }
   
   validate() {
-    // const validationResp = validateJobFormHelper(_.clone(intialProjectState), this.state);
-    // this.setState({validate: validationResp.error});
-    //return containsErrors(validationResp.error);
+    // const validationResp = validateProjectHelper(this.props.project, this.state.validationErrors);
+    // this.setState({validationErrors: validationResp.errors});
+    // return validationResp.containsErrors;
     return false;
   }
 
@@ -65,80 +59,100 @@ export default class SchoolAdd extends React.Component {
 
     if (e.target.type === 'checkbox') {
       value = this.state.current
-      this.setState({
-        current: !this.state.current,
-        project: {
-            ...this.state.project,
-          [field] : !this.state.current
-        }
-      })
+      this.props.projectChange({
+        field: 'current',
+        value: !this.props.project.current,
+        id: this.props.project._id
+      });  
     } else {
   
-      this.setState({
-          project: {
-            ...this.state.project,
-          [field] : value
-          }
+      this.props.projectChange({
+        field: field,
+        value: value,
+        id: this.props.project._id
       });  
     } 
   }
 
   render () {
-    const { validate, current } = this.state;
+    const {
+            validationErrors
+          } = this.state;
+
+    const {
+            project,
+          } = this.props;
+    
+    const datePicker = (data, name)  => {
+      if (data && data !== '') {
+        return (
+          <DatePicker
+            autoOk={true}
+            formatDate={ (obj) => {
+              return moment(new Date(obj)).format("MMMM YYYY")
+            }}
+            value={new Date(project[name + 'Date'])}
+            errorText={validationErrors[name + "Date"]}
+            className="col-sm-5"
+            hintText={(name.charAt(0).toUpperCase() + name.slice(1)) + " Date"}
+            onChange={this.handleChange(name + 'Date')}
+          />
+      )} else {
+        return (
+          <DatePicker
+            autoOk={true}
+            formatDate={ (obj) => {
+              return moment(new Date(obj)).format("MMMM YYYY")
+            }}
+            errorText={validationErrors[name + "Date"]}
+            className="col-sm-5"
+            hintText={(name.charAt(0).toUpperCase() + name.slice(1)) + " Date"}
+            onChange={this.handleChange(name + 'Date')}
+          />
+        )
+      }
+    }
+
     return (
       <div>
         <form
-          className="wrapper"
           onSubmit={this.handleSubmit}
         >
-          <div className="panel">
 
-            <div>{ validate.name }</div>
+          <TextField
+            value={project.name}
+            errorText={validationErrors.name}
+            floatingLabelText="Project"
+            onChange={this.handleChange('name')}
+          />
+          
+          <TextField
+            value={project.projectUrl}
+            errorText={validationErrors.projectUrl}
+            floatingLabelText="URL"
+            onChange={this.handleChange('projectUrl')}
+          />
+          
+            {datePicker(project.startDate, 'start')}
 
-            <div className="form-group row">
-              <label htmlFor="name" className="col-xs-2 col-form-label">Project Name</label>
-              <div className="col-xs-5">
-                <input onChange={this.handleChange('name')}  className="form-control" type="text" id="name" />
-              </div>
-            </div>
-
-            <div className="form-group row">
-              <label htmlFor="projectUrl" className="col-xs-2 col-form-label">URL</label>
-              <div className="col-xs-5">
-                <input onChange={this.handleChange('projectUrl')}  className="form-control" type="text" id="projectUrl" />
-              </div>
-            </div>
-            
-            <div className="form-group row">
-              <label htmlFor="startDate" className="col-xs-2 col-form-label">Start Date</label>
-              <div className="col-xs-5">
-                <input onChange={this.handleChange('startDate')}  className="form-control" type="date" id="startDate" />
-              </div>
-            </div>
-            
-            { !current ? (
-              <div className="form-group row">
-                <label htmlFor="endDate" className="col-xs-2 col-form-label">End Date</label>
-                <div className="col-xs-5">
-                  <input onChange={this.handleChange('endDate')} className="form-control" type="date" id="endDate" />
-                </div>
-              </div>
-              ) : (<span />)
-            }
+            { !project.current ? (
+                datePicker(project.endDate, 'end')
+            ) : (<span />)}
   
-            <input 
-              type="checkbox"
-              checked={current}
-              onChange={this.handleChange('current')} />
+            <Checkbox
+              label="Current"
+              checked={project.current}
+              onCheck={this.handleChange('current')}
+            />
 
-            <button
-              className="btn"
-              type="submit"
-            >
-             Save
-            </button>
-
+          <div className={cx('profile-btn-group')}>
+            <RaisedButton className='pull-right' type="submit" label="Save" primary={true} />
+            {this.props.handleDelete ? (
+              <FlatButton className='pull-left' label="Delete" onClick={this.props.handleDelete} primary={true} />
+            ) : (<span />)}
+            <FlatButton className='pull-left' label="Close" onClick={this.props.toggleEdit} primary={true} />
           </div>
+
         </form>
       </div>
     )

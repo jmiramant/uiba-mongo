@@ -5,6 +5,33 @@ import * as types from 'types';
 
 polyfill();
 
+export function newLanguage() {
+  return {
+    type: types.NEW_LANGUAGE,
+  };
+}
+
+export function languageChange(state) {
+  return {
+    type: types.CHANGE_LANGUAGE,
+    state
+  };
+}
+
+export function languagesChange(state) {
+  return {
+    type: types.CHANGE_LANGUAGES,
+    state
+  };
+}
+
+export function toggleLanguageAdd (data) {
+  return {
+    type: types.TOGGLE_LANGUAGE_ADD,
+    data: data
+  };
+}
+
 function makeLanguagesRequest(method, data, api = '/languages') {
   return request[method](api, data);
 }

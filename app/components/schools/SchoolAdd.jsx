@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import SchoolNameTypeahead from '../../containers/Typeahead';
 
-import { containsErrors } from '../helpers/CommonFormValidations';
 import { validateSchoolHelper } from '../helpers/schoolValidations';
 
 import TextField from 'material-ui/TextField';

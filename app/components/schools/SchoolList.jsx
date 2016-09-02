@@ -48,12 +48,12 @@ class SchoolList extends React.Component {
   }
 
   render () {
-    let { school,
+    const { school,
           schools,
           addVisibile,
           actions
         } = this.props;
-    let lengthIndex = schools.length - 1;
+    const lengthIndex = schools.length - 1;
 
     const renderItems = (
       <div>
@@ -64,7 +64,8 @@ class SchoolList extends React.Component {
                       schoolChange={actions.schoolsChange}
                       handleDelete={this.handleDelete}
                       saveSchoolEdit={this.handleEditSave} 
-                      isntLast={lengthIndex !== i} />);
+                      isntLast={lengthIndex !== i} 
+                    />);
         })}
       </div>
     )
@@ -85,10 +86,10 @@ class SchoolList extends React.Component {
         { addVisibile ? (
           <SchoolAdd 
             school={school}
+            onSchoolSave={this.handleSave} 
             schoolChange={actions.schoolChange}
             toggleEdit={this.toggleAddSchool.bind(this)} 
             addVisibile={addVisibile} 
-            onSchoolSave={this.handleSave} 
           />
         ) : (
           <div>
