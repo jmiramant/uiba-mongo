@@ -1,12 +1,8 @@
 @import '../../common/colors';
 @import '../../common/button';
+@import '../../common/profile';
 
 :root {
-  --item--header {
-    padding-top: 0;
-    padding-bottom: 0;
-    display: inline-block;
-  }
 
   --item--name {
     font-size: 17px; 
@@ -23,16 +19,6 @@
   width: 75%;
 }
 
-.jobItem--edit {
-  background: url('../../../images/pencil.svg');
-  height: 15px;
-  background-size: 100%;
-  width: 15px;
-  float: right;
-  margin: -15px -19px;
-  background-repeat: no-repeat;
-}
-
 .jobItem--title {
   color: #999;
   width: 75%;
@@ -47,10 +33,12 @@
   display: inline-block;
   width: 25%;
   padding: 0;
+  @apply --item--subheader;
 }
 
 .jobItem--description {
   font-size: 13px;
+  padding-left: 14px;
   line-height: 1.4;
   color: var(--colorLightGreyText);
 }

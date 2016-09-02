@@ -7,9 +7,6 @@ import JobItem from 'components/jobs/JobItem';
 import JobAdd from 'components/jobs/JobAdd';
 import NullProfItem from 'components/ProfileNull';
 
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import AddIcon from 'material-ui/svg-icons/content/add';
-
 import classNames from 'classnames/bind';
 import styles from 'css/components/profile/jobList';
 import moment from 'moment';
@@ -71,8 +68,18 @@ class JobList extends React.Component {
     )
 
     return (
-      <div className={cx('jobList--container') + ' col-md-8 col-md-offset-2'}>
-        
+      <div className={cx('jobList--container')}>
+
+        { addVisibile ? (
+          <JobAdd
+            job={job}
+            onJobSave={this.handleSave} 
+            jobChange={actions.jobChange}
+            toggleEdit={this.toggleAddJob.bind(this)} 
+            addVisibile={addVisibile} 
+          />
+        ) : (<span/>)}
+
         { jobs.length ? (
           <div>
             {renderItems}
@@ -83,25 +90,6 @@ class JobList extends React.Component {
           </span>
         )}
 
-        { addVisibile ? (
-          <JobAdd
-            job={job}
-            onJobSave={this.handleSave} 
-            jobChange={actions.jobChange}
-            toggleEdit={this.toggleAddJob.bind(this)} 
-            addVisibile={addVisibile} 
-          />
-        ) : (
-          <div>
-            <FloatingActionButton 
-              onClick={this.toggleAddJob}
-              className={cx('jobItem--add') + ' pull-right'}
-              mini={true}
-            >
-              <AddIcon />
-            </FloatingActionButton>
-          </div>
-        ) }
       </div>
     )
   }

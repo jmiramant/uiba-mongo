@@ -62,18 +62,20 @@ export default class SkillItem extends React.Component {
     } else {
 
       return (
-        <Chip className={cx('skillItem--chip')}>
-          {skill.type} 
-          <span 
-            onClick={this.toggleEdit.bind(this)}
-            className={cx('skillItem--editBg')}
-          >
-            <EditIcon
-              color='#E0E0E0'
-              className={cx('skillItem--editIcon')}
-            />
-          </span>
-        </Chip>
+        <div className={cx('chip-container')}>
+          <Chip className={cx('skillItem--chip')}>
+            {skill.type} 
+            <span 
+              onClick={this.toggleEdit.bind(this)}
+              className={cx('skillItem--editBg')}
+            >
+              <EditIcon
+                color='#E0E0E0'
+                className={cx('skillItem--editIcon')}
+              />
+            </span>
+          </Chip>
+        </div>
       )
 
     }

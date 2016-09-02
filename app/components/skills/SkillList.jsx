@@ -70,33 +70,29 @@ class SkillList extends React.Component {
     )
 
     return (
-      <div className={cx('skillList--container') + ' col-md-8 col-md-offset-2'}>
-        { skills.length ? (
-          <div>
-            {renderItems}
-          </div>
-        ) : (
-          <span>
-            <NullProfItem target="skill" />
-          </span>
-        )}
-        { addVisibile ? (
-          <SkillAdd
-            skill={skill}
-            skillChange={actions.skillChange}
-            toggleEdit={this.toggleAddSkill.bind(this)} 
-            addVisibile={addVisibile} 
-            onSkillSave={this.handleSave} 
-          />
-        ) : (
-          <FloatingActionButton 
-            onClick={this.toggleAddSkill}
-            className={cx('schoolItem--add') + ' pull-right'}
-            mini={true}
-          >
-            <AddIcon />
-          </FloatingActionButton>
-        ) }
+      <div className={cx('skillList--bootstrap-container')}>
+        <div className={cx('skillList--container')}>
+          
+          { addVisibile ? (
+            <SkillAdd
+              skill={skill}
+              skillChange={actions.skillChange}
+              toggleEdit={this.toggleAddSkill.bind(this)} 
+              addVisibile={addVisibile} 
+              onSkillSave={this.handleSave} 
+            />
+          ) : ( <span/>)}
+
+          { skills.length ? (
+            <div>
+              {renderItems}
+            </div>
+          ) : (
+            <span>
+              <NullProfItem target="skill" />
+            </span>
+          )}
+        </div>
       </div>
     )
   }

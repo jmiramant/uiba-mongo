@@ -1,6 +1,6 @@
 @import '../../common/colors';
 @import '../../common/button';
-@import '../../components/profile';
+@import '../../common/profile';
 
 .projectList--container {
   @apply --profile--container;
@@ -31,6 +31,13 @@
 }
 
 .profile-btn-group {
-  height: 55px;
-  padding-top: 10px;
+  @apply --btngr;
 } 
+
+.projectAdd-container {
+  min-height: 300px;
+}
+.description {
+  width: 100% !important;
+}
+

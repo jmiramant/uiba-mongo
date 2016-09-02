@@ -1,13 +1,6 @@
 @import '../../common/colors';
 @import '../../common/button';
-@import '../../components/profile';
-
-.button {
-  @apply --drkBlueButton;
-  width: 75%;
-  margin: 0 2%;
-  font-size: 1.3em;
-}
+@import '../../common/profile';
 
 .schoolList--container {
   @apply --profile--container;
@@ -18,14 +11,12 @@
 }
 
 .schoolItem--header {
-  border-left: 2px solid var(--colorBrightPink);
-  padding-left: 10px;
+  @apply --item--header;
 }
 
 .schoolItem--subHeader {
-  margin: 0;
+  @apply --item--subheader;
   color: var(--colorLightGreyText);
-  padding: 0 0 0px 14px;
 }
 
 .schoolItem--edit {
@@ -36,7 +27,10 @@
 .schoolItem--add {
 }
 
+.schoolAdd-container {
+  min-height: 300px;
+}
+
 .profile-btn-group {
-  height: 55px;
-  padding-top: 10px;
+  @apply --btngr
 } 

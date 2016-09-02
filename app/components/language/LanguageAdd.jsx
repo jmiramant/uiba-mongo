@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 
 import { validateLanguageHelper } from '../helpers/languageValidations';
 
+import AutoComplete from 'material-ui/AutoComplete';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
@@ -13,8 +14,17 @@ import _ from 'lodash';
 
 
 import classNames from 'classnames/bind';
-import styles from 'css/components/profile/jobItem';
+import styles from 'css/components/profile/language';
 const cx = classNames.bind(styles);
+
+const LangData = [ 
+  'Mandarin','Spanish','English','Hindi','Arabic','Portuguese','Bengali','Russian','Japanese','Punjabi','German','Javanese','Malaysian','Telugu','Vietnamese','Korean',
+  'French','Marathi','Tamil','Urdu','Turkish','Italian','Yue','Thai','Gujarati','Jin','Persian','Polish','Pashto','Kannada','Xiang','Malayalam','Sundanese','Hausa','Odia',
+  'Burmese','Hakka','Ukrainian','Bhojpuri','Tagalog','Yoruba','Maithili','Uzbek','Sindhi','Amharic','Fula','Romanian','Oromo','Igbo','Azerbaijani','Awadhi','Dutch','Kurdish',
+  'Malagasy','Saraiki','Nepali','Sinhalese','Chittagonian','Zhuang','Khmer','Turkmen','Assamese','Madurese','Somali','Marwari','Magahi','Haryanvi','Hungarian','Chhattisgarhi',
+  'Greek','Chewa','Deccan','Akan','Kazakh','Northern','Sylheti','Zulu','Czech','Kinyarwanda','Dhundhari','Haitian','Eastern','Ilocano','Quechua','Kirundi','Swedish','Hmong','Shona',
+  'Uyghur','Hiligaynon','Mossi','Xhosa','Belarusian','Balochi','Konkani'
+]
 
 export default class LanguageAdd extends React.Component {
 
@@ -25,6 +35,7 @@ export default class LanguageAdd extends React.Component {
     addVisible: PropTypes.bool,
     onLanguageSave: PropTypes.func.isRequired
   }
+
 
   constructor(props) {
     super(props)
@@ -42,10 +53,17 @@ export default class LanguageAdd extends React.Component {
   }
   
   validate() {
-    // const validationResp = validateLanguageHelper(this.props.language, this.state.validationErrors);
-    // this.setState({validationErrors: validationResp.errors});
-    // return validationResp.containsErrors;
-    return false;
+    const validationResp = validateLanguageHelper(this.props.language, this.state.validationErrors);
+    this.setState({validationErrors: validationResp.errors});
+    return validationResp.containsErrors;
+  }
+
+  handleLanguage (value) {
+    this.props.languageChange({
+      field: 'language',
+      value: value,
+      id: this.props.language._id
+    });  
   }
 
   handleChange = field => (e, i, uiVal) => {
@@ -76,20 +94,25 @@ export default class LanguageAdd extends React.Component {
     return (
       <div>
         <form
+          className={cx('languageAdd--form')}
           onSubmit={this.handleSubmit}
         >
-
-          <TextField
+          <AutoComplete
             value={language.language}
-            errorText={validationErrors.language}
             floatingLabelText="Language"
-            onChange={this.handleChange('language')}
+            errorText={validationErrors.language}
+            filter={AutoComplete.fuzzyFilter}
+            dataSource={LangData}
+            onNewRequest={this.handleLanguage.bind(this)}
+            onUpdateInput={this.handleLanguage.bind(this)}
+            maxSearchResults={5}
           />
 
           <SelectField
             errorText={validationErrors.proficiency}
             onChange={this.handleChange('proficiency')}
             value={language.proficiency}
+            floatingLabelText="Proficiency"
             hintText='Proficiency'
           >
             <MenuItem value={'elementary proficiency'} primaryText="Elementary Proficiency" />

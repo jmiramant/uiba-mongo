@@ -14,12 +14,15 @@ export default class UserCard extends React.Component {
   render () {
     const { profile } = this.props;
     return (
-      <div className={cx('userCard--container') + ' text-center'}>      
-        <div className={cx('userCard--picture-container')}>
-          <img className={cx('userCard--picture-img')} src={profile.picture}/>
+      <div className={cx('userCard--container') + ' text-center'}>
+        <div className={cx('profile--container')}>
+          <div className={cx('userCard--picture-container')}>
+            <img className={cx('userCard--picture-img')} src={profile.picture}/>
+          </div>
+          <div className={cx('userCard--name')}>{profile.name}</div>
+          <div>{profile.headline}</div>
+          <a className={cx('button')}href="/auth/linkedin">AutoFill</a>
         </div>
-        <div className={cx('userCard--name')}>{profile.name}</div>
-        <div>{profile.headline}</div>
       </div>
     )
   }

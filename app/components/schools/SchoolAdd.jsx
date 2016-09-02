@@ -110,6 +110,9 @@ export default class SchoolAdd extends React.Component {
           } = this.props;
     
     const datePicker = (data, name)  => {
+      const capitalizeFirstLetter = (string) => {
+          return string.charAt(0).toUpperCase() + string.slice(1);
+      }
       if (data && data !== '') {
         return (
           <DatePicker
@@ -119,8 +122,9 @@ export default class SchoolAdd extends React.Component {
             }}
             value={new Date(school[name + 'Date'])}
             errorText={validationErrors[name + "Date"]}
-            className="col-sm-5"
+            className="col-md-6"
             hintText={(name.charAt(0).toUpperCase() + name.slice(1)) + " Date"}
+            floatingLabelText={capitalizeFirstLetter(name) + " Date"}
             onChange={this.handleChange(name + 'Date')}
           />
       )} else {
@@ -131,8 +135,9 @@ export default class SchoolAdd extends React.Component {
               return moment(new Date(obj)).format("MMMM YYYY")
             }}
             errorText={validationErrors[name + "Date"]}
-            className="col-sm-5"
-            hintText={(name.charAt(0).toUpperCase() + name.slice(1)) + " Date"}
+            className="col-md-6"
+            hintText={capitalizeFirstLetter(name) + " Date"}
+            floatingLabelText={(name.charAt(0).toUpperCase() + name.slice(1)) + " Date"}
             onChange={this.handleChange(name + 'Date')}
           />
         )
@@ -140,47 +145,23 @@ export default class SchoolAdd extends React.Component {
     }
 
     return (
-      <div>
+      <div className={cx('schoolAdd-container')}>
         <form
           onSubmit={this.handleSubmit}
         >
-          <div>
+          <div className="col-md-6">
             <SchoolNameTypeahead 
               initial={school.name}
               error={validationErrors.name}
               handleChange={this.handleSchoolName.bind(this)}
             />
-            <div className='error'>{validationErrors.date}</div>
-
-            {datePicker(school.startDate, 'start')}
-
-            { !school.current ? (
-                datePicker(school.endDate, 'end')
-            ) : (<span />)}
-  
-            <Checkbox
-              label="Current"
-              checked={school.current}
-              onCheck={this.handleChange('current')}
-            />
-
-            <TextField
-              value={school.major}
-              errorText={validationErrors.major}
-              hintText="Seperate multiple by comma"
-              floatingLabelText="Major"
-              onChange={this.handleChange('major')}
-            />
-            <TextField
-              errorText={validationErrors.minor}
-              hintText="Seperate multiple by comma"
-              floatingLabelText="Minor"
-              onChange={this.handleChange('minor')}
-            />
+          </div>
+          <div className="col-md-6">
             <SelectField
               errorText={validationErrors.degree}
               onChange={this.handleDegree}
               value={school.degree}
+              floatingLabelText="Degree"
               hintText='Degree'
             >
               <MenuItem value={'Associate'} primaryText="Associate" />
@@ -196,16 +177,50 @@ export default class SchoolAdd extends React.Component {
               <MenuItem value={'First Professional Certificate'} primaryText="First Professional Certificate" />
               <MenuItem value={'other'} primaryText="Other" />
             </SelectField>
-            <div className={cx('profile-btn-group')}>
-              <RaisedButton className='pull-right' type="submit" label="Save" primary={true} />
-              {this.props.handleDelete ? (
-                <FlatButton className='pull-left' label="Delete" onClick={this.props.handleDelete} primary={true} />
-              ) : (<span />)}
-              <FlatButton className='pull-left' label="Close" onClick={this.props.toggleEdit} primary={true} />
-            </div>
-            <Divider />
+          </div>
+
+          {datePicker(school.startDate, 'start')}
+
+          { !school.current ? (
+              datePicker(school.endDate, 'end')
+          ) : (<span />)}
+          
+          <div className='col-md-6 col-md-offset-6'>
+            <Checkbox
+              label="Current"
+              checked={school.current}
+              onCheck={this.handleChange('current')}
+            />
+          </div>
+
+          <div className="col-md-6">
+            <TextField
+              value={school.major}
+              errorText={validationErrors.major}
+              hintText="Seperate multiple by comma"
+              floatingLabelText="Major"
+              onChange={this.handleChange('major')}
+            />
+          </div>
+          
+          <div className="col-md-6">
+            <TextField
+              errorText={validationErrors.minor}
+              hintText="Seperate multiple by comma"
+              floatingLabelText="Minor"
+              onChange={this.handleChange('minor')}
+            />
+          </div>
+          
+          <div className={cx('profile-btn-group')}>
+            <RaisedButton className='pull-right' type="submit" label="Save" primary={true} />
+            {this.props.handleDelete ? (
+              <FlatButton className='pull-left' label="Delete" onClick={this.props.handleDelete} primary={true} />
+            ) : (<span />)}
+            <FlatButton className='pull-left' label="Close" onClick={this.props.toggleEdit} primary={true} />
           </div>
         </form>
+        <Divider />
       </div>
     )
   }

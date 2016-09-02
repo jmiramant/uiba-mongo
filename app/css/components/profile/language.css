@@ -1,13 +1,9 @@
 @import '../../common/colors';
 @import '../../common/button';
-@import '../profile';
+@import '../../common/profile';
 
 .languageList--container {
   @apply --profile--container;
-}
-
-.languageItem--chip {
-  display: inline-flex !important;
 }
 
 .languageItem--editBg {
@@ -23,4 +19,17 @@
   color: rgb(124, 124, 124);
   width: 14px !important;
   height: 14px !important;
+}
+
+.chip-container {
+  @apply --chip--spacing; 
+}
+
+
+.languageAdd--form {
+  overflow: hidden;
+}
+
+.profile-btn-group {
+  @apply --btngr;
 }

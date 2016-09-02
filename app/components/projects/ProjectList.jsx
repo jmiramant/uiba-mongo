@@ -7,9 +7,6 @@ import ProjectItem from 'components/projects/ProjectItem';
 import ProjectAdd from 'components/projects/ProjectAdd';
 import NullProfItem from 'components/ProfileNull';
 
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import AddIcon from 'material-ui/svg-icons/content/add';
-
 import classNames from 'classnames/bind';
 import styles from 'css/components/profile/projectList';
 import moment from 'moment';
@@ -70,7 +67,18 @@ class ProjectList extends React.Component {
       </div>
     )
     
-    return ( <div className={cx('projectList--container') + ' col-md-8 col-md-offset-2'}>
+    return ( <div className={cx('projectList--container')}>
+      
+      { addVisibile ? (
+        <ProjectAdd
+          project={project}
+          onProjectSave={this.handleSave} 
+          projectChange={actions.projectChange}
+          toggleEdit={this.toggleAddProject.bind(this)} 
+          addVisibile={addVisibile}
+        />
+      ) : (<span/>)}
+
       { projects.length ? (
         <div>
           {renderItems}
@@ -80,25 +88,7 @@ class ProjectList extends React.Component {
           <NullProfItem target="project" />
         </span>
       )}
-      { addVisibile ? (
-        <ProjectAdd
-          project={project}
-          onProjectSave={this.handleSave} 
-          projectChange={actions.projectChange}
-          toggleEdit={this.toggleAddProject.bind(this)} 
-          addVisibile={addVisibile}
-        />
-      ) : (
-          <div>
-            <FloatingActionButton 
-              onClick={this.toggleAddProject}
-              className={cx('projectItem--add') + ' pull-right'}
-              mini={true}
-            >
-              <AddIcon />
-            </FloatingActionButton>
-          </div>
-      ) }
+
     </div>)
   }
 };

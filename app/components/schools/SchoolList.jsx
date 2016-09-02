@@ -7,9 +7,6 @@ import SchoolItem from 'components/schools/SchoolItem';
 import SchoolAdd from 'components/schools/SchoolAdd';
 import NullProfItem from 'components/ProfileNull';
 
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import AddIcon from 'material-ui/svg-icons/content/add';
-
 import classNames from 'classnames/bind';
 import styles from 'css/components/profile/school';
 import moment from 'moment';
@@ -71,7 +68,17 @@ class SchoolList extends React.Component {
     )
 
     return (
-      <div className={cx('schoolList--container') + ' col-md-8 col-md-offset-2'}>
+      <div className={cx('schoolList--container')}>
+
+        { addVisibile ? (
+          <SchoolAdd 
+            school={school}
+            onSchoolSave={this.handleSave} 
+            schoolChange={actions.schoolChange}
+            toggleEdit={this.toggleAddSchool.bind(this)} 
+            addVisibile={addVisibile} 
+          />
+        ) : (<span/>)}
 
         { schools.length ? (
           <div>
@@ -83,25 +90,6 @@ class SchoolList extends React.Component {
           </span>
         )}
 
-        { addVisibile ? (
-          <SchoolAdd 
-            school={school}
-            onSchoolSave={this.handleSave} 
-            schoolChange={actions.schoolChange}
-            toggleEdit={this.toggleAddSchool.bind(this)} 
-            addVisibile={addVisibile} 
-          />
-        ) : (
-          <div>
-            <FloatingActionButton 
-              onClick={this.toggleAddSchool}
-              className={cx('schoolItem--add') + ' pull-right'}
-              mini={true}
-            >
-              <AddIcon />
-            </FloatingActionButton>
-          </div>
-        ) }
       </div>
     )
   }

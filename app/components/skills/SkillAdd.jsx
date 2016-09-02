@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 import { validateSkillHelper } from '../helpers/skillValidations';
 
 import classNames from 'classnames/bind';
-import styles from 'css/components/profile/jobItem';
+import styles from 'css/components/profile/skill';
 
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
@@ -71,7 +71,7 @@ export default class SkillAdd extends React.Component {
     return (
       <div>
         <form
-          className="wrapper"
+          className={cx('skillAdd--form')}
           onSubmit={this.handleSubmit}
         >
           <TextField
@@ -123,7 +123,6 @@ export default class SkillAdd extends React.Component {
             {this.props.handleDelete ? (
               <FlatButton className='pull-left' label="Delete" onClick={this.props.handleDelete} primary={true} />
             ) : (<span />)}
-            <FlatButton className='pull-left' label="Close" onClick={this.props.toggleEdit} primary={true} />
           </div>
 
         </form>

@@ -68,7 +68,7 @@ const skills = (
   }
 };
 
-const add = (
+const addShow = (
   state = false,
   action
 ) => {
@@ -84,7 +84,7 @@ const add = (
 const skillReducer = combineReducers({
   skill,
   skills,
-  add
+  addShow
 });
 
 export default skillReducer;

@@ -1,6 +1,6 @@
 @import '../../common/colors';
 @import '../../common/button';
-@import '../profile';
+@import '../../common/profile';
 
 .projectList--container {
   @apply --profile--container;

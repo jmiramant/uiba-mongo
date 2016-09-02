@@ -62,18 +62,20 @@ export default class LanguageItem extends React.Component {
     } else {
 
       return (
-        <Chip className={cx('languageItem--chip')}>
-          {language.language} 
-          <span 
-            onClick={this.toggleEdit.bind(this)}
-            className={cx('languageItem--editBg')}
-          >
-            <EditIcon
-              color='#E0E0E0'
-              className={cx('languageItem--editIcon')}
-            />
-          </span>
-        </Chip>
+        <div className={cx('chip-container')}>
+          <Chip className={cx('languageItem--chip')}>
+            {language.language} 
+            <span 
+              onClick={this.toggleEdit.bind(this)}
+              className={cx('languageItem--editBg')}
+            >
+              <EditIcon
+                color='#E0E0E0'
+                className={cx('languageItem--editIcon')}
+              />
+            </span>
+          </Chip>
+        </div>
       )
 
     }

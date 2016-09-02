@@ -14,7 +14,7 @@ import moment from 'moment';
 import _ from 'lodash';
 
 import classNames from 'classnames/bind';
-import styles from 'css/components/profile/jobItem';
+import styles from 'css/components/profile/project';
 const cx = classNames.bind(styles);
 
 export default class ProjectAdd extends React.Component {
@@ -112,7 +112,7 @@ export default class ProjectAdd extends React.Component {
             }}
             value={new Date(project[name + 'Date'])}
             errorText={validationErrors[name + "Date"]}
-            className="col-sm-5"
+            className="col-md-6"
             hintText={(name.charAt(0).toUpperCase() + name.slice(1)) + " Date"}
             onChange={this.handleChange(name + 'Date')}
           />
@@ -124,7 +124,7 @@ export default class ProjectAdd extends React.Component {
               return moment(new Date(obj)).format("MMMM YYYY")
             }}
             errorText={validationErrors[name + "Date"]}
-            className="col-sm-5"
+            className="col-md-6"
             hintText={(name.charAt(0).toUpperCase() + name.slice(1)) + " Date"}
             onChange={this.handleChange(name + 'Date')}
           />
@@ -133,45 +133,54 @@ export default class ProjectAdd extends React.Component {
     }
 
     return (
-      <div>
+      <div className={cx('projectAdd-container')}>
         <form
           onSubmit={this.handleSubmit}
         >
 
-          <TextField
-            value={project.name}
-            errorText={validationErrors.name}
-            floatingLabelText="Project"
-            onChange={this.handleChange('name')}
-          />
-          
-          <TextField
-            value={project.projectUrl}
-            errorText={validationErrors.projectUrl}
-            floatingLabelText="URL"
-            onChange={this.handleChange('projectUrl')}
-          />
+          <div className="col-md-6">
+            <TextField
+              value={project.name}
+              errorText={validationErrors.name}
+              floatingLabelText="Project"
+              onChange={this.handleChange('name')}
+            />
+          </div>
 
-          <TextField
-            value={project.description}
-            errorText={validationErrors.description}
-            floatingLabelText="Description"
-            onChange={this.handleChange('description')}
-            multiLine={true}
-            rows={2}
-          />
+          <div className="col-md-6">
+            <TextField
+              value={project.projectUrl}
+              errorText={validationErrors.projectUrl}
+              floatingLabelText="URL"
+              onChange={this.handleChange('projectUrl')}
+            />
+          </div>
           
-            {datePicker(project.startDate, 'start')}
+          {datePicker(project.startDate, 'start')}
 
-            { !project.current ? (
-                datePicker(project.endDate, 'end')
-            ) : (<span />)}
-  
+          { !project.current ? (
+              datePicker(project.endDate, 'end')
+          ) : (<span />)}
+
+          <div className='col-md-6 col-md-offset-6'>
             <Checkbox
               label="Current"
               checked={project.current}
               onCheck={this.handleChange('current')}
             />
+          </div>
+          
+          <div className="col-md-12">
+            <TextField
+              value={project.description}
+              className={cx('description') + ' col-md-12'}
+              errorText={validationErrors.description}
+              floatingLabelText="Description"
+              onChange={this.handleChange('description')}
+              multiLine={true}
+              rows={2}
+            />
+          </div>
 
           <div className={cx('profile-btn-group')}>
             <RaisedButton className='pull-right' type="submit" label="Save" primary={true} />

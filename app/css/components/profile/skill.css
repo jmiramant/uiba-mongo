@@ -1,9 +1,14 @@
 @import '../../common/colors';
 @import '../../common/button';
-@import '../profile';
+@import '../../common/profile';
+
+.skillList--bootstrap-container {
+  padding-left: 0px;
+}
 
 .skillList--container {
   @apply --profile--container;
+  text-align: center;
 }
 
 .skillItem--chip {
@@ -23,4 +28,16 @@
   color: rgb(124, 124, 124);
   width: 14px !important;
   height: 14px !important;
+}
+
+.skillAdd--form {
+  overflow: hidden;
+}
+
+.profile-btn-group {
+  @apply --btngr;
+}
+
+.chip-container {
+  @apply --chip--spacing; 
 }

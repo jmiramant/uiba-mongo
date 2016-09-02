@@ -1,0 +1,25 @@
+@import '../../common/colors';
+
+.cardHeader--container {
+  background-color: var(--colorDarkBlue);
+  color: var(--colorLightText);
+  margin-top: 20px;
+  border-radius: 3px 3px 0 0;
+
+}
+
+.text {
+  width: 70%;
+  display: inline-block;
+  border-radius: 3px 3px 0 0;
+  padding: 15px 30px;
+  font-size: 20px;
+  background-color: var(--colorDarkBlue);
+}
+
+.icon {
+  height: 52px !important;
+  width: 52px !important;
+  color: var(--colorLightText) !important;
+  padding: 10px !important;
+}

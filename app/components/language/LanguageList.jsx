@@ -7,9 +7,6 @@ import LanguageItem from 'components/language/LanguageItem';
 import LanguageAdd from 'components/language/LanguageAdd';
 import NullProfItem from 'components/ProfileNull';
 
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import AddIcon from 'material-ui/svg-icons/content/add';
-
 import classNames from 'classnames/bind';
 import styles from 'css/components/profile/languageList';
 import moment from 'moment';
@@ -69,7 +66,19 @@ class LanguageList extends React.Component {
     )
 
     return (
-      <div className={cx('languageList--container') + ' col-md-8 col-md-offset-2'}>
+      <div className={cx('languageList--bootstrap-container')}>
+        <div className={cx('languageList--container')}>
+
+        { addVisibile ? (
+          <LanguageAdd
+            language={language}
+            languageChange={actions.languageChange}
+            toggleEdit={this.toggleAddLanguage.bind(this)} 
+            addVisibile={addVisibile}
+            onLanguageSave={this.handleSave}
+          />
+        ) : (<span/>)}
+
         { languages.length ? (
           <div>
             {renderItems}
@@ -79,25 +88,8 @@ class LanguageList extends React.Component {
             <NullProfItem target="language" />
           </span>
         )}
-        { addVisibile ? (
-          <LanguageAdd
-            language={language}
-            languageChange={actions.languageChange}
-            toggleEdit={this.toggleAddLanguage.bind(this)} 
-            addVisibile={addVisibile}
-            onLanguageSave={this.handleSave}
-          />
-        ) : (
-          <div>
-            <FloatingActionButton 
-              onClick={this.toggleAddLanguage}
-              className={cx('languageItem--add') + ' pull-right'}
-              mini={true}
-            >
-              <AddIcon />
-            </FloatingActionButton>
-          </div>
-        ) }
+
+        </div>
       </div>
     )
   }

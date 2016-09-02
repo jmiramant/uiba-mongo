@@ -1,13 +1,35 @@
-@import '../../common/card';
+@import './card';
+@import './colors';
 
 :root {
 
   --profile--container {
     @apply --card;
     background: #fff;
-    margin-top: 20px;
     margin-bottom: 20px;
     padding: 15px 30px;
+  }
+
+  --btngr {
+    float: left;
+    width: 100%;
+    min-height: 50px;
+    padding: 16px 0;
+  }
+
+  --item--header {
+    border-left: 2px solid var(--colorBrightPink);
+    padding-left: 10px;
+  }
+ 
+  --item--subheader {
+    margin: 0;
+    padding: 0 0 0 14px;
+  }
+
+  --chip--spacing {
+    display: inline-flex !important;
+    margin: 4px 2px
   }
 
 }

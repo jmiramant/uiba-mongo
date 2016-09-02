@@ -15,7 +15,7 @@ import moment from 'moment';
 import _ from 'lodash';
 
 import classNames from 'classnames/bind';
-import styles from 'css/components/profile/jobItem';
+import styles from 'css/components/profile/jobAdd';
 const cx = classNames.bind(styles);
 
 export default class JobAdd extends React.Component {
@@ -88,6 +88,9 @@ export default class JobAdd extends React.Component {
           } = this.props;
 
     const datePicker = (data, name)  => {
+      const capitalizeFirstLetter = (string) => {
+          return string.charAt(0).toUpperCase() + string.slice(1);
+      }
       if (data && data !== '') {
         return (
           <DatePicker
@@ -97,8 +100,9 @@ export default class JobAdd extends React.Component {
             }}
             value={new Date(job[name + 'Date'])}
             errorText={validationErrors[name + "Date"]}
-            className="col-sm-5"
+            className="col-md-6"
             hintText={(name.charAt(0).toUpperCase() + name.slice(1)) + " Date"}
+            floatingLabelText={capitalizeFirstLetter(name) + " Date"}
             onChange={this.handleChange(name + 'Date')}
           />
       )} else {
@@ -109,7 +113,8 @@ export default class JobAdd extends React.Component {
               return moment(new Date(obj)).format("MMMM YYYY")
             }}
             errorText={validationErrors[name + "Date"]}
-            className="col-sm-5"
+            className="col-md-6"
+            floatingLabelText={capitalizeFirstLetter(name) + " Date"}
             hintText={(name.charAt(0).toUpperCase() + name.slice(1)) + " Date"}
             onChange={this.handleChange(name + 'Date')}
           />
@@ -118,45 +123,54 @@ export default class JobAdd extends React.Component {
     }
 
     return (
-      <div>
+      <div className={cx('jobAdd-container')}>
         <form
           onSubmit={this.handleSubmit}
         >
 
-          <TextField
-            value={job.companyName}
-            errorText={validationErrors.companyName}
-            floatingLabelText="Company Name"
-            onChange={this.handleChange('companyName')}
-          />
+          <div className="col-md-6">
+            <TextField
+              value={job.companyName}
+              errorText={validationErrors.companyName}
+              floatingLabelText="Company Name"
+              onChange={this.handleChange('companyName')}
+            />
+          </div>
           
-          <TextField
-            value={job.title}
-            errorText={validationErrors.title}
-            floatingLabelText="Title"
-            onChange={this.handleChange('title')}
-          />
+          <div className="col-md-6">
+            <TextField
+              value={job.title}
+              errorText={validationErrors.title}
+              floatingLabelText="Title"
+              onChange={this.handleChange('title')}
+            />
+          </div>
 
           {datePicker(job.startDate, 'start')}
 
           { !job.current ? (
               datePicker(job.endDate, 'end')
           ) : (<span />)}
+          
+          <div className='col-md-6 col-md-offset-6'>
+            <Checkbox
+              label="Current"
+              checked={job.current}
+              onCheck={this.handleChange('current')}
+            />
+          </div>
 
-          <Checkbox
-            label="Current"
-            checked={job.current}
-            onCheck={this.handleChange('current')}
-          />
-
-          <TextField
-            value={job.description}
-            errorText={validationErrors.description}
-            floatingLabelText="Description"
-            onChange={this.handleChange('description')}
-            multiLine={true}
-            rows={2}
-          />
+          <div className="col-md-12">
+            <TextField
+              className={cx('description') + ' col-md-12'}
+              value={job.description}
+              errorText={validationErrors.description}
+              floatingLabelText="Description"
+              onChange={this.handleChange('description')}
+              multiLine={true}
+              rows={2}
+            />
+          </div>
 
           <div className={cx('profile-btn-group')}>
             <RaisedButton className='pull-right' type="submit" label="Save" primary={true} />

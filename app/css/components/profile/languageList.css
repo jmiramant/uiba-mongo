@@ -1,6 +1,10 @@
 @import '../../common/colors';
 @import '../../common/button';
-@import '../profile';
+@import '../../common/profile';
+
+.languageList--bootstrap-container {
+  padding-right: 0px;
+}
 
 .languageList--container {
   @apply --profile--container;

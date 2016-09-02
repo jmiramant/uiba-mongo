@@ -1,0 +1,14 @@
+@import '../../common/colors';
+@import '../../common/profile';
+
+.jobAdd-container {
+  min-height: 400px;
+}
+
+.profile-btn-group {
+  @apply --btngr
+} 
+
+.description {
+  width: 100% !important;
+}
