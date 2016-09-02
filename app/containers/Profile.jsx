@@ -13,7 +13,7 @@ import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { Card } from 'material-ui/Card';
-import CardHeader from 'components/cardHeader';
+import CardHeader from 'components/CardHeader';
 import Jobs from 'components/jobs/JobList';
 import Schools from 'components/schools/SchoolList';
 import Skills from 'components/skills/SkillList';
