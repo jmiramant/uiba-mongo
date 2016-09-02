@@ -123,6 +123,7 @@ export default class SkillAdd extends React.Component {
             {this.props.handleDelete ? (
               <FlatButton className='pull-left' label="Delete" onClick={this.props.handleDelete} primary={true} />
             ) : (<span />)}
+            <FlatButton className='pull-left' label="Close" onClick={this.props.toggleEdit} primary={true} />
           </div>
 
         </form>
