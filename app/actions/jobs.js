@@ -5,6 +5,33 @@ import * as types from 'types';
 
 polyfill();
 
+export function newJob() {
+  return {
+    type: types.NEW_JOB,
+  };
+}
+
+export function jobChange(state) {
+  return {
+    type: types.CHANGE_JOB,
+    state
+  };
+}
+
+export function jobsChange(state) {
+  return {
+    type: types.CHANGE_JOBS,
+    state
+  };
+}
+
+export function toggleJobAdd (data) {
+  return {
+    type: types.TOGGLE_JOB_ADD,
+    data: data
+  };
+}
+
 function makeJobsRequest(method, data, api = '/jobs') {
   return request[method](api, data);
 }

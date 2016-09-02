@@ -49,51 +49,50 @@ class Profile extends Component {
 
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
-        <div className={cx('about') + ' container'}>
-          <Card>
-            <CardHeader title="Profile" />
-            <CardText>
-              <UserCard profile={profile} />
-            </CardText>
-          </Card>
-          <Jobs 
-            jobs={jobs} 
-            onEditSave={jobActions.updateJob} 
-            onJobSave={jobActions.createJob} 
-            onJobDelete={jobActions.deleteJob} 
-          />
-          <Schools 
-            schools={schools.schools} 
-            addVisibile={schools.addShow}
-            toggleSchoolAdd={schoolActions.toggleSchoolAdd}
-            onEditSave={schoolActions.updateSchool} 
-            onSchoolSave={schoolActions.createSchool} 
-            onSchoolDelete={schoolActions.deleteSchool} 
-          />
-          <Skills 
-            skills={skills.skills}
-            addVisibile={skills.add}
-            toggleSkillAdd={skillActions.toggleSkillAdd}
-            onEditSave={skillActions.updateSkill} 
-            onSkillSave={skillActions.createSkill} 
-            onSkillDelete={skillActions.deleteSkill} 
-          />
-          <Languages
-            languages={languages.languages}
-            addVisibile={languages.addShow}
-            toggleLanguageAdd={languageActions.toggleLanguageAdd}
-            onEditSave={languageActions.updateLanguage} 
-            onLanguageSave={languageActions.createLanguage} 
-            onLanguageDelete={languageActions.deleteLanguage} 
-          />
-          <Projects
-            projects={projects.projects}
-            addVisibile={projects.addShow}
-            toggleProjectAdd={projectActions.toggleProjectAdd}
-            onEditSave={projectActions.updateProject} 
-            onProjectSave={projectActions.createProject} 
-            onProjectDelete={projectActions.deleteProject} 
-          />
+        <div>
+          <UserCard profile={profile} />
+          <div className={cx('about') + ' container'}>
+            <Jobs 
+              jobs={jobs.jobs} 
+              addVisibile={jobs.addShow}
+              toggleJobAdd={jobActions.toggleJobAdd}
+              onEditSave={jobActions.updateJob} 
+              onJobSave={jobActions.createJob} 
+              onJobDelete={jobActions.deleteJob} 
+            />
+            <Schools 
+              schools={schools.schools} 
+              addVisibile={schools.addShow}
+              toggleSchoolAdd={schoolActions.toggleSchoolAdd}
+              onEditSave={schoolActions.updateSchool} 
+              onSchoolSave={schoolActions.createSchool} 
+              onSchoolDelete={schoolActions.deleteSchool} 
+            />
+            <Skills 
+              skills={skills.skills}
+              addVisibile={skills.add}
+              toggleSkillAdd={skillActions.toggleSkillAdd}
+              onEditSave={skillActions.updateSkill} 
+              onSkillSave={skillActions.createSkill} 
+              onSkillDelete={skillActions.deleteSkill} 
+            />
+            <Languages
+              languages={languages.languages}
+              addVisibile={languages.addShow}
+              toggleLanguageAdd={languageActions.toggleLanguageAdd}
+              onEditSave={languageActions.updateLanguage} 
+              onLanguageSave={languageActions.createLanguage} 
+              onLanguageDelete={languageActions.deleteLanguage} 
+            />
+            <Projects
+              projects={projects.projects}
+              addVisibile={projects.addShow}
+              toggleProjectAdd={projectActions.toggleProjectAdd}
+              onEditSave={projectActions.updateProject} 
+              onProjectSave={projectActions.createProject} 
+              onProjectDelete={projectActions.deleteProject} 
+            />
+          </div>
         </div>
       </MuiThemeProvider>
     );
@@ -103,7 +102,7 @@ class Profile extends Component {
 function mapStateToProps(state) {
   return {
     schools: state.school,
-    jobs: state.job.jobs,
+    jobs: state.job,
     profile: state.profile.currentProfile,
     skills: state.skill,
     languages: state.language,

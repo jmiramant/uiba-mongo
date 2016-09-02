@@ -40,11 +40,6 @@ export function get(req, res) {
 
 export function create(req, res) {
   
-  function createDateObj (date) {
-    const split = date.split('-');
-    return new Date(split[0], split[1], split[2])
-  };
-
   return Company.create({
     name: req.body.company
   }, function (err, company) {
@@ -58,8 +53,8 @@ export function create(req, res) {
       description: req.body.description,
       title: req.body.title,
       current: req.body.current,
-      startDate: createDateObj(req.body.startDate),
-      endDate: createDateObj(req.body.endDate),
+      startDate: new Date(req.body.startDate),
+      endDate: new Date(req.body.endDate),
     }, function (err, job) {
 
       if (err) return handleError(err);

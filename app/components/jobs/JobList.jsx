@@ -1,33 +1,42 @@
 import React, { PropTypes } from 'react';
-import classNames from 'classnames/bind';
-import styles from 'css/components/profile/jobList';
-import moment from 'moment';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as jobsActionCreators from 'actions/jobs';
+
 import JobItem from 'components/jobs/JobItem';
 import JobAdd from 'components/jobs/JobAdd';
 import NullProfItem from 'components/ProfileNull';
 
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import AddIcon from 'material-ui/svg-icons/content/add';
+
+import classNames from 'classnames/bind';
+import styles from 'css/components/profile/jobList';
+import moment from 'moment';
 const cx = classNames.bind(styles);
 
-export default class JobList extends React.Component {
+class JobList extends React.Component {
   
   static propTypes = {
     jobs: PropTypes.array,
-    onJobSave: PropTypes.func.isRequired
+    addVisibile: PropTypes.bool.isRequired,
+    onEditSave: PropTypes.func.isRequired,
+    toggleJobAdd: PropTypes.func.isRequired,
+    onJobSave: PropTypes.func.isRequired,
+    onJobDelete: PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props);
-    this.handleSave = this.handleSave.bind(this);
-    this.state = { addVisibile: false } ;
   }
   
-  showAddJob = () => {
-    this.setState({addVisibile: true})
+  toggleAddJob = () => {
+    this.props.toggleJobAdd(this.props.addVisibile)
   }
 
   handleSave = (data) => {
     this.props.onJobSave(data);
-    this.setState({addVisibile: false})
+    this.props.toggleJobAdd(this.props.addVisibile)
   }
 
   handleEditSave = (data) => {
@@ -39,19 +48,24 @@ export default class JobList extends React.Component {
   }
 
   render () {
-    let { jobs } = this.props;
-    let lengthIndex = jobs.length - 1;
-    const { addVisibile } = this.state;
+    const { job,
+            jobs,
+            addVisibile,
+            actions
+          } = this.props;
+    const lengthIndex = jobs.length - 1;
 
     const renderItems = (
       <div>
         {jobs.map((job, i) => {
             return (<JobItem 
                       key={job._id} 
+                      job={job} 
+                      jobChange={actions.jobsChange} 
                       saveJobEdit={this.handleEditSave} 
                       handleDelete={this.handleDelete}
-                      job={job} 
-                      isntLast={lengthIndex !== i} />);
+                      isntLast={lengthIndex !== i} 
+                    />);
         })}
       </div>
     )
@@ -69,14 +83,43 @@ export default class JobList extends React.Component {
           </span>
         )}
 
-        { this.state.addVisibile ? (
-          <JobAdd addVisibile={addVisibile} onJobSave={this.handleSave} />
+        { addVisibile ? (
+          <JobAdd
+            job={job}
+            onJobSave={this.handleSave} 
+            jobChange={actions.jobChange}
+            toggleEdit={this.toggleAddJob.bind(this)} 
+            addVisibile={addVisibile} 
+          />
         ) : (
           <div>
-            <div onClick={this.showAddJob} className='pull-right'>Add Job</div>
+            <FloatingActionButton 
+              onClick={this.toggleAddJob}
+              className={cx('jobItem--add') + ' pull-right'}
+              mini={true}
+            >
+              <AddIcon />
+            </FloatingActionButton>
           </div>
         ) }
       </div>
     )
   }
 };
+
+function mapStateToProps(state) {
+  return {
+    job: state.job.job
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    actions: bindActionCreators(jobsActionCreators, dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(JobList);

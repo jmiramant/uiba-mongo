@@ -26,7 +26,6 @@ class ProjectList extends React.Component {
     onProjectDelete: PropTypes.func.isRequired
   }
 
-
   constructor(props) {
     super(props);
   }

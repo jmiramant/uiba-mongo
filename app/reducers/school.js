@@ -44,7 +44,7 @@ const schools = (
   state = [],
   action
 ) => {
-  let updatedSchool
+  let updatedSchool;
   switch (action.type) {
     case types.GET_SCHOOLS_SUCCESS:
       return schoolOrder(action.res.data)

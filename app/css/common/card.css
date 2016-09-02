@@ -1,7 +1,6 @@
 :root {
 
   --card {
-    box-shadow: 0px 0px 10px -2px #afafaf;
     -webkit-border-radius: 2px;
     border-radius: 2px;
   }
