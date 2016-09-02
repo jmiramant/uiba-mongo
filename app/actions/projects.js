@@ -103,7 +103,6 @@ export function createProject(projectData) {
 
 export function updateProject(projectData) {
   return (dispatch) => {
-
     dispatch(updateProjectRequest(projectData));
     
     return makeProjectsRequest('put', projectData)

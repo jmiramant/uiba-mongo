@@ -1,7 +1,10 @@
 import { setValidationErrorObject,
          containsErrors } from './CommonFormValidations';
 import moment from 'moment';
+import isURL from 'validator/lib/isURL';
 import _ from 'lodash';
+
+
 
 export function validateProjectHelper (project, errorStore) {
   const cantBeNull = ['name', 'description', 'startDate']
@@ -27,6 +30,12 @@ export function validateProjectHelper (project, errorStore) {
     if (start.isAfter(moment()) || end.isAfter(moment())) {
       errors['startDate'] = "Dates must be before today.";
       errors['endDate'] = "Dates must be before today. If this is your current project, please select the current box.";
+    }
+  }
+
+  if (project.projectUrl) {
+    if (!isURL(project.projectUrl, { protocols: ['http','https'] })) {
+      errors['projectUrl'] = "Please add a valid link.";
     }
   }
   

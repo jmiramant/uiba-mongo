@@ -48,6 +48,16 @@ export default class ProjectAdd extends React.Component {
     return validationResp.containsErrors;
   }
 
+  formatURL(url) {
+    const inHttps = url.includes('https')
+    const inHttp = url.includes('http')
+    if (!inHttp && !inHttps) {
+      return "http://" + url
+    } else {
+      return url
+    }
+  }
+
   handleChange = field => (e, uiVal) => {
     let value;
     if (uiVal) {
@@ -60,6 +70,10 @@ export default class ProjectAdd extends React.Component {
       value = e.target.value      
     } else {
       value = e.value
+    }
+
+    if (field === 'projectUrl') {
+      value = this.formatURL(value)
     }
 
     if (e && e.target && e.target.type === 'checkbox') {

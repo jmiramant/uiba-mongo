@@ -3,6 +3,7 @@
 @import 'common/typography';
 
 @import url(https://fonts.googleapis.com/css?family=Montserrat:100,400,700);
+@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700);
 @import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:100,300);
 
 * { box-sizing: border-box; }
@@ -10,6 +11,7 @@
 body {
   margin: 0;
   font-family: var(--fontMontserrat);
+  background: #f5f5f5;
 }
 
 textarea,
