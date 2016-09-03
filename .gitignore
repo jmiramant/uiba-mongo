@@ -14,3 +14,8 @@ pids
 
 server/config/secrets.js
 /server/config/secrets.js
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

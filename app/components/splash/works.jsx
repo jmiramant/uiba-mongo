@@ -17,7 +17,7 @@ export default class SplashWorks extends React.Component {
   handleWaypointEnter() {
     var elem = ReactDom.findDOMNode(this);
     window.requestAnimationFrame(function() {
-      elem.style.transition = "opacity 1500ms";
+      elem.style.transition = "opacity 800ms";
       elem.style.opacity = 1;
     });
   }
@@ -48,7 +48,7 @@ export default class SplashWorks extends React.Component {
             </div>
             <div className={cx('works--text-container') + ' col-md-9'}>
               <div className={cx('works--title')}>Then a Lot of Data Science</div>
-              <div className={cx('works--description')}>Using that data, we applied data science and machine learning to deleve into the nature of how work is performed: knowledge, skills, activities, teamwork, etc.</div>
+              <div className={cx('works--description')}>We then applied cutting-edge data science and machine learning to understand and model how work is performed across all jobs in all industries.</div>
             </div>
           </div>
           
@@ -57,7 +57,7 @@ export default class SplashWorks extends React.Component {
           <div className={cx('works--item-container')}>
             <div className={cx('works--icon-container') + ' col-md-3 hidden-sm hidden-xs'}>
               <div className={cx('works--border', 'blue')}>
-                <div className={cx('works--icon-globe')}></div>
+                <div className={cx('works--icon-dna')}></div>
               </div>
             </div>
             <div className={cx('works--text-container') + ' col-md-9'}>
@@ -68,8 +68,8 @@ export default class SplashWorks extends React.Component {
 
           <div className={cx('works--item-container')}>
             <div className={cx('works--icon-container') + ' col-md-3 hidden-sm hidden-xs'}>
-              <div className={cx('works--border', 'blue')}>
-                <div className={cx('works--icon-globe')}></div>
+              <div className={cx('works--border', 'red')}>
+                <div className={cx('works--icon-jigsaw')}></div>
               </div>
             </div>
             <div className={cx('works--text-container') + ' col-md-9'}>

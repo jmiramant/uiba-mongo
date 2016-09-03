@@ -6,6 +6,10 @@
   text-align: center;
 }
 
+.manifesto {
+  padding: 0 10%;
+}
+
 .about {
   background-color: #7ecefd;
   background-image: -webkit-linear-gradient(-387deg, #f9fafb 0, #7ecefd 100%);

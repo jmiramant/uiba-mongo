@@ -50,3 +50,7 @@ section {
 .section--numbers {
   min-height: 1370px;
 }
+
+.section--companies {
+  min-height: 1200px;
+}
