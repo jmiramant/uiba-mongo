@@ -1,21 +1,28 @@
 import mongoose, { Schema } from 'mongoose';
+import Profile from '../models/profile';
 import Job from '../models/job';
 import Company from '../models/company';
 import moment from 'moment';
 
-const handleError = (err) => {
-  console.log(err)
+const handleError = (res, err) => {
+  return res.status(401).json({ message: err });
 }
 
-const setUid = (req) => {
+/**
+ * Me
+ */
+export function me(req, res) {
 
-  if (req.params && req.params.id) {
-    return req.params.id 
-  } else if (req.user && req.user._id) {
-    return req.user._id;
-  } else {
-    return req.session.passport.user;
-  }
+  Job.find({
+    
+    "profile_id": mongoose.Types.ObjectId(req.user.profile_id)
+
+  }).exec((err, jobs) => {
+    
+    if (err) return handleError(res, err);
+    return res.status(200).json(jobs);
+  
+  });
 
 }
 
@@ -23,9 +30,9 @@ const setUid = (req) => {
  * Get
  */
 export function get(req, res) {
-  var uid = setUid(req);
+  var uid = req.params.id
 
-  Job.find({"user_id": mongoose.Types.ObjectId(uid)}).exec((err, jobs) => {
+  Job.find({"profile_id": mongoose.Types.ObjectId(uid)}).exec((err, jobs) => {
     if (err) {
       console.log('Error in "jobs/me" query');
       return res.status(500).send('Something went wrong getting the data');
@@ -47,7 +54,7 @@ export function create(req, res) {
     if (err) return handleError(err);
 
     Job.create({
-      user_id: req.user._id,
+      profile_id: req.user.profile_id,
       company_id: company._id,
       companyName: req.body.companyName,
       description: req.body.description,
@@ -132,6 +139,7 @@ export function remove (req, res) {
 
 
 export default {
+  me,
   get,
   create,
   update,

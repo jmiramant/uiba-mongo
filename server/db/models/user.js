@@ -3,7 +3,8 @@
  */
 
 import bcrypt from 'bcrypt-nodejs';
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
+import { Profile } from './profile';
 // Other oauthtypes to be added
 
 /*
@@ -17,7 +18,8 @@ const UserSchema = new mongoose.Schema({
   resetPasswordToken: String,
   resetPasswordExpires: Date,
   google: {},
-  linkedin: {}
+  linkedin: {},
+  profile_id: {type: Schema.Types.ObjectId, ref: 'Profile'},
 }, {timestamp: true});
 
 function encryptPassword(next) {

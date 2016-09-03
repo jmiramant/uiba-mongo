@@ -33,6 +33,8 @@ export default (req, accessToken, refreshToken, profile, done) => {
 
           setDefaultProfileFields(_profile, profile, user._id);
           
+          user.profile_id = _profile._id;
+
           return async.series({
             _profile: _profile.save,
             user: user.save
@@ -57,6 +59,7 @@ export default (req, accessToken, refreshToken, profile, done) => {
 
       setDefaultUserFields(user, profile, accessToken)
       setDefaultProfileFields(_profile, profile, user._id);
+      user.profile_id = _profile._id;
       
       return async.series({
         _profile: _profile.save,

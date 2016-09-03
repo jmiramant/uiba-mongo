@@ -8,6 +8,7 @@ const cx = classNames.bind(styles);
 export default class UserCard extends React.Component {
   
   //static propTypes = {
+          // <a className={cx('button')}href="/auth/linkedin">AutoFill</a>
   // profile: PropTypes.object,
   //}
   
@@ -21,7 +22,6 @@ export default class UserCard extends React.Component {
           </div>
           <div className={cx('userCard--name')}>{profile.name}</div>
           <div>{profile.headline}</div>
-          <a className={cx('button')}href="/auth/linkedin">AutoFill</a>
         </div>
       </div>
     )

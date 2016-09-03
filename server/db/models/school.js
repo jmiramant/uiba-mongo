@@ -1,8 +1,8 @@
 import mongoose, { Schema } from 'mongoose';
-import { User } from './user';
+import { Profile } from './profile';
 
 const SchoolSchema = new mongoose.Schema({
-  user_id: {type: Schema.Types.ObjectId, ref: 'User'},
+  profile_id: {type: Schema.Types.ObjectId, ref: 'Profile'},
   name: { type: String, required: true },
   major: [{type: String, default: '', required: true}],
   minor: [{type: String, default: ''}],

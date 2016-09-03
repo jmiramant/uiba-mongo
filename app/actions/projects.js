@@ -39,7 +39,7 @@ function makeProjectsRequest(method, data, api = '/projects') {
 export function fetchProjects() {
   return {
     type: types.GET_PROJECTS,
-    promise: makeProjectsRequest('get')
+    promise: makeProjectsRequest('get', {}, '/projects/me')
   };
 }
 

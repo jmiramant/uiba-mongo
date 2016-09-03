@@ -39,7 +39,7 @@ function makeLanguagesRequest(method, data, api = '/languages') {
 export function fetchLanguages() {
   return {
     type: types.GET_LANGUAGES,
-    promise: makeLanguagesRequest('get')
+    promise: makeLanguagesRequest('get', {}, '/languages/me')
   };
 }
 

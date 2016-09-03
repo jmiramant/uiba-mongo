@@ -1,8 +1,8 @@
 import mongoose, { Schema } from 'mongoose';
-import { User } from './user';
+import { Profile } from './profile';
 
 const SkillSchema = new mongoose.Schema({
-  user_id: {type: Schema.Types.ObjectId, ref: 'User', required: true },
+  profile_id: {type: Schema.Types.ObjectId, ref: 'Profile', required: true },
   type: { type: String, default: '', required: true },
   proficiency: { type: String,
                  enum: ['learning', 'intermediate', 'competent', 'expert'],

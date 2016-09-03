@@ -3,19 +3,24 @@ import Skill from '../models/skill';
 import moment from 'moment';
 
 const handleError = (res, err) => {
-  console.log(err);
   return res.status(401).json({ message: err });
 }
 
-const setUid = (req) => {
+/**
+ * Me
+ */
+export function me(req, res) {
 
-  if (req.params && req.params.id) {
-    return req.params.id 
-  } else if (req.user && req.user._id) {
-    return req.user._id;
-  } else {
-    return req.session.passport.user;
-  }
+  Skill.find({
+    
+    "profile_id": mongoose.Types.ObjectId(req.user.profile_id)
+
+  }).exec((err, skills) => {
+    
+    if (err) return handleError(res, err);
+    return res.status(200).json(skills);
+  
+  });
 
 }
 
@@ -23,11 +28,10 @@ const setUid = (req) => {
  * Get
  */
 export function get(req, res) {
-  var uid = setUid(req);
+  var uid = req.params.id
 
   Skill.find({"user_id": mongoose.Types.ObjectId(uid)}).exec((err, skills) => {
     if (err) {
-      console.log('Error in "skill/me" query');
       return res.status(500).send('Something went wrong getting the skills data');
     }
     return res.status(200).json(skills);
@@ -41,7 +45,7 @@ export function get(req, res) {
 export function create(req, res) {
   
   Skill.create({
-    user_id: req.user._id,
+    profile_id: req.user.profile_id,
     type: req.body.type,
     proficiency: req.body.proficiency,
     lengthOfUse: req.body.lengthOfUse,
@@ -81,6 +85,7 @@ export function remove (req, res) {
 
 
 export default {
+  me,
   get,
   create,
   update,

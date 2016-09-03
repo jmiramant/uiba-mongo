@@ -39,7 +39,7 @@ function makeSchoolsRequest(method, data, api = '/schools') {
 export function fetchSchools() {
   return {
     type: types.GET_SCHOOLS,
-    promise: makeSchoolsRequest('get')
+    promise: makeSchoolsRequest('get', {}, '/schools/me')
   };
 }
 

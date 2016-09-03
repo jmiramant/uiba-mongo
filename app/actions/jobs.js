@@ -39,7 +39,7 @@ function makeJobsRequest(method, data, api = '/jobs') {
 export function fetchJobs() {
   return {
     type: types.GET_JOBS,
-    promise: makeJobsRequest('get')
+    promise: makeJobsRequest('get', {}, 'jobs/me')
   };
 }
 

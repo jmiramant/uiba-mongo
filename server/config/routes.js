@@ -26,7 +26,8 @@ export default (app) => {
   }
 
   if (jobsController) {
-    app.get('/jobs', jobsController.get);
+    app.get('/jobs/me', jobsController.me);
+    app.get('/jobs/:id', jobsController.get);
     app.post('/jobs', jobsController.create);
     app.put('/jobs', jobsController.update);
     app.delete('/jobs/:id', jobsController.remove);
@@ -35,7 +36,8 @@ export default (app) => {
   }
 
   if (schoolNamesController) {
-    app.get('/schools', schoolsController.get);
+    app.get('/schools/me', schoolsController.me);
+    app.get('/schools/:id', schoolsController.get);
     app.post('/schools', schoolsController.create);
     app.put('/schools', schoolsController.update);
     app.delete('/school/:id', schoolsController.remove);
@@ -44,7 +46,8 @@ export default (app) => {
   }
 
   if (skillsController) {
-    app.get('/skills', skillsController.get);
+    app.get('/skills/me', skillsController.me);
+    app.get('/skills/:id', skillsController.get);
     app.post('/skills', skillsController.create);
     app.put('/skills', skillsController.update);
     app.delete('/skill/:id', skillsController.remove);
@@ -53,7 +56,8 @@ export default (app) => {
   }
 
   if (languagesController) {
-    app.get('/languages', languagesController.get);
+    app.get('/languages/me', languagesController.me);
+    app.get('/languages/:id', languagesController.get);
     app.post('/languages', languagesController.create);
     app.put('/languages', languagesController.update);
     app.delete('/language/:id', languagesController.remove);
@@ -62,7 +66,8 @@ export default (app) => {
   }
 
   if (projectsController) {
-    app.get('/projects', projectsController.get);
+    app.get('/projects/me', projectsController.me);
+    app.get('/projects/:id', projectsController.get);
     app.post('/projects', projectsController.create);
     app.put('/projects', projectsController.update);
     app.delete('/project/:id', projectsController.remove);

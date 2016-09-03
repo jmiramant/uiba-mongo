@@ -45,7 +45,7 @@ var companies = [{name: 'Blue Orange Digital', start: new Date(2014, 6, 20), end
                  {name: 'Good.Co', start: new Date(2013, 2, 20), end: new Date(2014, 5, 20)},
                  {name: "EverFi, Inc", start: new Date(2012, 1, 20), end: new Date(2013, 1, 20)}]
 
-var user = db.users.findOne();
+var profile = db.profiles.findOne();
 
 db.companies.find().snapshot().forEach(function (company) {
   var companyData = companies.filter(function (a) {return a.name === company.name })
@@ -53,7 +53,7 @@ db.companies.find().snapshot().forEach(function (company) {
     db.jobs.insertOne(
       {
         company_id: company._id,
-        user_id: user._id,
+        profile_id: profile._id,
         current: false,
         companyName: companyData[0].name,
         title: 'Software Engineer',
@@ -78,13 +78,13 @@ var skills = [
   {type: 'EMACS', proficiency: 'intermediate', lengthOfUse: 5, frequency: 'monthly'},
 ]
 
-var user = db.users.findOne();
+var profile = db.profiles.findOne();
 
 skills.forEach(function (skill) {
     
   db.skills.insertOne(
     {
-      user_id: user._id,
+      profile_id: profile._id,
       type: skill.type,
       proficiency: skill.proficiency,
       lengthOfUse: skill.lengthOfUse,
@@ -106,13 +106,13 @@ var languages = [
                 {language: 'French', proficiency: 'minimum professional proficiency', experience: 2},
               ]
 
-var user = db.users.findOne();
+var profile = db.profiles.findOne();
 
 languages.forEach(function (school) {
     
   db.languages.insertOne(
     {
-      user_id: user._id,
+      profile_id: profile._id,
       language: school.language,
       proficiency: school.proficiency,
       experience: school.experience,
@@ -131,13 +131,13 @@ var projects = [
                 {projectUrl: 'www.google.com', name: "Website", start: new Date(2012, 1, 20), end: new Date(2013, 1, 20)}]
               ]
 
-var user = db.users.findOne();
+var profile = db.profiles.findOne();
 
 projects.forEach(function (project) {
     
   db.projects.insertOne(
     {
-      user_id: user._id,
+      profile_id: profile._id,
       name: project.name,
       projectUrl: project.projectUrl,
       startDate: project.start,
@@ -160,13 +160,13 @@ var schools = [
                {name: 'Duke University', start: new Date(2012, 1, 20), end: new Date(2013, 1, 20), major: ['Art History'], minor: [], degree: ['Baccalaureate']}
                ]
 
-var user = db.users.findOne();
+var profile = db.profiles.findOne();
 
 schools.forEach(function (school) {
     
   db.schools.insertOne(
     {
-      user_id: user._id,
+      profile_id: profile._id,
       name: school.name,
       startDate: school.start,
       endDate: school.end,

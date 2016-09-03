@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
+import Profile from '../models/profile';
 import Language from '../models/language';
 import moment from 'moment';
 
@@ -7,15 +8,21 @@ const handleError = (res, err) => {
   return res.status(401).json({ message: err });
 }
 
-const setUid = (req) => {
+/**
+ * Me
+ */
+export function me(req, res) {
 
-  if (req.params && req.params.id) {
-    return req.params.id 
-  } else if (req.user && req.user._id) {
-    return req.user._id;
-  } else {
-    return req.session.passport.user;
-  }
+  Language.find({
+    
+    "profile_id": mongoose.Types.ObjectId(req.user.profile_id)
+
+  }).exec((err, languages) => {
+    
+    if (err) return handleError(res, err);
+    return res.status(200).json(languages);
+  
+  });
 
 }
 
@@ -23,7 +30,7 @@ const setUid = (req) => {
  * Get
  */
 export function get(req, res) {
-  var uid = setUid(req);
+  var uid = req.params.id
 
   Language.find({"user_id": mongoose.Types.ObjectId(uid)}).exec((err, languages) => {
     if (err) {
@@ -39,9 +46,9 @@ export function get(req, res) {
  */
 
 export function create(req, res) {
-  
+
   Language.create({
-    user_id: req.user._id,
+    profile_id: req.user.profile_id,
     language: req.body.language,
     proficiency: req.body.proficiency,
     experience: req.body.experience,
@@ -79,6 +86,7 @@ export function remove (req, res) {
 
 
 export default {
+  me,
   get,
   create,
   update,

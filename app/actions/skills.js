@@ -39,7 +39,7 @@ function makeSkillsRequest(method, data, api = '/skills') {
 export function fetchSkills() {
   return {
     type: types.GET_SKILLS,
-    promise: makeSkillsRequest('get')
+    promise: makeSkillsRequest('get', {}, '/skills/me')
   };
 }
 

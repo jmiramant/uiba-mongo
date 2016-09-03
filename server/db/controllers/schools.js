@@ -6,15 +6,21 @@ const handleError = (res, err) => {
   return res.status(401).json({ message: err }); 
 }
 
-const setUid = (req) => {
+/**
+ * Me
+ */
+export function me(req, res) {
 
-  if (req.params && req.params.id) {
-    return req.params.id 
-  } else if (req.user && req.user._id) {
-    return req.user._id;
-  } else {
-    return req.session.passport.user;
-  }
+  School.find({
+    
+    "profile_id": mongoose.Types.ObjectId(req.user.profile_id)
+
+  }).exec((err, jobs) => {
+    
+    if (err) return handleError(res, err);
+    return res.status(200).json(jobs);
+  
+  });
 
 }
 
@@ -22,7 +28,7 @@ const setUid = (req) => {
  * Get
  */
 export function get(req, res) {
-  var uid = setUid(req);
+  var uid = req.params.id
 
   School.find({"user_id": mongoose.Types.ObjectId(uid)}).exec((err, schools) => {
     if (err) {
@@ -40,7 +46,7 @@ export function get(req, res) {
 export function create(req, res) {
   
   School.create({
-    user_id: req.user._id,
+    profile_id: req.user.profile_id,
     name: req.body.name,
     major: [req.body.major],
     minor: [req.body.minor],
@@ -87,6 +93,7 @@ export function remove (req, res) {
 
 
 export default {
+  me,
   get,
   create,
   update,

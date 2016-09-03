@@ -1,8 +1,8 @@
 import mongoose, { Schema } from 'mongoose';
-import { User } from './user';
+import { Profile } from './profile';
 
 const ProjectSchema = new mongoose.Schema({
-  user_id: {type: Schema.Types.ObjectId, ref: 'User', required: true },
+  profile_id: {type: Schema.Types.ObjectId, ref: 'Profile', required: true },
   name: { type: String, default: '', required: true },
   projectUrl: { type: String, default: '', required: true },
   description: { type: String, default: '', required: true },

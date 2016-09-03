@@ -1,8 +1,8 @@
 import mongoose, { Schema } from 'mongoose';
-import { User } from './user';
+import { Profile } from './profile';
 
 const LanguageSchema = new mongoose.Schema({
-  user_id: {type: Schema.Types.ObjectId, ref: 'User', required: true },
+  profile_id: {type: Schema.Types.ObjectId, ref: 'Profile', required: true },
   language: { type: String, default: '', required: true },
   proficiency: { type: String,
                  enum: ['elementary proficiency', 'limited working proficiency', 'minimum professional proficiency', 'full professional proficiency', 'native or bilingual proficiency'],
