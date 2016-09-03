@@ -31,5 +31,6 @@ export default (passport) => {
     clientSecret: linkedin.clientSecret,
     callbackURL: linkedin.callbackURL,
     scope: ['r_emailaddress', 'r_basicprofile'],
+    state: true
   }, dbPassport.linkedin));
 };
