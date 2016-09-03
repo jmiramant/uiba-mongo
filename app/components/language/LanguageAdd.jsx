@@ -90,7 +90,6 @@ export default class LanguageAdd extends React.Component {
             language,
           } = this.props;
 
-    console.log(language.language)
     return (
       <div>
         <form
