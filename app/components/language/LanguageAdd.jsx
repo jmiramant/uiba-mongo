@@ -90,7 +90,7 @@ export default class LanguageAdd extends React.Component {
             language,
           } = this.props;
 
-
+    console.log(language.language)
     return (
       <div>
         <form
@@ -98,7 +98,7 @@ export default class LanguageAdd extends React.Component {
           onSubmit={this.handleSubmit}
         >
           <AutoComplete
-            value={language.language}
+            searchText={language.language}
             floatingLabelText="Language"
             errorText={validationErrors.language}
             filter={AutoComplete.fuzzyFilter}

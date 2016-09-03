@@ -33,6 +33,8 @@ const project = (
       const newStateOjb = {...state}
       newStateOjb[action.state.field] = action.state.value
       return newStateOjb;
+    case types.CREATE_PROJECT_SUCCESS:
+      return {};
     default:
       return state;
   }

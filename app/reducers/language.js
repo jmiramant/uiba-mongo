@@ -26,6 +26,8 @@ const language = (
         proficiency: undefined,
         experience: undefined,
       }
+    case types.CREATE_LANGUAGE_SUCCESS:
+      return {};
     case types.CHANGE_LANGUAGE:
       const newStateOjb = {...state}
       newStateOjb[action.state.field] = action.state.value

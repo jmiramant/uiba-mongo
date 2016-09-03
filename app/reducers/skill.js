@@ -30,6 +30,8 @@ const skill = (
       const newStateOjb = {...state}
       newStateOjb[action.state.field] = action.state.value
       return newStateOjb;
+    case types.CREATE_SKILL_SUCCESS:
+      return {};
     default:
       return state;
   }

@@ -35,6 +35,8 @@ const school = (
       const newStateOjb = {...state}
       newStateOjb[action.state.field] = action.state.value
       return newStateOjb;
+    case types.CREATE_SCHOOL_SUCCESS:
+      return {};
     default:
       return state;
   }

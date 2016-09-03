@@ -34,6 +34,8 @@ const job = (
       const newStateOjb = {...state}
       newStateOjb[action.state.field] = action.state.value
       return newStateOjb;
+    case types.CREATE_JOB_SUCCESS:
+      return {}
     default:
       return state;
   }
