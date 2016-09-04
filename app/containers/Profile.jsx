@@ -32,7 +32,7 @@ class Profile extends Component {
     jobsActionCreators.fetchJobs,
     skillsActionCreators.fetchSkills,
     languagesActionCreators.fetchLanguages,
-    projectsActionCreators.fetchProjects
+    projectsActionCreators.fetchProjects,
   ]
 
   constructor(props) {
