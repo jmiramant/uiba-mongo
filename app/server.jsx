@@ -113,9 +113,6 @@ export default function render(req, res) {
       })
       .then(() => {
         const initialState = store.getState();
-        console.log('----store.getState--start--')
-        console.log(store.getState())
-        console.log('----store.getState--end--')
         const componentHTML = renderToString(
           <Provider store={store}>
             <RouterContext {...props} />

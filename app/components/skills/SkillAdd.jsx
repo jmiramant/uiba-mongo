@@ -79,6 +79,7 @@ export default class SkillAdd extends React.Component {
             errorText={validationErrors.type}
             floatingLabelText="Skill"
             onChange={this.handleChange('type')}
+            hintText='Add one skill at a time.'
           />
           
           <SelectField
