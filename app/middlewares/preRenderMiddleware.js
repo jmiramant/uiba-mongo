@@ -9,6 +9,9 @@
 */
 
 export default function preRenderMiddleware(dispatch, components, params) {
+  console.log('---preRenderMiddleware---')
+  console.log(components)
+  console.log('---preRenderMiddleware---')
   return Promise.all(
     components.reduce((previous, current) => {
       return (current.need || []).concat(previous);
