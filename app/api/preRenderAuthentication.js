@@ -15,7 +15,7 @@ export default function ssrAuth(cookie) {
        config.headers['cookie'] = cookie;
        return config;
      }, function(error) {
-       return Promise.reject(error);
+        return Promise.reject(error);
      });
    }
 }
