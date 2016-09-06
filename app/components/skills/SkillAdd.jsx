@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
 
 import { validateSkillHelper } from '../helpers/skillValidations';
+import skillData from './SkillData';
 
 import classNames from 'classnames/bind';
 import styles from 'css/components/profile/skill';
 
-import TextField from 'material-ui/TextField';
+import AutoComplete from 'material-ui/AutoComplete';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -15,6 +16,8 @@ import moment from 'moment';
 import _ from 'lodash';
 
 const cx = classNames.bind(styles);
+
+const SkillData = skillData();
 
 export default class SkillAdd extends React.Component {
   
@@ -47,6 +50,14 @@ export default class SkillAdd extends React.Component {
     return errorStore.containsErrors;
   }
 
+  handleSkillChange (value) {
+    this.props.skillChange({
+      field: 'type',
+      value: value,
+      id: this.props.skill._id
+    });  
+  }
+
   handleChange = field => (e, i, val) => {
     const value = (val ? val : i)
 
@@ -74,12 +85,16 @@ export default class SkillAdd extends React.Component {
           className={cx('skillAdd--form')}
           onSubmit={this.handleSubmit}
         >
-          <TextField
-            value={skill.type}
-            errorText={validationErrors.type}
-            floatingLabelText="Skill"
-            onChange={this.handleChange('type')}
+          <AutoComplete
             hintText='Add one skill at a time.'
+            searchText={skill.type}
+            floatingLabelText="Skill"
+            errorText={validationErrors.type}
+            filter={AutoComplete.fuzzyFilter}
+            dataSource={SkillData}
+            onNewRequest={this.handleSkillChange.bind(this)}
+            onUpdateInput={this.handleSkillChange.bind(this)}
+            maxSearchResults={5}
           />
           
           <SelectField
