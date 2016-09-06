@@ -3,9 +3,7 @@ import React, { PropTypes } from 'react';
 import { validateJobHelper } from '../helpers/jobValidations';
 
 import TextField from 'material-ui/TextField';
-// import DatePicker from 'material-ui/DatePicker';
 import DatePicker from 'lib/DatePicker';
-
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Checkbox from 'material-ui/Checkbox';

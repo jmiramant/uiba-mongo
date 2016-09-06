@@ -85,9 +85,9 @@ export default (app) => {
   console.log(`===>  Environment: ${ENV}`);
   console.log(`===>  Listening on port: ${app.get('port')}`);
   if (ENV === 'production') {
-    console.log('===> 🚦  Note: In order for authentication to work in production');
-    console.log('===>           you will need a secure HTTPS connection');
-    sess.cookie.secure = true; // Serve secure cookies
+    // console.log('===> 🚦  Note: In order for authentication to work in production');
+    // console.log('===>           you will need a secure HTTPS connection');
+    // sess.cookie.secure = true; // Serve secure cookies
   }
   console.log('--------------------------');
 
