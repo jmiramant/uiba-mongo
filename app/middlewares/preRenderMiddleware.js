@@ -9,12 +9,18 @@
 */
 
 export default function preRenderMiddleware(dispatch, components, params) {
-  console.log('---preRenderMiddleware---')
-  console.log(components)
-  console.log('---preRenderMiddleware---')
+  console.log('---preRenderMiddlewareStart---')
+
   return Promise.all(
     components.reduce((previous, current) => {
       return (current.need || []).concat(previous);
-    }, []).map(need => dispatch(need(params)))
+    }, []).map(need => {
+      dispatch(need(params))
+      console.log('---needs---')
+      console.log(need());
+      console.log(need);
+      console.log('---needs---')
+    })
   );
+  console.log('---preRenderMiddlewareEnd---')
 }
