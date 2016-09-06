@@ -8,7 +8,7 @@ const LanguageSchema = new mongoose.Schema({
                  enum: ['elementary proficiency', 'limited working proficiency', 'minimum professional proficiency', 'full professional proficiency', 'native or bilingual proficiency'],
                  required: true
                },
-  experience: { type: Number, required: true }
+  experience: { type: Number, enum: [0,1,3,5,10] }
 }, {timestamps: true});
 
 export default mongoose.model('Language', LanguageSchema);

@@ -74,11 +74,19 @@ export default class LanguageAdd extends React.Component {
       value = e.target.value
     }
 
+    if (field === 'proficiency' && value === 'native or bilingual proficiency') {
+      this.props.languageChange({
+        field: 'experience',
+        value: '',
+        id: this.props.language._id
+      });
+    }
+
     this.props.languageChange({
       field: field,
       value: value,
       id: this.props.language._id
-    });  
+    });
   }
 
   render () {
@@ -120,14 +128,22 @@ export default class LanguageAdd extends React.Component {
             <MenuItem value={'native or bilingual proficiency'} primaryText="Native Or Bilingual Proficiency" />
           </SelectField>
           
-          <TextField
-            value={language.experience}
-            errorText={validationErrors.experience}
-            floatingLabelText="Experience"
-            hintText='Enter in years'
-            onChange={this.handleChange('experience')}
-          />
-
+          { language.proficiency !== 'native or bilingual proficiency' ? (
+            <SelectField
+              floatingLabelText="Experience"
+              errorText={validationErrors.experience}
+              onChange={this.handleChange('experience')}
+              value={language.experience}
+              hintText='Length of Use'
+            >
+              <MenuItem value={0} primaryText="Less Than 1 Year" />
+              <MenuItem value={1} primaryText="1-3 Years" />
+              <MenuItem value={3} primaryText="3-5 Years" />
+              <MenuItem value={5} primaryText="5-10 Years" />
+              <MenuItem value={10} primaryText="More Than 10 Years" />
+            </SelectField>
+          ) : (<span/>)}
+          
           <div className={cx('profile-btn-group')}>
             <RaisedButton className='pull-right' type="submit" label="Save" primary={true} />
             {this.props.handleDelete ? (
