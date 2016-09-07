@@ -100,29 +100,45 @@ export default function render(req, res) {
         authenticated ? ssrAuth() : null;
       })
       .then(() => {
-        const initialState = store.getState();
-        const componentHTML = renderToString(
-          <Provider store={store}>
-            <RouterContext {...props} />
-          </Provider>
-        );
+        let initialState = store.getState();
 
-        res.status(200).send(`
-          <!doctype html>
-          <html ${header.htmlAttributes.toString()}>
-            <head>
-              ${header.title.toString()}
-              ${header.meta.toString()}
-              ${header.link.toString()}
-            </head>
-            <body>
-              <div id="app">${componentHTML}</div>
-              <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};</script>
-              ${analtyicsScript}
-              <script type="text/javascript" charset="utf-8" src="/assets/app.js"></script>
-            </body>
-          </html>
-        `);
+        const waitForFetching = () => {
+          initialState = store.getState();
+
+          let fetching = _.reduce(initialState, function (prev, next) {
+             prev.push(next.isFetching);
+             return prev
+          }, []).includes(true)
+
+          if (fetching) {
+            setTimeout(waitForFetching, 100);
+          } else {
+            const componentHTML = renderToString(
+              <Provider store={store}>
+                <RouterContext {...props} />
+              </Provider>
+            );
+
+            return res.status(200).send(`
+              <!doctype html>
+              <html ${header.htmlAttributes.toString()}>
+                <head>
+                  ${header.title.toString()}
+                  ${header.meta.toString()}
+                  ${header.link.toString()}
+                </head>
+                <body>
+                  <div id="app">${componentHTML}</div>
+                  <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};</script>
+                  ${analtyicsScript}
+                  <script type="text/javascript" charset="utf-8" src="/assets/app.js"></script>
+                </body>
+              </html>
+            `);    
+          }
+        }
+
+        waitForFetching();
       })
       .catch((err) => {
         res.status(500).json(err);
