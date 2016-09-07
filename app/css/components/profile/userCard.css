@@ -19,6 +19,12 @@
   height: 100%;
 }
 
+.userCard--default-icon {
+  width: 100% !important;
+  height: 100% !important;
+  color: var(--colorLightGray);
+}
+
 .userCard--name {
   font-size: 20px;
   margin: 15px 0 0 0;
