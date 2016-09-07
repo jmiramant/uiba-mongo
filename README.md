@@ -1,5 +1,8 @@
-# Uiba Web App
+# Welcome to Gotham City
 
+Looking to move on up in the world?! Gotham City is just the place to do it. Ambitious, motivated, hungry? You've come to the land of opportunity. Gotham City is full of characters. This world includes Mr. Freeze, a React/Redux/Webpack client app, The Joker, a Node/Express API handling user logic and Black Mask, the MongoDB storage. 
+
+![GitHub Logo](/docs/architecture.png)
 
 ## Instructions
 
