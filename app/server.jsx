@@ -126,7 +126,7 @@ export default function render(req, res) {
             </html>
           `);
 
-        }, 750)
+        }, 1000)
 
       })
       .catch((err) => {
