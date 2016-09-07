@@ -2,6 +2,21 @@ import * as types from 'types';
 import { combineReducers } from 'redux';
 import _ from 'lodash';
 
+const isFetching = (
+  state = false,
+  action
+) => {
+  switch (action.type) {
+    case types.GET_JOBS_REQUEST:
+      return true;
+    case types.GET_JOBS_SUCCESS:
+    case types.GET_JOBS_FAILURE:
+      return false;
+    default:
+      return state;
+  }
+};
+
 const jobOrder = (jobs, order = 'asc') => {
   if (order === 'asc') {
     return jobs.sort( (a,b) => {
@@ -88,6 +103,7 @@ const addShow = (
 };
 
 const jobReducer = combineReducers({
+  isFetching,
   job,
   jobs,
   addShow,

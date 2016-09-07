@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import * as profilesActionCreators from 'actions/profiles';
 import * as jobsActionCreators from 'actions/jobs';
 import * as schoolsActionCreators from 'actions/schools';
 import * as skillsActionCreators from 'actions/skills';
@@ -40,7 +41,7 @@ class Profile extends Component {
   }
 
   render() {
-    const { profile,
+    const { profile,   profileActions,
             jobs,      jobActions,
             schools,   schoolActions,
             skills,    skillActions,
@@ -51,7 +52,12 @@ class Profile extends Component {
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
         <div>
-          <UserCard profile={profile} />
+          <UserCard 
+            editMode={profile.edit}
+            profile={profile.profile} 
+            toggleEdit={profileActions.toggleProfileEdit}
+            onEditSave={profileActions.updateProfile} 
+          />
           <div className={cx('about') + ' container'}>
             
             <div className='col-md-8 col-md-offset-2'>
@@ -144,7 +150,7 @@ function mapStateToProps(state) {
   return {
     schools: state.school,
     jobs: state.job,
-    profile: state.profile.currentProfile,
+    profile: state.profile,
     skills: state.skill,
     languages: state.language,
     projects: state.project,
@@ -153,6 +159,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps (dispatch) {
   return {
+    profileActions: bindActionCreators(profilesActionCreators, dispatch),
     schoolActions: bindActionCreators(schoolsActionCreators, dispatch),
     jobActions: bindActionCreators(jobsActionCreators, dispatch),
     skillActions: bindActionCreators(skillsActionCreators, dispatch),

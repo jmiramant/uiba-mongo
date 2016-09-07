@@ -2,6 +2,21 @@ import * as types from 'types';
 import { combineReducers } from 'redux';
 import _ from 'lodash';
 
+const isFetching = (
+  state = false,
+  action
+) => {
+  switch (action.type) {
+    case types.GET_LANGUAGES_REQUEST:
+      return true;
+    case types.GET_LANGUAGES_SUCCESS:
+    case types.GET_LANGUAGES_FAILURE:
+      return false;
+    default:
+      return state;
+  }
+};
+
 const languageOrder = (language, order = 'asc') => {
   if (order === 'asc') {
     return language.sort( (a,b) => {

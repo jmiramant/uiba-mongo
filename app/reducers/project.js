@@ -2,6 +2,21 @@ import * as types from 'types';
 import { combineReducers } from 'redux';
 import _ from 'lodash';
 
+const isFetching = (
+  state = false,
+  action
+) => {
+  switch (action.type) {
+    case types.GET_PROJECTS_REQUEST:
+      return true;
+    case types.GET_PROJECTS_SUCCESS:
+    case types.GET_PROJECTS_FAILURE:
+      return false;
+    default:
+      return state;
+  }
+};
+
 const projectOrder = (project, order = 'asc') => {
   if (order === 'asc') {
     return project.sort( (a,b) => {

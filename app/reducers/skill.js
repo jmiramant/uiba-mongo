@@ -2,6 +2,21 @@ import * as types from 'types';
 import { combineReducers } from 'redux';
 import _ from 'lodash';
 
+const isFetching = (
+  state = false,
+  action
+) => {
+  switch (action.type) {
+    case types.GET_SKILLS_REQUEST:
+      return true;
+    case types.GET_SKILLS_SUCCESS:
+    case types.GET_SKILLS_FAILURE:
+      return false;
+    default:
+      return state;
+  }
+};
+
 const skillOrder = (skill, order = 'asc') => {
   if (order === 'asc') {
     return skill.sort( (a,b) => {

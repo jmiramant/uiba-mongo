@@ -16,6 +16,14 @@ const languagesController = controllers && controllers.languages;
 
 export default (app) => {
 
+  
+  if (profilesController) {
+    app.get('/profile/me', profilesController.me);
+    app.put('/profile', profilesController.update);
+  } else {
+    console.warn(unsupportedMessage('profile routes'));
+  }
+
   if (usersController) {
     app.get('/me', usersController.me);
     app.post('/login', usersController.login);
@@ -124,7 +132,5 @@ export default (app) => {
     );
 
   }
-  
-  app.get('/profile/me', profilesController.me);
 
 };

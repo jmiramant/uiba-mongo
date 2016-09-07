@@ -16,15 +16,35 @@ const isFetching = (
   }
 };
 
-const currentProfile = (
+const profile = (
   state = [],
   action
 ) => {
+  let updatedProfile;
   switch (action.type) {
     case types.GET_PROFILE_SUCCESS:
       return action.res.data;
+    case types.CHANGE_PROFILE:
+      const newStateOjb = {...state}
+      newStateOjb[action.state.field] = action.state.value
+      return newStateOjb;
     case types.GET_PROFILE_FAILURE:
       return state.filter(t => t.id !== action.id);
+    case types.UPDATE_PROFILE_SUCCESS:
+      return {...state}
+    default:
+      return state;
+  }
+};
+
+const edit = (
+  state = false,
+  action
+) => {
+  switch (action.type) {
+    case types.TOGGLE_PROFILE_EDIT:
+    case types.UPDATE_PROFILE_SUCCESS:
+      return !action.data
     default:
       return state;
   }
@@ -32,7 +52,8 @@ const currentProfile = (
 
 const profileReducer = combineReducers({
   isFetching,
-  currentProfile,
+  profile,
+  edit
 });
 
 export default profileReducer;

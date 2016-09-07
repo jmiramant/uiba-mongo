@@ -2,6 +2,21 @@ import * as types from 'types';
 import { combineReducers } from 'redux';
 import _ from 'lodash';
 
+const isFetching = (
+  state = false,
+  action
+) => {
+  switch (action.type) {
+    case types.GET_SCHOOLS_REQUEST:
+      return true;
+    case types.GET_SCHOOLS_SUCCESS:
+    case types.GET_SCHOOLS_FAILURE:
+      return false;
+    default:
+      return state;
+  }
+};
+
 const schoolOrder = (school, order = 'asc') => {
   if (order === 'asc') {
     return school.sort( (a,b) => {
