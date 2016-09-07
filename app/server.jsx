@@ -100,34 +100,29 @@ export default function render(req, res) {
         authenticated ? ssrAuth() : null;
       })
       .then(() => {
-        setTimeout(() => {
+        const initialState = store.getState();
+        const componentHTML = renderToString(
+          <Provider store={store}>
+            <RouterContext {...props} />
+          </Provider>
+        );
 
-          const initialState = store.getState();
-          const componentHTML = renderToString(
-            <Provider store={store}>
-              <RouterContext {...props} />
-            </Provider>
-          );
-
-          res.status(200).send(`
-            <!doctype html>
-            <html ${header.htmlAttributes.toString()}>
-              <head>
-                ${header.title.toString()}
-                ${header.meta.toString()}
-                ${header.link.toString()}
-              </head>
-              <body>
-                <div id="app">${componentHTML}</div>
-                <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};</script>
-                ${analtyicsScript}
-                <script type="text/javascript" charset="utf-8" src="/assets/app.js"></script>
-              </body>
-            </html>
-          `);
-
-        }, 1000)
-
+        res.status(200).send(`
+          <!doctype html>
+          <html ${header.htmlAttributes.toString()}>
+            <head>
+              ${header.title.toString()}
+              ${header.meta.toString()}
+              ${header.link.toString()}
+            </head>
+            <body>
+              <div id="app">${componentHTML}</div>
+              <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};</script>
+              ${analtyicsScript}
+              <script type="text/javascript" charset="utf-8" src="/assets/app.js"></script>
+            </body>
+          </html>
+        `);
       })
       .catch((err) => {
         res.status(500).json(err);
