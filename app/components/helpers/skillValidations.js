@@ -8,7 +8,7 @@ export function validateSkillHelper (skill, errorStore) {
   var errors = setValidationErrorObject(errorStore);
   
   _.forEach(cantBeNull, (v, i) => {
-    if (!skill[v] || skill[v] === '') {
+    if (skill[v] === null || skill[v] === undefined || skill[v] === '') {
       errors[v] = 'Please add a ' + v + '.';
     } 
   }) 

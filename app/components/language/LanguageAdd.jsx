@@ -128,7 +128,7 @@ export default class LanguageAdd extends React.Component {
               value={language.experience}
               hintText='Length of Use'
             >
-              <MenuItem value={0} primaryText="Less Than 1 Year" />
+              <MenuItem value={365} primaryText="Less Than 1 Year" />
               <MenuItem value={1} primaryText="1-3 Years" />
               <MenuItem value={3} primaryText="3-5 Years" />
               <MenuItem value={5} primaryText="5-10 Years" />

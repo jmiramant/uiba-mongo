@@ -8,13 +8,13 @@ export function validateLanguageHelper (language, errorStore) {
   var errors = setValidationErrorObject(errorStore);
   
   _.forEach(cantBeNull, (v, i) => {
-    if (!language[v] || language[v] === '') {
+    if (!language[v]  === null || language[v] === undefined || language[v] === '') {
       errors[v] = 'Please add a ' + v + '.';
     } 
   }) 
-  
+
   if (language.proficiency !== 'native or bilingual proficiency' && 
-     (!language.experience || language.experience === '')) {
+     (language.experience  === null || language.experience === undefined  || language.experience === '')) {
     errors.experience = 'Please add your experience level.';
   } 
 
