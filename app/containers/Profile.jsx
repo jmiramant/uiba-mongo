@@ -88,7 +88,7 @@ class Profile extends Component {
 
             <div className='col-md-5 col-md-offset-2'>
               <CardHeader
-                text='Skills'
+                text='Knowledge, Skills, Abilities'
                 addVisibile={skills.addShow}
                 toggleAdd={skillActions.toggleSkillAdd}
               />
