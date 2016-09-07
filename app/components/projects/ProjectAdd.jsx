@@ -106,7 +106,6 @@ export default class ProjectAdd extends React.Component {
       if (data && data !== '') {
         return (
           <DatePicker
-            autoOk={true}
             formatDate={ (obj) => {
               return moment(new Date(obj)).format("MMMM YYYY")
             }}
@@ -119,7 +118,6 @@ export default class ProjectAdd extends React.Component {
       )} else {
         return (
           <DatePicker
-            autoOk={true}
             formatDate={ (obj) => {
               return moment(new Date(obj)).format("MMMM YYYY")
             }}

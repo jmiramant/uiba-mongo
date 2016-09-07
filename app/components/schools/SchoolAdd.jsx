@@ -4,7 +4,7 @@ import SchoolNameTypeahead from '../../containers/Typeahead';
 import { validateSchoolHelper } from '../helpers/schoolValidations';
 
 import TextField from 'material-ui/TextField';
-import DatePicker from 'material-ui/DatePicker';
+import DatePicker from 'lib/DatePicker';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Checkbox from 'material-ui/Checkbox';
@@ -116,7 +116,6 @@ export default class SchoolAdd extends React.Component {
       if (data && data !== '') {
         return (
           <DatePicker
-            autoOk={true}
             formatDate={ (obj) => {
               return moment(new Date(obj)).format("MMMM YYYY")
             }}
@@ -130,7 +129,6 @@ export default class SchoolAdd extends React.Component {
       )} else {
         return (
           <DatePicker
-            autoOk={true}
             formatDate={ (obj) => {
               return moment(new Date(obj)).format("MMMM YYYY")
             }}
