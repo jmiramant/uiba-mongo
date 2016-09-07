@@ -9,6 +9,7 @@ import preRenderMiddleware from 'middlewares/preRenderMiddleware';
 import header from 'components/Meta';
 import ssrAuth from 'api/preRenderAuthentication.js';
 import injectTapEventPlugin from 'react-tap-event-plugin'
+
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin()
@@ -36,20 +37,7 @@ const analtyicsScript =
     ga('send', 'pageview');
   </script>`;
 
-
-/*
- * To Enable Google analytics simply replace the hashes with your tracking ID
- * and move the constant to above the analtyicsScript constant.
- *
- * Currently because the ID is declared beneath where is is being used, the
- * declaration will get hoisted to the top of the file.
- * however the assignement  does not, so it is undefined for the type check above.
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var#var_hoisting
- */
-const trackingID  = "'UA-81887884-1'";
-
-
-
+const trackingID  = "UA-81887884-1";
 
 /*
  * Export render function to be used in server/config/routes.js
@@ -91,7 +79,7 @@ export default function render(req, res) {
    * given location.
    */
   if(authenticated){
-    ssrAuth(req.headers.cookie);
+   ssrAuth(req.headers.cookie);
   }
 
   match({routes, location: req.url}, (err, redirect, props) => {
@@ -112,29 +100,34 @@ export default function render(req, res) {
         authenticated ? ssrAuth() : null;
       })
       .then(() => {
-        const initialState = store.getState();
-        const componentHTML = renderToString(
-          <Provider store={store}>
-            <RouterContext {...props} />
-          </Provider>
-        );
+        setTimeout(() => {
 
-        res.status(200).send(`
-          <!doctype html>
-          <html ${header.htmlAttributes.toString()}>
-            <head>
-              ${header.title.toString()}
-              ${header.meta.toString()}
-              ${header.link.toString()}
-            </head>
-            <body>
-              <div id="app">${componentHTML}</div>
-              <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};</script>
-              ${analtyicsScript}
-              <script type="text/javascript" charset="utf-8" src="/assets/app.js"></script>
-            </body>
-          </html>
-        `);
+          const initialState = store.getState();
+          const componentHTML = renderToString(
+            <Provider store={store}>
+              <RouterContext {...props} />
+            </Provider>
+          );
+
+          res.status(200).send(`
+            <!doctype html>
+            <html ${header.htmlAttributes.toString()}>
+              <head>
+                ${header.title.toString()}
+                ${header.meta.toString()}
+                ${header.link.toString()}
+              </head>
+              <body>
+                <div id="app">${componentHTML}</div>
+                <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};</script>
+                ${analtyicsScript}
+                <script type="text/javascript" charset="utf-8" src="/assets/app.js"></script>
+              </body>
+            </html>
+          `);
+
+        }, 750)
+
       })
       .catch((err) => {
         res.status(500).json(err);
