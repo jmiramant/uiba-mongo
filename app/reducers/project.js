@@ -103,7 +103,8 @@ const addShow = (
 const projectReducer = combineReducers({
   project,
   projects,
-  addShow
+  addShow,
+  isFetching
 });
 
 export default projectReducer;

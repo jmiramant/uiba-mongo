@@ -118,11 +118,11 @@ export default function render(req, res) {
               setTimeout(waitForFetching, 100);
             } else {
               console.log('resolve')
-              resolve(initialState) 
+              return resolve(initialState) 
             }
           }
 
-          waitForFetching();
+          return waitForFetching();
         })
       })
       .then((initialState) => {

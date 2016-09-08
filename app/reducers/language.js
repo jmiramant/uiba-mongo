@@ -101,6 +101,7 @@ const languageReducer = combineReducers({
   language,
   languages,
   addShow,
+  isFetching
 });
 
 export default languageReducer;

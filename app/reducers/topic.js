@@ -80,7 +80,7 @@ const newTopic = (
 const topicReducer = combineReducers({
   topics,
   isFetching,
-  newTopic
+  newTopic,
 });
 
 export default topicReducer;

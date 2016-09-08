@@ -101,7 +101,8 @@ const addShow = (
 const skillReducer = combineReducers({
   skill,
   skills,
-  addShow
+  addShow,
+  isFetching
 });
 
 export default skillReducer;

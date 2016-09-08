@@ -117,7 +117,8 @@ const addShow = (
 const schoolReducer = combineReducers({
   school,
   schools,
-  addShow
+  addShow,
+  isFetching
 });
 
 export default schoolReducer;
