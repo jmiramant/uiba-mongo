@@ -33,7 +33,9 @@ export function toggleJobAdd (data) {
 }
 
 function makeJobsRequest(method, data, api = '/jobs') {
+  console.log('-----axios---')
   console.log(method, api, data)
+  console.log('-----axios---')
   return request[method](api, data);
 }
 
