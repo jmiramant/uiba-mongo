@@ -122,7 +122,7 @@ export default function render(req, res) {
             console.log(initialState)
 
             if (fetching) {
-              setTimeout(waitForFetching, 100);
+              setTimeout(waitForFetching, 250);
             } else {
               return resolve(initialState) 
             }
