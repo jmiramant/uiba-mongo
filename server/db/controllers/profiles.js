@@ -5,6 +5,11 @@ import Profile from '../models/profile';
  * List
  */
 export function me(req, res) {
+  console.log('profile controller')
+  console.log(req)
+  console.log('profile id: ' + req.user.profile_id)
+  console.log('profile controller')
+  
   const query = {"_id": mongoose.Types.ObjectId(req.user.profile_id)};
   
   Profile.findOne(query).exec( (err, profile) => {
