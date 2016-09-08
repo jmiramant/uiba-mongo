@@ -94,8 +94,11 @@ const fetchPromise = (cb) => {
     console.log('2')
     console.log(initialState)
     let fetching = _.reduce(initialState, (prev, next) => {
-       prev.push(next.isFetching);
-       return prev
+      console.log(prev)
+      console.log(next)
+      prev.push(next.isFetching);
+      console.log(prev)
+      return prev
     }, []).includes(true)
     console.log('3')
     console.log(fetching)
