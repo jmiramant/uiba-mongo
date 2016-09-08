@@ -96,10 +96,13 @@ export default function render(req, res) {
         props.params
       )
       .then(() => {
+        console.log('pre cookie')
         //after preRendering is complete, we destroy the interceptors
         authenticated ? ssrAuth() : null;
+        console.log('post cookie')
       })
       .then(() => {
+        console.log('pre promise')
         return new Promise((resolve, reject) => {  
           let initialState = store.getState();
 
@@ -122,6 +125,7 @@ export default function render(req, res) {
         })
       })
       .then((initialState) => {
+        console.log(initialState)
         const componentHTML = renderToString(
           <Provider store={store}>
             <RouterContext {...props} />
