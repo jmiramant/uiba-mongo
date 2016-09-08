@@ -13,7 +13,7 @@ export function newJob() {
 
 export function jobChange(state) {
   return {
-    type: types.CHANGE_JOB,
+    type: types.CHANGE_JOBS,
     state
   };
 }
@@ -33,6 +33,7 @@ export function toggleJobAdd (data) {
 }
 
 function makeJobsRequest(method, data, api = '/jobs') {
+  console.log(method, api, data)
   return request[method](api, data);
 }
 
