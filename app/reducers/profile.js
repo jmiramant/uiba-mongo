@@ -9,7 +9,14 @@ const isFetching = (
     case types.GET_PROFILE_REQUEST:
       return true;
     case types.GET_PROFILE_SUCCESS:
+      console.log('===========================')
+      console.log('success')
+      console.log('===========================')
+      return false;
     case types.GET_PROFILE_FAILURE:
+      console.log('===========================')
+      console.log('fail')
+      console.log('===========================')
       return false;
     default:
       return state;
