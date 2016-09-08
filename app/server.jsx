@@ -124,7 +124,7 @@ export default function render(req, res) {
             if (fetching) {
               setTimeout(waitForFetching, 250);
             } else {
-              setTimeout(() => {resolve(initialState)}, 250)
+              setTimeout(() => {resolve(initialState)}, 1000)
             }
           }
 
