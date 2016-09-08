@@ -22,7 +22,6 @@ export default function message(state = {
     case types.GET_LANGUAGES_FAILURE:
     case types.GET_SCHOOLS_FAILURE:
     case types.CREATE_SCHOOL_FAILURE:
-      console.log(action.error)
       return {...state, message: action.error.response.data.error, type: "SUCCESS"}
     default:
       return state;
