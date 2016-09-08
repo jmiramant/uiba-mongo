@@ -5,11 +5,15 @@ import Profile from '../models/profile';
  * List
  */
 export function me(req, res) {
-  Profile.findOne({"user_id": mongoose.Types.ObjectId(req.user._id)}).exec((err, profile) => {
-    if (err) {
-      return res.status(500).send({error: err});
-      console.log('Error in "profile/me" query', err);
+  const query = {"_id": req.user.profile_id};
+  
+  Profile.findOne(query).exec( (err, profile) => {
+    if (!profile || err) {
+      console.log('Error in "profile/me" query');
+      if (err) return res.status(500).send({error: 'Profile resource not found: ' + err.value});
+      return res.status(500).send({error:  + ' does not have a resource'});
     }
+
     return res.json(profile);
   });
 }
