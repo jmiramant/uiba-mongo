@@ -92,6 +92,7 @@ const fetchPromise = (cb) => {
     console.log('1')
     initialState = store.getState();
     console.log('2')
+    console.log(initialState)
     let fetching = _.reduce(initialState, (prev, next) => {
        prev.push(next.isFetching);
        return prev
