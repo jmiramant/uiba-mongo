@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as profilesActionCreators from 'actions/profiles';
 
 import CardEdit from 'components/userCard/UserCardEdit'
+import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 
 import DefaultUserIcon from 'material-ui/svg-icons/action/account-circle';
 
@@ -26,6 +27,22 @@ export default class UserCard extends React.Component {
     super(props);
   }
 
+  state = {
+    showEdit: false
+  }
+
+  editIconShow() {
+    this.setState({
+      showEdit: true
+    })
+  }
+
+  editIconHide() {
+    this.setState({
+      showEdit: false
+    })
+  }
+
   handleEditSave = (data) => {
     this.props.onEditSave(data);
   }
@@ -42,7 +59,7 @@ export default class UserCard extends React.Component {
 
     } = this.props;
     return (
-      <div className={cx('userCard--container') + ' text-center'}>
+      <div className={cx('userCard--container') + ' text-center'} onMouseEnter={this.editIconShow.bind(this)} onMouseLeave={this.editIconHide.bind(this)}>
         <div className={cx('profile--container')}>
           <div className={cx('userCard--picture-container')}>
             {profile.picture ? (
@@ -61,6 +78,16 @@ export default class UserCard extends React.Component {
               />
             ) : (
               <div>
+                {this.state.showEdit ? (
+                  <EditIcon
+                    onClick={this.toggleEdit.bind(this)}
+                    color="#66747F"
+                    hoverColor="#f20253"
+                    className={cx("userCard--edit")}
+                  />
+                ) : (
+                  <span />            
+                )}
                 <div className={cx('userCard--name')}>{profile.name}</div>
                 <div>{profile.headline}</div>
               </div>

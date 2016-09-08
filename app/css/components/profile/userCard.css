@@ -5,6 +5,10 @@
   background: #fff;
   padding: 40px 0;
 }
+.userEdit--form {
+  width: 256px;
+  margin: 0 auto;
+}
 
 .userCard--picture-container {
   overflow: hidden;
@@ -28,4 +32,9 @@
 .userCard--name {
   font-size: 20px;
   margin: 15px 0 0 0;
+}
+
+.userCard--edit {
+  margin-left: 244px;
+  position: absolute;
 }

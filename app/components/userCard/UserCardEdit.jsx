@@ -1,12 +1,11 @@
 import React, { PropTypes } from 'react';
 
-// import { validateUserCardHelper } from '../helpers/skillValidations';
+import { validateUserCardHelper } from '../helpers/userCardlValidations';
 
 import classNames from 'classnames/bind';
-import styles from 'css/components/profile/skill';
+import styles from 'css/components/profile/userCard';
 
 import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 
 import moment from 'moment';
@@ -38,10 +37,9 @@ export default class UserCardEdit extends React.Component {
   }
   
   validate() {
-    // const errorStore = validateUserCardHelper(this.props.skill, this.state.validationErrors);
-    // this.setState({validationErrors: errorStore.errors});
-    // return errorStore.containsErrors;
-    return false
+    const errorStore = validateUserCardHelper(this.props.profile, this.state.validationErrors);
+    this.setState({validationErrors: errorStore.errors});
+    return errorStore.containsErrors;
   }
 
   handleChange = field => (e, i, val) => {
@@ -74,19 +72,17 @@ export default class UserCardEdit extends React.Component {
            <TextField
             value={profile.name}
             errorText={validationErrors.name}
-            floatingLabelText="Name"
             onChange={this.handleChange('name')}
           />
 
            <TextField
             value={profile.headline}
             errorText={validationErrors.headline}
-            floatingLabelText="Headline"
             onChange={this.handleChange('headline')}
           />
           
           <div className={cx('profile-btn-group')}>
-            <RaisedButton className='pull-right' type="submit" label="Save" primary={true} />
+            <FlatButton className='pull-right' type="submit" label="Save" primary={true} />
             <FlatButton className='pull-left' label="Close" onClick={this.props.toggleEdit} primary={true} />
           </div>
 
