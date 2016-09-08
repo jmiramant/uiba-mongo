@@ -80,6 +80,40 @@ export default function render(req, res) {
    * If all three parameters are `undefined`, this means that there was no route found matching the
    * given location.
    */
+
+const fetchPromise = () => {
+  return new Promise((resolve, reject) => {  
+    let initialState = store.getState();
+    let count = 0;
+
+    const waitForFetching = () => {
+      initialState = store.getState();
+
+      let fetching = _.reduce(initialState, function (prev, next) {
+         prev.push(next.isFetching);
+         return prev
+      }, []).includes(true)
+      if (fetching) {
+        console.log('loop')
+        console.log(initialState)
+        count += 1;
+        console.log('count: ', count)
+        if (count > 30) {
+          reject('There was an error fetching initial data.')
+        } else {
+          setTimeout(waitForFetching, 100);
+        }
+      } else {
+        console.log('resolve')
+        return resolve(initialState) 
+      }
+    }
+
+    return waitForFetching();
+  })
+}
+
+
   if(authenticated){
    ssrAuth(req.headers.cookie);
   }
@@ -103,37 +137,8 @@ export default function render(req, res) {
       })
       .then(() => {
         console.log('pre promise')
-        const fetchPromise = new Promise((resolve, reject) => {  
-          let initialState = store.getState();
-          let count = 0;
-
-          const waitForFetching = () => {
-            initialState = store.getState();
-
-            let fetching = _.reduce(initialState, function (prev, next) {
-               prev.push(next.isFetching);
-               return prev
-            }, []).includes(true)
-            if (fetching) {
-              console.log('loop')
-              console.log(initialState)
-              count += 1;
-              console.log('count: ', count)
-              if (count > 30) {
-                reject('There was an error fetching initial data.')
-              } else {
-                setTimeout(waitForFetching, 100);
-              }
-            } else {
-              console.log('resolve')
-              return resolve(initialState) 
-            }
-          }
-
-          return waitForFetching();
-        })
+        return fetchPromise();
         console.log('fetchPromise return')
-        return fetchPromise;
       })
       .then((initialState) => {
         console.log('initialState')
