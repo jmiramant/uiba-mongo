@@ -1,4 +1,7 @@
 import _ from 'lodash';
+import { polyfill } from 'es6-promise';
+
+polyfill()
 
 export default function isFetchingMiddleware(store) {
 
