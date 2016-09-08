@@ -96,13 +96,13 @@ const fetchPromise = (cb) => {
     let fetching = _.reduce(initialState, (prev, next) => {
       console.log(prev)
       console.log(next)
-      prev.push(next.isFetching);
+      if (next.isFetching) prev.push(next.isFetching);
       console.log(prev)
       return prev
-    }, []).includes(true)
+    }, []);
     console.log('3')
     console.log(fetching)
-    if (fetching) {
+    if (fetching.includes(true)) {
       console.log('loop')
       console.log(initialState)
       count += 1;
