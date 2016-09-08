@@ -103,8 +103,9 @@ export default function render(req, res) {
       })
       .then(() => {
         console.log('pre promise')
-        return new Promise((resolve, reject) => {  
+        const fetchPromise = new Promise((resolve, reject) => {  
           let initialState = store.getState();
+          let count = 0;
 
           const waitForFetching = () => {
             initialState = store.getState();
@@ -113,11 +114,16 @@ export default function render(req, res) {
                prev.push(next.isFetching);
                return prev
             }, []).includes(true)
-
             if (fetching) {
               console.log('loop')
               console.log(initialState)
-              setTimeout(waitForFetching, 100);
+              count += 1;
+              console.log('count: ', count)
+              if (count > 30) {
+                reject('There was an error fetching initial data.')
+              } else {
+                setTimeout(waitForFetching, 100);
+              }
             } else {
               console.log('resolve')
               return resolve(initialState) 
@@ -126,6 +132,8 @@ export default function render(req, res) {
 
           return waitForFetching();
         })
+        console.log('fetchPromise return')
+        return fetchPromise;
       })
       .then((initialState) => {
         console.log('initialState')
