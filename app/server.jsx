@@ -11,6 +11,7 @@ import preRenderMiddleware from 'middlewares/preRenderMiddleware';
 import header from 'components/Meta';
 import ssrAuth from 'api/preRenderAuthentication.js';
 import injectTapEventPlugin from 'react-tap-event-plugin'
+import _ from 'lodash';
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
