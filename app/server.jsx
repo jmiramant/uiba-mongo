@@ -89,12 +89,15 @@ const fetchPromise = (cb) => {
   console.log('pre-internal func')
 
   const waitForFetching = () => {
+    console.log('1')
     initialState = store.getState();
-
+    console.log('2')
     let fetching = _.reduce(initialState, function (prev, next) {
        prev.push(next.isFetching);
        return prev
     }, []).includes(true)
+    console.log('3')
+    console.log(fetching)
     if (fetching) {
       console.log('loop')
       console.log(initialState)
