@@ -7,8 +7,8 @@ import Profile from '../models/profile';
 export function me(req, res) {
   Profile.findOne({"user_id": mongoose.Types.ObjectId(req.user._id)}).exec((err, profile) => {
     if (err) {
-      console.log('Error in "profile/me" query');
-      return res.status(500).send('Something went wrong getting the data');
+      return res.status(500).send({error: err});
+      console.log('Error in "profile/me" query', err);
     }
     return res.json(profile);
   });
@@ -19,10 +19,9 @@ export function update(req, res) {
   const omitKeys = ['id', '_id', '_v'];
   const data = _.omit(req.body, omitKeys);
 
-  return Profile.findOneAndUpdate({"_id": req.body._id}, data, (err, profile) => {
+  return Profile.findOneAndUpdate(query, data, (err, profile) => {
     if (err) {
-      console.log('Error on save!');
-      return res.status(500).send('We failed to save for some reason');
+      return res.status(500).send({error: err.response.status});
     }
 
     return res.status(200).json(profile);

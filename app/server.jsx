@@ -129,7 +129,6 @@ export default function render(req, res) {
         })
       })
       .then((initialState) => {
-        console.log(initialState)
         const componentHTML = renderToString(
           <Provider store={store}>
             <RouterContext {...props} />
