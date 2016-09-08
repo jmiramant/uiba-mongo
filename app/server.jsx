@@ -119,6 +119,7 @@ export default function render(req, res) {
             }, []).indexOf(true) !== -1);
             
             console.log(fetching)
+            console.log(initialState)
 
             if (fetching) {
               setTimeout(waitForFetching, 100);
@@ -132,6 +133,7 @@ export default function render(req, res) {
       })
       .then((initialState) => {
         console.log('initialState')
+        console.log(initialState)
         const componentHTML = renderToString(
           <Provider store={store}>
             <RouterContext {...props} />
