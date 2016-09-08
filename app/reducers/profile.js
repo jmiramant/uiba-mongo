@@ -23,6 +23,9 @@ const profile = (
   let updatedProfile;
   switch (action.type) {
     case types.GET_PROFILE_SUCCESS:
+      console.log('===========================')
+      console.log(action.res.data)
+      console.log('===========================')
       return action.res.data;
     case types.CHANGE_PROFILE:
       const newStateOjb = {...state}

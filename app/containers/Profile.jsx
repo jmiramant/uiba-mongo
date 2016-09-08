@@ -27,26 +27,17 @@ import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
 class Profile extends Component {
-  // static need = [  // eslint-disable-line
-  //   profileActionCreators.fetchCurrentProfile,
-  //   schoolsActionCreators.fetchSchools,
-  //   jobsActionCreators.fetchJobs,
-  //   skillsActionCreators.fetchSkills,
-  //   languagesActionCreators.fetchLanguages,
-  //   projectsActionCreators.fetchProjects,
-  // ]
+  static need = [  // eslint-disable-line
+    profileActionCreators.fetchCurrentProfile,
+    schoolsActionCreators.fetchSchools,
+    jobsActionCreators.fetchJobs,
+    skillsActionCreators.fetchSkills,
+    languagesActionCreators.fetchLanguages,
+    projectsActionCreators.fetchProjects,
+  ]
 
   constructor(props) {
     super(props)
-  }
-
-  componentDidMount() {
-    profileActionCreators.fetchCurrentProfile()
-    schoolsActionCreators.fetchSchools()
-    jobsActionCreators.fetchJobs()
-    skillsActionCreators.fetchSkills()
-    languagesActionCreators.fetchLanguages()
-    projectsActionCreators.fetchProjects()
   }
 
   render() {
