@@ -118,13 +118,10 @@ export default function render(req, res) {
               return prev
             }, []).indexOf(true) !== -1);
             
-            console.log(fetching)
-            console.log(initialState)
-
             if (fetching) {
               setTimeout(waitForFetching, 250);
             } else {
-              setTimeout(() => {resolve(store.getState())}, 5000)
+              resolve( store.getState() );
             }
           }
 
