@@ -3,7 +3,7 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { createMemoryHistory, match, RouterContext } from 'react-router';
 import { Provider } from 'react-redux';
-import { polyfill } from 'es6-promise';
+import Promise from 'bluebird';
 import createRoutes from 'routes';
 import configureStore from 'store/configureStore';
 import preRenderMiddleware from 'middlewares/preRenderMiddleware';
@@ -12,7 +12,6 @@ import header from 'components/Meta';
 import ssrAuth from 'api/preRenderAuthentication.js';
 import injectTapEventPlugin from 'react-tap-event-plugin'
 
-polyfill()
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin()
