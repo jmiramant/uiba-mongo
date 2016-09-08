@@ -10,12 +10,12 @@ const isFetching = (
       return true;
     case types.GET_PROFILE_SUCCESS:
       console.log('===========================')
-      console.log('success')
+      console.log('success ', action)
       console.log('===========================')
       return false;
     case types.GET_PROFILE_FAILURE:
       console.log('===========================<')
-      console.log('fail')
+      console.log('fail: ', action)
       console.log('===========================<')
       return false;
     default:

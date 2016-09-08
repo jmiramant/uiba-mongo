@@ -90,9 +90,6 @@ export default function render(req, res) {
   }
 
   match({routes, location: req.url}, (err, redirect, props) => {
-    console.log('propsStart')
-    console.log(props)
-    console.log("propsEnd")
     if (err) {
       res.status(500).json(err);
     } else if (redirect) {
