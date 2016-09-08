@@ -39,7 +39,7 @@ export default (store) => {
     <Route path="/" component={App}>
       <IndexRoute component={Splash} />
       <Route path="login" component={LoginOrRegister} onEnter={redirectAuth} />
-      <Route path="profile" component={Profile} onEnter={requireAuth}></Route>
+      <Route path="/profile" component={Profile} onEnter={requireAuth}></Route>
       <Route path="about" component={About} />
       <Route path="terms" component={Terms} />
       <Route path="privacy" component={Privacy} />
