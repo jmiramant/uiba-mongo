@@ -1,6 +1,5 @@
 import { polyfill } from 'es6-promise';
-//import request from 'axios';
-import fetch from 'isomorphic-fetch';
+import request from 'axios';
 import { push } from 'react-router-redux';
 
 import * as types from 'types';
@@ -15,8 +14,7 @@ export function profileChange(state) {
 }
 
 function makeProfileRequest(method, data, api = '/profile') {
-  //return request[method](api, data);
-  return fetch(api, {method}).then(r => r.json()).catch(e => console.error(e.stack));
+  return request[method](api, data);  
 }
 
 export function updateProfileRequest(data) {
