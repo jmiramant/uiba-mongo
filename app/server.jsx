@@ -113,17 +113,16 @@ export default function render(req, res) {
           const waitForFetching = () => {
             initialState = store.getState();
 
-            let fetching = !(_.reduce(initialState, (prev, next) => {
+            let fetching = (_.reduce(initialState, (prev, next) => {
               prev.push(next.isFetching);
               return prev
-            }, []).indexOf(true) === -1);
+            }, []).indexOf(true) !== -1);
+            
+            console.log(fetching)
 
             if (fetching) {
-              console.log('loop')
-              console.log(initialState)
               setTimeout(waitForFetching, 100);
             } else {
-              console.log('resolve')
               return resolve(initialState) 
             }
           }
