@@ -99,7 +99,7 @@ const fetchPromise = (cb) => {
     }, []);
     console.log('3')
     console.log(fetching)
-    if (fetching.includes(true)) {
+    if (fetching.indexOf(true) !== -1) {
       console.log('loop')
       console.log(initialState)
       count += 1;
