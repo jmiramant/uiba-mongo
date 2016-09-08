@@ -81,36 +81,34 @@ export default function render(req, res) {
    * given location.
    */
 
-const fetchPromise = () => {
-  return new Promise((resolve, reject) => {  
-    let initialState = store.getState();
-    let count = 0;
+const fetchPromise = (cb) => {
+  let initialState = store.getState();
+  let count = 0;
 
-    const waitForFetching = () => {
-      initialState = store.getState();
+  const waitForFetching = () => {
+    initialState = store.getState();
 
-      let fetching = _.reduce(initialState, function (prev, next) {
-         prev.push(next.isFetching);
-         return prev
-      }, []).includes(true)
-      if (fetching) {
-        console.log('loop')
-        console.log(initialState)
-        count += 1;
-        console.log('count: ', count)
-        if (count > 30) {
-          reject('There was an error fetching initial data.')
-        } else {
-          setTimeout(waitForFetching, 100);
-        }
-      } else {
-        console.log('resolve')
-        return resolve(initialState) 
-      }
+    let fetching = _.reduce(initialState, function (prev, next) {
+       prev.push(next.isFetching);
+       return prev
+    }, []).includes(true)
+    if (fetching) {
+      console.log('loop')
+      console.log(initialState)
+      count += 1;
+      console.log('count: ', count)
+      setTimeout(waitForFetching, 100);
+      // if (count > 30) {
+      //   reject('There was an error fetching initial data.')
+      // } else {
+      // }
+    } else {
+      console.log('resolve')
+      return cb(initialState)
     }
+  }
 
-    return waitForFetching();
-  })
+  return waitForFetching();
 }
 
 
@@ -137,34 +135,33 @@ const fetchPromise = () => {
       })
       .then(() => {
         console.log('pre promise')
-        return fetchPromise();
-        console.log('fetchPromise return')
-      })
-      .then((initialState) => {
-        console.log('initialState')
-        console.log(initialState)
-        const componentHTML = renderToString(
-          <Provider store={store}>
-            <RouterContext {...props} />
-          </Provider>
-        );
+        return fetchPromise( (initialState) => {
+          console.log('fetchPromise return')
+          console.log('initialState')
+          console.log(initialState)
+          const componentHTML = renderToString(
+            <Provider store={store}>
+              <RouterContext {...props} />
+            </Provider>
+          );
 
-        return res.status(200).send(`
-          <!doctype html>
-          <html ${header.htmlAttributes.toString()}>
-            <head>
-              ${header.title.toString()}
-              ${header.meta.toString()}
-              ${header.link.toString()}
-            </head>
-            <body>
-              <div id="app">${componentHTML}</div>
-              <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};</script>
-              ${analtyicsScript}
-              <script type="text/javascript" charset="utf-8" src="/assets/app.js"></script>
-            </body>
-          </html>
-        `);   
+          return res.status(200).send(`
+            <!doctype html>
+            <html ${header.htmlAttributes.toString()}>
+              <head>
+                ${header.title.toString()}
+                ${header.meta.toString()}
+                ${header.link.toString()}
+              </head>
+              <body>
+                <div id="app">${componentHTML}</div>
+                <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};</script>
+                ${analtyicsScript}
+                <script type="text/javascript" charset="utf-8" src="/assets/app.js"></script>
+              </body>
+            </html>
+          `);   
+        });
       })
       .catch((err) => {
         res.status(500).json(err);
