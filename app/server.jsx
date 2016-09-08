@@ -100,45 +100,50 @@ export default function render(req, res) {
         authenticated ? ssrAuth() : null;
       })
       .then(() => {
-        let initialState = store.getState();
+        return new Promise((resolve, reject) => {  
+          let initialState = store.getState();
 
-        const waitForFetching = () => {
-          initialState = store.getState();
+          const waitForFetching = () => {
+            initialState = store.getState();
 
-          let fetching = _.reduce(initialState, function (prev, next) {
-             prev.push(next.isFetching);
-             return prev
-          }, []).includes(true)
+            let fetching = _.reduce(initialState, function (prev, next) {
+               prev.push(next.isFetching);
+               return prev
+            }, []).includes(true)
 
-          if (fetching) {
-            setTimeout(waitForFetching, 100);
-          } else {
-            const componentHTML = renderToString(
-              <Provider store={store}>
-                <RouterContext {...props} />
-              </Provider>
-            );
-
-            return res.status(200).send(`
-              <!doctype html>
-              <html ${header.htmlAttributes.toString()}>
-                <head>
-                  ${header.title.toString()}
-                  ${header.meta.toString()}
-                  ${header.link.toString()}
-                </head>
-                <body>
-                  <div id="app">${componentHTML}</div>
-                  <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};</script>
-                  ${analtyicsScript}
-                  <script type="text/javascript" charset="utf-8" src="/assets/app.js"></script>
-                </body>
-              </html>
-            `);    
+            if (fetching) {
+              setTimeout(waitForFetching, 100);
+            } else {
+              resolve(initialState) 
+            }
           }
-        }
 
-        waitForFetching();
+          waitForFetching();
+        })
+      })
+      .then((initialState) => {
+        const componentHTML = renderToString(
+          <Provider store={store}>
+            <RouterContext {...props} />
+          </Provider>
+        );
+
+        return res.status(200).send(`
+          <!doctype html>
+          <html ${header.htmlAttributes.toString()}>
+            <head>
+              ${header.title.toString()}
+              ${header.meta.toString()}
+              ${header.link.toString()}
+            </head>
+            <body>
+              <div id="app">${componentHTML}</div>
+              <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};</script>
+              ${analtyicsScript}
+              <script type="text/javascript" charset="utf-8" src="/assets/app.js"></script>
+            </body>
+          </html>
+        `);   
       })
       .catch((err) => {
         res.status(500).json(err);
