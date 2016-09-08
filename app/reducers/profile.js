@@ -15,7 +15,8 @@ const isFetching = (
       return false;
     case types.GET_PROFILE_FAILURE:
       console.log('===========================<')
-      console.log('fail: ', action)
+      console.log('fail: ', action.response)
+      console.log('fail1: ', action.response.request.res[0])
       console.log('===========================<')
       return false;
     default:
