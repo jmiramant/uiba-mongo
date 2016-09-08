@@ -124,15 +124,14 @@ export default function render(req, res) {
             if (fetching) {
               setTimeout(waitForFetching, 250);
             } else {
-              setTimeout(() => {resolve(initialState)}, 1000)
+              setTimeout(() => {resolve(store.getState())}, 5000)
             }
           }
 
           return waitForFetching();
         })
       })
-      .then(() => {
-        let initialState = store.getState();
+      .then((initialState) => {
         console.log(initialState)
         const componentHTML = renderToString(
           <Provider store={store}>
