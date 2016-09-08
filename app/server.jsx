@@ -82,6 +82,7 @@ export default function render(req, res) {
    */
 
 const fetchPromise = (cb) => {
+  console.log('func')
   let initialState = store.getState();
   let count = 0;
 
