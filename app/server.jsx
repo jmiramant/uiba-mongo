@@ -85,6 +85,7 @@ const fetchPromise = (cb) => {
   console.log('func')
   let initialState = store.getState();
   let count = 0;
+  console.log('pre-internal func')
 
   const waitForFetching = () => {
     initialState = store.getState();
@@ -108,8 +109,8 @@ const fetchPromise = (cb) => {
       return cb(initialState)
     }
   }
-
-  return waitForFetching();
+  console.log('initial func call')
+  waitForFetching();
 }
 
 
