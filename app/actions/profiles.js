@@ -14,9 +14,6 @@ export function profileChange(state) {
 }
 
 function makeProfileRequest(method, data, api = '/profile') {
-  console.log('-----axios---')
-  console.log(method, api, data)
-  console.log('-----axios---')
   return request[method](api, data);
 }
 
