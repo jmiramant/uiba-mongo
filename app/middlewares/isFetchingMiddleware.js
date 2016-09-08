@@ -17,11 +17,9 @@ export default function isFetchingMiddleware(store) {
       }, []).includes(true)
 
       if (fetching) {
-        console.log('loop');
         setTimeout(waitForFetching, 100);
       } else {
-        console.log('resolve');
-        return resolve(initialState);
+        resolve(initialState);
       }
     }
 

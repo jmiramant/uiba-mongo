@@ -7,6 +7,7 @@ import { polyfill } from 'es6-promise';
 import createRoutes from 'routes';
 import configureStore from 'store/configureStore';
 import preRenderMiddleware from 'middlewares/preRenderMiddleware';
+// import isFetchingMiddleware from 'middlewares/isFetchingMiddleware';
 import header from 'components/Meta';
 import ssrAuth from 'api/preRenderAuthentication.js';
 import injectTapEventPlugin from 'react-tap-event-plugin'
@@ -129,6 +130,7 @@ export default function render(req, res) {
       })
       .then((initialState) => {
         console.log('initialState')
+        console.log(initialState)
         const componentHTML = renderToString(
           <Provider store={store}>
             <RouterContext {...props} />
