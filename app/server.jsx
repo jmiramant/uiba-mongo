@@ -19,8 +19,9 @@ polyfill();
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin()
 
+const hostName = process.env.HOSTNAME;
 const clientConfig = {
-  host: process.env.HOSTNAME || 'localhost',
+  host: hostName && hostName.substr(0, hostName.length-1)) || 'localhost',
   port: process.env.PORT || '3000'
 };
 
