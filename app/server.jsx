@@ -21,7 +21,7 @@ injectTapEventPlugin()
 
 const hostName = process.env.HOSTNAME;
 const clientConfig = {
-  host: hostName && hostName.substr(0, hostName.length-1)) || 'localhost',
+  host: (hostName && hostName.substr(0, hostName.length-1)) || 'localhost',
   port: process.env.PORT || '3000'
 };
 
