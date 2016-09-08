@@ -64,7 +64,7 @@ export function updateProfile(profileData) {
 
 }
 
-export function fetchCurrentProfile() {
+export function fetchProfile() {
   return {
     type: types.GET_PROFILE,
     promise: makeProfileRequest('get', {}, '/profile/me')

@@ -28,7 +28,7 @@ const cx = classNames.bind(styles);
 
 class Profile extends Component {
   static need = [  // eslint-disable-line
-    profileActionCreators.fetchCurrentProfile,
+    // profileActionCreators.fetchProfile,
     schoolsActionCreators.fetchSchools,
     jobsActionCreators.fetchJobs,
     skillsActionCreators.fetchSkills,
