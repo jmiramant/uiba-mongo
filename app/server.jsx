@@ -96,10 +96,8 @@ export default function render(req, res) {
         props.params
       )
       .then(() => {
-        console.log('pre cookie')
         //after preRendering is complete, we destroy the interceptors
         authenticated ? ssrAuth() : null;
-        console.log('post cookie')
       })
       .then(() => {
         console.log('pre promise')
@@ -115,8 +113,11 @@ export default function render(req, res) {
             }, []).includes(true)
 
             if (fetching) {
+              console.log('loop')
+              console.log(initialState)
               setTimeout(waitForFetching, 100);
             } else {
+              console.log('resolve')
               resolve(initialState) 
             }
           }
@@ -125,7 +126,7 @@ export default function render(req, res) {
         })
       })
       .then((initialState) => {
-        console.log(initialState)
+        console.log('initialState')
         const componentHTML = renderToString(
           <Provider store={store}>
             <RouterContext {...props} />
