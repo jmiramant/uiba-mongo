@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-import { validateUserCardHelper } from '../helpers/userCardlValidations';
+import { validateUserCardHelper } from '../helpers/userCardValidations';
 
 import classNames from 'classnames/bind';
 import styles from 'css/components/profile/userCard';
