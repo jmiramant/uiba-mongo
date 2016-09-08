@@ -3,7 +3,7 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { createMemoryHistory, match, RouterContext } from 'react-router';
 import { Provider } from 'react-redux';
-import Promise from 'bluebird';
+import { polyfill } from 'es6-promise';
 import createRoutes from 'routes';
 import configureStore from 'store/configureStore';
 import preRenderMiddleware from 'middlewares/preRenderMiddleware';
@@ -12,6 +12,8 @@ import header from 'components/Meta';
 import ssrAuth from 'api/preRenderAuthentication.js';
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import _ from 'lodash';
+
+polyfill();
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -82,42 +84,6 @@ export default function render(req, res) {
    * given location.
    */
 
-const fetchPromise = (cb) => {
-  console.log('func')
-  let initialState = store.getState();
-  let count = 0;
-  console.log('pre-internal func')
-
-  const waitForFetching = () => {
-    console.log('1')
-    initialState = store.getState();
-    console.log('2')
-    console.log(initialState)
-    let fetching = _.reduce(initialState, (prev, next) => {
-      prev.push(next.isFetching);
-      return prev
-    }, []);
-    console.log('3')
-    console.log(fetching)
-    if (fetching.indexOf(true) !== -1) {
-      console.log('loop')
-      console.log(initialState)
-      count += 1;
-      console.log('count: ', count)
-      setTimeout(waitForFetching, 100);
-      // if (count > 30) {
-      //   reject('There was an error fetching initial data.')
-      // } else {
-      // }
-    } else {
-      console.log('resolve')
-      return cb(initialState)
-    }
-  }
-  console.log('initial func call')
-  waitForFetching();
-}
-
 
   if(authenticated){
    ssrAuth(req.headers.cookie);
@@ -141,34 +107,54 @@ const fetchPromise = (cb) => {
         authenticated ? ssrAuth() : null;
       })
       .then(() => {
-        console.log('pre promise')
-        return fetchPromise( (initialState) => {
-          console.log('fetchPromise return')
-          console.log('initialState')
-          console.log(initialState)
-          const componentHTML = renderToString(
-            <Provider store={store}>
-              <RouterContext {...props} />
-            </Provider>
-          );
+        return new Promise((resolve, reject) => {  
+          let initialState = store.getState();
 
-          return res.status(200).send(`
-            <!doctype html>
-            <html ${header.htmlAttributes.toString()}>
-              <head>
-                ${header.title.toString()}
-                ${header.meta.toString()}
-                ${header.link.toString()}
-              </head>
-              <body>
-                <div id="app">${componentHTML}</div>
-                <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};</script>
-                ${analtyicsScript}
-                <script type="text/javascript" charset="utf-8" src="/assets/app.js"></script>
-              </body>
-            </html>
-          `);   
-        });
+          const waitForFetching = () => {
+            initialState = store.getState();
+
+            let fetching = !(_.reduce(initialState, (prev, next) => {
+              prev.push(next.isFetching);
+              return prev
+            }, []).indexOf(true) === -1);
+
+            if (fetching) {
+              console.log('loop')
+              console.log(initialState)
+              setTimeout(waitForFetching, 100);
+            } else {
+              console.log('resolve')
+              return resolve(initialState) 
+            }
+          }
+
+          return waitForFetching();
+        })
+      })
+      .then((initialState) => {
+        console.log('initialState')
+        const componentHTML = renderToString(
+          <Provider store={store}>
+            <RouterContext {...props} />
+          </Provider>
+        );
+
+        return res.status(200).send(`
+          <!doctype html>
+          <html ${header.htmlAttributes.toString()}>
+            <head>
+              ${header.title.toString()}
+              ${header.meta.toString()}
+              ${header.link.toString()}
+            </head>
+            <body>
+              <div id="app">${componentHTML}</div>
+              <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};</script>
+              ${analtyicsScript}
+              <script type="text/javascript" charset="utf-8" src="/assets/app.js"></script>
+            </body>
+          </html>
+        `);   
       })
       .catch((err) => {
         res.status(500).json(err);
