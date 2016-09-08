@@ -94,10 +94,7 @@ const fetchPromise = (cb) => {
     console.log('2')
     console.log(initialState)
     let fetching = _.reduce(initialState, (prev, next) => {
-      console.log(prev)
-      console.log(next)
-      if (next.isFetching) prev.push(next.isFetching);
-      console.log(prev)
+      prev.push(next.isFetching);
       return prev
     }, []);
     console.log('3')
