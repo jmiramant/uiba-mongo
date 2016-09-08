@@ -10,7 +10,7 @@ const isFetching = (
       return true;
     case types.GET_PROFILE_SUCCESS:
       console.log('===========================')
-      console.log('success ', action)
+      console.log('success ')
       console.log('===========================')
       return false;
     case types.GET_PROFILE_FAILURE:
