@@ -33,16 +33,13 @@ export function toggleJobAdd (data) {
 }
 
 function makeJobsRequest(method, data, api = '/jobs') {
-  console.log('-----axios---')
-  console.log(method, api, data)
-  console.log('-----axios---')
   return request[method](api, data);
 }
 
 export function fetchJobs() {
   return {
     type: types.GET_JOBS,
-    promise: makeJobsRequest('get', {}, 'jobs/me')
+    promise: makeJobsRequest('get', {}, '/jobs/me')
   };
 }
 
