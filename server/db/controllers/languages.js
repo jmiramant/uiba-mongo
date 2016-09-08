@@ -12,7 +12,10 @@ const handleError = (res, err) => {
  * Me
  */
 export function me(req, res) {
-
+  console.log('profile controller')
+  console.log(req)
+  console.log('profile id: ' + req.user.profile_id)
+  console.log('profile controller')
   Language.find({
     
     "profile_id": mongoose.Types.ObjectId(req.user.profile_id)
