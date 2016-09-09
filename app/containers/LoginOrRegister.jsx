@@ -37,6 +37,7 @@ class LoginOrRegister extends Component {
     if (isLogin) {
       manualLogin(formInputs);
     } else {
+      console.log(formInputs)
       if (formInputs.confirm === formInputs.password) {
         signUp(formInputs);
       }
@@ -95,7 +96,7 @@ class LoginOrRegister extends Component {
         <TextField
           fullWidth={true} 
           type='password'
-          onChange={this.onDataChange('formInputs.confirm')}
+          onChange={this.onDataChange('confirm')}
           errorText={this.props.user.message}
           floatingLabelText="Confirm Password"
         />
@@ -135,7 +136,9 @@ class LoginOrRegister extends Component {
               <div>
                 <div className={cx('toggle-container')}>
                   <p 
-                    className={cx('toggle')}
+                    className={cx('toggle', {
+                      'active': isLogin
+                    })}
                   >
                     Log In
                   </p>
@@ -145,7 +148,9 @@ class LoginOrRegister extends Component {
                     style={{width: 50}}
                   />
                   <p 
-                    className={cx('toggle')}
+                    className={cx('toggle', {
+                      'active': !isLogin
+                    })}
                   >
                     Sign Up
                   </p>

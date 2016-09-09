@@ -110,7 +110,7 @@ export function signUp(data) {
       .then(response => {
         if (response.status === 200) {
           dispatch(signUpSuccess(response.data.message));
-          dispatch(push('/'));
+          dispatch(push('/profile'));
         } else {
           dispatch(signUpError('Oops! Something went wrong'));
         }

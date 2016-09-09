@@ -61,8 +61,10 @@ export function signUp(req, res, next) {
     }
     const _profile = new Profile({
       user_id: user.id,
+      firstName: req.body.first,
+      lastName: req.body.last,
       email: req.body.email,
-      name: 'Please Enter Your Name'
+      name: req.body.first + ' ' + req.body.last
     })
 
     user.profile_id = _profile._id;
