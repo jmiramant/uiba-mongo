@@ -1,20 +1,21 @@
 import React, { Component, PropTypes } from 'react';
-import ReactDOM from 'react-dom';
-import classNames from 'classnames/bind';
 import { connect } from 'react-redux';
+
 import { manualLogin, signUp, toggleLoginMode } from 'actions/users';
-import styles from 'css/components/login';
-import hourGlassSvg from 'images/hourglass.svg';
+
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
-import Toggle from 'material-ui/Toggle';
-import linkedinLogo from '../images/linkedin.svg';
-import Divider from 'material-ui/Divider';
-import Paper from 'material-ui/Paper';
 
+import Toggle from 'material-ui/Toggle';
+import Divider from 'material-ui/Divider';
+import linkedinLogo from '../images/linkedin.svg';
+
+import LoginForm from 'components/login/loginForm';
+import SignupForm from 'components/login/signupForm';
+
+import classNames from 'classnames/bind';
+import styles from 'css/components/login';
 const cx = classNames.bind(styles);
 
 class LoginOrRegister extends Component {
@@ -28,19 +29,13 @@ class LoginOrRegister extends Component {
     formInputs: {}
   }
 
-  handleOnSubmit(event) {
-    event.preventDefault();
-
+  handleOnSubmit(data) {
     const { manualLogin, signUp, user: { isLogin } } = this.props;
-    const { formInputs } = this.state
 
     if (isLogin) {
-      manualLogin(formInputs);
+      manualLogin(data);
     } else {
-      console.log(formInputs)
-      if (formInputs.confirm === formInputs.password) {
-        signUp(formInputs);
-      }
+      signUp(data);
     }
   }
 
@@ -48,59 +43,18 @@ class LoginOrRegister extends Component {
     const { user: { isLogin } , toggleLoginMode } = this.props;
     if (isLogin) {
       return (
-        <div>
-          <TextField
-            fullWidth={true} 
-            errorText={this.props.user.message}
-            floatingLabelText="Email"
-            onChange={this.onDataChange('email')}
-          />
-          <TextField
-            fullWidth={true} 
-            type='password'
-            errorText={this.props.user.message}
-            floatingLabelText="Password"
-            onChange={this.onDataChange('password')}
-          />
-        </div>
+        <LoginForm
+          user={this.props.user}
+          onSumbit={this.handleOnSubmit}
+        />     
       );
     }
 
     return (
-      <div>
-        <TextField
-          fullWidth={true} 
-          onChange={this.onDataChange('first')}
-          errorText={this.props.user.message}
-          floatingLabelText="First Name"
-        />
-        <TextField
-          fullWidth={true} 
-          onChange={this.onDataChange('last')}
-          errorText={this.props.user.message}
-          floatingLabelText="Last Name"
-        />
-        <TextField
-          fullWidth={true} 
-          onChange={this.onDataChange('email')}
-          errorText={this.props.user.message}
-          floatingLabelText="Email"
-        />
-        <TextField
-          fullWidth={true} 
-          onChange={this.onDataChange('password')}
-          type='password'
-          errorText={this.props.user.message}
-          floatingLabelText="Password"
-        />
-        <TextField
-          fullWidth={true} 
-          type='password'
-          onChange={this.onDataChange('confirm')}
-          errorText={this.props.user.message}
-          floatingLabelText="Confirm Password"
-        />
-      </div>
+      <SignupForm
+        user={this.props.user}
+        onSumbit={this.handleOnSubmit}
+      />
     );
   }
 
@@ -158,7 +112,6 @@ class LoginOrRegister extends Component {
 
               <div className={cx('email-container')}>
                 { this.renderForm() }
-                <RaisedButton className={cx('btn')} label={this.props.user.isLogin ? 'Login' : 'Register'} onClick={this.handleOnSubmit} primary={true} />
               </div>
 
             </div>

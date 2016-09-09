@@ -47,13 +47,15 @@
   margin: 20px 0px 30px;
   width: 100%;
   text-align: center;
+  height: 90px;
 }
 
 .li-auth img {
   height: 80px;
   width: 80px;
+  transition: 0.1s all ease-in-out;
   &:hover {
-    zoom: 105%;
+    transform: scale(1.1);
   }
 }
 

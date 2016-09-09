@@ -16,6 +16,6 @@
 }
 
 .success {
-  background-color: var(--colorBrightPink);
+  background-color: rgb(129,210,235);
   color: var(--colorWhite);
 }
