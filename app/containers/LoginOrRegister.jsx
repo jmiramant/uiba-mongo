@@ -5,92 +5,161 @@ import { connect } from 'react-redux';
 import { manualLogin, signUp, toggleLoginMode } from 'actions/users';
 import styles from 'css/components/login';
 import hourGlassSvg from 'images/hourglass.svg';
+import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+import Toggle from 'material-ui/Toggle';
+import linkedinLogo from '../images/linkedin.svg';
+import Divider from 'material-ui/Divider';
+import Paper from 'material-ui/Paper';
 
 const cx = classNames.bind(styles);
 
 class LoginOrRegister extends Component {
+
   constructor(props) {
     super(props);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
+  }
+
+  state = {
+    formInputs: {}
   }
 
   handleOnSubmit(event) {
     event.preventDefault();
 
     const { manualLogin, signUp, user: { isLogin } } = this.props;
-    const email = ReactDOM.findDOMNode(this.refs.email).value;
-    const password = ReactDOM.findDOMNode(this.refs.password).value;
+    const { formInputs } = this.state
 
     if (isLogin) {
-      manualLogin({ email, password });
+      manualLogin(formInputs);
     } else {
-      signUp({ email, password });
+      if (formInputs.confirm === formInputs.password) {
+        signUp(formInputs);
+      }
     }
   }
 
-  renderHeader() {
+  renderForm() {
     const { user: { isLogin } , toggleLoginMode } = this.props;
     if (isLogin) {
       return (
-        <div className={cx('header')}>
-          <div className={cx('alternative')}>
-            New User?
-            <a className={cx('alternative-link')}
-              onClick={toggleLoginMode}> Sign up Here</a>
-          </div>
+        <div>
+          <TextField
+            fullWidth={true} 
+            errorText={this.props.user.message}
+            floatingLabelText="Email"
+            onChange={this.onDataChange('email')}
+          />
+          <TextField
+            fullWidth={true} 
+            type='password'
+            errorText={this.props.user.message}
+            floatingLabelText="Password"
+            onChange={this.onDataChange('password')}
+          />
         </div>
       );
     }
 
     return (
-      <div className={cx('header')}>
-        <div className={cx('alternative')}>
-          Already have an account?
-          <a className={cx('alternative-link')}
-            onClick={toggleLoginMode}> Login</a>
-        </div>
+      <div>
+        <TextField
+          fullWidth={true} 
+          onChange={this.onDataChange('first')}
+          errorText={this.props.user.message}
+          floatingLabelText="First Name"
+        />
+        <TextField
+          fullWidth={true} 
+          onChange={this.onDataChange('last')}
+          errorText={this.props.user.message}
+          floatingLabelText="Last Name"
+        />
+        <TextField
+          fullWidth={true} 
+          onChange={this.onDataChange('email')}
+          errorText={this.props.user.message}
+          floatingLabelText="Email"
+        />
+        <TextField
+          fullWidth={true} 
+          onChange={this.onDataChange('password')}
+          type='password'
+          errorText={this.props.user.message}
+          floatingLabelText="Password"
+        />
+        <TextField
+          fullWidth={true} 
+          type='password'
+          onChange={this.onDataChange('formInputs.confirm')}
+          errorText={this.props.user.message}
+          floatingLabelText="Confirm Password"
+        />
       </div>
     );
   }
 
+  onDataChange = field => (e, uiVal) => {
+    this.setState({
+      formInputs: {
+        ...this.state.formInputs,
+        [field]: uiVal,
+      }
+    });  
+  }
+
   render() {
-    const { isWaiting, message, isLogin } = this.props.user;
+    const { user: { isLogin } , toggleLoginMode } = this.props;
+    const { isWaiting, message } = this.props.user;
 
     return (
-      <div className={cx('login', {
-        waiting: isWaiting
-      })}>
-          <div className={cx('google-container')}>
-            <a className={cx('button')}
-              href="/auth/linkedin">Login with Linkedin</a>
-          </div>
+      <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
         <div>
-          { this.renderHeader() }
-          <img className={cx('loading')} src={hourGlassSvg} />
-          <div className={cx('email-container')}>
-            <form onSubmit={this.handleOnSubmit} className="pure-form pure-form-aligned">
-              <fieldset>
-                <div className="pure-control-group">
-                  <label htmlFor="name">Email</label>
-                  <input type="email" ref="email" placeholder="Email" />
+          <div className={cx('login', {
+            waiting: isWaiting
+          })}>
+            <div className={cx('li-container')}>
+              <a className={cx('li-auth')}
+                href="/auth/linkedin"
+              >
+              <img src={linkedinLogo} />
+              </a>
+            </div>
+            <Divider/>
+            
+
+              <div>
+                <div className={cx('toggle-container')}>
+                  <p 
+                    className={cx('toggle')}
+                  >
+                    Log In
+                  </p>
+                  <Toggle
+                    className={cx('toggle')}
+                    onToggle={toggleLoginMode}
+                    style={{width: 50}}
+                  />
+                  <p 
+                    className={cx('toggle')}
+                  >
+                    Sign Up
+                  </p>
                 </div>
 
-                <div className="pure-control-group">
-                  <label htmlFor="password">Password</label>
-                  <input type="password" ref="password" placeholder="Password" />
-                  <p className={cx('message', {
-                    'message-show': message && message.length > 0
-                  })}>{message}</p>
-                </div>
+              <div className={cx('email-container')}>
+                { this.renderForm() }
+                <RaisedButton className={cx('btn')} label={this.props.user.isLogin ? 'Login' : 'Register'} onClick={this.handleOnSubmit} primary={true} />
+              </div>
 
-                <div className="pure-controls">
-                  <button type="submit" value={isLogin ? 'Login' : 'Register'} className="pure-button pure-button-primary">Submit</button>
-                </div>
-              </fieldset>
-            </form>
+            </div>
           </div>
         </div>
-      </div>
+      </MuiThemeProvider> 
     );
   }
 }

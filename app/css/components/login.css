@@ -18,6 +18,20 @@
   }
 }
 
+.toggle-container {
+  margin: 30px auto 0;
+  width: 60%;
+}
+
+.toggle {
+  display: inline-block !important;
+  text-align: center;
+  width: 39%;
+  font-size: 22px;
+  padding: 0;
+  margin: 0;
+}
+
 .alternative {
   background: var(--colorWhite);
   padding: 12px 8px;
@@ -25,7 +39,28 @@
   text-align: center;
 }
 
+.li-container {
+  margin: 20px 0px 30px;
+  width: 100%;
+  text-align: center;
+}
 
+.li-auth img {
+  height: 80px;
+  width: 80px;
+  &:hover {
+    zoom: 105%;
+  }
+}
+
+.btn{
+  margin-top: 20px;
+  width: 100%;
+}
+
+.text {
+  width: 100% !important;
+}
   
 .alternative-link {
   color: var(--colorLightBlue);
@@ -40,7 +75,7 @@
 }
 
 .email-container {
-  padding: 16px 12px;
+  padding: 0px 12px 40px;
   border-bottom: 2px solid var(--colorLightGray);
 }
 
