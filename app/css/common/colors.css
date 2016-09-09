@@ -5,6 +5,7 @@
   
   --colorBackground-tan:      #f9fafb;
   --colorBackground-darkBlue: #2185c5;
+  --colorBackground-ltgry:    #f5f5f5;
   --colorLightText:           #FDFDFD;
   --colorLightGreyText:       #66747F;
 
@@ -15,4 +16,6 @@
   --colorLightBlue:           #7ecefd;
   --colorDarkGray:            #677480;
   --colorLightGray:           #97abbc;
+
+
 }
