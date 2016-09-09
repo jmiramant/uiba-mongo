@@ -1,4 +1,5 @@
 import User from '../models/user';
+import Profile from '../models/profile'
 
 export default (email, password, done) => {
   User.findOne({ email }, (findErr, user) => {

@@ -11,7 +11,7 @@ export function me(req, res) {
     if (!profile || err) {
       console.log('Error in "profile/me" query');
       if (err) return res.status(500).send({error: 'Profile resource not found: ' + err.value});
-      return res.status(500).send({error:  + ' does not have a resource'});
+      return res.status(500).send({error: 'Profile does not have a resource'});
     }
 
     return res.json(profile);

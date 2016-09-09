@@ -1,6 +1,7 @@
 import User from '../models/user';
-import Jobs from '../models/job';
+import Profile from '../models/profile';
 import passport from 'passport';
+import async from 'async'
 
 /**
  * GET /user
@@ -56,10 +57,20 @@ export function signUp(req, res, next) {
 
   User.findOne({ email: req.body.email }, (findErr, existingUser) => {
     if (existingUser) {
-      return res.status(409).json({ message: 'Account with this email address already exists!' });
+      return res.status(409).json({ message: 'Account with this email address already exists. Did you sign up with LinkedIn?' });
     }
+    const _profile = new Profile({
+      user_id: user.id,
+      email: req.body.email,
+      name: 'Please Enter Your Name'
+    })
 
-    return user.save((saveErr) => {
+    user.profile_id = _profile._id;
+
+    return async.series({
+      _profile: _profile.save,
+      user: user.save
+    }, function(saveErr, resp){
       if (saveErr) return next(saveErr);
       return req.logIn(user, (loginErr) => {
         if (loginErr) return res.status(401).json({ message: loginErr });
@@ -67,7 +78,9 @@ export function signUp(req, res, next) {
           message: 'You have been successfully logged in.'
         });
       });
-    });
+
+    });      
+
   });
 }
 

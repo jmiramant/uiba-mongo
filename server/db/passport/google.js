@@ -7,6 +7,7 @@ const setDefaultProfileFields = (prof, profile, userId) => {
   prof.name = profile.displayName;
   prof.gender = profile._json.gender;
   prof.picture = profile._json.picture;
+  prof.service = 'google'
 }
 
 const setDefaultUserFields = (user, profile, accessToken)  => {

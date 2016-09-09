@@ -38,3 +38,28 @@
   margin-left: 244px;
   position: absolute;
 }
+
+
+a.auto-complete {
+  position: absolute;
+  margin-left: 250px;
+  color: #fff;
+  width: 300px;
+  background: rgb(22,134,176);
+  border-radius: 3px;
+}
+
+a .li-img {
+  display: inline-block;
+  width: 10%;
+  height: 28px;
+  vertical-align: top;
+  margin-top: 12px;
+  margin-left: 5%;
+}
+
+a p {
+  padding: 20px 0px 8px 0px;
+  display: inline-block;
+  width: 78%;
+}

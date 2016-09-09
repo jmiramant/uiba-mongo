@@ -9,14 +9,7 @@ const isFetching = (
     case types.GET_PROFILE_REQUEST:
       return true;
     case types.GET_PROFILE_SUCCESS:
-      console.log('===========================')
-      console.log('success ')
-      console.log('===========================')
-      return false;
     case types.GET_PROFILE_FAILURE:
-      console.log('===========================<')
-      console.log('fail')
-      console.log('===========================<')
       return false;
     default:
       return state;
@@ -24,7 +17,7 @@ const isFetching = (
 };
 
 const profile = (
-  state = [],
+  state = {},
   action
 ) => {
   let updatedProfile;
@@ -36,7 +29,7 @@ const profile = (
       newStateOjb[action.state.field] = action.state.value
       return newStateOjb;
     case types.GET_PROFILE_FAILURE:
-      return state.filter(t => t.id !== action.id);
+      return state;
     case types.UPDATE_PROFILE_SUCCESS:
       return {...state}
     default:

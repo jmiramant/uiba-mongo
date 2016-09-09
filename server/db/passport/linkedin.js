@@ -11,6 +11,8 @@ const setDefaultProfileFields = (prof, profile, userId) => {
   prof.headline = profile._json.headline;
   prof.summary = profile._json.summary;
   prof.url = profile._json.publicProfileUrl;
+  prof.email = profile._json.emailAddress;
+  prof.service = 'linkedin'
 }
 
 const setDefaultUserFields = (user, profile, accessToken)  => {

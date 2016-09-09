@@ -48,7 +48,6 @@ class Profile extends Component {
             languages, languageActions,
             projects, projectActions,
           } = this.props;
-
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
         <div>

@@ -13,7 +13,7 @@ export function newJob() {
 
 export function jobChange(state) {
   return {
-    type: types.CHANGE_JOBS,
+    type: types.CHANGE_JOB,
     state
   };
 }

@@ -62,7 +62,7 @@ class LoginOrRegister extends Component {
       })}>
           <div className={cx('google-container')}>
             <a className={cx('button')}
-          href="/auth/linkedin">Login with Linkedin</a>
+              href="/auth/linkedin">Login with Linkedin</a>
           </div>
         <div>
           { this.renderHeader() }

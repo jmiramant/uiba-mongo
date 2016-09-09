@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as profilesActionCreators from 'actions/profiles';
 
+import LiImg from '../../images/linkedin-logo.svg';
 import CardEdit from 'components/userCard/UserCardEdit'
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 
@@ -56,12 +57,24 @@ export default class UserCard extends React.Component {
       profile,
       editMode,
       actions
-
     } = this.props;
+    
     return (
       <div className={cx('userCard--container') + ' text-center'} onMouseEnter={this.editIconShow.bind(this)} onMouseLeave={this.editIconHide.bind(this)}>
         <div className={cx('profile--container')}>
           <div className={cx('userCard--picture-container')}>
+            {profile.service === 'linkedin' ? (
+              <span />
+            ) : (
+              <a 
+                className={cx('auto-complete')}
+                href="/auth/linkedin"
+              >
+                <img className={cx('li-img')} src={LiImg} />
+                <p>AutoComplete with Linkedin</p>
+              </a>
+            )}
+
             {profile.picture ? (
               <img className={cx('userCard--picture-img')} src={profile.picture}/>
             ) : (

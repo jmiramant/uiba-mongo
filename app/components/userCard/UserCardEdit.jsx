@@ -72,12 +72,14 @@ export default class UserCardEdit extends React.Component {
            <TextField
             value={profile.name}
             errorText={validationErrors.name}
+            hintText='Full Name'
             onChange={this.handleChange('name')}
           />
 
            <TextField
             value={profile.headline}
             errorText={validationErrors.headline}
+            hintText='Title/Company'
             onChange={this.handleChange('headline')}
           />
           
