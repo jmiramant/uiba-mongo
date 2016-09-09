@@ -91,7 +91,7 @@ export function manualLogin(data) {
       .then(response => {
         if (response.status === 200) {
           dispatch(loginSuccess(response.data.message));
-          dispatch(push('/'));
+          dispatch(push('/profile'));
         } else {
           dispatch(loginError('Oops! Something went wrong!'));
         }
