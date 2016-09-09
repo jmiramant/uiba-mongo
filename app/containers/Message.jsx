@@ -6,12 +6,23 @@ import styles from 'css/components/message';
 
 const cx = classNames.bind(styles);
 
-const Message = ({message, type, dismissMessage}) => (
-    <div className={cx('message', {
+class Message extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
+  render() {
+    const {message, dismissMessage, type} = this.props;
+    
+    setTimeout(dismissMessage, 6000)
+    
+    return (<div className={cx('message', {
       show: message && message.length > 0,
       success: type === 'SUCCESS'
-    })} onClick={dismissMessage}>{message}</div>
-);
+    })} onClick={dismissMessage}>{message}
+    </div>)
+  }
+};
 
 Message.propTypes = {
   message: PropTypes.string,
