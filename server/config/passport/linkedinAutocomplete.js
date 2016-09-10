@@ -6,7 +6,7 @@ import { passport as dbPassport } from '../../db';
 const OAuth2Strategy = LinkedInStrategy.Strategy;
 
 export default (passport) => {
-  if (!dbPassport || !dbPassport.linkedin || ! typeof dbPassport.linkedin === 'function') {
+  if (!dbPassport || !dbPassport.linkedinAutocomplete || ! typeof dbPassport.linkedinAutocomplete === 'function') {
     console.warn(unsupportedMessage('passport-linkedin-oauth2'));
     return;
   }
@@ -31,7 +31,6 @@ export default (passport) => {
     clientSecret: linkedin.clientSecret,
     callbackURL: linkedin.callbackURL,
     scope: ['r_emailaddress', 'r_basicprofile'],
-    state: true,
-    passReqToCallback: true
-  }, dbPassport.linkedin));
+    state: true
+  }, dbPassport.linkedinAutocomplete));
 };

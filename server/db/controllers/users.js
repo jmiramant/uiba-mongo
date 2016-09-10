@@ -64,7 +64,8 @@ export function signUp(req, res, next) {
       firstName: req.body.first,
       lastName: req.body.last,
       email: req.body.email,
-      name: req.body.first + ' ' + req.body.last
+      name: req.body.first + ' ' + req.body.last,
+      service: 'email'
     })
 
     user.profile_id = _profile._id;

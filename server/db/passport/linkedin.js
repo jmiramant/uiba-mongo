@@ -17,36 +17,67 @@ const setDefaultProfileFields = (prof, profile, userId) => {
 
 const setDefaultUserFields = (user, profile, accessToken)  => {
   user.linkedin = profile.id;
+  if (!user.tokens) {
+    user.tokens = [];
+  }
   user.tokens.push({ kind: 'linkedin', accessToken });  
 }
 
 /* eslint-disable no-param-reassign */
 export default (req, accessToken, refreshToken, profile, done) => {
-  if (req.user) {
+  if (req.user) { 
     return User.findOne({ linkedin: profile.id }, (findOneErr, existingUser) => {
+      //standard
       if (existingUser) {
         return done(null, false, { message: 'There is already a linkedin account that belongs to you. Sign in with that account or delete it, then link it with your current account.' });
       }
-      User.findById(req.user.id, (findByIdErr, user) => {
-
-        setDefaultUserFields(user, profile, accessToken)
-
-        Profile.find({"user_id": req.user.id}, (findByProfErr, _profile) => {
-
-          setDefaultProfileFields(_profile, profile, user._id);
+      User.findOne({'_id': req.user.id}, (findByIdErr, _user) => {
+        if (req.user.tokens.length === 0) {
           
-          user.profile_id = _profile._id;
+          const secondUser = new User();
+          Profile.findById(req.user.profile_id, (err, updatedProfile) => {
+            
+            setDefaultUserFields(secondUser, profile, accessToken)
+            setDefaultUserFields(_user, profile, accessToken)
+            setDefaultProfileFields(updatedProfile, profile, _user._id);
 
-          return async.series({
-            _profile: _profile.save,
-            user: user.save
-          }, function(err, res){
-            done(err, res.user[0])
+            updatedProfile.user_id = secondUser._id;
+            _user.profile_id = updatedProfile._id;
+            secondUser.profile_id = updatedProfile._id;
+            
+            return async.series({
+              _profile: updatedProfile.save,
+              secondUser: secondUser.save,
+              user: _user.save
+            }, function(err, res){
+              done(err, res.user[0])
+            });
+
+          })
+
+        } else {
+          
+          setDefaultUserFields(user, profile, accessToken)
+
+          Profile.find({"user_id": req.user.id}, (findByProfErr, _profile) => {
+
+            setDefaultProfileFields(_profile, profile, user._id);
+            
+            user.profile_id = _profile._id;
+
+            return async.series({
+              _profile: _profile.save,
+              user: user.save
+            }, function(err, res){
+              done(err, res.user[0])
+            });
+
           });
-        });
+        }
       });
     });
   }
+
   return User.findOne({ linkedin: profile.id }, (findBylinkedinIdErr, existingUser) => {
     if (existingUser) return done(null, existingUser);
     
