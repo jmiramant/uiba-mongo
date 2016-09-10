@@ -115,17 +115,10 @@ export default (app) => {
     );
   }
 
-  if (passportConfig && passportConfig.linkedin && passportConfig.linkedinAutocomplete) {
+  if (passportConfig && passportConfig.linkedin) {
 
     app.get('/auth/linkedin',
       passport.authenticate('linkedin'),
-      function(req, res){
-         // The request will be redirected to LinkedIn for authentication, so this
-         // function will not be called.
-      });
-
-    app.get('/auth/linkedin/autocomplete',
-      passport.authenticate('linkedinAutocomplete'),
       function(req, res){
          // The request will be redirected to LinkedIn for authentication, so this
          // function will not be called.
