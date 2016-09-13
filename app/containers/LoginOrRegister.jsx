@@ -23,6 +23,7 @@ class LoginOrRegister extends Component {
   constructor(props) {
     super(props);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
+    this.props.toggleLoginMode(this.props.user.isLogin)
   }
 
   state = {
@@ -58,6 +59,10 @@ class LoginOrRegister extends Component {
     );
   }
 
+  setLoginState(isLogin) {
+    this.props.toggleLoginMode(isLogin)
+  }
+
   onDataChange = field => (e, uiVal) => {
     this.setState({
       formInputs: {
@@ -90,6 +95,7 @@ class LoginOrRegister extends Component {
               <div>
                 <div className={cx('toggle-container')}>
                   <p 
+                    onClick={() => { this.setLoginState('true')}}
                     className={cx('toggle', {
                       'active': isLogin
                     })}
@@ -100,8 +106,10 @@ class LoginOrRegister extends Component {
                     className={cx('toggle')}
                     onToggle={toggleLoginMode}
                     style={{width: 50}}
+                    toggled={!isLogin}
                   />
                   <p 
+                    onClick={() => { this.setLoginState('false')}}
                     className={cx('toggle', {
                       'active': !isLogin
                     })}

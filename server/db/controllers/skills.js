@@ -3,7 +3,7 @@ import Skill from '../models/skill';
 import moment from 'moment';
 
 const handleError = (res, err) => {
-  return res.status(401).json({ message: err });
+  return res.status(500).send(err);
 }
 
 /**
@@ -43,20 +43,41 @@ export function get(req, res) {
  */
 
 export function create(req, res) {
-  
-  Skill.create({
-    profile_id: req.user.profile_id,
-    type: req.body.type,
-    proficiency: req.body.proficiency,
-    lengthOfUse: req.body.lengthOfUse,
-    frequency: req.body.frequency,
-  }, function (err, skill) {
 
-    if (err) return handleError(res, err);
-  
-    return res.json(skill);
+  Skill.find({'profile_id': req.user.profile_id}).exec( (err, existingSkills) => {
 
-  })
+    function containsType(type, list) {
+      var i;
+      for (i = 0; i < list.length; i++) {
+        if (list[i].type === type) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    if (containsType(req.body.type, existingSkills)) {
+      return res.status(500).send('You have already added this skill.');
+    
+    } else {
+
+
+      Skill.create({
+        profile_id: req.user.profile_id,
+        type: req.body.type,
+        proficiency: req.body.proficiency,
+        lengthOfUse: req.body.lengthOfUse,
+        frequency: req.body.frequency,
+      }, function (err, skill) {
+
+        if (err) return handleError(res, err);
+      
+        return res.json(skill);
+
+      })
+    
+    }
+  });
 }
 
 export function update(req, res) {

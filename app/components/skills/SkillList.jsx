@@ -6,6 +6,7 @@ import * as skillsActionCreators from 'actions/skills';
 import SkillItem from 'components/skills/SkillItem';
 import SkillAdd from 'components/skills/SkillAdd';
 import NullProfItem from 'components/ProfileNull';
+import ErrorMessage from 'components/ErrorMessage';
 
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import AddIcon from 'material-ui/svg-icons/content/add';
@@ -52,6 +53,7 @@ class SkillList extends React.Component {
             skills,
             addVisibile,
             actions,
+            errorMessage,
           } = this.props;
     const lengthIndex = skills.length - 1;
     const renderItems = (
@@ -85,6 +87,9 @@ class SkillList extends React.Component {
 
           { skills.length ? (
             <div>
+              <ErrorMessage 
+                errorText={errorMessage}
+              />
               {renderItems}
             </div>
           ) : (

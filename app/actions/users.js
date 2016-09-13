@@ -71,8 +71,11 @@ export function logoutError() {
   return { type: types.LOGOUT_ERROR_USER };
 }
 
-export function toggleLoginMode() {
-  return { type: types.TOGGLE_LOGIN_MODE };
+export function toggleLoginMode(isLogin) {
+  return { 
+    type: types.TOGGLE_LOGIN_MODE,
+    isLogin
+  };
 }
 
 // Fetch all users

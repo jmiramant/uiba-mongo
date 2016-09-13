@@ -39,7 +39,6 @@ const skill = (
         type: '', 
         proficiency: undefined,
         lengthOfUse: undefined,
-        frequency: undefined,
       }
     case types.CHANGE_SKILL:
       const newStateOjb = {...state}
@@ -98,9 +97,26 @@ const addShow = (
 };
 
 
+
+const errorMessage = (
+  state = '',
+  action
+) => {
+  switch (action.type) {
+    case types.CREATE_SKILL_FAILURE:
+      return action.error
+    case types.DISMISS_SKILL_ERROR:
+      return ''
+    default:
+      return state;
+  }
+};
+
+
 const skillReducer = combineReducers({
   skill,
   skills,
+  errorMessage,
   addShow,
   isFetching
 });

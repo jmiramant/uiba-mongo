@@ -121,18 +121,6 @@ export default class SkillAdd extends React.Component {
             <MenuItem value={5} primaryText="5-10 Years" />
             <MenuItem value={10} primaryText="More Than 10 Years" />
           </SelectField>
-
-          <SelectField
-            errorText={validationErrors.frequency}
-            onChange={this.handleChange('frequency')}
-            value={skill.frequency}
-            hintText='Frequency of Use'
-          >
-            <MenuItem value={'daily'} primaryText="Daily" />
-            <MenuItem value={'weekly'} primaryText="Weekly" />
-            <MenuItem value={'monthly'} primaryText="Monthly" />
-            <MenuItem value={'yearly'} primaryText="Yearly" />
-          </SelectField>
           
           <div className={cx('profile-btn-group')}>
             <RaisedButton className='pull-right' type="submit" label="Save" primary={true} />

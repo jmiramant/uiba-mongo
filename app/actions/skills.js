@@ -95,8 +95,8 @@ export function createSkill(skillData) {
           return dispatch(createSkillSuccess(res.data));
         }
       })
-      .catch(() => {
-        return dispatch(createSkillFailure({ error: 'Oops! Something went wrong and we couldn\'t create your skill.'}));
+      .catch((err) => {
+        return dispatch(createSkillFailure({error: err.response.data}));
       });
   }
 }
@@ -155,4 +155,10 @@ export function deleteSkill(skill) {
       });
   }
 
+}
+
+export function dismissError() {
+  return { 
+      type: types.DISMISS_SKILL_ERROR 
+  };  
 }

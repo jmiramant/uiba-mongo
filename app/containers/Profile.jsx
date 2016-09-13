@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -26,7 +26,7 @@ import styles from 'css/common/profile';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
-class Profile extends Component {
+class Profile extends React.Component {
   static need = [  // eslint-disable-line
     profileActionCreators.fetchProfile,
     schoolsActionCreators.fetchSchools,
@@ -99,6 +99,7 @@ class Profile extends Component {
               />
               <Skills 
                 skills={skills.skills}
+                errorMessage={skills.errorMessage}
                 addVisibile={skills.addShow}
                 toggleSkillAdd={skillActions.toggleSkillAdd}
                 onEditSave={skillActions.updateSkill} 

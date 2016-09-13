@@ -34,7 +34,10 @@ const isLogin = (
 ) => {
   switch (action.type) {
     case types.TOGGLE_LOGIN_MODE:
-      return !state;
+      const passedState = action.isLogin;
+      let resp = !state;
+      if (passedState && passedState === true || passedState === false) { resp = passedState }
+      return resp;
     default:
       return state;
   }

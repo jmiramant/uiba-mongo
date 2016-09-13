@@ -20,6 +20,9 @@ const UserSchema = new mongoose.Schema({
   google: {},
   linkedin: {},
   profile_id: {type: Schema.Types.ObjectId, ref: 'Profile'},
+  isEmailVerified: Boolean,
+  verifyEmailToken: String,
+  verifyEmailTokenExpires: Date
 }, {timestamp: true});
 
 function encryptPassword(next) {

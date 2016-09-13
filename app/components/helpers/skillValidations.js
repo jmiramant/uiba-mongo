@@ -4,7 +4,7 @@ import moment from 'moment';
 import _ from 'lodash';
 
 export function validateSkillHelper (skill, errorStore) {
-  const cantBeNull = ['type', 'frequency', 'lengthOfUse', 'proficiency']
+  const cantBeNull = ['type', 'lengthOfUse', 'proficiency']
   var errors = setValidationErrorObject(errorStore);
   
   _.forEach(cantBeNull, (v, i) => {

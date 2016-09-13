@@ -72,10 +72,10 @@ db.companies.find().snapshot().forEach(function (company) {
 
 ```
 var skills = [
-  {type: 'Node.JS', proficiency: 'expert', lengthOfUse: 5, frequency: 'daily'},
-  {type: 'Ruby', proficiency: 'expert', lengthOfUse: 1, frequency: 'daily'},
-  {type: 'WebGL', proficiency: 'learning', lengthOfUse: 0, frequency: 'weekly'},
-  {type: 'EMACS', proficiency: 'intermediate', lengthOfUse: 5, frequency: 'monthly'},
+  {type: 'Node.JS', proficiency: 'expert', lengthOfUse: 5},
+  {type: 'Ruby', proficiency: 'expert', lengthOfUse: 1},
+  {type: 'WebGL', proficiency: 'learning', lengthOfUse: 0},
+  {type: 'EMACS', proficiency: 'intermediate', lengthOfUse: 5},
 ]
 
 var profile = db.profiles.findOne();
@@ -88,7 +88,6 @@ skills.forEach(function (skill) {
       type: skill.type,
       proficiency: skill.proficiency,
       lengthOfUse: skill.lengthOfUse,
-      frequency: skill.frequency
     }
   )
 

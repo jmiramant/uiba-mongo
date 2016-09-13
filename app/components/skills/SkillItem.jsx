@@ -44,7 +44,8 @@ export default class SkillItem extends React.Component {
     const { 
             isntLast, 
             skill, 
-            skillChange
+            skillChange,
+            errorMessage,
           } = this.props;
 
     if (this.state.edit) {
@@ -63,6 +64,7 @@ export default class SkillItem extends React.Component {
 
       return (
         <div className={cx('chip-container')}>
+        
           <Chip className={cx('skillItem--chip')}>
             {skill.type} 
             <span 

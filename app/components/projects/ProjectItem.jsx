@@ -72,7 +72,26 @@ export default class ProjectItem extends React.Component {
             onClick={this.toggleEdit.bind(this)}
             className={cx("projectItem--edit") + ' pull-right'}
           />
-          <h4 className={cx("projectItem--header")}>{project.name} | { project.current ? ( 'Current' ) : ( moment(project.endDate).format('MMM, YYYY')) } <a href={project.projectUrl} target="_blank"><LinkIcon hoverColor="#f20253" className={cx('projectItem--link')}/></a></h4>
+          <h4 
+            className={cx("projectItem--header")}
+          >
+            {project.name} | { 
+              project.current ? ( 
+                'Current' 
+              ) : ( 
+                moment(project.endDate).format('MMM, YYYY')) 
+            } 
+            { (project.projectUrl && project.projectUrl.length > 0) ? (
+                <a 
+                  href={project.projectUrl}
+                  target="_blank">
+                    <LinkIcon
+                      hoverColor="#f20253"
+                      className={cx('projectItem--link')}
+                    />
+                </a>
+              ) : (null)}
+          </h4>
           <p className={cx('projectItem--description')}>{project.description}</p>
         </div>
       )

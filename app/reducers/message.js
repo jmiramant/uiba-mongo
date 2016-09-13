@@ -18,10 +18,10 @@ export default function message(state = {
       return {...state, message: '', type: 'SUCCESS'};
     case types.GET_PROFILE_FAILURE:
     case types.GET_JOBS_FAILURE:
-    case types.GET_SKILLS_FAILURE:
     case types.GET_LANGUAGES_FAILURE:
     case types.GET_SCHOOLS_FAILURE:
     case types.CREATE_SCHOOL_FAILURE:
+      debugger
       return {...state, message: action.error.response.data.error, type: "SUCCESS"}
     default:
       return state;

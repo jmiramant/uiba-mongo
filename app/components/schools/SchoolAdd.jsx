@@ -110,9 +110,11 @@ export default class SchoolAdd extends React.Component {
           } = this.props;
     
     const datePicker = (data, name)  => {
+      
       const capitalizeFirstLetter = (string) => {
           return string.charAt(0).toUpperCase() + string.slice(1);
       }
+      
       if (data && data !== '') {
         return (
           <DatePicker
@@ -162,17 +164,17 @@ export default class SchoolAdd extends React.Component {
               floatingLabelText="Degree"
               hintText='Degree'
             >
-              <MenuItem value={'Associate'} primaryText="Associate" />
-              <MenuItem value={'Bachelor'} primaryText="Bachelor" />
-              <MenuItem value={'Graduate'} primaryText="Graduate" />
-              <MenuItem value={'Master'} primaryText="Master" />
               <MenuItem value={'Doctorate'} primaryText="Doctorate" />
-              <MenuItem value={'Postbaccalaureate Certificate'} primaryText="Postbaccalaureate Certificate" />
+              <MenuItem value={'Graduate'} primaryText="Graduate" />
               <MenuItem value={'Post Masters Certificate'} primaryText="Post Master's Certificate" />
+              <MenuItem value={'Master'} primaryText="Master" />
+              <MenuItem value={'Postbaccalaureate Certificate'} primaryText="Postbaccalaureate Certificate" />
+              <MenuItem value={'Bachelor'} primaryText="Bachelor" />
+              <MenuItem value={'Associate'} primaryText="Associate" />
+              <MenuItem value={'First Professional Certificate'} primaryText="First Professional Certificate" />
+              <MenuItem value={'High School Diploma'} primaryText="High School Diploma" />
               <MenuItem value={'Certificate'} primaryText="Certificate" />
               <MenuItem value={'Coursework'} primaryText="Coursework" />
-              <MenuItem value={'High School Diploma'} primaryText="High School Diploma" />
-              <MenuItem value={'First Professional Certificate'} primaryText="First Professional Certificate" />
               <MenuItem value={'other'} primaryText="Other" />
             </SelectField>
           </div>
@@ -203,6 +205,7 @@ export default class SchoolAdd extends React.Component {
           
           <div className="col-md-6">
             <TextField
+              value={school.minor}
               errorText={validationErrors.minor}
               hintText="Seperate multiple by comma"
               floatingLabelText="Minor"
