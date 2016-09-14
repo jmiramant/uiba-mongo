@@ -1,24 +1,18 @@
 import React, { PropTypes } from 'react';
 import { render } from 'react-dom';
-import SchoolNameTypeahead from '../../containers/Typeahead';
+import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 
+import SchoolNameTypeahead from '../../containers/Typeahead';
+import UibaDatePicker from '../../components/DatePicker';
 import { validateSchoolHelper } from '../helpers/schoolValidations';
 
 import TextField from 'material-ui/TextField';
-import DatePicker from 'lib/DatePicker';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
-import DateTimePicker from 'react-widgets/lib/DateTimePicker';
-
-import 'react-widgets/lib/less/react-widgets.less';
-
-import moment from 'moment';
-import momentLocalizer from 'react-widgets/lib/localizers/moment';
-momentLocalizer(moment)
 
 import _ from 'lodash';
 
@@ -72,11 +66,9 @@ export default class SchoolAdd extends React.Component {
   handleDegree = (e, i, val) => {
     this.changeSchoolProps('degree', val)
   }
-
-  handleDateChange = field => (e, uiVal) => {
-    let value = moment(new Date(uiVal.replace('/', ', 01, '))).format();
-    this.changeSchoolProps(field, value)
   
+  handleDateChange = (field, value) => {
+    this.changeSchoolProps(field, value);
   }
 
   handleChange = field => (e, uiVal) => {
@@ -109,57 +101,6 @@ export default class SchoolAdd extends React.Component {
             school,
           } = this.props;
     
-    const datePicker = (data, name)  => {
-      
-      const capitalizeFirstLetter = (string) => {
-          return string.charAt(0).toUpperCase() + string.slice(1);
-      }
-
-      const inputClass = classNames({
-        'rw-date-picker': true,
-        'error': validationErrors.startDate && name === 'start',
-        'error': validationErrors.endDate && name === 'end',
-      });
-      
-      const err = (
-        <div className={cx('err-msg')}>{validationErrors[name + 'Date']}</div>
-      )
-
-      if (data && data !== '') {
-        return (
-          <div className='col-md-6'>
-            <DateTimePicker
-              defaultValue={new Date(school[name + 'Date'])}
-              max={new Date()} 
-              className={inputClass}
-              onChange={this.handleDateChange(name + 'Date')}
-              format={"MM/YYYY"}
-              editFormat={'MM/YYYY'}
-              time={false}
-              initialView={"year"}
-              placeholder='mm/yyyy'
-            />
-            {err}
-          </div>
-      )} else {
-        return (
-          <div className='col-md-6'>
-            <DateTimePicker
-              max={new Date()} 
-              className={inputClass}
-              onChange={this.handleDateChange(name + 'Date')}
-              format={"MM/YYYY"}
-              editFormat={'MM/YYYY'}
-              time={false}
-              initialView={"year"}
-              placeholder='mm/yyyy'
-            />
-            {err}
-          </div>
-        )
-      }
-    }
-
     return (
       <div className={cx('schoolAdd-container')}>
 
@@ -197,12 +138,22 @@ export default class SchoolAdd extends React.Component {
             </SelectField>
           </div>
 
-          {datePicker(school.startDate, 'start')}
+          <UibaDatePicker
+            data={school.startDate}
+            name='start'
+            onDateChange={this.handleDateChange}
+            validationErrors={validationErrors}
+          />
 
           { !school.current ? (
-              datePicker(school.endDate, 'end')
+            <UibaDatePicker
+              data={school.endDate}
+              name='end'
+              onDateChange={this.handleDateChange}
+              validationErrors={validationErrors}
+            />
           ) : (null)}
-          
+
           <div className='col-md-6 col-md-offset-6'>
             <Checkbox
               label="Current"

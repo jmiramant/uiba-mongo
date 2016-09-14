@@ -11,11 +11,14 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
 
-import moment from 'moment';
 import _ from 'lodash';
+import moment from 'moment';
+import momentLocalizer from 'react-widgets/lib/localizers/moment';
+momentLocalizer(moment)
 
-import classNames from 'classnames/bind';
+import 'react-widgets/lib/less/react-widgets.less';
 import styles from 'css/components/profile/jobAdd';
+import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
 export default class JobAdd extends React.Component {
@@ -49,6 +52,14 @@ export default class JobAdd extends React.Component {
     return validationResp.containsErrors;
   }
 
+  changeJobProps(field, value) {
+    this.props.schoolChange({
+      field: field,
+      value: value,
+      id: this.props.job._id
+    });  
+  }
+
   handleChange = field => (e, uiVal) => {
     let value;
     if (uiVal) {
@@ -64,17 +75,13 @@ export default class JobAdd extends React.Component {
     }
 
     if (e && e.target && e.target.type === 'checkbox') {
-      this.props.jobChange({
-        field: field,
-        value: !this.props.job.current,
-        id: this.props.job._id
-      });  
+
+      this.changeJobProps(field, !this.props.job.current)
+
     } else {
-      this.props.jobChange({
-        field: field,
-        value: value,
-        id: this.props.job._id
-      });  
+
+      this.changeJobProps(field, value)
+
     }
   }
 
