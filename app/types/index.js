@@ -1,3 +1,9 @@
+// import keyMirror from 'key-mirror';
+
+// export default keyMirror({
+//   ROUTER_STATE_CHANGE: null,
+//   SIGNUP: null
+// });
 export const DISMISS_MESSAGE = 'DISMISS_MESSAGE';
 
 export const CREATE_TOPIC_REQUEST = 'CREATE_TOPIC_REQUEST';

@@ -20,11 +20,12 @@ export function validateJobHelper (job, errorStore) {
   if (job.startDate && job.endDate) {
     const start = moment(new Date(job.startDate));
     const end   = moment(new Date(job.endDate));
-    if (end.isBefore(start)) {
-      errors['date'] = "The end date can't be before the start date.";
+
+    if (end.isBefore(start) && !job.current) {
+      errors['endDate'] = "The end date can't be before the start date.";
     }
     if (start.isAfter(moment()) || end.isAfter(moment())) {
-      errors['date'] = "Dates must be before today. If this is your current job, please select the current box.";
+      errors['endDate'] = "Dates must be before today. If this is your current school, please select the current box.";
     }
   }
   

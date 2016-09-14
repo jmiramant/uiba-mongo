@@ -17,19 +17,18 @@ export function validateProjectHelper (project, errorStore) {
   }) 
 
   if (!project.endDate && !project.current) {
-    errors['endDate'] = "Please add end date or select current job."
+    errors['endDate'] = "Please add end date or select current project."
   }
 
   if (project.startDate && project.endDate) {
     const start = moment(new Date(project.startDate));
     const end   = moment(new Date(project.endDate));
-    if (end.isBefore(start)) {
-      errors['startDate'] = "The date can't be before the start date.";
-      errors['endDate'] = "The date can't be before the start date.";
+
+    if (end.isBefore(start) && !project.current) {
+      errors['endDate'] = "The end date can't be before the start date.";
     }
     if (start.isAfter(moment()) || end.isAfter(moment())) {
-      errors['startDate'] = "Dates must be before today.";
-      errors['endDate'] = "Dates must be before today. If this is your current project, please select the current box.";
+      errors['endDate'] = "Dates must be before today. If this is your current school, please select the current box.";
     }
   }
 

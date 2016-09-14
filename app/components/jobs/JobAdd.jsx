@@ -49,7 +49,7 @@ export default class JobAdd extends React.Component {
   }
 
   changeJobProps(field, value) {
-    this.props.schoolChange({
+    this.props.jobChange({
       field: field,
       value: value,
       id: this.props.job._id

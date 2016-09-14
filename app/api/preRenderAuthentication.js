@@ -1,10 +1,8 @@
 import axios from 'axios';
 
-/*
-If it's initialized with a cookie, it sets it as a global interceptor
-if it gets called with no arguemnts, it deletes *all* request intercepotrs
-This is from https://github.com/reactGo/reactGo/pull/225 
-*/
+// If it's initialized with a cookie, it sets it as a global interceptor
+// if it gets called with no arguemnts, it deletes *all* request intercepotrs
+// This is from https://github.com/reactGo/reactGo/pull/225 
 
 let interceptorID;
 export default function ssrAuth(cookie) {

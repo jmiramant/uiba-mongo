@@ -1,4 +1,10 @@
+export const NEW_JOB = 'NEW_JOB';
+export const CHANGE_JOB = 'CHANGE_JOB';
+export const CHANGE_JOBS = 'CHANGE_JOBS';
+export const TOGGLE_JOB_ADD = 'TOGGLE_JOB_ADD';
+
 export const GET_JOBS = 'GET_JOBS';
+export const GET_JOBS_REQUEST = 'GET_JOBS_REQUEST';
 export const GET_JOBS_SUCCESS = 'GET_JOBS_SUCCESS';
 export const GET_JOBS_FAILURE = 'GET_JOBS_FAILURE';
 
