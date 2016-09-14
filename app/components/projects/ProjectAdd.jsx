@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
 
+import UibaDatePicker from '../../components/DatePicker';
 import { validateProjectHelper } from '../helpers/projectValidations';
 
 import TextField from 'material-ui/TextField';
-import DatePicker from 'lib/DatePicker';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Checkbox from 'material-ui/Checkbox';
@@ -48,6 +48,14 @@ export default class ProjectAdd extends React.Component {
     return validationResp.containsErrors;
   }
 
+  changeProjectProps(field, value) {
+    this.props.projectChange({
+      field: field,
+      value: value,
+      id: this.props.project._id
+    });  
+  }
+
   formatURL(url) {
     const inHttps = url.includes('https')
     const inHttp = url.includes('http')
@@ -58,15 +66,15 @@ export default class ProjectAdd extends React.Component {
     }
   }
 
+  handleDateChange = (field, value) => {
+    this.changeProjectProps(field, value);
+  }
+
   handleChange = field => (e, uiVal) => {
     let value;
     if (uiVal) {
-      if (typeof(Object.getPrototypeOf(uiVal).getTime) === 'function') {
-        value = moment(new Date(uiVal)).format();
-      } else {
-        value = uiVal
-      }
-    }else if (e.target) {
+      value = uiVal
+    } else if (e.target) {
       value = e.target.value      
     } else {
       value = e.value
@@ -77,19 +85,13 @@ export default class ProjectAdd extends React.Component {
     }
 
     if (e && e.target && e.target.type === 'checkbox') {
-      value = this.state.current
-      this.props.projectChange({
-        field: 'current',
-        value: !this.props.project.current,
-        id: this.props.project._id
-      });  
+
+      this.changeProjectProps('current', !this.props.project.current)
+    
     } else {
   
-      this.props.projectChange({
-        field: field,
-        value: value,
-        id: this.props.project._id
-      });  
+      this.changeProjectProps(field, value)
+
     } 
   }
 
@@ -101,34 +103,6 @@ export default class ProjectAdd extends React.Component {
     const {
             project,
           } = this.props;
-    
-    const datePicker = (data, name)  => {
-      if (data && data !== '') {
-        return (
-          <DatePicker
-            formatDate={ (obj) => {
-              return moment(new Date(obj)).format("MMMM YYYY")
-            }}
-            value={new Date(project[name + 'Date'])}
-            errorText={validationErrors[name + "Date"]}
-            className="col-md-6"
-            hintText={(name.charAt(0).toUpperCase() + name.slice(1)) + " Date"}
-            onChange={this.handleChange(name + 'Date')}
-          />
-      )} else {
-        return (
-          <DatePicker
-            formatDate={ (obj) => {
-              return moment(new Date(obj)).format("MMMM YYYY")
-            }}
-            errorText={validationErrors[name + "Date"]}
-            className="col-md-6"
-            hintText={(name.charAt(0).toUpperCase() + name.slice(1)) + " Date"}
-            onChange={this.handleChange(name + 'Date')}
-          />
-        )
-      }
-    }
 
     return (
       <div className={cx('projectAdd-container')}>
@@ -154,11 +128,21 @@ export default class ProjectAdd extends React.Component {
             />
           </div>
           
-          {datePicker(project.startDate, 'start')}
+          <UibaDatePicker
+            data={project.startDate}
+            name='start'
+            onDateChange={this.handleDateChange}
+            validationErrors={validationErrors}
+          />
 
           { !project.current ? (
-              datePicker(project.endDate, 'end')
-          ) : (<span />)}
+            <UibaDatePicker
+              data={project.endDate}
+              name='end'
+              onDateChange={this.handleDateChange}
+              validationErrors={validationErrors}
+            />
+          ) : (null)}
 
           <div className='col-md-6 col-md-offset-6'>
             <Checkbox

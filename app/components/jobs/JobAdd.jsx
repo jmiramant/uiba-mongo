@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
 
+import UibaDatePicker from '../../components/DatePicker';
 import { validateJobHelper } from '../helpers/jobValidations';
 
 import TextField from 'material-ui/TextField';
-import DatePicker from 'lib/DatePicker';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Checkbox from 'material-ui/Checkbox';
@@ -12,11 +12,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
 
 import _ from 'lodash';
-import moment from 'moment';
-import momentLocalizer from 'react-widgets/lib/localizers/moment';
-momentLocalizer(moment)
 
-import 'react-widgets/lib/less/react-widgets.less';
 import styles from 'css/components/profile/jobAdd';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
@@ -60,6 +56,10 @@ export default class JobAdd extends React.Component {
     });  
   }
 
+  handleDateChange = (field, value) => {
+    this.changeJobProps(field, value);
+  }
+
   handleChange = field => (e, uiVal) => {
     let value;
     if (uiVal) {
@@ -94,38 +94,7 @@ export default class JobAdd extends React.Component {
             job,
           } = this.props;
 
-    const datePicker = (data, name)  => {
-      const capitalizeFirstLetter = (string) => {
-          return string.charAt(0).toUpperCase() + string.slice(1);
-      }
-      if (data && data !== '') {
-        return (
-          <DatePicker
-            formatDate={ (obj) => {
-              return moment(new Date(obj)).format("MMMM YYYY")
-            }}
-            value={new Date(job[name + 'Date'])}
-            errorText={validationErrors[name + "Date"]}
-            className="col-md-6"
-            hintText={(name.charAt(0).toUpperCase() + name.slice(1)) + " Date"}
-            floatingLabelText={capitalizeFirstLetter(name) + " Date"}
-            onChange={this.handleChange(name + 'Date')}
-          />
-      )} else {
-        return (
-          <DatePicker
-            formatDate={ (obj) => {
-              return moment(new Date(obj)).format("MMMM YYYY")
-            }}
-            errorText={validationErrors[name + "Date"]}
-            className="col-md-6"
-            floatingLabelText={capitalizeFirstLetter(name) + " Date"}
-            hintText={(name.charAt(0).toUpperCase() + name.slice(1)) + " Date"}
-            onChange={this.handleChange(name + 'Date')}
-          />
-        )
-      }
-    }
+
 
     return (
       <div className={cx('jobAdd-container')}>
@@ -151,11 +120,21 @@ export default class JobAdd extends React.Component {
             />
           </div>
 
-          {datePicker(job.startDate, 'start')}
+          <UibaDatePicker
+            data={job.startDate}
+            name='start'
+            onDateChange={this.handleDateChange}
+            validationErrors={validationErrors}
+          />
 
           { !job.current ? (
-              datePicker(job.endDate, 'end')
-          ) : (<span />)}
+            <UibaDatePicker
+              data={job.endDate}
+              name='end'
+              onDateChange={this.handleDateChange}
+              validationErrors={validationErrors}
+            />
+          ) : (null)}
           
           <div className='col-md-6 col-md-offset-6'>
             <Checkbox

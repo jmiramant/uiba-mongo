@@ -1,6 +1,4 @@
 import React, { PropTypes } from 'react';
-import { render } from 'react-dom';
-import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 
 import SchoolNameTypeahead from '../../containers/Typeahead';
 import UibaDatePicker from '../../components/DatePicker';
