@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { render } from 'react-dom';
 import SchoolNameTypeahead from '../../containers/Typeahead';
 
 import { validateSchoolHelper } from '../helpers/schoolValidations';
@@ -11,8 +12,14 @@ import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
+import DateTimePicker from 'react-widgets/lib/DateTimePicker';
+
+import 'react-widgets/lib/less/react-widgets.less';
 
 import moment from 'moment';
+import momentLocalizer from 'react-widgets/lib/localizers/moment';
+momentLocalizer(moment)
+
 import _ from 'lodash';
 
 import styles from 'css/components/profile/school';
@@ -50,53 +57,46 @@ export default class SchoolAdd extends React.Component {
     return validationResp.containsErrors;
   }
 
-  handleSchoolName = val => {
+  changeSchoolProps(field, value) {
     this.props.schoolChange({
-      field: 'name',
-      value: val,
+      field: field,
+      value: value,
       id: this.props.school._id
-    });   
+    });  
+  }
+  
+  handleSchoolName = val => {
+    this.changeSchoolProps('name', val)
   }
 
   handleDegree = (e, i, val) => {
-    this.props.schoolChange({
-      field: 'degree',
-      value: val,
-      id: this.props.school._id
-    });  
+    this.changeSchoolProps('degree', val)
+  }
+
+  handleDateChange = field => (e, uiVal) => {
+    let value = moment(new Date(uiVal.replace('/', ', 01, '))).format();
+    this.changeSchoolProps(field, value)
+  
   }
 
   handleChange = field => (e, uiVal) => {
     let value;
-    if (uiVal) {
-      if (typeof(Object.getPrototypeOf(uiVal).getTime) === 'function') {
-        value = moment(new Date(uiVal)).format();
-      } else {
-        value = uiVal
-      }
-    } else if (e.value) {
+    if (e.value) {
       value  = e.value[0];
     } else {
       value = e.target.value;
     }
 
     if (e && e.target && e.target.type === 'checkbox') {
-      this.props.schoolChange({
-        field: 'current',
-        value: !this.props.school.current,
-        id: this.props.school._id
-      });  
+      this.changeSchoolProps('current', !this.props.school.current)
     } else {
       
       if (['major', 'minor'].includes(field)) {
         value = value.split(',');
       }
+      
+      this.changeSchoolProps(field, value)
 
-      this.props.schoolChange({
-        field: field,
-        value: value,
-        id: this.props.school._id
-      });  
     }
   }
 
@@ -114,38 +114,55 @@ export default class SchoolAdd extends React.Component {
       const capitalizeFirstLetter = (string) => {
           return string.charAt(0).toUpperCase() + string.slice(1);
       }
+
+      const inputClass = classNames({
+        'rw-date-picker': true,
+        'error': validationErrors.startDate && name === 'start',
+        'error': validationErrors.endDate && name === 'end',
+      });
       
+      const err = (
+        <div className={cx('err-msg')}>{validationErrors[name + 'Date']}</div>
+      )
+
       if (data && data !== '') {
         return (
-          <DatePicker
-            formatDate={ (obj) => {
-              return moment(new Date(obj)).format("MMMM YYYY")
-            }}
-            value={new Date(school[name + 'Date'])}
-            errorText={validationErrors[name + "Date"]}
-            className="col-md-6"
-            hintText={(name.charAt(0).toUpperCase() + name.slice(1)) + " Date"}
-            floatingLabelText={capitalizeFirstLetter(name) + " Date"}
-            onChange={this.handleChange(name + 'Date')}
-          />
+          <div className='col-md-6'>
+            <DateTimePicker
+              defaultValue={new Date(school[name + 'Date'])}
+              max={new Date()} 
+              className={inputClass}
+              onChange={this.handleDateChange(name + 'Date')}
+              format={"MM/YYYY"}
+              editFormat={'MM/YYYY'}
+              time={false}
+              initialView={"year"}
+              placeholder='mm/yyyy'
+            />
+            {err}
+          </div>
       )} else {
         return (
-          <DatePicker
-            formatDate={ (obj) => {
-              return moment(new Date(obj)).format("MMMM YYYY")
-            }}
-            errorText={validationErrors[name + "Date"]}
-            className="col-md-6"
-            hintText={capitalizeFirstLetter(name) + " Date"}
-            floatingLabelText={(name.charAt(0).toUpperCase() + name.slice(1)) + " Date"}
-            onChange={this.handleChange(name + 'Date')}
-          />
+          <div className='col-md-6'>
+            <DateTimePicker
+              max={new Date()} 
+              className={inputClass}
+              onChange={this.handleDateChange(name + 'Date')}
+              format={"MM/YYYY"}
+              editFormat={'MM/YYYY'}
+              time={false}
+              initialView={"year"}
+              placeholder='mm/yyyy'
+            />
+            {err}
+          </div>
         )
       }
     }
 
     return (
       <div className={cx('schoolAdd-container')}>
+
         <form
           onSubmit={this.handleSubmit}
         >
@@ -156,6 +173,7 @@ export default class SchoolAdd extends React.Component {
               handleChange={this.handleSchoolName.bind(this)}
             />
           </div>
+
           <div className="col-md-6">
             <SelectField
               errorText={validationErrors.degree}
@@ -183,7 +201,7 @@ export default class SchoolAdd extends React.Component {
 
           { !school.current ? (
               datePicker(school.endDate, 'end')
-          ) : (<span />)}
+          ) : (null)}
           
           <div className='col-md-6 col-md-offset-6'>
             <Checkbox

@@ -29,6 +29,17 @@ const schoolOrder = (school, order = 'asc') => {
   }
 }
 
+
+const validations = (
+  state = {},
+  action
+) => {
+  switch (action.type) {
+    default:
+      return state;
+  }
+}
+
 const school = (
   state = {},
   action
@@ -118,6 +129,7 @@ const schoolReducer = combineReducers({
   school,
   schools,
   addShow,
+  validations,
   isFetching
 });
 
