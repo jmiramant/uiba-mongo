@@ -45,6 +45,8 @@ const skill = (
       newStateOjb[action.state.field] = action.state.value
       return newStateOjb;
     case types.CREATE_SKILL_SUCCESS:
+    case types.CREATE_SKILL_FAILURE:
+    case types.TOGGLE_SKILL_ADD:
       return {};
     default:
       return state;

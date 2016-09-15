@@ -41,14 +41,19 @@
   @apply --chip--spacing; 
 }
 
+.left-border {
+  border-left: 1px solid rgba(0, 0, 0, 0.298039);
+}
+
 .horizontal {
   display: inline-block;
   vertical-align: top;
   &.left {
-    width: 75%;
+    width: 50%;
   }
   &.right {
-    width: 25%;
+    padding-left: 3%;
+    width: 50%;
   }
   &.split {
     width: 50%;
@@ -64,6 +69,12 @@
       &.split {
         width: 100%;
       }
+  }
+  .left-border {
+    border-left: none;
+  }
+  .horizontal.right {
+    padding-left: 0;
   }
 }
 

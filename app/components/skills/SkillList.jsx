@@ -66,6 +66,7 @@ class SkillList extends React.Component {
 
     const addClass = classNames({
       [cx('horizontal')]: true,
+      [cx('left-border')]: addVisible,
       [cx('right')]: true,
       [cx('split')]: addVisible,
     });
