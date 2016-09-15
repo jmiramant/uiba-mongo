@@ -16,7 +16,7 @@ class ProjectList extends React.Component {
   
   static propTypes = {
     projects: PropTypes.array,
-    addVisibile: PropTypes.bool.isRequired,
+    addVisible: PropTypes.bool.isRequired,
     onEditSave: PropTypes.func.isRequired,
     toggleProjectAdd: PropTypes.func.isRequired,
     onProjectSave: PropTypes.func.isRequired,
@@ -28,12 +28,12 @@ class ProjectList extends React.Component {
   }
   
   toggleAddProject = () => {
-    this.props.toggleProjectAdd(this.props.addVisibile)
+    this.props.toggleProjectAdd(this.props.addVisible)
   }
 
   handleSave = (data) => {
     this.props.onProjectSave(data);
-    this.props.toggleProjectAdd(this.props.addVisibile)
+    this.props.toggleProjectAdd(this.props.addVisible)
   }
 
   handleEditSave = (data) => {
@@ -47,7 +47,7 @@ class ProjectList extends React.Component {
   render () {
     const { project,
             projects,
-            addVisibile,
+            addVisible,
             actions
           } = this.props;
     const lengthIndex = projects.length - 1;
@@ -69,13 +69,13 @@ class ProjectList extends React.Component {
     
     return ( <div className={cx('projectList--container')}>
       
-      { addVisibile ? (
+      { addVisible ? (
         <ProjectAdd
           project={project}
           onProjectSave={this.handleSave} 
           projectChange={actions.projectChange}
           toggleEdit={this.toggleAddProject.bind(this)} 
-          addVisibile={addVisibile}
+          addVisible={addVisible}
         />
       ) : (<span/>)}
 

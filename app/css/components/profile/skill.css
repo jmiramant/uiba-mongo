@@ -43,14 +43,27 @@
 
 .horizontal {
   display: inline-block;
-  width: 50%;
   vertical-align: top;
+  &.left {
+    width: 75%;
+  }
+  &.right {
+    width: 25%;
+  }
+  &.split {
+    width: 50%;
+  }
 }
 
 @media (max-width: 768px) {
    .horizontal {
       display: block;
       width: 100%;
+      &.left,
+      &.right,
+      &.split {
+        width: 100%;
+      }
   }
 }
 

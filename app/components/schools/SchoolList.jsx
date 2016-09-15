@@ -16,7 +16,7 @@ class SchoolList extends React.Component {
   
   static propTypes = {
     schools: PropTypes.array,
-    addVisibile: PropTypes.bool.isRequired,
+    addVisible: PropTypes.bool.isRequired,
     onEditSave: PropTypes.func.isRequired,
     toggleSchoolAdd: PropTypes.func.isRequired,
     onSchoolSave: PropTypes.func.isRequired,
@@ -28,12 +28,12 @@ class SchoolList extends React.Component {
   }
   
   toggleAddSchool = () => {
-    this.props.toggleSchoolAdd(this.props.addVisibile)
+    this.props.toggleSchoolAdd(this.props.addVisible)
   }
 
   handleSave = (data) => {
     this.props.onSchoolSave(data);
-    this.props.toggleSchoolAdd(this.props.addVisibile)
+    this.props.toggleSchoolAdd(this.props.addVisible)
   }
 
   handleEditSave = (data) => {
@@ -47,7 +47,7 @@ class SchoolList extends React.Component {
   render () {
     const { school,
           schools,
-          addVisibile,
+          addVisible,
           actions
         } = this.props;
     const lengthIndex = schools.length - 1;
@@ -70,13 +70,13 @@ class SchoolList extends React.Component {
     return (
       <div className={cx('schoolList--container')}>
 
-        { addVisibile ? (
+        { addVisible ? (
           <SchoolAdd 
             school={school}
             onSchoolSave={this.handleSave} 
             schoolChange={actions.schoolChange}
             toggleEdit={this.toggleAddSchool.bind(this)} 
-            addVisibile={addVisibile} 
+            addVisible={addVisible} 
           />
         ) : (<span/>)}
 

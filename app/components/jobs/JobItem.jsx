@@ -54,7 +54,7 @@ export default class JobItem extends React.Component {
         <JobAdd
           job={job}
           jobChange={jobChange}
-          addVisibile={false}
+          addVisible={false}
           onJobSave={this.saveEdit.bind(this)}
           handleDelete={this.handleDelete.bind(this)}
           toggleEdit={this.toggleEdit.bind(this)}

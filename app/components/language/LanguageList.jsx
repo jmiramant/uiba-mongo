@@ -16,7 +16,7 @@ class LanguageList extends React.Component {
   
   static propTypes = {
     languages: PropTypes.array,
-    addVisibile: PropTypes.bool.isRequired,
+    addVisible: PropTypes.bool.isRequired,
     onEditSave: PropTypes.func.isRequired,
     toggleLanguageAdd: PropTypes.func.isRequired,
     onLanguageSave: PropTypes.func.isRequired,
@@ -28,12 +28,12 @@ class LanguageList extends React.Component {
   }
   
   toggleAddLanguage = () => {
-    this.props.toggleLanguageAdd(this.props.addVisibile)
+    this.props.toggleLanguageAdd(this.props.addVisible)
   }
   
   handleSave = (data) => {
     this.props.onLanguageSave(data);
-    this.props.toggleLanguageAdd(this.props.addVisibile)
+    this.props.toggleLanguageAdd(this.props.addVisible)
   }
 
   handleEditSave = (data) => {
@@ -47,7 +47,7 @@ class LanguageList extends React.Component {
   render () {
     let { language,
           languages,
-          addVisibile,
+          addVisible,
           actions
         } = this.props;
     let lengthIndex = languages.length - 1;
@@ -69,12 +69,12 @@ class LanguageList extends React.Component {
       <div className={cx('languageList--bootstrap-container')}>
         <div className={cx('languageList--container')}>
 
-        { addVisibile ? (
+        { addVisible ? (
           <LanguageAdd
             language={language}
             languageChange={actions.languageChange}
             toggleEdit={this.toggleAddLanguage.bind(this)} 
-            addVisibile={addVisibile}
+            addVisible={addVisible}
             onLanguageSave={this.handleSave}
           />
         ) : (<span/>)}

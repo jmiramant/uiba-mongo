@@ -52,6 +52,7 @@ export default class SkillItem extends React.Component {
 
       return (
         <SkillAdd
+          isEdit={true}
           skill={skill}
           skillChange={skillChange}
           onSkillSave={this.saveEdit.bind(this)}

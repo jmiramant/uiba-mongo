@@ -63,13 +63,13 @@ class Profile extends React.Component {
             <div className='col-md-8 col-md-offset-2'>
               <CardHeader
                 text='Knowledge, Skills, Abilities'
-                addVisibile={skills.addShow}
+                addVisible={skills.addShow}
                 toggleAdd={skillActions.toggleSkillAdd}
               />
               <Skills 
                 skills={skills.skills}
                 errorMessage={skills.errorMessage}
-                addVisibile={skills.addShow}
+                addVisible={skills.addShow}
                 toggleSkillAdd={skillActions.toggleSkillAdd}
                 onEditSave={skillActions.updateSkill} 
                 onSkillSave={skillActions.createSkill} 
@@ -80,12 +80,12 @@ class Profile extends React.Component {
             <div className='col-md-8 col-md-offset-2'>
               <CardHeader
                 text='Employment'
-                addVisibile={jobs.addShow}
+                addVisible={jobs.addShow}
                 toggleAdd={jobActions.toggleJobAdd}
               />
               <Jobs 
                 jobs={jobs.jobs} 
-                addVisibile={jobs.addShow}
+                addVisible={jobs.addShow}
                 toggleJobAdd={jobActions.toggleJobAdd}
                 onEditSave={jobActions.updateJob} 
                 onJobSave={jobActions.createJob} 
@@ -96,12 +96,12 @@ class Profile extends React.Component {
             <div className='col-md-8 col-md-offset-2'>
               <CardHeader
                 text='Education'
-                addVisibile={schools.addShow}
+                addVisible={schools.addShow}
                 toggleAdd={schoolActions.toggleSchoolAdd}
               />
               <Schools 
                 schools={schools.schools} 
-                addVisibile={schools.addShow}
+                addVisible={schools.addShow}
                 toggleSchoolAdd={schoolActions.toggleSchoolAdd}
                 onEditSave={schoolActions.updateSchool} 
                 onSchoolSave={schoolActions.createSchool} 
@@ -112,12 +112,12 @@ class Profile extends React.Component {
             <div className='col-md-6 col-md-offset-2'>
               <CardHeader
                 text='Languages'
-                addVisibile={languages.addShow}
+                addVisible={languages.addShow}
                 toggleAdd={languageActions.toggleLanguageAdd}
               />
               <Languages
                 languages={languages.languages}
-                addVisibile={languages.addShow}
+                addVisible={languages.addShow}
                 toggleLanguageAdd={languageActions.toggleLanguageAdd}
                 onEditSave={languageActions.updateLanguage} 
                 onLanguageSave={languageActions.createLanguage} 
@@ -128,12 +128,12 @@ class Profile extends React.Component {
             <div className='col-md-8 col-md-offset-2'>
               <CardHeader
                 text='Projects'
-                addVisibile={projects.addShow}
+                addVisible={projects.addShow}
                 toggleAdd={projectActions.toggleProjectAdd}
               />
               <Projects
                 projects={projects.projects}
-                addVisibile={projects.addShow}
+                addVisible={projects.addShow}
                 toggleProjectAdd={projectActions.toggleProjectAdd}
                 onEditSave={projectActions.updateProject} 
                 onProjectSave={projectActions.createProject} 

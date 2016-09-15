@@ -16,7 +16,7 @@ class JobList extends React.Component {
   
   static propTypes = {
     jobs: PropTypes.array,
-    addVisibile: PropTypes.bool.isRequired,
+    addVisible: PropTypes.bool.isRequired,
     onEditSave: PropTypes.func.isRequired,
     toggleJobAdd: PropTypes.func.isRequired,
     onJobSave: PropTypes.func.isRequired,
@@ -28,12 +28,12 @@ class JobList extends React.Component {
   }
   
   toggleAddJob = () => {
-    this.props.toggleJobAdd(this.props.addVisibile)
+    this.props.toggleJobAdd(this.props.addVisible)
   }
 
   handleSave = (data) => {
     this.props.onJobSave(data);
-    this.props.toggleJobAdd(this.props.addVisibile)
+    this.props.toggleJobAdd(this.props.addVisible)
   }
 
   handleEditSave = (data) => {
@@ -47,7 +47,7 @@ class JobList extends React.Component {
   render () {
     const { job,
             jobs,
-            addVisibile,
+            addVisible,
             actions
           } = this.props;
     const lengthIndex = jobs.length - 1;
@@ -70,13 +70,13 @@ class JobList extends React.Component {
     return (
       <div className={cx('jobList--container')}>
 
-        { addVisibile ? (
+        { addVisible ? (
           <JobAdd
             job={job}
             onJobSave={this.handleSave} 
             jobChange={actions.jobChange}
             toggleEdit={this.toggleAddJob.bind(this)} 
-            addVisibile={addVisibile} 
+            addVisible={addVisible} 
           />
         ) : (<span/>)}
 

@@ -63,7 +63,7 @@ export default class SchoolItem extends React.Component {
         <SchoolAdd
           school={school}
           schoolChange={schoolChange}
-          addVisibile={false}
+          addVisible={false}
           onSchoolSave={this.saveEdit.bind(this)}
           handleDelete={this.handleDelete.bind(this)}
           toggleEdit={this.toggleEdit.bind(this)}

@@ -19,10 +19,12 @@ import _ from 'lodash';
 const cx = classNames.bind(styles);
 
 const SkillData = skillData();
+let timeout;
 
 export default class SkillAdd extends React.Component {
   
   static propTypes = {
+    isEdit: PropTypes.bool.isRequired, 
     skill: PropTypes.object.isRequired,
     skillChange: PropTypes.func.isRequired,
     toggleEdit: PropTypes.func.isRequired,
@@ -52,14 +54,26 @@ export default class SkillAdd extends React.Component {
   }
 
   changeSkillProps(field, value) {
-      this.props.skillChange({
+    this.props.skillChange({
       field: field,
       value: value,
       id: this.props.skill._id
-    });  
+    });
+  }
+
+  handleExpand(next) {
+    if (this.props.skill.type !== next) {
+      if(timeout) { clearTimeout(timeout); }
+      timeout = setTimeout(() => {
+        !this.props.addVisible && this.props.skill.type ? this.props.toggleEdit() : null
+      }, 500)
+    } 
   }
 
   handleSkillChange (value) {
+    if (!this.props.addVisible) {
+      this.handleExpand(value) 
+    }
     this.changeSkillProps('type', value)
   }
 
@@ -73,14 +87,19 @@ export default class SkillAdd extends React.Component {
   }
 
   render () {
-    
+
     const {
             validationErrors
           } = this.state;
 
     const {
             skill,
+            addVisible,
+            isEdit
           } = this.props;
+
+    let skillText = 'Add a Skill';
+    if (isEdit) skillText = 'Skill';
 
     return (
       <div>
@@ -91,7 +110,7 @@ export default class SkillAdd extends React.Component {
           <AutoComplete
             hintText='Add one skill at a time.'
             searchText={skill.type}
-            floatingLabelText="Skill"
+            floatingLabelText={skillText}
             errorText={validationErrors.type}
             filter={AutoComplete.fuzzyFilter}
             dataSource={SkillData}
@@ -99,34 +118,37 @@ export default class SkillAdd extends React.Component {
             onUpdateInput={this.handleSkillChange.bind(this)}
             maxSearchResults={5}
           />
+          
+          { addVisible || isEdit ? (
+            <span>
+              <SkillSlider
+                skill={skill}
+                errorText={validationErrors.proficiency}
+                title="Proficiency"
+                field={'proficiency'}
+                handleChange={this.sliderChange.bind(this)}
+                stages={['learning', 'intermediate', 'competent', 'expert']}
+              />
 
-          <SkillSlider
-            skill={skill}
-            errorText={validationErrors.proficiency}
-            title="Proficiency"
-            field={'proficiency'}
-            handleChange={this.sliderChange.bind(this)}
-            stages={['learning', 'intermediate', 'competent', 'expert']}
-          />
+              <SkillSlider
+                skill={skill}
+                errorText={validationErrors.lengthOfUse}
+                title="Length of Use"
+                field={'lengthOfUse'}
+                handleChange={this.sliderChange.bind(this)}
+                storeValue={[0, 1, 3, 5, 10]}
+                stages={['>1', '1-3', '3-5', '5-10', '<10']}
+              />
 
-          <SkillSlider
-            skill={skill}
-            errorText={validationErrors.lengthOfUse}
-            title="Length of Use"
-            field={'lengthOfUse'}
-            handleChange={this.sliderChange.bind(this)}
-            storeValue={[0, 1, 3, 5, 10]}
-            stages={['>1', '1-3', '3-5', '5-10', '<10']}
-          />
-
-          <div className={cx('profile-btn-group')}>
-            <RaisedButton className='pull-right' type="submit" label="Save + Add" primary={true} />
-            <FlatButton className='pull-right' type="submit" label="Save" primary={true} />
-            {this.props.handleDelete ? (
-              <FlatButton className='pull-left' label="Delete" onClick={this.props.handleDelete} primary={true} />
-            ) : (<span />)}
-            <FlatButton className='pull-left' label="Close" onClick={this.props.toggleEdit} primary={true} />
-          </div>
+              <div className={cx('profile-btn-group')}>
+                <FlatButton className='pull-right' type="submit" label="Save" primary={true} />
+                {this.props.handleDelete ? (
+                  <FlatButton className='pull-left' label="Delete" onClick={this.props.handleDelete} primary={true} />
+                ) : (<span />)}
+                <FlatButton className='pull-left' label="Close" onClick={this.props.toggleEdit} primary={true} />
+              </div>
+            </span>
+          ) : (null)}
 
         </form>
       </div>

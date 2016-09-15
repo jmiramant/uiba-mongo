@@ -21,7 +21,7 @@ class SkillList extends React.Component {
   static propTypes = {
     skills: PropTypes.array,
     onSkillSave: PropTypes.func.isRequired,
-    addVisibile: PropTypes.bool.isRequired,
+    addVisible: PropTypes.bool.isRequired,
     toggleSkillAdd: PropTypes.func.isRequired,
     onEditSave: PropTypes.func.isRequired,
     onSkillDelete: PropTypes.func.isRequired
@@ -32,12 +32,12 @@ class SkillList extends React.Component {
   }
   
   toggleAddSkill = () => {
-    this.props.toggleSkillAdd(this.props.addVisibile)
+    this.props.toggleSkillAdd(this.props.addVisible)
   }
 
   handleSave = (data) => {
     this.props.onSkillSave(data);
-    this.props.toggleSkillAdd(this.props.addVisibile)
+    this.props.toggleSkillAdd(this.props.addVisible)
   }
 
   handleEditSave = (data) => {
@@ -51,7 +51,7 @@ class SkillList extends React.Component {
   render () {
     const { skill,
             skills,
-            addVisibile,
+            addVisible,
             actions,
             errorMessage,
           } = this.props;
@@ -59,7 +59,15 @@ class SkillList extends React.Component {
     const lengthIndex = skills.length - 1;
     
     const listClass = classNames({
-      [cx('horizontal')]: addVisibile,
+      [cx('horizontal')]: true,
+      [cx('left')]: true,
+      [cx('split')]: addVisible,
+    });
+
+    const addClass = classNames({
+      [cx('horizontal')]: true,
+      [cx('right')]: true,
+      [cx('split')]: addVisible,
     });
 
     const renderItems = (
@@ -94,18 +102,17 @@ class SkillList extends React.Component {
             </span>
           )}
           
-          { addVisibile ? (
-            <div className={cx('horizontal')}>
-              <SkillAdd
-                skill={skill}
-                skillChange={actions.skillChange}
-                toggleEdit={this.toggleAddSkill.bind(this)} 
-                addVisibile={addVisibile} 
-                onSkillSave={this.handleSave} 
-              />
-            </div>
-          ) : ( <span/>)}
-          
+          <div className={addClass}>
+            <SkillAdd
+              isEdit={false}
+              skill={skill}
+              skillChange={actions.skillChange}
+              toggleEdit={this.toggleAddSkill.bind(this)} 
+              addVisible={addVisible} 
+              onSkillSave={this.handleSave} 
+            />
+          </div>
+
         </div>
       </div>
     )

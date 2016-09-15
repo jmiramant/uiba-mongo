@@ -55,7 +55,7 @@ export default class ProjectItem extends React.Component {
         <ProjectAdd
           project={project}
           projectChange={projectChange}
-          addVisibile={false}
+          addVisible={false}
           onProjectSave={this.saveEdit.bind(this)}
           handleDelete={this.handleDelete.bind(this)}
           toggleEdit={this.toggleEdit.bind(this)}
