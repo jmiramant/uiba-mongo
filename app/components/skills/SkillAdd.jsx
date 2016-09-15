@@ -6,6 +6,7 @@ import skillData from './SkillData';
 import classNames from 'classnames/bind';
 import styles from 'css/components/profile/skill';
 
+import SkillSlider from './SkillSlider';
 import AutoComplete from 'material-ui/AutoComplete';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
@@ -50,23 +51,25 @@ export default class SkillAdd extends React.Component {
     return errorStore.containsErrors;
   }
 
-  handleSkillChange (value) {
-    this.props.skillChange({
-      field: 'type',
+  changeSkillProps(field, value) {
+      this.props.skillChange({
+      field: field,
       value: value,
       id: this.props.skill._id
     });  
   }
 
+  handleSkillChange (value) {
+    this.changeSkillProps('type', value)
+  }
+
+  sliderChange(field, value) {
+    this.changeSkillProps(field, value)
+  }
+
   handleChange = field => (e, i, val) => {
     const value = (val ? val : i)
-
-    this.props.skillChange({
-      field: field,
-      value: value,
-      id: this.props.skill._id
-    });   
-
+    this.changeSkillProps(field, value)
   }
 
   render () {
@@ -96,34 +99,29 @@ export default class SkillAdd extends React.Component {
             onUpdateInput={this.handleSkillChange.bind(this)}
             maxSearchResults={5}
           />
-          
-          <SelectField
-            errorText={validationErrors.proficiency}
-            onChange={this.handleChange('proficiency')}
-            value={skill.proficiency}
-            hintText='Proficiency'
-          >
-            <MenuItem value={'learning'} primaryText="Learning" />
-            <MenuItem value={'intermediate'} primaryText="Intermediate" />
-            <MenuItem value={'competent'} primaryText="Competent" />
-            <MenuItem value={'expert'} primaryText="Expert" />
-          </SelectField>
 
-          <SelectField
+          <SkillSlider
+            skill={skill}
+            errorText={validationErrors.proficiency}
+            title="Proficiency"
+            field={'proficiency'}
+            handleChange={this.sliderChange.bind(this)}
+            stages={['learning', 'intermediate', 'competent', 'expert']}
+          />
+
+          <SkillSlider
+            skill={skill}
             errorText={validationErrors.lengthOfUse}
-            onChange={this.handleChange('lengthOfUse')}
-            value={skill.lengthOfUse}
-            hintText='Length of Use'
-          >
-            <MenuItem value={0} primaryText="Less Than 1 Year" />
-            <MenuItem value={1} primaryText="1-3 Years" />
-            <MenuItem value={3} primaryText="3-5 Years" />
-            <MenuItem value={5} primaryText="5-10 Years" />
-            <MenuItem value={10} primaryText="More Than 10 Years" />
-          </SelectField>
-          
+            title="Length of Use"
+            field={'lengthOfUse'}
+            handleChange={this.sliderChange.bind(this)}
+            storeValue={[0, 1, 3, 5, 10]}
+            stages={['>1', '1-3', '3-5', '5-10', '<10']}
+          />
+
           <div className={cx('profile-btn-group')}>
-            <RaisedButton className='pull-right' type="submit" label="Save" primary={true} />
+            <RaisedButton className='pull-right' type="submit" label="Save + Add" primary={true} />
+            <FlatButton className='pull-right' type="submit" label="Save" primary={true} />
             {this.props.handleDelete ? (
               <FlatButton className='pull-left' label="Delete" onClick={this.props.handleDelete} primary={true} />
             ) : (<span />)}

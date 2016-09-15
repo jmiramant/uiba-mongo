@@ -55,7 +55,13 @@ class SkillList extends React.Component {
             actions,
             errorMessage,
           } = this.props;
+
     const lengthIndex = skills.length - 1;
+    
+    const listClass = classNames({
+      [cx('horizontal')]: addVisibile,
+    });
+
     const renderItems = (
       <div>
         {skills.map((skill, i) => {
@@ -74,19 +80,9 @@ class SkillList extends React.Component {
     return (
       <div className={cx('skillList--bootstrap-container')}>
         <div className={cx('skillList--container')}>
-          
-          { addVisibile ? (
-            <SkillAdd
-              skill={skill}
-              skillChange={actions.skillChange}
-              toggleEdit={this.toggleAddSkill.bind(this)} 
-              addVisibile={addVisibile} 
-              onSkillSave={this.handleSave} 
-            />
-          ) : ( <span/>)}
 
           { skills.length ? (
-            <div>
+            <div className={listClass}>
               <ErrorMessage 
                 errorText={errorMessage}
               />
@@ -97,6 +93,19 @@ class SkillList extends React.Component {
               <NullProfItem target="skill" />
             </span>
           )}
+          
+          { addVisibile ? (
+            <div className={cx('horizontal')}>
+              <SkillAdd
+                skill={skill}
+                skillChange={actions.skillChange}
+                toggleEdit={this.toggleAddSkill.bind(this)} 
+                addVisibile={addVisibile} 
+                onSkillSave={this.handleSave} 
+              />
+            </div>
+          ) : ( <span/>)}
+          
         </div>
       </div>
     )

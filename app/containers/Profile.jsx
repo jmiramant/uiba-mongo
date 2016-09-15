@@ -59,6 +59,23 @@ class Profile extends React.Component {
             onEditSave={profileActions.updateProfile} 
           />
           <div className={cx('about') + ' container'}>
+
+            <div className='col-md-8 col-md-offset-2'>
+              <CardHeader
+                text='Knowledge, Skills, Abilities'
+                addVisibile={skills.addShow}
+                toggleAdd={skillActions.toggleSkillAdd}
+              />
+              <Skills 
+                skills={skills.skills}
+                errorMessage={skills.errorMessage}
+                addVisibile={skills.addShow}
+                toggleSkillAdd={skillActions.toggleSkillAdd}
+                onEditSave={skillActions.updateSkill} 
+                onSkillSave={skillActions.createSkill} 
+                onSkillDelete={skillActions.deleteSkill} 
+              />
+            </div>
             
             <div className='col-md-8 col-md-offset-2'>
               <CardHeader
@@ -92,24 +109,7 @@ class Profile extends React.Component {
               />
             </div>
 
-            <div className='col-md-5 col-md-offset-2'>
-              <CardHeader
-                text='Knowledge, Skills, Abilities'
-                addVisibile={skills.addShow}
-                toggleAdd={skillActions.toggleSkillAdd}
-              />
-              <Skills 
-                skills={skills.skills}
-                errorMessage={skills.errorMessage}
-                addVisibile={skills.addShow}
-                toggleSkillAdd={skillActions.toggleSkillAdd}
-                onEditSave={skillActions.updateSkill} 
-                onSkillSave={skillActions.createSkill} 
-                onSkillDelete={skillActions.deleteSkill} 
-              />
-            </div>
-
-            <div className='col-md-3'>
+            <div className='col-md-6 col-md-offset-2'>
               <CardHeader
                 text='Languages'
                 addVisibile={languages.addShow}
