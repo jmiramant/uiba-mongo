@@ -42,7 +42,14 @@ const language = (
         experience: undefined,
       }
     case types.CREATE_LANGUAGE_SUCCESS:
+    case types.CREATE_LANGUAGE_FAILURE:
       return {};
+    case types.TOGGLE_LANGUAGE_ADD:
+      if (!action.data && action.persist) {
+        return action.persist
+      } else {
+        return {};
+      }
     case types.CHANGE_LANGUAGE:
       const newStateOjb = {...state}
       newStateOjb[action.state.field] = action.state.value
@@ -97,9 +104,24 @@ const addShow = (
   }
 };
 
+const errorMessage = (
+  state = '',
+  action
+) => {
+  switch (action.type) {
+    case types.CREATE_LANGUAGE_FAILURE:
+      return action.error
+    case types.DISMISS_LANGUAGE_ERROR:
+      return ''
+    default:
+      return state;
+  }
+};
+
 const languageReducer = combineReducers({
   language,
   languages,
+  errorMessage,
   addShow,
   isFetching
 });

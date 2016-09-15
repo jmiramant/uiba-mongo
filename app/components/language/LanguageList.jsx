@@ -6,6 +6,7 @@ import * as languagesActionCreators from 'actions/languages';
 import LanguageItem from 'components/language/LanguageItem';
 import LanguageAdd from 'components/language/LanguageAdd';
 import NullProfItem from 'components/ProfileNull';
+import ErrorMessage from 'components/ErrorMessage';
 
 import classNames from 'classnames/bind';
 import styles from 'css/components/profile/languageList';
@@ -17,6 +18,7 @@ class LanguageList extends React.Component {
   static propTypes = {
     languages: PropTypes.array,
     addVisible: PropTypes.bool.isRequired,
+    errorMessage: PropTypes.string,
     onEditSave: PropTypes.func.isRequired,
     toggleLanguageAdd: PropTypes.func.isRequired,
     onLanguageSave: PropTypes.func.isRequired,
@@ -28,12 +30,25 @@ class LanguageList extends React.Component {
   }
   
   toggleAddLanguage = () => {
-    this.props.toggleLanguageAdd(this.props.addVisible)
+    let {
+      addVisible,
+      language,
+      toggleLanguageAdd
+    } = this.props
+
+    toggleLanguageAdd(addVisible, language)
   }
   
   handleSave = (data) => {
-    this.props.onLanguageSave(data);
-    this.props.toggleLanguageAdd(this.props.addVisible)
+    let {
+      addVisible,
+      language,
+      toggleLanguageAdd,
+      onLanguageSave
+    } = this.props
+
+    onLanguageSave(data);
+    toggleLanguageAdd(addVisible, language)
   }
 
   handleEditSave = (data) => {
@@ -48,9 +63,25 @@ class LanguageList extends React.Component {
     let { language,
           languages,
           addVisible,
-          actions
+          actions,
+          errorMessage,
         } = this.props;
-    let lengthIndex = languages.length - 1;
+
+    const lengthIndex = languages.length - 1;
+
+    const listClass = classNames({
+      [cx('horizontal')]: true,
+      [cx('left')]: true,
+      [cx('split')]: addVisible,
+    });
+
+    const addClass = classNames({
+      [cx('horizontal')]: true,
+      [cx('left-border')]: addVisible,
+      [cx('right')]: true,
+      [cx('split')]: addVisible,
+    });
+
     const renderItems = (
       <div>
         {languages.map((language, i) => {
@@ -69,26 +100,29 @@ class LanguageList extends React.Component {
       <div className={cx('languageList--bootstrap-container')}>
         <div className={cx('languageList--container')}>
 
-        { addVisible ? (
-          <LanguageAdd
-            language={language}
-            languageChange={actions.languageChange}
-            toggleEdit={this.toggleAddLanguage.bind(this)} 
-            addVisible={addVisible}
-            onLanguageSave={this.handleSave}
-          />
-        ) : (<span/>)}
+          { languages.length ? (
+            <div className={listClass}>
+              {renderItems}
+            </div>
+          ) : (
+            <span>
+              <NullProfItem target="language" />
+            </span>
+          )}
+          <div className={addClass}>
+            <ErrorMessage 
+              errorText={errorMessage}
+            />
+            <LanguageAdd
+              isEdit={false}
+              language={language}
+              languageChange={actions.languageChange}
+              toggleEdit={this.toggleAddLanguage.bind(this)} 
+              addVisible={addVisible}
+              onLanguageSave={this.handleSave}
+            />
 
-        { languages.length ? (
-          <div>
-            {renderItems}
           </div>
-        ) : (
-          <span>
-            <NullProfItem target="language" />
-          </span>
-        )}
-
         </div>
       </div>
     )

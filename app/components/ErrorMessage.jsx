@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { dismissError } from 'actions/skills';
+import * as messageActionCreator from 'actions/messages';
 
 import classNames from 'classnames/bind';
 import styles from 'css/components/errorMessage';
@@ -22,11 +22,11 @@ class ErrorMessage extends React.Component {
 
     const {
       errorText,
-      dismissError
+      messageActions
     } = this.props;
 
     if (this.shouldShow()) {
-      setTimeout(dismissError, 6000);
+      setTimeout(messageActions.dismissError, 6000);
     }
 
     return (
@@ -54,4 +54,11 @@ function mapStateToProps(state) {
   return {...state};
 }
 
-export default connect(mapStateToProps, { dismissError })(ErrorMessage);
+function mapDispatchToProps (dispatch) {
+  return {
+    messageActions: bindActionCreators(messageActionCreator, dispatch),
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ErrorMessage);

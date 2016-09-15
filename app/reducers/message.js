@@ -1,15 +1,12 @@
 import * as types from 'types';
+import { combineReducers } from 'redux';
 
-/*
- * Message store for global messages, i.e. Network messages / Redirect messages
- * that need to be communicated on the page itself. Ideally
- * messages/notifications should appear within the component to give the user
- * more context. - My 2 cents.
- */
-export default function message(state = {
+const message = (
+  state = {
   message: '',
   type: 'SUCCESS'
-}, action = {}) {
+}, action
+) => {
   switch (action.type) {
     case types.LOGIN_SUCCESS_USER:
     case types.SIGNUP_SUCCESS_USER:
@@ -21,9 +18,30 @@ export default function message(state = {
     case types.GET_LANGUAGES_FAILURE:
     case types.GET_SCHOOLS_FAILURE:
     case types.CREATE_SCHOOL_FAILURE:
-      debugger
       return {...state, message: action.error.response.data.error, type: "SUCCESS"}
     default:
       return state;
   }
 }
+
+const errorMessage = (
+  state = '',
+  action
+) => {
+  switch (action.type) {
+    case types.CREATE_SKILL_FAILURE:
+    case types.CREATE_LANGUAGE_FAILURE:
+      return action.error
+    case types.DISMISS_ERROR:
+      return ''
+    default:
+      return state;
+  }
+};
+
+const messageReducer = combineReducers({
+  message,
+  errorMessage
+});
+
+export default messageReducer;

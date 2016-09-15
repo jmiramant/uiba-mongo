@@ -51,6 +51,7 @@ export default class LanguageItem extends React.Component {
 
       return (
         <LanguageAdd
+          isEdit={true}
           language={language}
           languageChange={languageChange}
           onLanguageSave={this.saveEdit.bind(this)}

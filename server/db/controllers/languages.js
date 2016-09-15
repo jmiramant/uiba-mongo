@@ -47,18 +47,38 @@ export function get(req, res) {
 
 export function create(req, res) {
 
-  Language.create({
-    profile_id: req.user.profile_id,
-    language: req.body.language,
-    proficiency: req.body.proficiency,
-    experience: req.body.experience,
-  }, function (err, language) {
 
-    if (err) return handleError(res, err);
-  
-    return res.json(language);
+  Language.find({'profile_id': req.user.profile_id}).exec( (err, existingLanguages) => {
 
-  })
+    function containsType(language, list) {
+      var i;
+      for (i = 0; i < list.length; i++) {
+        if (list[i].language === language) {
+          return true;
+        }
+      }
+      return false;
+    }
+    if (containsType(req.body.language, existingLanguages)) {
+      
+      return res.status(500).send('You have already added this language.');
+    
+    } else {
+      Language.create({
+        profile_id: req.user.profile_id,
+        language: req.body.language,
+        proficiency: req.body.proficiency,
+        experience: req.body.experience,
+      }, function (err, language) {
+
+        if (err) return handleError(res, err);
+      
+        return res.json(language);
+
+      })
+    
+    }
+  });
 }
 
 export function update(req, res) {

@@ -3,9 +3,9 @@ import React, { PropTypes } from 'react';
 import { validateLanguageHelper } from '../helpers/languageValidations';
 import languageData from './LanguageData';
 
+import UibaSlider from '../UibaSlider';
 import AutoComplete from 'material-ui/AutoComplete';
 import TextField from 'material-ui/TextField';
-import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
@@ -18,10 +18,12 @@ import styles from 'css/components/profile/language';
 const cx = classNames.bind(styles);
 
 const LangData = languageData();
+let timeout;
 
 export default class LanguageAdd extends React.Component {
 
   static propTypes = {
+    isEdit: PropTypes.bool.isRequired, 
     language: PropTypes.object.isRequired,
     languageChange: PropTypes.func.isRequired,
     toggleEdit: PropTypes.func.isRequired,
@@ -50,12 +52,32 @@ export default class LanguageAdd extends React.Component {
     return validationResp.containsErrors;
   }
 
-  handleLanguage (value) {
+  changeLanguageProps(field, value) {
     this.props.languageChange({
-      field: 'language',
+      field: field,
       value: value,
       id: this.props.language._id
-    });  
+    });
+  }
+
+  handleExpand(next) {
+    if (this.props.language.language !== next) {
+      if(timeout) { clearTimeout(timeout); }
+      timeout = setTimeout(() => {
+        !this.props.addVisible && this.props.language.language ? this.props.toggleEdit() : null
+      }, 500)
+    } 
+  }
+
+  handleLanguage (value) {
+    if (!this.props.addVisible) {
+      this.handleExpand(value) 
+    }
+    this.changeLanguageProps('language', value);
+  }
+  
+  sliderChange(field, value) {
+    this.changeLanguageProps(field, value)
   }
 
   handleChange = field => (e, i, uiVal) => {
@@ -67,18 +89,9 @@ export default class LanguageAdd extends React.Component {
     }
 
     if (field === 'proficiency' && value === 'native or bilingual proficiency') {
-      this.props.languageChange({
-        field: 'experience',
-        value: '',
-        id: this.props.language._id
-      });
+      this.changeLanguageProps('experience', '');
     }
-
-    this.props.languageChange({
-      field: field,
-      value: value,
-      id: this.props.language._id
-    });
+    this.changeLanguageProps(field, value);
   }
 
   render () {
@@ -88,7 +101,12 @@ export default class LanguageAdd extends React.Component {
 
     const {
             language,
+            addVisible,
+            isEdit
           } = this.props;
+    
+    let langaugeText = 'Add a Language';
+    if (isEdit) langaugeText = 'Language';
 
     return (
       <div>
@@ -107,43 +125,42 @@ export default class LanguageAdd extends React.Component {
             maxSearchResults={5}
           />
 
-          <SelectField
-            errorText={validationErrors.proficiency}
-            onChange={this.handleChange('proficiency')}
-            value={language.proficiency}
-            floatingLabelText="Proficiency"
-            hintText='Proficiency'
-          >
-            <MenuItem value={'elementary proficiency'} primaryText="Elementary Proficiency" />
-            <MenuItem value={'limited working proficiency'} primaryText="Limited Working Proficiency" />
-            <MenuItem value={'minimum professional proficiency'} primaryText="Minimum Professional Proficiency" />
-            <MenuItem value={'native or bilingual proficiency'} primaryText="Native Or Bilingual Proficiency" />
-          </SelectField>
-          
-          { language.proficiency !== 'native or bilingual proficiency' ? (
-            <SelectField
-              floatingLabelText="Experience"
-              errorText={validationErrors.experience}
-              onChange={this.handleChange('experience')}
-              value={language.experience}
-              hintText='Length of Use'
-            >
-              <MenuItem value={365} primaryText="Less Than 1 Year" />
-              <MenuItem value={1} primaryText="1-3 Years" />
-              <MenuItem value={3} primaryText="3-5 Years" />
-              <MenuItem value={5} primaryText="5-10 Years" />
-              <MenuItem value={10} primaryText="More Than 10 Years" />
-            </SelectField>
-          ) : (<span/>)}
-          
-          <div className={cx('profile-btn-group')}>
-            <RaisedButton className='pull-right' type="submit" label="Save" primary={true} />
-            {this.props.handleDelete ? (
-              <FlatButton className='pull-left' label="Delete" onClick={this.props.handleDelete} primary={true} />
-            ) : (<span />)}
-            <FlatButton className='pull-left' label="Close" onClick={this.props.toggleEdit} primary={true} />
-          </div>
+          { addVisible || isEdit ? (
+            <span>
 
+              <UibaSlider
+                dataSource={language}
+                errorText={validationErrors.proficiency}
+                title="Proficiency"
+                field={'proficiency'}
+                handleChange={this.sliderChange.bind(this)}
+                storeValue={['elementary proficiency', 'limited working proficiency', 'minimum professional proficiency', 'native or bilingual proficiency']}
+                stages={['elementary', 'limited working', 'minimum professional', 'native or bilingual']}
+              />
+          
+              { language.proficiency !== 'native or bilingual proficiency' ? (
+                <UibaSlider
+                  dataSource={language}
+                  errorText={validationErrors.experience}
+                  title="Experience (in years)"
+                  field={'experience'}
+                  handleChange={this.sliderChange.bind(this)}
+                  storeValue={[0, 1, 3, 5, 10]}
+                  stages={['>1', '1-3', '3-5', '5-10', '<10']}
+                />
+              ) : (null)}
+          
+              <div className={cx('profile-btn-group')}>
+                <FlatButton className='pull-right' type="submit" label="Save" primary={true} />
+                {this.props.handleDelete ? (
+                  <FlatButton className='pull-left' label="Delete" onClick={this.props.handleDelete} primary={true} />
+                ) : (<span />)}
+                <FlatButton className='pull-left' label="Close" onClick={this.props.toggleEdit} primary={true} />
+              </div>
+
+            </span>
+          
+          ) : (null)}
         </form>
       </div>
     )

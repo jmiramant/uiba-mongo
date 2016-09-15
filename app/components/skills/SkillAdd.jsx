@@ -6,9 +6,8 @@ import skillData from './SkillData';
 import classNames from 'classnames/bind';
 import styles from 'css/components/profile/skill';
 
-import SkillSlider from './SkillSlider';
+import UibaSlider from '../UibaSlider';
 import AutoComplete from 'material-ui/AutoComplete';
-import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
@@ -121,8 +120,8 @@ export default class SkillAdd extends React.Component {
           
           { addVisible || isEdit ? (
             <span>
-              <SkillSlider
-                skill={skill}
+              <UibaSlider
+                dataSource={skill}
                 errorText={validationErrors.proficiency}
                 title="Proficiency"
                 field={'proficiency'}
@@ -130,8 +129,8 @@ export default class SkillAdd extends React.Component {
                 stages={['learning', 'intermediate', 'competent', 'expert']}
               />
 
-              <SkillSlider
-                skill={skill}
+              <UibaSlider
+                dataSource={skill}
                 errorText={validationErrors.lengthOfUse}
                 title="Length of Use"
                 field={'lengthOfUse'}

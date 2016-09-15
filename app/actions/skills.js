@@ -25,10 +25,11 @@ export function skillsChange(state) {
   };
 }
 
-export function toggleSkillAdd (data) {
+export function toggleSkillAdd (data, persist = false) {
   return {
     type: types.TOGGLE_SKILL_ADD,
-    data: data
+    data: data,
+    persist: persist
   };
 }
 
@@ -155,10 +156,4 @@ export function deleteSkill(skill) {
       });
   }
 
-}
-
-export function dismissError() {
-  return { 
-      type: types.DISMISS_SKILL_ERROR 
-  };  
 }

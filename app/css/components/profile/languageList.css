@@ -9,3 +9,37 @@
 .languageList--container {
   @apply --profile--container;
 }
+
+.left-border {
+  border-left: 1px solid rgba(0, 0, 0, 0.298039);
+}
+
+.horizontal {
+  display: inline-block;
+  vertical-align: top;
+  &.left {
+    width: 45%;
+  }
+  &.right {
+    padding-left: 10%;
+    width: 55%;
+  }
+}
+
+@media (max-width: 768px) {
+   .horizontal {
+      display: block;
+      width: 100%;
+      &.left,
+      &.right,
+      &.split {
+        width: 100%;
+      }
+  }
+  .left-border {
+    border-left: none;
+  }
+  .horizontal.right {
+    padding-left: 0;
+  }
+}

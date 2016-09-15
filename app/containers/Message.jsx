@@ -27,7 +27,7 @@ class Message extends React.Component {
 Message.propTypes = {
   message: PropTypes.string,
   type: PropTypes.string,
-  dismissMessage: PropTypes.func.isRequired
+  dismissMessage: PropTypes.func
 };
 
 function mapStateToProps(state) {

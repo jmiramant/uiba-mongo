@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import Navigation from 'containers/Navigation';
-import Message from 'containers/Message';
 import Footer from 'containers/Footer';
 import classNames from 'classnames/bind';
 import styles from 'css/main';
@@ -12,7 +11,6 @@ const App = ({children}) => {
     <div>
       <Navigation />
       <div className={cx('app')}>
-        <Message />
           {children}
       </div>
       <Footer />

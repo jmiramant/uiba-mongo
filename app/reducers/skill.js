@@ -46,8 +46,13 @@ const skill = (
       return newStateOjb;
     case types.CREATE_SKILL_SUCCESS:
     case types.CREATE_SKILL_FAILURE:
-    case types.TOGGLE_SKILL_ADD:
       return {};
+    case types.TOGGLE_SKILL_ADD:
+      if (!action.data && action.persist) {
+        return action.persist
+      } else {
+        return {};
+      }
     default:
       return state;
   }
@@ -98,27 +103,9 @@ const addShow = (
   }
 };
 
-
-
-const errorMessage = (
-  state = '',
-  action
-) => {
-  switch (action.type) {
-    case types.CREATE_SKILL_FAILURE:
-      return action.error
-    case types.DISMISS_SKILL_ERROR:
-      return ''
-    default:
-      return state;
-  }
-};
-
-
 const skillReducer = combineReducers({
   skill,
   skills,
-  errorMessage,
   addShow,
   isFetching
 });

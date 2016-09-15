@@ -9,6 +9,7 @@ import * as skillsActionCreators from 'actions/skills';
 import * as profileActionCreators from 'actions/profiles';
 import * as languagesActionCreators from 'actions/languages';
 import * as projectsActionCreators from 'actions/projects';
+import * as messagesActionCreators from 'actions/messages';
 
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -48,7 +49,9 @@ class Profile extends React.Component {
             skills,    skillActions,
             languages, languageActions,
             projects, projectActions,
+            messages, messageActions,
           } = this.props;
+
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
         <div>
@@ -68,8 +71,8 @@ class Profile extends React.Component {
               />
               <Skills 
                 skills={skills.skills}
-                errorMessage={skills.errorMessage}
                 addVisible={skills.addShow}
+                errorMessage={messages.errorMessage}
                 toggleSkillAdd={skillActions.toggleSkillAdd}
                 onEditSave={skillActions.updateSkill} 
                 onSkillSave={skillActions.createSkill} 
@@ -109,7 +112,7 @@ class Profile extends React.Component {
               />
             </div>
 
-            <div className='col-md-6 col-md-offset-2'>
+            <div className='col-md-8 col-md-offset-2'>
               <CardHeader
                 text='Languages'
                 addVisible={languages.addShow}
@@ -118,6 +121,7 @@ class Profile extends React.Component {
               <Languages
                 languages={languages.languages}
                 addVisible={languages.addShow}
+                errorMessage={messages.errorMessage}
                 toggleLanguageAdd={languageActions.toggleLanguageAdd}
                 onEditSave={languageActions.updateLanguage} 
                 onLanguageSave={languageActions.createLanguage} 
@@ -155,6 +159,7 @@ function mapStateToProps(state) {
     skills: state.skill,
     languages: state.language,
     projects: state.project,
+    messages: state.message
   };
 }
 
@@ -166,6 +171,8 @@ function mapDispatchToProps (dispatch) {
     skillActions: bindActionCreators(skillsActionCreators, dispatch),
     languageActions: bindActionCreators(languagesActionCreators, dispatch),
     projectActions: bindActionCreators(projectsActionCreators, dispatch),
+    messageActions: bindActionCreators(messagesActionCreators, dispatch),
+
   }
 }
 

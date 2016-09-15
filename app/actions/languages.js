@@ -25,10 +25,11 @@ export function languagesChange(state) {
   };
 }
 
-export function toggleLanguageAdd (data) {
+export function toggleLanguageAdd (data, persist = false) {
   return {
     type: types.TOGGLE_LANGUAGE_ADD,
-    data: data
+    data: data,
+    persist: persist
   };
 }
 
@@ -95,8 +96,8 @@ export function createLanguage(languageData) {
           return dispatch(createLanguageSuccess(res.data));
         }
       })
-      .catch(() => {
-        return dispatch(createLanguageFailure({ error: 'Oops! Something went wrong and we couldn\'t create your language.'}));
+      .catch((err) => {
+        return dispatch(createLanguageFailure({error: err.response.data}));
       });
   }
 }
@@ -156,4 +157,10 @@ export function deleteLanguage(language) {
       });
   }
 
+}
+
+export function dismissError() {
+  return { 
+      type: types.DISMISS_LANGUAGE_ERROR 
+  };  
 }

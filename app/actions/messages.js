@@ -4,3 +4,10 @@ import * as types from 'types';
 export function dismissMessage() {
   return { type: types.DISMISS_MESSAGE };
 }
+
+
+export function dismissError() {
+  return { 
+      type: types.DISMISS_ERROR 
+  };  
+}

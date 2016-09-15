@@ -4,15 +4,15 @@ import Slider from 'material-ui/Slider';
 
 import moment from 'moment';
 import classNames from 'classnames/bind';
-import styles from 'css/components/profile/skill';
+import styles from 'css/components/uibaSlider';
 const cx = classNames.bind(styles);
 
-export default class SkillSlider extends React.Component {
+export default class UibaSlider extends React.Component {
   
   static propTypes = {
     title: PropTypes.string.isRequired,
     field: PropTypes.string.isRequired,
-    skill: PropTypes.object.isRequired,
+    dataSource: PropTypes.object.isRequired,
     stages: PropTypes.array.isRequired,
     storeValue: PropTypes.array,
     errorText: PropTypes.string,
@@ -43,7 +43,7 @@ export default class SkillSlider extends React.Component {
 
     const { 
             title,
-            skill,
+            dataSource,
             stages,
             field,
             storeValue,
@@ -66,13 +66,13 @@ export default class SkillSlider extends React.Component {
           
           let itemClass = classNames({
             [cx('stage-label')]: true,
-            [cx('active')]: stages.indexOf(skill[field]) === i,
+            [cx('active')]: stages.indexOf(dataSource[field]) === i,
           });
           
           if (storeValue) {
             itemClass = classNames({
               [cx('stage-label')]: true,
-              [cx('active')]: storeValue.indexOf(skill[field]) === i,
+              [cx('active')]: storeValue.indexOf(dataSource[field]) === i,
             });
           } 
           
@@ -89,11 +89,11 @@ export default class SkillSlider extends React.Component {
     )
 
     const sliderValue = () => {
-      if (skill[field]) {
+      if (dataSource[field]) {
         if (storeValue) {
-          return storeValue.indexOf(skill[field])
+          return storeValue.indexOf(dataSource[field])
         } else {
-          return stages.indexOf(skill[field]);
+          return stages.indexOf(dataSource[field]);
         }
       } else {
         return 0;
@@ -105,7 +105,7 @@ export default class SkillSlider extends React.Component {
     ) : (null)
 
     return (
-      <div className={cx('skill-slider-container')}>
+      <div className={cx('ubia-slider-container')}>
         <div className={cx('title')}>{title}</div>
         <Slider 
           step={1} 

@@ -20,6 +20,7 @@ class SkillList extends React.Component {
   
   static propTypes = {
     skills: PropTypes.array,
+    errorMessage: PropTypes.string,
     onSkillSave: PropTypes.func.isRequired,
     addVisible: PropTypes.bool.isRequired,
     toggleSkillAdd: PropTypes.func.isRequired,
@@ -32,12 +33,25 @@ class SkillList extends React.Component {
   }
   
   toggleAddSkill = () => {
-    this.props.toggleSkillAdd(this.props.addVisible)
+    let {
+      addVisible,
+      skill,
+      toggleSkillAdd
+    } = this.props
+
+    this.props.toggleSkillAdd(this.props.addVisible, skill)
   }
 
   handleSave = (data) => {
-    this.props.onSkillSave(data);
-    this.props.toggleSkillAdd(this.props.addVisible)
+    let {
+      addVisible,
+      skill,
+      toggleSkillAdd,
+      onSkillSave
+    } = this.props
+    
+    onSkillSave(data);
+    toggleSkillAdd(addVisible, skill)
   }
 
   handleEditSave = (data) => {
@@ -49,15 +63,13 @@ class SkillList extends React.Component {
   }
 
   render () {
-    const { skill,
+    let { skill,
             skills,
             addVisible,
             actions,
             errorMessage,
           } = this.props;
 
-    const lengthIndex = skills.length - 1;
-    
     const listClass = classNames({
       [cx('horizontal')]: true,
       [cx('left')]: true,
@@ -80,7 +92,6 @@ class SkillList extends React.Component {
                     skillChange={actions.skillsChange}
                     handleDelete={this.handleDelete}
                     saveSkillEdit={this.handleEditSave} 
-                    isntLast={lengthIndex !== i} 
                   />);
         })}
       </div>
@@ -92,9 +103,6 @@ class SkillList extends React.Component {
 
           { skills.length ? (
             <div className={listClass}>
-              <ErrorMessage 
-                errorText={errorMessage}
-              />
               {renderItems}
             </div>
           ) : (
@@ -104,6 +112,9 @@ class SkillList extends React.Component {
           )}
           
           <div className={addClass}>
+            <ErrorMessage 
+              errorText={errorMessage}
+            />
             <SkillAdd
               isEdit={false}
               skill={skill}
