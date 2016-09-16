@@ -10,7 +10,7 @@ import imgGrid from 'images/splash/3D-Grid.svg';
 import imgMap from 'images/splash/Map.svg';
 import imgYing from 'images/splash/Yin-Yang.svg';
 
-require("css/lib/caroselOverrides");
+// require("css/lib/caroselOverrides");
 
 import styles from 'css/components/splash/succeed';
 const cx = classNames.bind(styles);

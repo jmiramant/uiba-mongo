@@ -27,7 +27,7 @@ import styles from 'css/common/profile';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
-require("css/lib/datepickerOverrides");
+// require("css/lib/datepickerOverrides");
 
 class Profile extends React.Component {
   static need = [  // eslint-disable-line
