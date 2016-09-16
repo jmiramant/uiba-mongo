@@ -80,6 +80,7 @@ class SkillList extends React.Component {
       [cx('horizontal')]: true,
       [cx('left-border')]: addVisible,
       [cx('right')]: true,
+      [cx('no-items')]: skills.length === 0,
       [cx('split')]: addVisible,
     });
 

@@ -78,6 +78,7 @@ class LanguageList extends React.Component {
     const addClass = classNames({
       [cx('horizontal')]: true,
       [cx('left-border')]: addVisible,
+      [cx('no-items')]: languages.length === 0,
       [cx('right')]: true,
       [cx('split')]: addVisible,
     });

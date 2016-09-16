@@ -24,6 +24,12 @@
     padding-left: 10%;
     width: 55%;
   }
+  &.no-items {
+    text-align: center;
+    width: 100%;
+    padding: 0px 25%;
+    border-left: none;
+  }
 }
 
 @media (max-width: 768px) {
@@ -40,6 +46,6 @@
     border-left: none;
   }
   .horizontal.right {
-    padding-left: 0;
+    padding: 0;
   }
 }
