@@ -23,7 +23,7 @@ import Languages from 'components/language/LanguageList';
 import Projects from 'components/projects/ProjectList';
 import UserCard from 'components/userCard/UserCard';
 
-import "./datepickerOverrides.less";
+import "./datepickerOverrides";
 import styles from 'css/common/profile';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);

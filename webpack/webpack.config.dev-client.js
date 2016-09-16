@@ -95,7 +95,7 @@ module.exports = {
     },
     resolve: {
       root: [path.join(__dirname, '..', 'app')],
-      extensions: ['', '.js', '.jsx', '.css'],
+      extensions: ['', '.js', '.jsx', '.css', '.less'],
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
