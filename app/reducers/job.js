@@ -50,6 +50,7 @@ const job = (
       newStateOjb[action.state.field] = action.state.value
       return newStateOjb;
     case types.CREATE_JOB_SUCCESS:
+    case types.TOGGLE_JOB_ADD:
       return {}
     default:
       return state;

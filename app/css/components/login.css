@@ -11,7 +11,11 @@
   border-radius: 3px;
   padding: 10px;
 }
-
+@media (max-width: 508px) {
+  .login {
+    width: 100%;
+  }
+}
 .waiting {
   .loading {
     display: block;
@@ -36,6 +40,15 @@
   }
 }
 
+@media (max-width: 508px) {
+  .login {
+    width: 100%;
+  }
+  .toggle-container {
+    width: 100%;
+  }
+}
+
 .alternative {
   background: var(--colorWhite);
   padding: 12px 8px;
@@ -44,15 +57,15 @@
 }
 
 .li-container {
-  margin: 20px 0px 30px;
+  margin: 20px 0px 0px;
   width: 100%;
   text-align: center;
   height: 90px;
 }
 
 .li-auth img {
-  height: 80px;
-  width: 80px;
+  height: 55px;
+  width: 55px;
   transition: 0.1s all ease-in-out;
   &:hover {
     transform: scale(1.1);

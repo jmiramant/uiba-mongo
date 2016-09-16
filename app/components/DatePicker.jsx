@@ -6,7 +6,9 @@ import moment from 'moment';
 import momentLocalizer from 'react-widgets/lib/localizers/moment';
 momentLocalizer(moment)
 
-import 'react-widgets/lib/less/react-widgets';
+import 'react-widgets/lib/less/react-widgets.less';
+// import "css/lib/datepickerOverrides";
+
 import classNames from 'classnames/bind';
 import styles from 'css/components/datePicker';
 const cx = classNames.bind(styles);

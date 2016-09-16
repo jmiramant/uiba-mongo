@@ -97,7 +97,10 @@
   }
 }
 
-@media (max-width: 508px) { 
+@media (max-width: 508px) {
+  .companies--box-title {
+    padding: 0;
+  } 
   .companies--item-icon {
     background-size: 80%;
   }

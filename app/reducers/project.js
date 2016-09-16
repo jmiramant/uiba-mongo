@@ -48,6 +48,7 @@ const project = (
       const newStateOjb = {...state}
       newStateOjb[action.state.field] = action.state.value
       return newStateOjb;
+    case types.TOGGLE_PROJECT_ADD:
     case types.CREATE_PROJECT_SUCCESS:
       return {};
     default:

@@ -22,3 +22,8 @@
   padding: 40px 32px;
   color: #8C8C8C;
 }
+@media (max-width: 508px) {
+  .item {
+    padding: 40px 8px;
+  }
+}

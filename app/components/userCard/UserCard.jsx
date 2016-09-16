@@ -63,18 +63,6 @@ export default class UserCard extends React.Component {
       <div className={cx('userCard--container') + ' text-center'} onMouseEnter={this.editIconShow.bind(this)} onMouseLeave={this.editIconHide.bind(this)}>
         <div className={cx('profile--container')}>
           <div className={cx('userCard--picture-container')}>
-            {profile.service === 'linkedin' ? (
-              <span />
-            ) : (
-              <a 
-                className={cx('auto-complete')}
-                href="/auth/linkedin"
-              >
-                <img className={cx('li-img')} src={LiImg} />
-                <p>AutoComplete with Linkedin</p>
-              </a>
-            )}
-
             {profile.picture ? (
               <img className={cx('userCard--picture-img')} src={profile.picture}/>
             ) : (
@@ -106,6 +94,17 @@ export default class UserCard extends React.Component {
               </div>
             )}
           </div>
+          {profile.service === 'linkedin' ? (null) : (
+            <a 
+              className={cx('auto-complete')}
+              href="/auth/linkedin"
+            >
+              <div className={cx('auto-complete-container')}>
+                <img className={cx('li-img')} src={LiImg} />
+                <p>AutoComplete with Linkedin</p>
+              </div>
+            </a>
+          )}
         </div>
       </div>
     )

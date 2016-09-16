@@ -1,4 +1,8 @@
 @import '../common/colors';
+rocket-container {
+  width: 307px;
+  height: 283px;
+}
 
 .rocket_inner {
   transform: translateY(15px) translateX(-3px);
