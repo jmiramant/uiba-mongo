@@ -158,6 +158,6 @@ module.exports = [
         new webpack.IgnorePlugin(/vertx/),
         new InlineEnviromentVariablesPlugin({ NODE_ENV: 'production' })
     ],
-    // postcss: postCSSConfig
+    postcss: postCSSConfig
   }
 ];
