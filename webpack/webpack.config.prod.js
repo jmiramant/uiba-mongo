@@ -1,5 +1,4 @@
 var path = require('path');
-var LessPluginCleanCSS = require('less-plugin-clean-css');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var InlineEnviromentVariablesPlugin = require('inline-environment-variables-webpack-plugin');
 var webpack = require('webpack');
