@@ -14,6 +14,16 @@ import imgYing from 'images/splash/Yin-Yang.svg';
 
 import styles from 'css/components/splash/succeed';
 const cx = classNames.bind(styles);
+const carouselControlOverride = "\
+  .carousel-control.left,.carousel-control.right{\
+    background-image:none !important;\
+    opacity: 1;\
+    text-shadow: none;\
+  }\
+  .carousel-control .glyphicon {\
+    color: #f20253;\
+  }\
+"
 
 export default class SplashSucceed extends React.Component {
   render() {
@@ -43,6 +53,7 @@ export default class SplashSucceed extends React.Component {
             </CCaption>
           </CItem>
         </Carousel>
+        <style>{carouselControlOverride}</style>
       </div>
     )
   }
