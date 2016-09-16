@@ -9,7 +9,7 @@ import { StickyContainer, Sticky } from 'react-sticky';
 import logoImg from '../images/logo/uiba.png';
 import classNames from 'classnames/bind';
 import styles from 'css/components/navigation';
-import "./caretOverride";
+import "css/lib/caretOverride";
 
 const cx = classNames.bind(styles);
 
