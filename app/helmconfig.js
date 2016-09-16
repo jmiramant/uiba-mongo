@@ -13,6 +13,7 @@ const config = {
     // Order is important here. Main needs to be declared to overwrite.
     { rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css' },
     { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css', type: 'text/css' },
+    { rel: 'stylesheet', href: 'dist/css/react-widgets.css' },
     { rel: 'stylesheet', href: '/assets/styles/main.css' }
   ],
   meta: [
