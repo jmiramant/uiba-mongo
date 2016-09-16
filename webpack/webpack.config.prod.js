@@ -9,7 +9,6 @@ var publicPath = '/assets/';
 var commonLoaders = [
   {
     /*
-     * TC39 categorises proposals for babel in 4 stages
      * Read more http://babeljs.io/docs/usage/experimental/
      */
     test: /\.js$|\.jsx$/,
