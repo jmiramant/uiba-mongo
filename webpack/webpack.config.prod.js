@@ -1,4 +1,5 @@
 var path = require('path');
+var LessPluginCleanCSS = require('less-plugin-clean-css');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var InlineEnviromentVariablesPlugin = require('inline-environment-variables-webpack-plugin');
 var webpack = require('webpack');
@@ -37,7 +38,7 @@ var commonLoaders = [
         limit: 10000,
     }
   },
-  { test: /\.less$/, loader: "style-loader!css-loader!less-loader" },
+  { test: /\.less$/, loader:  ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")},
   { test: /\.woff(2)?(\?v=[0-9].[0-9].[0-9])?$/, loader: "url-loader?mimetype=application/font-woff" },
   { test: /\.(ttf|eot)(\?v=[0-9].[0-9].[0-9])?$/, loader: "file-loader?name=[name].[ext]" },
   { test: /\.css$/,
@@ -158,6 +159,6 @@ module.exports = [
         new webpack.IgnorePlugin(/vertx/),
         new InlineEnviromentVariablesPlugin({ NODE_ENV: 'production' })
     ],
-    postcss: postCSSConfig
+    // postcss: postCSSConfig
   }
 ];

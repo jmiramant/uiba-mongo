@@ -38,6 +38,7 @@
     "karma-webpack": "^1.7.0",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
+    "less-plugin-clean-css": "^1.5.1",
     "mocha": "^2.5.3",
     "nock": "^8.0.0",
     "node-inspector": "^0.12.8",
