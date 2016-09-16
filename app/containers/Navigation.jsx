@@ -100,7 +100,7 @@ const Navigation = ({ user, logOut }) => {
               )}
 
             </NavDropdown>
-            <style>{carouselControlOverride}</style>
+            <style>{caretStyle}</style>
           </nav>
         </Sticky>
       </StickyContainer>
