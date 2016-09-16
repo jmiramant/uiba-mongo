@@ -51,7 +51,7 @@ const datepickerStyle ="\
   position: absolute;\
   left: 230px;\
 }\
-.rw-state-focus {/\
+.rw-state-focus {\
   box-shadow: none !important;}\
 "
 
