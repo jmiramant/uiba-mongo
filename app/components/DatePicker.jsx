@@ -36,7 +36,7 @@ export default class DatePicker extends React.Component {
           } = this.props;
 
     const inputClass = classNames({
-      'rw-date-picker': true,
+      [cx('rw-date-picker')]: true,
       'error': validationErrors.startDate && name === 'start',
       'error': validationErrors.endDate && name === 'end',
     });
