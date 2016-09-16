@@ -29,6 +29,11 @@
   margin: 0 2%;
   font-size: 1.3em;
 }
+@media (max-width: 508px) {
+  .hero--right {
+    margin-left: -14px;
+  }
+}
 
 @media (max-width: 992px) {
   .hero--left {
