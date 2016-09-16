@@ -10,6 +10,8 @@ import logoImg from '../images/logo/uiba.png';
 import classNames from 'classnames/bind';
 import styles from 'css/components/navigation';
 
+require("./caretOverrides.less")
+
 const cx = classNames.bind(styles);
 
 const Navigation = ({ user, logOut }) => {
