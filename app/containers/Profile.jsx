@@ -42,7 +42,7 @@ const datepickerStyle ="\
   margin: 25px 0 5px;\
 }\
 .rw-datetimepicker.error input.rw-input {\
-  border-bottom: 2px solid rgb(244, 67, 54);;\
+  border-bottom: 2px solid rgb(244, 67, 54);\
 }\
 .rw-combobox:hover,\
 .rw-datetimepicker:hover,\
