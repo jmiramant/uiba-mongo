@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { logOut } from 'actions/users';
 import { NavDropdown, MenuItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { StickyContainer, Sticky } from 'react-sticky';
 
 import logoImg from '../images/logo/uiba.png';
 import classNames from 'classnames/bind';
@@ -17,70 +16,64 @@ const cx = classNames.bind(styles);
 const Navigation = ({ user, logOut }) => {
     
     return (
-      <StickyContainer>
-        <Sticky className={cx('sticky-nav')}>
-          <nav className={cx('navigation')} role="navigation">
-            { user.authenticated ? (
-              <Link to="/profile"
-                className={cx('item', 'logo')}
-                activeClassName={cx('active')}>
-                  <img className={cx('navbar--header-logo')} src={logoImg} />
-              </Link>
-            ) : (
-              <Link to="/"
-                className={cx('item', 'logo')}
-                activeClassName={cx('active')}>
-                  <img className={cx('navbar--header-logo')} src={logoImg} />
-              </Link>
-            )}
+      <nav className={cx('navigation')} role="navigation">
+        { user.authenticated ? (
+          <Link to="/profile"
+            className={cx('item', 'logo')}
+            activeClassName={cx('active')}>
+              <img className={cx('navbar--header-logo')} src={logoImg} />
+          </Link>
+        ) : (
+          <Link to="/"
+            className={cx('item', 'logo')}
+            activeClassName={cx('active')}>
+              <img className={cx('navbar--header-logo')} src={logoImg} />
+          </Link>
+        )}
 
-            <div className={cx('nav--items-right') + ' pull-right hidden-xs'}>
-              { user.authenticated ? ( <Link className={cx('item')} to="/profile">Profile</Link> ) : (<span />)}
-              <Link to="/about" className={cx('item')} activeClassName={cx('active')}>About</Link>
-              { user.authenticated ? (
-                <Link onClick={logOut}
-                  className={cx('item')} to="/">Logout</Link>
-              ) : (
-                <Link className={cx('item')} to="/login">Get Started</Link>
-              )}
-            </div>
+        <div className={cx('nav--items-right') + ' pull-right hidden-xs'}>
+          { user.authenticated ? ( <Link className={cx('item')} to="/profile">Profile</Link> ) : (<span />)}
+          <Link to="/about" className={cx('item')} activeClassName={cx('active')}>About</Link>
+          { user.authenticated ? (
+            <Link onClick={logOut}
+              className={cx('item')} to="/">Logout</Link>
+          ) : (
+            <Link className={cx('item')} to="/login">Get Started</Link>
+          )}
+        </div>
+        <NavDropdown title='' className={cx('navbar--resp-nav') + ' hidden-sm pull-right hidden-md hidden-lg'} id="responsive-nav-dropdown">
+          { user.authenticated ? (
+            <LinkContainer to="/profile">
+              <MenuItem>
+                Profile
+              </MenuItem>
+            </LinkContainer>
+          ) : (
+            <span />
+          )}
 
-            <NavDropdown title='' className={cx('navbar--resp-nav') + ' hidden-sm pull-right hidden-md hidden-lg'} id="responsive-nav-dropdown">
-              { user.authenticated ? (
-                <LinkContainer to="/profile">
-                  <MenuItem>
-                    Profile
-                  </MenuItem>
-                </LinkContainer>
-              ) : (
-                <span />
-              )}
+          <LinkContainer to="/about">
+            <MenuItem>
+              About
+            </MenuItem>
+          </LinkContainer>
+          
+          { user.authenticated ? (
+            <LinkContainer onClick={logOut} to="/#">
+              <MenuItem>
+                Logout
+              </MenuItem>
+            </LinkContainer>
+          ) : (
+            <LinkContainer to="/login">
+              <MenuItem>
+                Get Started
+              </MenuItem>
+            </LinkContainer>
+          )}
 
-              <LinkContainer to="/about">
-                <MenuItem>
-                  About
-                </MenuItem>
-              </LinkContainer>
-              
-              { user.authenticated ? (
-                <LinkContainer onClick={logOut} to="/#">
-                  <MenuItem>
-                    Logout
-                  </MenuItem>
-                </LinkContainer>
-              ) : (
-                <LinkContainer to="/login">
-                  <MenuItem>
-                    Get Started
-                  </MenuItem>
-                </LinkContainer>
-              )}
-
-            </NavDropdown>
-          </nav>
-        </Sticky>
-      </StickyContainer>
-
+        </NavDropdown>
+      </nav>
     );
 };
 
