@@ -10,32 +10,9 @@ import logoImg from '../images/logo/uiba.png';
 import classNames from 'classnames/bind';
 import styles from 'css/components/navigation';
 
-// require("css/lib/caretOverrides");
+import "css/lib/caretOverrides.less";
 
 const cx = classNames.bind(styles);
-const caretStyle = "\
-  .caret {\
-    border-top: 10px dashed #2185c5;\
-    border-top: 10px solid #2185c5;\
-    border-right: 10px solid transparent;\
-    border-left: 10px solid transparent;\
-  }\
-  .dropdown ul.dropdown-menu {\
-    margin-top: 29px;\
-    right: -55px;\
-    border: none;\
-    width: 250px;\
-    background-color: #FAFAFA;\
-    border-radius: 0px;\
-  }\
-  .dropdown ul.dropdown-menu li {\
-    height: 45px;\
-  }\
-  .dropdown ul.dropdown-menu li a {\
-    height: 45px;\
-    padding-top: 12px;\
-  }\
-"
 
 const Navigation = ({ user, logOut }) => {
     
@@ -100,7 +77,6 @@ const Navigation = ({ user, logOut }) => {
               )}
 
             </NavDropdown>
-            <style>{caretStyle}</style>
           </nav>
         </Sticky>
       </StickyContainer>
