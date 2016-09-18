@@ -6,8 +6,9 @@ import schoolNames from './schoolNames';
 import skills from './skills';
 import projects from './projects';
 import languages from './languages';
+import _exports from './export';
 
-export { users, profiles, jobs, schools, skills, languages, projects };
+export { users, profiles, jobs, schools, skills, languages, projects, _exports};
 
 export default {
   users,
@@ -18,4 +19,5 @@ export default {
   skills,
   projects,
   languages,
+  _exports
 };

@@ -14,9 +14,10 @@ const skillsController = controllers && controllers.skills;
 const projectsController = controllers && controllers.projects;
 const languagesController = controllers && controllers.languages;
 
+const exportsController = controllers && controllers._exports;
+
 export default (app) => {
 
-  
   if (profilesController) {
     app.get('/profile/me', profilesController.me);
     app.put('/profile', profilesController.update);
@@ -132,5 +133,13 @@ export default (app) => {
     );
 
   }
+
+  if (exportsController) {
+    app.get('/api/export/updated/:datetime', exportsController.updated);
+    app.get('/api/export/created/:datetime', exportsController.created);
+  } else {
+    console.warn(unsupportedMessage('export API routes'));
+  }
+
 
 };
