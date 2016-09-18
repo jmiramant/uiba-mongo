@@ -84,7 +84,7 @@ const exportQuery = (req, res, datetime) => {
   });
 }
 
-export function updated(req, res) {
+export function updated(req, res, next) {
   return exportQuery(req, res, req.params.datetime);
 }
 

@@ -15,8 +15,13 @@ export const postmark = {
   token: process.env.POSTMARK_TOKEN || 'b2bc362e-fcc3-41c7-b4da-16327c121bec'
 }
 
+export const externalAPISecret = {
+  token: process.env.UIBA_API_SECRET || 'MvUHj6PG6UPfeA2CccMBwTFn'
+}
+
 export default {
   sessionSecret,
   google,
+  externalAPISecret,
   linkedin
 };

@@ -4,6 +4,7 @@
 import passport from 'passport';
 import unsupportedMessage from '../db/unsupportedMessage';
 import { controllers, passport as passportConfig } from '../db';
+import jwtauth from './jwtauth';
 
 const usersController = controllers && controllers.users;
 const profilesController = controllers && controllers.profiles;
@@ -15,6 +16,8 @@ const projectsController = controllers && controllers.projects;
 const languagesController = controllers && controllers.languages;
 
 const exportsController = controllers && controllers._exports;
+const tokensController = controllers && controllers.tokens;
+
 
 export default (app) => {
 
@@ -134,9 +137,15 @@ export default (app) => {
 
   }
 
+  if (tokensController) {
+    app.get('/api/token', tokensController.token);
+  } else {
+    console.warn(unsupportedMessage('export API routes'));
+  }
+
   if (exportsController) {
-    app.get('/api/export/updated/:datetime', exportsController.updated);
-    app.get('/api/export/created/:datetime', exportsController.created);
+    app.get('/api/export/updated/:datetime', jwtauth, exportsController.updated);
+    app.get('/api/export/created/:datetime', jwtauth, exportsController.created);
   } else {
     console.warn(unsupportedMessage('export API routes'));
   }
