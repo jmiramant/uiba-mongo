@@ -16,7 +16,8 @@ export const postmark = {
 }
 
 export const externalAPISecret = {
-  token: process.env.UIBA_API_SECRET || 'MvUHj6PG6UPfeA2CccMBwTFn'
+  token: process.env.UIBA_API_SECRET || 'MvUHj6PG6UPfeA2CccMBwTFn',
+  accessEmail: process.env.UIBA_API_SECRET || 'token@token.com'
 }
 
 export default {

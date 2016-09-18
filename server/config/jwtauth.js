@@ -22,7 +22,7 @@ module.exports = function(req, res, next){
       var decoded = jwt.decode(token, externalAPISecret.token)
 
       if (decoded.exp <= Date.now()) {
-        res.end('Access token has expired', 400)        
+        res.end('Access token has expired', 401)        
       }
 
       User.findOne({ '_id': decoded.iss }, function(err, user){
@@ -34,10 +34,10 @@ module.exports = function(req, res, next){
       })
 
     } catch (err) {     
-      res.status(400).send(err);
+      res.status(401).send(err);
     }
 
   } else {
-    res.status(400).send("Please provide an api key")
+    res.status(401).send("Please provide an api key")
   }
 }
