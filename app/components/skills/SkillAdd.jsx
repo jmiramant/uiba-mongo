@@ -126,6 +126,7 @@ export default class SkillAdd extends React.Component {
                 title="Proficiency"
                 field={'proficiency'}
                 handleChange={this.sliderChange.bind(this)}
+                storeValue={[1, 2, 3, 4]}
                 stages={['learning', 'intermediate', 'competent', 'expert']}
               />
 

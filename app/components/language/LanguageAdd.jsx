@@ -134,7 +134,7 @@ export default class LanguageAdd extends React.Component {
                 title="Proficiency"
                 field={'proficiency'}
                 handleChange={this.sliderChange.bind(this)}
-                storeValue={['elementary proficiency', 'limited working proficiency', 'minimum professional proficiency', 'native or bilingual proficiency']}
+                storeValue={[1, 2, 3, 4]}
                 stages={['elementary', 'limited working', 'minimum professional', 'native or bilingual']}
               />
           
