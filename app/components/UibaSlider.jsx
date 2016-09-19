@@ -17,6 +17,7 @@ export default class UibaSlider extends React.Component {
     storeValue: PropTypes.array,
     errorText: PropTypes.string,
     handleChange: PropTypes.func.isRequired,
+    style: PropTypes.object,
   }
 
   constructor(props) {
@@ -50,11 +51,15 @@ export default class UibaSlider extends React.Component {
             errorText
           } = this.props;
 
-    const sliderStyle = {
+
+    let sliderStyle = {
       width: "80%",
       margin: '0 auto 10px'
     }
     
+    if (this.props.style) {
+      sliderStyle = Object.assign({}, sliderStyle, this.props.style)
+    }
 
     const itemStyle = {
       width: ((100 / stages.length).toString() + '%')
