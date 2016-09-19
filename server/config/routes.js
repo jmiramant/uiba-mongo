@@ -138,14 +138,14 @@ export default (app) => {
   }
 
   if (tokensController) {
-    app.get('/api/token', tokensController.token);
+    app.get('/api/v1/token', tokensController.token);
   } else {
     console.warn(unsupportedMessage('export API routes'));
   }
 
   if (exportsController) {
-    app.get('/api/export/updated/:datetime', jwtauth, exportsController.updated);
-    app.get('/api/export/created/:datetime', jwtauth, exportsController.created);
+    app.get('/api/v1/export/updated/:datetime', jwtauth, exportsController.updated);
+    app.get('/api/v1/export/created/:datetime', jwtauth, exportsController.created);
   } else {
     console.warn(unsupportedMessage('export API routes'));
   }

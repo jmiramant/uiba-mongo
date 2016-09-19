@@ -8,7 +8,7 @@ export function token(req, res) {
 
   if (req.headers.email && req.headers.password) {   
   
-    if (req.headers.email.indexOf('@uiba.com') !== -1 || req.headers.email === externalAPISecret.accessEmail) {
+    if (req.headers.email.indexOf('@uiba.co') !== -1 || req.headers.email === externalAPISecret.accessEmail) {
       // Fetch the appropriate user, if they exist
       UserModel.findOne({ email: req.headers.email }, function(err, user) {
         if (err) {    

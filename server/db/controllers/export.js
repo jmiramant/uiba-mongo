@@ -37,7 +37,7 @@ const exportQuery = (req, res, datetime) => {
     parallels[k] = (callback) => {
       if (k === 'profile') {
         v.find(query)
-          .limit(250)
+          .limit(500)
           .exec( (err, prof) => {
           callback(err, prof);
         })

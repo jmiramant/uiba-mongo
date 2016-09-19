@@ -44,10 +44,10 @@ Master branch deploys to production. Staging deploys to staging.
 
 **Creating a token**
   - Ensure user is authenticated on app. 
-  - Hit `/api/token' with `email` and `password` as headers. You will be returned a Token.
+  - Hit `/api/v1/token' with `email` and `password` as headers. You will be returned a Token.
   - Pass this token as a header on `x-access-token`. 
   - Token will expire after 1 week.
-  
+
 
 **Get: Generate Token**
 ----
@@ -55,7 +55,7 @@ Master branch deploys to production. Staging deploys to staging.
 
 * **URL**
 
-  /api/token
+  /api/v1/token
 
 * **Method:**
 
@@ -98,7 +98,7 @@ Master branch deploys to production. Staging deploys to staging.
 
   ```javascript
     $.ajax({
-      url: "/api/token",
+      url: "/api/v1/token",
       headers: {
         email: <email>,
         password: <password>,
@@ -112,11 +112,11 @@ Master branch deploys to production. Staging deploys to staging.
 
 **Get: Export New Users**
 ----
-  Export user data for all new users after a provided timestamp. Limited to 250.
+  Export user data for all new users after a provided timestamp. Limited to 500.
 
 * **URL**
 
-  /api/export/created/:epoch_datetime
+  /api/v1/export/created/:epoch_datetime
 
 * **Method:**
 
@@ -195,7 +195,7 @@ Master branch deploys to production. Staging deploys to staging.
 
   ```javascript
     $.ajax({
-      url: "/api/export/created/1473465600000",
+      url: "/api/v1/export/created/1473465600000",
       headers: {
         x-access-token: <TOKEN>
       }
@@ -212,7 +212,7 @@ Master branch deploys to production. Staging deploys to staging.
 
 * **URL**
 
-  /api/export/updated/:epoch_datetime
+  /api/v1/export/updated/:epoch_datetime
 
 * **Method:**
 
@@ -291,7 +291,7 @@ Master branch deploys to production. Staging deploys to staging.
 
   ```javascript
     $.ajax({
-      url: "/api/export/updated/1473465600000",
+      url: "/api/v1/export/updated/1473465600000",
       headers: {
         x-access-token: <TOKEN>
       }
