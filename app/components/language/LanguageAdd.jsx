@@ -153,7 +153,7 @@ export default class LanguageAdd extends React.Component {
               ) : (null)}
           
               <div className={cx('profile-btn-group')}>
-                <FlatButton className='pull-right' type="submit" label="Save" primary={true} />
+                <RaisedButton className='pull-right' type="submit" label="Save" primary={true} />
                 {this.props.handleDelete ? (
                   <FlatButton className='pull-left' label="Delete" onClick={this.props.handleDelete} primary={true} />
                 ) : (<span />)}
