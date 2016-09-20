@@ -50,6 +50,7 @@ export default class SchoolAdd extends React.Component {
   }
 
   changeSchoolProps(field, value) {
+    this.setState({validationErrors: {}})
     this.props.schoolChange({
       field: field,
       value: value,

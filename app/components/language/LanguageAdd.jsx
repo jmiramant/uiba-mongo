@@ -53,6 +53,7 @@ export default class LanguageAdd extends React.Component {
   }
 
   changeLanguageProps(field, value) {
+    this.setState({validationErrors: {}})
     this.props.languageChange({
       field: field,
       value: value,

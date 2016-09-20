@@ -44,7 +44,6 @@ export default class SchoolItem extends React.Component {
 
   render () {
     const { 
-            isntLast, 
             school, 
             schoolChange
           } = this.props;

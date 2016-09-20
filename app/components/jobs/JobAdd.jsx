@@ -49,6 +49,7 @@ export default class JobAdd extends React.Component {
   }
 
   changeJobProps(field, value) {
+    this.setState({validationErrors: {}})
     this.props.jobChange({
       field: field,
       value: value,

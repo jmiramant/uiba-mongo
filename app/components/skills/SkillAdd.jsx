@@ -53,6 +53,7 @@ export default class SkillAdd extends React.Component {
   }
 
   changeSkillProps(field, value) {
+    this.setState({validationErrors: {}})
     this.props.skillChange({
       field: field,
       value: value,
