@@ -49,11 +49,19 @@ export default class SchoolItem extends React.Component {
             schoolChange
           } = this.props;
 
-    const addComma = (v, i, ct) => {
-      if ((i+1) === ct.length) {
-        return v;
+    const addComma = (items) => {
+      if (items.length > 1) {
+        let resp = '';
+        items.map( (item, i) => {
+          i + 1 === items.length ? (
+            resp+= item
+          ) : (
+            resp+= item + ','
+          )
+        })
+        return resp
       } else {
-        return v + ', ';
+        return items
       }
     }
     
@@ -82,6 +90,9 @@ export default class SchoolItem extends React.Component {
           />
           <h4 className={cx("schoolItem--header")}>{school.name} | { school.current ? ( 'Current' ) : ( moment(school.endDate).format('YYYY')) }</h4>
           <p className={cx("schoolItem--subHeader")}>{ school.major[0] } | { school.degree }</p>
+          { school.minor && school.minor[0] ? (
+            <p className={cx("schoolItem--subHeader")}>{ addComma(school.minor) } | Minor</p>
+          ) : (null)}
         </div>
       )
 
