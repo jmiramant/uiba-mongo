@@ -97,7 +97,9 @@ export function createSkill(skillData) {
         }
       })
       .catch((err) => {
-        return dispatch(createSkillFailure({error: err.response.data}));
+        let error = err
+        if (err.response && err.response.data) { error = err.response.data }
+        return dispatch(createSkillFailure({error: error}));
       });
   }
 }

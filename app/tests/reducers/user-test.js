@@ -4,6 +4,7 @@ import * as types from 'types';
 
 describe('Users reducer', () => {
   const initialState = {
+    isFetching: false,
     isLogin: true,
     currentUser: [],
     message: '',
