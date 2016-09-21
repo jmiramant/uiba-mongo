@@ -87,10 +87,11 @@ export default class SchoolItem extends React.Component {
             onClick={this.toggleEdit.bind(this)}
             className={cx("schoolItem--edit") + ' pull-right'}
           />
-          <h4 className={cx("schoolItem--header")}>{school.name} | { school.current ? ( 'Current' ) : ( moment(school.endDate).format('YYYY')) }</h4>
-          <p className={cx("schoolItem--subHeader")}>{ school.major[0] } | { school.degree }</p>
+          <h4 className={cx("schoolItem--header")}>{school.name} | { school.degree }</h4>
+          <p className={cx("schoolItem--subHeader", 'date')}>{ moment(school.startDate).format('YYYY') } - {school.current ? ( 'Current' ) : ( moment(school.endDate).format('YYYY')) }</p>
+          <p className={cx("schoolItem--subHeader")}>Major{school.minor.length > 1 ? ("s") : (null)} | { addComma(school.major) } </p>
           { school.minor && school.minor[0] ? (
-            <p className={cx("schoolItem--subHeader")}>{ addComma(school.minor) } | Minor</p>
+            <p className={cx("schoolItem--subHeader")}>Minor{school.minor.length > 1 ? ("s") : (null)} | { addComma(school.minor) }</p>
           ) : (null)}
         </div>
       )
