@@ -43,10 +43,7 @@
 .companies--box-title {
   font-size: 22px;
   color: #363636;
-  padding: 0 55px;
-  &.first {
-    padding-bottom: 0px;
-  }
+  padding: 0 40px;
   &.bottom { 
     padding-top: 25px; 
   }

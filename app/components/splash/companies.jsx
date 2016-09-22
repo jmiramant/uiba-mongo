@@ -51,7 +51,7 @@ export default class SplashCompanies extends React.Component {
               <div className={cx('companies--box-text')}>Tailored career guidance empowers employees to understand & manage their careers.</div>
             </div>
           </div>
-          <div className='col-md-4 col-sm-24 col-md-offset-2 col-sm-offset-12'>
+          <div className='col-md-4 col-md-offset-2'>
             <div className={cx('companies--box-item', 'companies--box-item-blue')}>
               <div className={cx('companies--box-title', 'bottom')}>Talent Acquisition</div>
               <div className={cx('companies--item-icon', 'crosshair')}></div>
