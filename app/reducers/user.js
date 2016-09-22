@@ -6,8 +6,6 @@ const isFetching = (
   action
 ) => {
   switch (action.type) {
-    case types.GET_USERS_REQUEST:
-      return true;
     case types.GET_USERS_SUCCESS:
     case types.GET_USERS_FAILURE:
       return false;

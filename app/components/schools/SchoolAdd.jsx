@@ -50,6 +50,7 @@ export default class SchoolAdd extends React.Component {
   }
 
   changeSchoolProps(field, value) {
+    this.setState({validationErrors: {}})
     this.props.schoolChange({
       field: field,
       value: value,
@@ -115,21 +116,22 @@ export default class SchoolAdd extends React.Component {
 
           <div className="col-md-6">
             <SelectField
+              style={{minWidth: "320px"}}
               errorText={validationErrors.degree}
               onChange={this.handleDegree}
               value={school.degree}
               floatingLabelText="Degree"
               hintText='Degree'
             >
-              <MenuItem value={'Doctorate'} primaryText="Doctorate" />
-              <MenuItem value={'Graduate'} primaryText="Graduate" />
-              <MenuItem value={'Post Masters Certificate'} primaryText="Post Master's Certificate" />
-              <MenuItem value={'Master'} primaryText="Master" />
-              <MenuItem value={'Postbaccalaureate Certificate'} primaryText="Postbaccalaureate Certificate" />
-              <MenuItem value={'Bachelor'} primaryText="Bachelor" />
-              <MenuItem value={'Associate'} primaryText="Associate" />
-              <MenuItem value={'First Professional Certificate'} primaryText="First Professional Certificate" />
-              <MenuItem value={'High School Diploma'} primaryText="High School Diploma" />
+              <MenuItem value={'High School'} primaryText="High School" />
+              <MenuItem value={"Associate"} primaryText="Associate's Degree" />
+              <MenuItem value={'Bachelor'} primaryText="Bachelor's Degree" />
+              <MenuItem value={'Master'} primaryText="Master's Degree" />
+              <MenuItem value={'MBA'} primaryText="Master's of Business Administration (MBA)" />
+              <MenuItem value={'JD'} primaryText="Juris Doctorate (J.D.)" />
+              <MenuItem value={'MD'} primaryText="Doctor of Medicine (M.D.)" />
+              <MenuItem value={'PhD'} primaryText="Doctor of Philosophy (Ph.D.)" />
+              <MenuItem value={'Engineer Degree'} primaryText="Engineer's Degree" />
               <MenuItem value={'Certificate'} primaryText="Certificate" />
               <MenuItem value={'Coursework'} primaryText="Coursework" />
               <MenuItem value={'other'} primaryText="Other" />

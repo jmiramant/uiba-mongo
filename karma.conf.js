@@ -48,12 +48,24 @@ module.exports = function(config) {
               'plugins': [
                 'transform-react-remove-prop-types',
                 'transform-react-constant-elements',
+                "transform-decorators-legacy", 
                 'transform-react-inline-elements'
               ]
             },
             include: path.join(__dirname, 'app'),
             exclude: path.join(__dirname, '/node_modules/')
           },
+          {
+            test: /\.(png|jpg|jpeg|gif|svg)$/,
+            loader: 'url',
+            query: {
+                name: '[hash].[ext]',
+                limit: 10000,
+            }
+          },
+          { test: /\.less$/, loader: "style-loader!css-loader!less-loader" },
+          { test: /\.woff(2)?(\?v=[0-9].[0-9].[0-9])?$/, loader: "url-loader?mimetype=application/font-woff" },
+          { test: /\.(ttf|eot)(\?v=[0-9].[0-9].[0-9])?$/, loader: "file-loader?name=[name].[ext]" },
           { test: /\.json$/, loader: 'json-loader' },
           { test: /\.css$/, loader: 'null-loader' }
         ],
@@ -65,7 +77,7 @@ module.exports = function(config) {
         'react/lib/ReactContext': true
       },
       resolve: {
-        extensions: ['', '.js', '.jsx', '.css'],
+        extensions: ['', '.js', '.jsx', '.css', '.less'],
         modulesDirectories: [
           'app', 'node_modules'
         ]

@@ -50,7 +50,7 @@ describe('Users Async Actions', () => {
     });
 
   describe('User Login', () => {
-    it('dispatches MANUAL_LOGIN_USER and LOGIN_SUCCESS_USER when Manual Login returns status of 200 and routes user to /', (done) => {
+    it('dispatches MANUAL_LOGIN_USER and LOGIN_SUCCESS_USER when Manual Login returns status of 200 and routes user to /profile', (done) => {
       const expectedActions = [
       {
         type: types.MANUAL_LOGIN_USER
@@ -61,7 +61,7 @@ describe('Users Async Actions', () => {
       },
       {
         payload: {
-          args: ['/'],
+          args: ['/profile'],
           method: 'push'
         },
         type: '@@router/CALL_HISTORY_METHOD'
@@ -99,7 +99,7 @@ describe('Users Async Actions', () => {
   });
 
   describe('User Signup', () => {
-    it('dispatches SIGNUP_USER and SIGNUP_SUCCESS_USER when Sign Up returns status of 200 and routes user to /', (done) => {
+    it('dispatches SIGNUP_USER and SIGNUP_SUCCESS_USER when Sign Up returns status of 200 and routes user to /profile', (done) => {
       const expectedActions = [
       {
         type: types.SIGNUP_USER
@@ -110,7 +110,7 @@ describe('Users Async Actions', () => {
       },
       {
         payload: {
-          args: ['/'],
+          args: ['/profile'],
           method: 'push'
         },
         type: '@@router/CALL_HISTORY_METHOD'

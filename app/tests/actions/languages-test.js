@@ -5,7 +5,7 @@ import md5 from 'spark-md5';
 import { polyfill } from 'es6-promise';
 import axios from 'axios';
 import expect from 'expect';
-import * as actions from 'actions/jobs';
+import * as actions from 'actions/languages';
 import * as types from 'types';
 
 polyfill();
@@ -13,34 +13,28 @@ polyfill();
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
-describe('Job Actions', () => {
+describe('Language Actions', () => {
   describe('Asynchronous actions', () => {
     let sandbox;
 
-    function createDateObj (date) {
-      const split = date.split('-');
-      return new Date(split[0], split[1], split[2])
-    };
-
-    const companyName = 'Pollo Loco';
-    const user_id = md5.hash(companyName);
-    const company_id = md5.hash(companyName);
-    const id = md5.hash(companyName);
+    const language = 'Node.js';
+    const profile_id = md5.hash(language);
+    const id = md5.hash(language);
     const data = {
       id,
-      user_id: user_id,
-      company_id: company_id,
-      companyName: companyName, 
-      description: 'I run the finest chicken places in New Mexico.',
-      title: 'CEO',
-      current: false,
-      startDate: createDateObj('2015-01-01'),
-      endDate: createDateObj('2016-01-01'),
+      profile_id,
+      name: 'Josh',
+      major: ['asd', 'asdw'],
+      minor: ['asd', 'asdw'],
+      degree: 'Master',
+      startDate: new Date(),
+      endDate: new Date(),
+      current: false
     };
 
     const initialState = {
-      job: {
-        jobs: []
+      language: {
+        languages: []
       }
     };
 
@@ -55,10 +49,10 @@ describe('Job Actions', () => {
     it('dispatches request and success actions when status is 200', done => {
       const expectedActions = [
         {
-          type: types.CREATE_JOB,
+          type: types.CREATE_LANGUAGE,
           data: data
         }, {
-          type: types.CREATE_JOB_SUCCESS,
+          type: types.CREATE_LANGUAGE_SUCCESS,
           data: undefined
         }
       ];
@@ -66,7 +60,7 @@ describe('Job Actions', () => {
       sandbox.stub(axios, 'post').returns(Promise.resolve({ status: 200 }));
 
       const store = mockStore(initialState);
-      store.dispatch(actions.createJob(data))
+      store.dispatch(actions.createLanguage(data))
         .then(() => {
           expect(store.getActions()).toEqual(expectedActions);
         }).then(done)
@@ -76,85 +70,85 @@ describe('Job Actions', () => {
     it('dispatches request and failed actions when status is NOT 200', done => {
       const expectedActions = [
         {
-          type: types.CREATE_JOB,
+          type: types.CREATE_LANGUAGE,
           data: data
         }, {
-          type: types.CREATE_JOB_FAILURE,
-          error: 'Oops! Something went wrong and we couldn\'t create your job.'
+          type: types.CREATE_LANGUAGE_FAILURE,
+          error: { data: 'Oops! Something went wrong and we couldn\'t create your language.', status: 404 }
         }
       ];
-      sandbox.stub(axios, 'post').returns(Promise.reject({status: 404, data: 'Oops! Something went wrong and we couldn\'t create your topic'}));
+      sandbox.stub(axios, 'post').returns(Promise.reject({status: 404, data: 'Oops! Something went wrong and we couldn\'t create your language.'}));
 
       const store = mockStore(initialState);
-      store.dispatch(actions.createJob(data))
+      store.dispatch(actions.createLanguage(data))
         .then(() => {
           expect(store.getActions()).toEqual(expectedActions);
         }).then(done)
         .catch(done);
     });
 
-    it('updateJob dispatches a change action on success', done => {
+    it('updateLanguage dispatches a change action on success', done => {
       const expectedActions = [{
         data: data,
-        type: types.UPDATE_JOB
+        type: types.UPDATE_LANGUAGE
       }, {
         data: undefined,
-        type: types.UPDATE_JOB_SUCCESS
+        type: types.UPDATE_LANGUAGE_SUCCESS
       }];
       sandbox.stub(axios, 'put').returns(Promise.resolve({ status: 200 }));
       const store = mockStore();
-      store.dispatch(actions.updateJob(data))
+      store.dispatch(actions.updateLanguage(data))
         .then(() => {
           expect(store.getActions()).toEqual(expectedActions);
         }).then(done)
         .catch(done);
     });
 
-    it('updateJob dispatches a failed action on failure', done => {
+    it('updateLanguage dispatches a failed action on failure', done => {
       const expectedActions = [{
         data: data,
-        type: types.UPDATE_JOB
+        type: types.UPDATE_LANGUAGE
       }, {
-        error: 'Oops! Something went wrong and we couldn\'t create your job.',
-        type: types.UPDATE_JOB_FAILURE
+        error: { data: 'Oops! Something went wrong and we couldn\'t delete your language.', status: 404 },
+        type: types.UPDATE_LANGUAGE_FAILURE
       }];
-      sandbox.stub(axios, 'put').returns(Promise.reject({status: 404, data: 'Oops! Something went wrong and we couldn\'t delete your job.'}));
+      sandbox.stub(axios, 'put').returns(Promise.reject({status: 404, data: 'Oops! Something went wrong and we couldn\'t delete your language.'}));
       const store = mockStore();
-      store.dispatch(actions.updateJob(data))
+      store.dispatch(actions.updateLanguage(data))
         .then(() => {
           expect(store.getActions()).toEqual(expectedActions);
         }).then(done)
         .catch(done);
     });
 
-    it('deleteJob dispatches a delete action on success', done => {
+    it('deleteLanguage dispatches a delete action on success', done => {
       const expectedActions = [{
         data: data,
-        type: 'DELETE_JOB_REQUEST'
+        type: 'DELETE_LANGUAGE_REQUEST'
       }, {
         data: undefined,
-        type: 'DELETE_JOB_SUCCESS'
+        type: 'DELETE_LANGUAGE_SUCCESS'
       }];
       sandbox.stub(axios, 'delete').returns(Promise.resolve({ status: 200 }));
       const store = mockStore();
-      store.dispatch(actions.deleteJob(data))
+      store.dispatch(actions.deleteLanguage(data))
         .then(() => {
           expect(store.getActions()).toEqual(expectedActions);
         }).then(done)
         .catch(done);
     });
 
-    it('deleteJob dispatches a failure event on failure', done => {
+    it('deleteLanguage dispatches a failure event on failure', done => {
       const expectedActions = [{
-        type: types.DELETE_JOB_REQUEST,
+        type: types.DELETE_LANGUAGE_REQUEST,
         data: data
       }, {
-        type: types.DELETE_JOB_FAILURE,
-        error: 'Oops! Something went wrong and we couldn\'t delete your job.',
+        type: types.DELETE_LANGUAGE_FAILURE,
+        error: 'Oops! Something went wrong and we couldn\'t delete your language.',
       }];
-      sandbox.stub(axios, 'delete').returns(Promise.reject({status: 404, data: 'Oops! Something went wrong and we couldn\'t delete your job.'}));
+      sandbox.stub(axios, 'delete').returns(Promise.reject({status: 404, data: 'Oops! Something went wrong and we couldn\'t delete your language.'}));
       const store = mockStore();
-      store.dispatch(actions.deleteJob(data))
+      store.dispatch(actions.deleteLanguage(data))
         .then(() => {
           expect(store.getActions()).toEqual(expectedActions);
         }).then(done)

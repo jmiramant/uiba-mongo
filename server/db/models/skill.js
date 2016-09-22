@@ -4,8 +4,8 @@ import { Profile } from './profile';
 const SkillSchema = new mongoose.Schema({
   profile_id: {type: Schema.Types.ObjectId, ref: 'Profile', required: true },
   type: { type: String, default: '', required: true},
-  proficiency: { type: String,
-                 enum: ['learning', 'intermediate', 'competent', 'expert'],
+  proficiency: { type: Number,
+                 enum: [1, 2, 3, 4],
                  required: true
                },
   lengthOfUse: { type: Number, required: true },

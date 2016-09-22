@@ -49,6 +49,8 @@ export default class ProjectItem extends React.Component {
             projectChange
           } = this.props;
 
+    let descId = 0;
+
     if (this.state.edit) {
 
       return (
@@ -75,13 +77,7 @@ export default class ProjectItem extends React.Component {
           <h4 
             className={cx("projectItem--header")}
           >
-            {project.name} | { 
-              project.current ? ( 
-                'Current' 
-              ) : ( 
-                moment(project.endDate).format('MMM, YYYY')) 
-            } 
-            { (project.projectUrl && project.projectUrl.length > 0) ? (
+            {project.name} { (project.projectUrl && project.projectUrl.length > 0) ? (
                 <a 
                   href={project.projectUrl}
                   target="_blank">
@@ -92,7 +88,23 @@ export default class ProjectItem extends React.Component {
                 </a>
               ) : (null)}
           </h4>
-          <p className={cx('projectItem--description')}>{project.description}</p>
+          <p className={cx("projectItem--date", 'date')}> { 
+              moment(project.startDate).format('MMM, YYYY')
+            } - { 
+              project.current ? ( 
+                'Current' 
+              ) : ( 
+                moment(project.endDate).format('MMM, YYYY')) 
+            } 
+          </p>
+          <div className={cx('projectItem--description')}>
+          {project.description.split('\n').map((item) => {
+            let key = project._id + item + descId
+            return (
+              <span key={key}>{item}<br/></span>
+            )
+            descId++
+          })}</div>
         </div>
       )
 

@@ -53,6 +53,7 @@ export default class SkillAdd extends React.Component {
   }
 
   changeSkillProps(field, value) {
+    this.setState({validationErrors: {}})
     this.props.skillChange({
       field: field,
       value: value,
@@ -126,17 +127,19 @@ export default class SkillAdd extends React.Component {
                 title="Proficiency"
                 field={'proficiency'}
                 handleChange={this.sliderChange.bind(this)}
+                storeValue={[1, 2, 3, 4]}
                 stages={['learning', 'intermediate', 'competent', 'expert']}
               />
 
               <UibaSlider
                 dataSource={skill}
                 errorText={validationErrors.lengthOfUse}
-                title="Length of Use"
+                title="Length of Use (Yrs)"
                 field={'lengthOfUse'}
+                style={{width: '90%'}}
                 handleChange={this.sliderChange.bind(this)}
-                storeValue={[0, 1, 3, 5, 10]}
-                stages={['>1', '1-3', '3-5', '5-10', '<10']}
+                storeValue={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+                stages={['>1', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10+']}
               />
 
               <div className={cx('profile-btn-group')}>

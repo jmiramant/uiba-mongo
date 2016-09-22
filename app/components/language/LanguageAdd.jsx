@@ -53,6 +53,7 @@ export default class LanguageAdd extends React.Component {
   }
 
   changeLanguageProps(field, value) {
+    this.setState({validationErrors: {}})
     this.props.languageChange({
       field: field,
       value: value,
@@ -134,7 +135,7 @@ export default class LanguageAdd extends React.Component {
                 title="Proficiency"
                 field={'proficiency'}
                 handleChange={this.sliderChange.bind(this)}
-                storeValue={['elementary proficiency', 'limited working proficiency', 'minimum professional proficiency', 'native or bilingual proficiency']}
+                storeValue={[1, 2, 3, 4]}
                 stages={['elementary', 'limited working', 'minimum professional', 'native or bilingual']}
               />
           
@@ -145,13 +146,14 @@ export default class LanguageAdd extends React.Component {
                   title="Experience (in years)"
                   field={'experience'}
                   handleChange={this.sliderChange.bind(this)}
-                  storeValue={[0, 1, 3, 5, 10]}
-                  stages={['>1', '1-3', '3-5', '5-10', '<10']}
+                  style={{width: '90%'}}
+                  storeValue={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+                  stages={['>1', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10+']}
                 />
               ) : (null)}
           
               <div className={cx('profile-btn-group')}>
-                <FlatButton className='pull-right' type="submit" label="Save" primary={true} />
+                <RaisedButton className='pull-right' type="submit" label="Save" primary={true} />
                 {this.props.handleDelete ? (
                   <FlatButton className='pull-left' label="Delete" onClick={this.props.handleDelete} primary={true} />
                 ) : (<span />)}

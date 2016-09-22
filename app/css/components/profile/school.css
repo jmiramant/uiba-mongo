@@ -12,11 +12,16 @@
 
 .schoolItem--header {
   @apply --item--header;
+  margin-bottom: 4px;
 }
 
 .schoolItem--subHeader {
   @apply --item--subheader;
   color: var(--colorLightGreyText);
+}
+
+.date {
+  @apply --item--subheader-date;
 }
 
 .schoolItem--edit {

@@ -29,6 +29,12 @@
   }
 }
 
+@media (max-width: 508px) { 
+  .stage-label {
+    font-size: 7px;
+  }
+}
+
 .errors {
   font-size: 12px;
   font-family: Roboto, sans-serif;

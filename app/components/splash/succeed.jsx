@@ -32,7 +32,7 @@ export default class SplashSucceed extends React.Component {
             <div className={cx('carousel--img-border', 'carousel--img-border-red')}><img className={cx('spalsh--carousel-img')} width={109} height={109} alt="109X109" src={imgGrid} /></div>
             <CCaption className={cx('carousel--caption')}>
               <h3 className={cx('carousel--item-title')}>2. Understanding Your Capabilities</h3>
-              <p className={cx('carousel--item-sub')}>Now let's compare your capabilities with the requirements of various roles along different career paths to being building your future today.</p>
+              <p className={cx('carousel--item-sub')}>Now let's compare your capabilities with the requirements of various roles along different career paths to begin building your future today.</p>
             </CCaption>
           </CItem>
           <CItem className={cx('carousel--item')}>

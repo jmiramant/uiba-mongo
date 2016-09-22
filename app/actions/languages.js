@@ -97,7 +97,9 @@ export function createLanguage(languageData) {
         }
       })
       .catch((err) => {
-        return dispatch(createLanguageFailure({error: err.response.data}));
+        let error = err;
+        if (err.response && err.response.data) {error = err.response.data;}
+        return dispatch(createLanguageFailure({error: error}));
       });
   }
 }
@@ -113,8 +115,10 @@ export function updateLanguage(languageData) {
           return dispatch(updateLanguageSuccess(res.data));
         }
       })
-      .catch(() => {
-        return dispatch(updateLanguageFailure({ error: 'Oops! Something went wrong and we couldn\'t create your language.'}));
+      .catch((err) => {
+        let error = err;
+        if (err.response && err.response.data) {error = err.response.data;}        
+        return dispatch(updateLanguageFailure({ error: error}));
       });
   }
 

@@ -20,11 +20,24 @@
   --item--header {
     border-left: 2px solid var(--colorBrightPink);
     padding-left: 10px;
+    font-size: 16px;
   }
  
   --item--subheader {
     margin: 0;
     padding: 0 0 0 14px;
+  }
+
+  --item--subheader-date {
+    font-size: 15px;
+    color: #363636;
+  }
+
+  --item-description {
+    font-size: 13px;
+    padding-left: 14px;
+    line-height: 1.4;
+    color: var(--colorLightGreyText);
   }
 
   --chip--spacing {

@@ -49,6 +49,7 @@ export default class ProjectAdd extends React.Component {
   }
 
   changeProjectProps(field, value) {
+    this.setState({validationErrors: {}})
     this.props.projectChange({
       field: field,
       value: value,
@@ -160,7 +161,7 @@ export default class ProjectAdd extends React.Component {
               floatingLabelText="Description"
               onChange={this.handleChange('description')}
               multiLine={true}
-              rows={2}
+              rows={1}
             />
           </div>
 
