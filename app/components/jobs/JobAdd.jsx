@@ -153,7 +153,7 @@ export default class JobAdd extends React.Component {
               floatingLabelText="Description"
               onChange={this.handleChange('description')}
               multiLine={true}
-              rows={2}
+              rows={1}
             />
           </div>
 

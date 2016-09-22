@@ -11,8 +11,7 @@
 }
 
 .projectItem--header {
-  border-left: 2px solid var(--colorBrightPink);
-  padding-left: 10px;
+  @apply --item--header;
 }
 
 .projectItem--description {
@@ -28,6 +27,16 @@
 
 .projectItem--link {
   margin-bottom: -6px;
+}
+
+.projectItem--date {
+  display: inline-block;
+  padding: 0;
+  @apply --item--subheader;
+}
+
+.projectItem--description {
+  @apply --item-description
 }
 
 .profile-btn-group {

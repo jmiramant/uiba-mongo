@@ -21,7 +21,7 @@
 }
 
 .date {
-  font-size: 15px;
+  @apply --item--subheader-date;
 }
 
 .schoolItem--edit {

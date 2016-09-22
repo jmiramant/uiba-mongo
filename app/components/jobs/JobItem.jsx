@@ -48,6 +48,8 @@ export default class JobItem extends React.Component {
             jobChange
           } = this.props;
 
+    let descId = 0;
+
     if (this.state.edit) {
 
       return (
@@ -86,10 +88,15 @@ export default class JobItem extends React.Component {
             {moment(job.startDate).format('MMM, YYYY')} - { job.current ? ( 'Current' ) : ( moment(job.endDate).format('MMM, YYYY')) } 
           </p>
 
-          <p className={cx("jobItem--description")}>
-            {job.description}
-          </p>
-        
+          <div className={cx("jobItem--description")}>
+            {job.description.split('\n').map((item) => {
+              let key = job._id + item + descId
+              return (
+                <span key={key}>{item}<br/></span>
+              )
+              descId++
+            })}
+          </div>
         </div>
       )
 

@@ -37,10 +37,7 @@
 }
 
 .jobItem--description {
-  font-size: 13px;
-  padding-left: 14px;
-  line-height: 1.4;
-  color: var(--colorLightGreyText);
+  @apply --item-description
 }
 
 .jobItem--spacer {
@@ -102,4 +99,10 @@
 
 .jobEdit--buttons:hover {
   color: var(--colorGreen);
+}
+
+@media (max-width: 508px) {
+  .jobItem--date {
+    width: 100%;
+  }
 }

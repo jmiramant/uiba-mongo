@@ -116,6 +116,7 @@ export default class SchoolAdd extends React.Component {
 
           <div className="col-md-6">
             <SelectField
+              style={{minWidth: "320px"}}
               errorText={validationErrors.degree}
               onChange={this.handleDegree}
               value={school.degree}
@@ -126,7 +127,7 @@ export default class SchoolAdd extends React.Component {
               <MenuItem value={"Associate"} primaryText="Associate's Degree" />
               <MenuItem value={'Bachelor'} primaryText="Bachelor's Degree" />
               <MenuItem value={'Master'} primaryText="Master's Degree" />
-              <MenuItem value={'MBA'} primaryText="Master's of Business Administrastion (MBA)" />
+              <MenuItem value={'MBA'} primaryText="Master's of Business Administration (MBA)" />
               <MenuItem value={'JD'} primaryText="Juris Doctorate (J.D.)" />
               <MenuItem value={'MD'} primaryText="Doctor of Medicine (M.D.)" />
               <MenuItem value={'PhD'} primaryText="Doctor of Philosophy (Ph.D.)" />
