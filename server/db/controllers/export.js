@@ -13,15 +13,12 @@ const handleError = (res, err) => {
   return res.status(404).json({ message: err }); 
 }
 
-const exportQuery = (req, res, datetime) => {
-  
-  const queryDate = new Date(Number(datetime));
+const exportQuery = (req, res, queryDate, query) => {
 
   if (queryDate.toString() === 'Invalid Date') {
     return handleError(res, 'There is a problem with your Epoch datetime. Please provide a provide a properly formatted timestamp.')
   }
-
-  const query = {updatedAt: {$gte: queryDate}};
+  
   const parallels = {};
   const models = {
                     language: Language,
@@ -85,11 +82,15 @@ const exportQuery = (req, res, datetime) => {
 }
 
 export function updated(req, res, next) {
-  return exportQuery(req, res, req.params.datetime);
+  const queryDate = new Date(Number(req.params.datetime));
+  const query = {updatedAt: {$gte: queryDate}};
+  return exportQuery(req, res, queryDate, );
 }
 
 export function created(req, res) {
-  return exportQuery(req, res, req.params.datetime);
+  const queryDate = new Date(Number(req.params.datetime));
+  const query = {createdAt: {$gte: queryDate}};
+  return exportQuery(req, res, queryDate, );
 }
 
 export default {

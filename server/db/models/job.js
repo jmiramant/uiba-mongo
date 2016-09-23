@@ -1,5 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 import { Company } from './company';
+import updateProfile from './profileUpdate'
 import { Profile } from './profile';
 
 const JobSchema = new mongoose.Schema({
@@ -13,5 +14,13 @@ const JobSchema = new mongoose.Schema({
   endDate: {type: Date},
   current: {type: Boolean, required: true, default: false },
 }, {timestamps: true});
+
+JobSchema.post('save', (doc) => {
+  updateProfile(doc)
+});
+
+JobSchema.pre('remove', (doc) => {
+  updateProfile(doc)
+});
 
 export default mongoose.model('Job', JobSchema);

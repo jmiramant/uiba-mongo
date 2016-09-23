@@ -1,5 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 import { User } from './user';
+import updateProfile from './profileUpdate'
 import { Job } from './job';
 
 const ProfileSchema = new mongoose.Schema({
@@ -13,8 +14,17 @@ const ProfileSchema = new mongoose.Schema({
   location: { type: String, default: '' },
   website: { type: String, default: '' },
   picture: { type: String, default: '' },
-  service: { type: String, enum: ['linkedin', 'email', 'google'] }
+  service: { type: String, enum: ['linkedin', 'email', 'google'] }, 
+  childUpdatedAt: { type: Date }
 }, {timestamps: true});
+
+ProfileSchema.post('save', (doc) => {
+  updateProfile(doc)
+});
+
+ProfileSchema.pre('remove', (doc) => {
+  updateProfile(doc)
+});
 
 ProfileSchema.statics = {};
 
