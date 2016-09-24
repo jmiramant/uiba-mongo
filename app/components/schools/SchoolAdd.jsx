@@ -38,7 +38,6 @@ export default class SchoolAdd extends React.Component {
   
   handleSubmit = e => {
     e.preventDefault();
-    console.log(this.state.validationErrors)
     if (!this.validate()) {
       this.props.onSchoolSave(this.props.school);
     }
