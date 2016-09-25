@@ -1,4 +1,4 @@
-var postmark = require("postmark")(process.env.POSTMARK_API_TOKEN);
+var mailer = require("sendinblue")(process.env.SENDBLUE_TOKEN);
 var async = require('async');
 var crypto = require('crypto');
 
@@ -7,13 +7,13 @@ if (!process.env.FROM_EMAIL) {
   process.exit();
 }
 
-function sendWelcomeEmail(user, host, finalCB) {
+const sendEmailConfirmation = (user, host, cb) => {
   host = host.indexOf('localhost') >= 0 ? 'http://' + host : 'https://' + host;
 
   async.waterfall([
       function(done) {
         crypto.randomBytes(15, function(err, buf) {
-          var token = buf.toString('hex');
+          varn = buf.toString('hex');
           done(err, token);
         });
       },
@@ -26,7 +26,7 @@ function sendWelcomeEmail(user, host, finalCB) {
         });
       },
       function(user, done) {
-        postmark.sendEmailWithTemplate({
+        mailer.sendEmailWithTemplate({
           "From": process.env.FROM_EMAIL,
           "To": user.email,
           "TemplateId": 491642,
@@ -46,7 +46,7 @@ function sendWelcomeEmail(user, host, finalCB) {
     ],
     function(err) {
       if (err) {
-        console.log('Could not send welcome email to: ' + user.email);
+        consolek;
         console.error(err);
         if (finalCB) {
           finalCB({
@@ -63,5 +63,5 @@ function sendWelcomeEmail(user, host, finalCB) {
 }
 
 module.exports = {
-  sendWelcomeEmail: sendWelcomeEmail
+  sendEmailConfirmationEmail
 };
