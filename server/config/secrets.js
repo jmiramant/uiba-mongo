@@ -12,8 +12,8 @@ export const linkedin = {
   callbackURL: process.env.GOOGLE_CALLBACK || '/auth/linkedin/callback'
 };
 
-export const sendinblue = {
-  clientToken: process.env.SENDBLUE_TOKEN || '<TOKEN>'
+export const sendInBlue = {
+  clientToken: process.env.SENDBLUE_TOKEN || 'MaNzWRXC0ELdyOQ1'
 }
 
 export const externalAPISecret = {

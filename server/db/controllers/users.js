@@ -102,7 +102,7 @@ export function emailConfirmation (req, res, next) {
 
   if (!token) {
     return res.status(401).json({
-      message: "Please pass a token";
+      message: "Please pass a token"
     });
   }
 
@@ -139,7 +139,7 @@ export function emailConfirmation (req, res, next) {
 export function resendEmailConfirmation (req, res, next) {
   
   User.findById({
-    
+
     '_id': req.user._id
 
   }, function(err, user) {
