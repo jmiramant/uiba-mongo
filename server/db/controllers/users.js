@@ -26,14 +26,18 @@ export function login(req, res, next) {
     if (!user) {
       return res.status(401).json({ message: info.message });
     }
-    // Passport exposes a login() function on req (also aliased as
-    // logIn()) that can be used to establish a login session
-    return req.logIn(user, (loginErr) => {
-      if (loginErr) return res.status(401).json({ message: loginErr });
-      return res.status(200).json({
-        message: 'You have been successfully logged in.'
+    if (user.isEmailVerified) {
+      // Passport exposes a login() function on req (also aliased as
+      // logIn()) that can be used to establish a login session
+      return req.logIn(user, (loginErr) => {
+        if (loginErr) return res.status(401).json({ message: loginErr });
+        return res.status(200).json({
+          message: 'You have been successfully logged in.'
+        });
       });
-    });
+    } else {
+      res.send(401, {message: 'This email is not yet verified. Please check our email to confirm.'});
+    }
   })(req, res, next);
 }
 
