@@ -6,8 +6,8 @@
 }
 
 .profile-btn-group {
-  @apply --btngr
-} 
+  @apply --btngr;
+}
 
 .description {
   width: 100% !important;
