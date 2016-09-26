@@ -34,5 +34,5 @@
 }
 
 .profile-btn-group {
-  @apply --btngr
+  @apply --btngr;
 } 

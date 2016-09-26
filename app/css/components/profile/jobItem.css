@@ -37,7 +37,7 @@
 }
 
 .jobItem--description {
-  @apply --item-description
+  @apply --item-description;
 }
 
 .jobItem--spacer {

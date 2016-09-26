@@ -33,14 +33,14 @@
 }
 
 @media (max-width: 768px) {
-   .horizontal {
-      display: block;
+  .horizontal {
+    display: block;
+    width: 100%;
+    &.left,
+    &.right,
+    &.split {
       width: 100%;
-      &.left,
-      &.right,
-      &.split {
-        width: 100%;
-      }
+    }
   }
   .left-border {
     border-left: none;

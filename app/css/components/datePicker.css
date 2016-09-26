@@ -1,5 +1,5 @@
 .err-msg {
-  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  transition: all 0.450s cubic-bezier(0.23, 1, 0.32, 1) 0s;
   font-weight: normal;
   font-family: Roboto, sans-serif;
   color: rgb(244, 67, 54);
