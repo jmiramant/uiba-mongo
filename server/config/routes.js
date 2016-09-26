@@ -34,7 +34,7 @@ export default (app) => {
     app.post('/signup', usersController.signUp);
     app.post('/logout', usersController.logout);
     app.get('/validateEmail/:token', usersController.emailConfirmation);
-    app.get('/resendValidationEmail', usersController.resendEmailConfirmation)
+    app.post('/resendValidationEmail', usersController.resendEmailConfirmation)
   } else {
     console.warn(unsupportedMessage('users routes'));
   }

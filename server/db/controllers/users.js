@@ -2,7 +2,7 @@ import User from '../models/user';
 import Profile from '../models/profile';
 import passport from 'passport';
 import async from 'async'
-import mailer from 'utils/email.js'
+import mailer from '../../utils/email.js'
 
 /**
  * GET /user
@@ -77,19 +77,8 @@ export function signUp(req, res, next) {
       user: user.save
     }, function(saveErr, resp){
       if (saveErr) return next(saveErr);
-      
       mailer.sendEmailConfirmation(user, req.headers.host)
-      
-      res.status(200).redirect('/email-confirmation');
-
-      //Enter redirect to email confirmation page here: DO NOT AUTH
-
-      // return req.logIn(user, (loginErr) => {
-      //   if (loginErr) return res.status(401).json({ message: loginErr });
-      //   return res.status(200).json({
-      //     message: 'You have been successfully logged in.'
-      //   });
-      // });
+      res.redirect(200, '/email-confirmation');
 
     });      
 
@@ -105,20 +94,17 @@ export function emailConfirmation (req, res, next) {
       message: "Please pass a token"
     });
   }
-
   User.findOne({
     verifyEmailToken: token, 
-    verifyEmailToken: {
+    verifyEmailTokenExpires: {
       $gt: Date.now()
     }
   }, (err, user) => {
-
     if (!user) {
       return res.status(404).json({
         message: "Token is not valid or expired."
       })
     }
-
     user.isEmailVerified = true;
     user.verifyEmailToken = undefined;
     user.verifyEmailTokenExpires = undefined;
@@ -126,9 +112,7 @@ export function emailConfirmation (req, res, next) {
       if (err) return next(err);
       return req.logIn(user, (loginErr) => {
         if (loginErr) return res.status(401).json({ message: loginErr });
-        return res.status(200).json({
-          message: 'You have been successfully logged in.'
-        });
+        res.redirect('/profile');
       });
     }) 
 
@@ -137,23 +121,18 @@ export function emailConfirmation (req, res, next) {
 }
 
 export function resendEmailConfirmation (req, res, next) {
+  const email = req.body.email;
   
-  User.findById({
-
-    '_id': req.user._id
-
+  User.findOne({
+    'email': email,
+    'isEmailVerified': false
   }, function(err, user) {
-
-    if (err) throw err;
-
-    email.sendWelcomeEmail(user, req.headers.host, function(err) {
-      if (err) {
-        res.status(404).json(err);
-      } else {
-        res.send({
-          message: 'Email was resent'
-        })
-      }
+    let errMsg;
+    !user ? (errMsg = 'We could not find this email or it as already been verifed.') : (errMsg = err)
+    if (err || !user) return res.status(401).json({ message: errMsg });
+    
+    mailer.sendEmailConfirmation(user, req.headers.host, (err, resp) => {
+      err ? res.status(404).json(err) : res.status(200).json(resp)
     });
   });
 
@@ -165,6 +144,6 @@ export default {
   login,
   logout,
   signUp, 
-  emailValidation,
+  emailConfirmation,
   resendEmailConfirmation
 };

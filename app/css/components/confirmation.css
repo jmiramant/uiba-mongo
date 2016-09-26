@@ -1,0 +1,16 @@
+.confirmation {
+  min-height: 500px;
+  text-align: center;
+}
+
+.paper {
+  margin-top: 5%;
+  border-radius: 3px;
+  background-color: #fff;
+  padding: 10% 5%;
+  margin: 5% 20px 20px 20px;  
+}
+
+.thanks {
+  font-size: 28px;
+}
