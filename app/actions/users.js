@@ -113,7 +113,7 @@ export function signUp(data) {
       .then(response => {
         if (response.status === 200) {
           dispatch(signUpSuccess(response.data.message));
-          dispatch(push('/profile'));
+          dispatch(push('/email-confirmation'));
         } else {
           dispatch(signUpError('Oops! Something went wrong'));
         }

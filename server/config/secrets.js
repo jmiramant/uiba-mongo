@@ -1,4 +1,5 @@
 export const sessionSecret = process.env.SESSION_SECRET || '6cKCWD75gHgzCvM4VQyR5_TU';
+
 export const google = {
   clientID: process.env.GOOGLE_CLIENTID || '114596459676-b30kskdonpjh9069evk4tk62ou8pis4g.apps.googleusercontent.com',
   clientSecret: process.env.GOOGLE_SECRET || '0Jg0XDNXlmM2UeDH6dXk8u-c',
@@ -11,8 +12,8 @@ export const linkedin = {
   callbackURL: process.env.GOOGLE_CALLBACK || '/auth/linkedin/callback'
 };
 
-export const postmark = {
-  token: process.env.POSTMARK_TOKEN || 'b2bc362e-fcc3-41c7-b4da-16327c121bec'
+export const sendInBlue = {
+  clientToken: process.env.SENDBLUE_TOKEN || 'MaNzWRXC0ELdyOQ1'
 }
 
 export const externalAPISecret = {

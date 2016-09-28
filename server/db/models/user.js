@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema({
   google: {},
   linkedin: {},
   profile_id: {type: Schema.Types.ObjectId, ref: 'Profile'},
-  isEmailVerified: Boolean,
+  isEmailVerified: { type: Boolean, default: false },
   verifyEmailToken: String,
   verifyEmailTokenExpires: Date
 }, {timestamp: true});

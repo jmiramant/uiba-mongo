@@ -91,6 +91,7 @@ router.get('/me/from/token', function(req, res, next) {
   });
 });
 
+
 router.get('/resendValidationEmail', expressJwt({
   secret: process.env.JWT_SECRET
 }), function(req, res, next) {

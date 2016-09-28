@@ -9,6 +9,7 @@ import language from 'reducers/language';
 import project from 'reducers/project';
 import typeahead from 'reducers/typeahead';
 import skill from 'reducers/skill';
+import confirmation from 'reducers/confirmation';
 import { routerReducer as routing } from 'react-router-redux';
 
 // Combine reducers with routeReducer which keeps track of
@@ -24,7 +25,8 @@ const rootReducer = combineReducers({
   typeahead,
   language,
   project,
-  skill
+  skill,
+  confirmation
 });
 
 export default rootReducer;

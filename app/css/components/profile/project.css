@@ -36,12 +36,12 @@
 }
 
 .projectItem--description {
-  @apply --item-description
+  @apply --item-description;
 }
 
 .profile-btn-group {
   @apply --btngr;
-} 
+}
 
 .projectAdd-container {
   min-height: 300px;
