@@ -36,7 +36,7 @@ export function login(req, res, next) {
         });
       });
     } else {
-      res.send(401, {message: 'This email is not yet verified. Please check our email to confirm.'});
+      res.send(401, {message: 'This email is not yet verified. Please check your email to confirm the account.'});
     }
   })(req, res, next);
 }
