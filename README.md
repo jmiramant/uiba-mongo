@@ -8,7 +8,26 @@ Looking to move on up in the world?! Gotham City is just the place to do it. Amb
 
 #### Development
 
-Development is a breeze. Once you have installed all your dependencies all the configuration is done for you. using simple The process is outlined [here](docs/development.md).
+This section contains notes on the development lifecycle of the project. Once you have installed all your dependencies all the configuration is done for you. using simple The process is outlined [here](docs/development.md).
+
+Development on this project is set up in a typical production/release/development cycle as described in _[A Successful Git Branching Model](http://nvie.com/posts/a-successful-git-branching-model/)_. A typical workflow is as follows:
+
+1. Select a card from Asana - preferably one that is "ready" then move it to "in-progress".
+
+2. Create a branch off of develop called "feature-[feature name]", work and commit into that branch.
+
+        ~$ git checkout -b feature-myfeature dev
+
+3. Once you are done working (and everything is tested) merge your feature into develop.
+
+        ~$ git checkout dev
+        ~$ git pull
+        ~$ git merge --no-ff feature-myfeature
+        ~$ git branch -d feature-myfeature
+        ~$ git push origin dev
+
+4. Repeat. Releases will be routinely pushed into master via release branches, then deployed to the server.
+
 
 #### Unit Tests
 

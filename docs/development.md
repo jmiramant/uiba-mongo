@@ -9,8 +9,6 @@ brew update
 brew install mongodb
 ```
 
-If you hate MongoDB with a passion and would like to see a postgresql example, check [this](./databases.md) out!
-
 #### Setup your mongoDB directory
 
 Note: Make sure you have the directory and its permissions setup (i.e. `/data/db`):
