@@ -1,6 +1,8 @@
 import async from 'async'
+import _ from 'lodash'
 import User from '../models/user';
 import Profile from '../models/profile'
+import Recruiter from '../models/recruiter';
 
 const setDefaultProfileFields = (prof, profile, userId) => {
   prof.user_id = userId;
@@ -23,8 +25,47 @@ const setDefaultUserFields = (user, profile, accessToken)  => {
   user.tokens.push({ kind: 'linkedin', accessToken });  
 }
 
+const logRecruiter = (req, Profile) => {
+  if (req.headers.referer.split('/apply/').length > 1) {
+   
+    const properString = (str) => {
+      return str.split('-').map( (s) => {
+        return s.charAt(0).toUpperCase() + s.slice(1)
+      }).join(' ');
+    }
+
+    const company = properString(req.headers.referer.split('/apply/')[1].split('?')[0]);
+    
+    if (req.headers.referer.split('/apply/')[1].split('?rid=')[1]) {
+      
+      const rid = req.headers.referer.split('/apply/')[1].split('?rid=')[1].split('&')[0];
+      
+      Recruiter.findOne({key: rid}).exec( (err, recruiter) => {
+        const companyObj = _.find(recruiter.credit, (obj) => {
+          return obj.company === company
+        })
+        
+        if (companyObj) {
+          companyObj.candidate.push(recruiter._id); 
+        } else {
+            company: company,
+            candidate: [recruiter._id]
+          })
+          recruiter.credit.push({
+            company: company,
+            candidate: [recruiter._id]
+          });
+        }
+        recruiter.save()
+      });
+
+    }
+  }
+}
+
 /* eslint-disable no-param-reassign */
 export default (req, accessToken, refreshToken, profile, done) => {
+  
   if (req.user) { 
     return User.findOne({ linkedin: profile.id }, (findOneErr, existingUser) => {
       //standard
@@ -48,8 +89,9 @@ export default (req, accessToken, refreshToken, profile, done) => {
             return async.series({
               _profile: updatedProfile.save,
               secondUser: secondUser.save,
-              user: _user.save
+              user: _user.save,
             }, function(err, res){
+              logRecruiter(req, updatedProfile);
               done(err, res.user[0])
             });
 
@@ -67,8 +109,9 @@ export default (req, accessToken, refreshToken, profile, done) => {
 
             return async.series({
               _profile: _profile.save,
-              user: user.save
+              user: user.save,
             }, function(err, res){
+              logRecruiter(req, _profile);
               done(err, res.user[0])
             });
 
@@ -96,8 +139,9 @@ export default (req, accessToken, refreshToken, profile, done) => {
       
       return async.series({
         _profile: _profile.save,
-        user: user.save
+        user: user.save,
       }, function(err, res){
+        logRecruiter(req, _profile);
         done(err, res.user[0])
       });
 

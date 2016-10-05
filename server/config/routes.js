@@ -14,6 +14,7 @@ const schoolNamesController = controllers && controllers.schoolNames;
 const skillsController = controllers && controllers.skills;
 const projectsController = controllers && controllers.projects;
 const languagesController = controllers && controllers.languages;
+const recruitersController = controllers && controllers.recruiters;
 
 const exportsController = controllers && controllers._exports;
 const tokensController = controllers && controllers.tokens;
@@ -89,6 +90,12 @@ export default (app) => {
     console.warn(unsupportedMessage('projects routes'));
   }
 
+  if (recruitersController) {
+    app.post('/recruiter/create', recruitersController.create);
+  } else {
+    console.warn(unsupportedMessage('recruiter routes'));
+  }
+
   if (schoolNamesController) {
     app.get('/schoolNames/search', schoolNamesController.search);
   } else {
@@ -136,6 +143,20 @@ export default (app) => {
         failureRedirect: '/login'
       })
     );
+
+    app.get('/auth/linkedin/:companyName/:rid',
+      passport.authenticate('linkedin'),
+      function(req, res){
+         // The request will be redirected to LinkedIn for authentication, so this
+         // function will not be called.
+      });
+
+    app.get('/auth/linkedin/:companyName',
+      passport.authenticate('linkedin'),
+      function(req, res){
+         // The request will be redirected to LinkedIn for authentication, so this
+         // function will not be called.
+      });
 
   }
 

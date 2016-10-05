@@ -1,0 +1,145 @@
+import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import { manualLogin, signUp, toggleLoginMode } from 'actions/users';
+
+import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
+import Toggle from 'material-ui/Toggle';
+import Divider from 'material-ui/Divider';
+import linkedinLogo from '../images/linkedin.svg';
+
+import LoginForm from 'components/login/loginForm';
+import SignupForm from 'components/login/signupForm';
+
+import * as confirmationActionCreators from 'actions/confirmation';
+
+import styles from 'css/components/login';
+import classNames from 'classnames/bind';
+const cx = classNames.bind(styles);
+
+
+class Apply extends Component {
+
+  constructor(props) {
+    super(props);
+    this.handleOnSubmit = this.handleOnSubmit.bind(this);
+    this.props.toggleLoginMode(this.props.user.isLogin)
+  }
+
+  state = {
+    formInputs: {}
+  }
+
+  handleOnSubmit(data) {
+    const { manualLogin, signUp, user: { isLogin } } = this.props;
+
+    if (isLogin) {
+      manualLogin(data);
+    } else {
+      signUp(data);
+    }
+  }
+
+  renderForm() {
+    const { user: { isLogin } , toggleLoginMode } = this.props;
+    if (isLogin) {
+      return (
+        <LoginForm
+          user={this.props.user}
+          onSumbit={this.handleOnSubmit}
+        />     
+      );
+    }
+
+    return (
+      <SignupForm
+        user={this.props.user}
+        onSumbit={this.handleOnSubmit}
+      />
+    );
+  }
+
+  setLoginState(isLogin) {
+    this.props.toggleLoginMode(isLogin)
+  }
+
+  onDataChange = field => (e, uiVal) => {
+    this.setState({
+      formInputs: {
+        ...this.state.formInputs,
+        [field]: uiVal,
+      }
+    });  
+  }
+
+  render () {
+    const { user: { isLogin } , toggleLoginMode } = this.props;
+    const { isWaiting, message } = this.props.user;
+    const company = this.props.location.pathname.split('/apply/')[1];
+    const rid = this.props.location.query.rid ? '/' + this.props.location.query.rid : '';
+
+    return (
+      <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
+        <div>
+          <div className={cx('login', {
+            waiting: isWaiting
+          })}>
+            <div className={cx('li-container')}>
+              <a className={cx('li-auth')}
+                href={"/auth/linkedin/" + company + rid }
+              >
+              <img src={linkedinLogo} />
+              </a>
+            </div>
+            <Divider/>
+            
+
+              <div>
+                <div className={cx('toggle-container')}>
+                  <p 
+                    onClick={() => { this.setLoginState('true')}}
+                    className={cx('toggle', {
+                      'active': isLogin
+                    })}
+                  >
+                    Log In
+                  </p>
+                  <Toggle
+                    className={cx('toggle')}
+                    onToggle={toggleLoginMode}
+                    style={{width: 50}}
+                    toggled={!isLogin}
+                  />
+                  <p 
+                    onClick={() => { this.setLoginState('false')}}
+                    className={cx('toggle', {
+                      'active': !isLogin
+                    })}
+                  >
+                    Sign Up
+                  </p>
+                </div>
+
+              <div className={cx('email-container')}>
+                { this.renderForm() }
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </MuiThemeProvider> 
+    );
+  }
+};
+
+function mapStateToProps({user}) {
+  return {
+    user
+  };
+}
+
+export default connect(mapStateToProps, { manualLogin, signUp, toggleLoginMode })(Apply);

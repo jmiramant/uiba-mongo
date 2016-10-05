@@ -8,8 +8,9 @@ import projects from './projects';
 import languages from './languages';
 import _exports from './export';
 import tokens from './tokens';
+import recruiters from './recruiters'
 
-export { users, profiles, jobs, schools, skills, languages, projects, _exports, tokens};
+export { users, profiles, jobs, schools, skills, languages, projects, _exports, tokens, recruiters};
 
 export default {
   users,
@@ -21,5 +22,6 @@ export default {
   projects,
   languages,
   _exports,
-  tokens
+  tokens,
+  recruiters
 };
