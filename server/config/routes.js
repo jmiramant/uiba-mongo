@@ -14,7 +14,9 @@ const schoolNamesController = controllers && controllers.schoolNames;
 const skillsController = controllers && controllers.skills;
 const projectsController = controllers && controllers.projects;
 const languagesController = controllers && controllers.languages;
+const interestsController = controllers && controllers.interests;
 const recruitersController = controllers && controllers.recruiters;
+const companysController = controllers && controllers.companys;
 
 const exportsController = controllers && controllers._exports;
 const tokensController = controllers && controllers.tokens;
@@ -50,6 +52,12 @@ export default (app) => {
     console.warn(unsupportedMessage('job routes'));
   }
 
+  if (companysController) {
+    app.get('/companies/:companyName', companysController.get);
+  } else {
+    console.warn(unsupportedMessage('companies routes'));
+  }
+
   if (schoolNamesController) {
     app.get('/schools/me', schoolsController.me);
     app.get('/schools/:id', schoolsController.get);
@@ -78,6 +86,16 @@ export default (app) => {
     app.delete('/language/:id', languagesController.remove);
   } else {
     console.warn(unsupportedMessage('languages routes'));
+  }
+
+  if (interestsController) {
+    app.get('/interests/me', interestsController.me);
+    app.get('/interests/:id', interestsController.get);
+    app.post('/interests', interestsController.create);
+    app.put('/interests', interestsController.update);
+    app.delete('/interest/:id', interestsController.remove);
+  } else {
+    console.warn(unsupportedMessage('interests routes'));
   }
 
   if (projectsController) {
@@ -143,14 +161,7 @@ export default (app) => {
         failureRedirect: '/login'
       })
     );
-
-    app.get('/auth/linkedin/:companyName/:rid',
-      passport.authenticate('linkedin'),
-      function(req, res){
-         // The request will be redirected to LinkedIn for authentication, so this
-         // function will not be called.
-      });
-
+    
     app.get('/auth/linkedin/:companyName',
       passport.authenticate('linkedin'),
       function(req, res){

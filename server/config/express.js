@@ -2,6 +2,7 @@ import express from 'express';
 import passport from 'passport';
 import session from 'express-session';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import path from 'path';
 import flash from 'express-flash';
 import methodOverride from 'method-override';
@@ -21,6 +22,8 @@ export default (app) => {
   // Keeping it makes it easier for an attacker to build the site's profile
   // It can be removed safely
   app.disable('x-powered-by');
+  
+  app.use(cookieParser());
 
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded

@@ -1,0 +1,84 @@
+@import '../../common/colors';
+@import '../../common/button';
+@import '../../common/profile';
+
+.interestList--container {
+  @apply --profile--container;
+}
+
+.interestItem--editBg {
+  background: rgb(188,188,188);
+  border-radius: 51px;
+  width: 18px;
+  height: 18px;
+  margin-left: 8px;
+  padding: 3px;
+}
+
+.interestItem--editIcon {
+  color: rgb(124, 124, 124);
+  width: 14px !important;
+  height: 14px !important;
+}
+
+.chip-container {
+  @apply --chip--spacing; 
+}
+
+
+.interestAdd--form {
+  overflow: hidden;
+}
+
+.profile-btn-group {
+  @apply --btngr;
+}
+
+
+.interestList--bootstrap-container {
+  padding-right: 0px;
+}
+
+.interestList--container {
+  @apply --profile--container;
+}
+
+.left-border {
+  border-left: 1px solid rgba(0, 0, 0, 0.298039);
+}
+
+.horizontal {
+  display: inline-block;
+  vertical-align: top;
+  &.left {
+    width: 45%;
+  }
+  &.right {
+    padding-left: 10%;
+    width: 55%;
+  }
+  &.no-items {
+    text-align: center;
+    width: 100%;
+    padding: 0px 25%;
+    border-left: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .horizontal {
+    display: block;
+    width: 100%;
+    &.left,
+    &.right,
+    &.split {
+      width: 100%;
+    }
+  }
+  .left-border {
+    border-left: none;
+  }
+  .horizontal.right {
+    padding: 0;
+  }
+}

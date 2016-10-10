@@ -22,8 +22,10 @@ export function update(req, res) {
   const query = { _id: req.body._id };
   const omitKeys = ['id', '_id', '_v'];
   const data = _.omit(req.body, omitKeys);
-
+  console.log(data)
   return Profile.findOneAndUpdate(query, data, (err, profile) => {
+    console.log(err)
+    console.log(profile)
     if (err) {
       return res.status(500).send({error: err.response.status});
     }

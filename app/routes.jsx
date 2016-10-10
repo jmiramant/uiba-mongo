@@ -10,6 +10,7 @@ import LoginOrRegister from 'containers/LoginOrRegister';
 import Profile from 'containers/Profile';
 import Confirmation from 'containers/Confirmation';
 import Apply from 'containers/Apply';
+import ApplyConfirmation from 'containers/ApplyConfirmation';
 
 export default (store) => {
   const requireAuth = (nextState, replace, callback) => {
@@ -27,7 +28,7 @@ export default (store) => {
     const { user: { authenticated }} = store.getState();
     if (authenticated) {
       replace({
-        pathname: '/'
+        pathname: '/profile'
       });
     }
     callback();
@@ -36,13 +37,14 @@ export default (store) => {
   return (
     <Route path="/" component={App}>
       <IndexRoute component={Splash} />
-      <Route path="login" component={LoginOrRegister} onEnter={redirectAuth} />
-      <Route path="apply/:companyName(/:recruiterId)" component={Apply} onEnter={redirectAuth} />
+      <Route path="login" component={LoginOrRegister} onEnter={redirectAuth}></Route>
+      <Route path="applyConfirmation" component={ApplyConfirmation}></Route>
+      <Route path="apply/:companyName" component={Apply} onEnter={redirectAuth}></Route>
       <Route path="profile" component={Profile} onEnter={requireAuth}></Route>
       <Route path="email-confirmation" component={Confirmation} ></Route>
-      <Route path="about" component={About} />
-      <Route path="terms" component={Terms} />
-      <Route path="privacy" component={Privacy} />
+      <Route path="about" component={About}></Route>
+      <Route path="terms" component={Terms}></Route>
+      <Route path="privacy" component={Privacy}></Route>
     </Route>
   );
 };
