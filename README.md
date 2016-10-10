@@ -31,12 +31,7 @@ Unit tests for async (redux) actions, reducers, and stateless components with [e
 
 ## Application Workflow
 
-The path to apply is '/apply/<company-name-spaces-are-dashes>?rid=<recruiterId>'
-To allow an user to apply using Ubia, a company object must be create in the database.
-
-## Application Workflow
-
-The path to apply is '/apply/<company-name-spaces-are-dashes>?rid=<recruiterId>'
+The path to apply is `/apply/<company-name-spaces-are-dashes>?rid=<recruiterId>`
 
 To allow an user to apply using Ubia, a company object must be create in the database.
 
