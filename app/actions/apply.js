@@ -41,7 +41,7 @@ export function sumbitApplication(profile) {
     return makeApplyRequest('put', profile, '/profile')
       .then(res => {
         if (res.status === 200) {
-          dispatch(push('/apply-confirmation'))
+          dispatch(push('/applyConfirmation'))
           return dispatch(submitApplySuccess(res.data));
         }
       })
