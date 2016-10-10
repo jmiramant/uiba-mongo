@@ -109,7 +109,7 @@ Create a Recruiter object to generate RecruiterId and track applications
         "credit": [0]
     }
     ```
-![REST Client Example](/docs/architecture.png)
+![REST Client Example](/docs/recruiter_rest.png)
 
 ## Environment
 
