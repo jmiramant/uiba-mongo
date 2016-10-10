@@ -17,7 +17,7 @@ export function create (req, res) {
 
   recruiter.save( (err, recruiter) => {
     if (err) return handleError(res, err);
-    return true;
+    return res.status(200).json(recruiter);;
   })
 }
 

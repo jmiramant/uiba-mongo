@@ -109,7 +109,7 @@ export default (app) => {
   }
 
   if (recruitersController) {
-    app.post('/recruiter/create', recruitersController.create);
+    app.post('/api/v1/recruiter/create', recruitersController.create);
   } else {
     console.warn(unsupportedMessage('recruiter routes'));
   }
