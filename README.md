@@ -62,7 +62,7 @@ There are two ways to create an Company item in the `companies` collection.
           "logoImg": "images/truveris-logo.png"
         }
     ```
-  ##### 2. Using Shell
+##### 2. Using Shell
   - SSH MLab Shell 
       - Staging: `mongo ds145405.mlab.com:45405/heroku_ntt4p0mr -u <dbuser> -p <dbpassword>
 `
