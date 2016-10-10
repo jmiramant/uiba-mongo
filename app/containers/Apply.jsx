@@ -91,13 +91,9 @@ class Apply extends Component {
     const { 
       userActions: { toggleLoginMode }, 
       user: { isWaiting, message, isLogin }, 
-      params: { companyName },
       location: { query: { rid } }, 
       company
     } = this.props;
-    
-    let url = "/auth/linkedin/" + companyName;
-    if (rid) url = url + '/' + rid
 
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
@@ -115,7 +111,7 @@ class Apply extends Component {
             })}>
               <div className={cx('li-container')}>
                 <a className={cx('li-auth')}
-                  href={url}
+                  href="/auth/linkedin"
                 >
                 <img src={linkedinLogo} />
                 </a>

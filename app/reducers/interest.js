@@ -30,15 +30,15 @@ const interestOrder = (interest, order = 'asc') => {
 }
 
 const interest = (
-  state = {
-    profile_id: undefined,
-    interest: undefined,
-  },
+  state = {},
   action
 ) => {
   switch (action.type) {
     case types.CREATE_NEW_INTEREST:
-      return state;
+      return {
+        profile_id: undefined,
+        interest: undefined,
+      }
     case types.CREATE_INTEREST_SUCCESS:
     case types.CREATE_INTEREST_FAILURE:
       return {};

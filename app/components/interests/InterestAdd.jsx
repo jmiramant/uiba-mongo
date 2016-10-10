@@ -94,7 +94,10 @@ export default class InterestAdd extends React.Component {
             addVisible,
             isEdit
           } = this.props;
-    
+
+    let iText = interest.interest
+    !interest.interest ? iText = '' : null
+
     let interestText = 'Add a Interest';
     if (isEdit) interestText = 'Interest';
 
@@ -105,7 +108,7 @@ export default class InterestAdd extends React.Component {
           onSubmit={this.handleSubmit}
         >
           <TextField
-            value={interest.interest}
+            value={iText}
             floatingLabelText="Interest"
             errorText={validationErrors.interest}
             onChange={this.handleChange('interest')}

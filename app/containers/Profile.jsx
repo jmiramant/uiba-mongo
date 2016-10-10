@@ -108,23 +108,6 @@ class Profile extends React.Component {
 
             <div className='col-md-8 col-md-offset-2'>
               <CardHeader
-                text='Interests'
-                addVisible={interests.addShow}
-                toggleAdd={interestActions.toggleInterestAdd}
-              />
-              <Interests
-                interests={interests.interests}
-                addVisible={interests.addShow}
-                errorMessage={messages.errorMessage}
-                toggleInterestAdd={interestActions.toggleInterestAdd}
-                onEditSave={interestActions.updateInterest} 
-                onInterestSave={interestActions.createInterest} 
-                onInterestDelete={interestActions.deleteInterest} 
-              />
-            </div>
-
-            <div className='col-md-8 col-md-offset-2'>
-              <CardHeader
                 text='Education'
                 addVisible={schools.addShow}
                 toggleAdd={schoolActions.toggleSchoolAdd}
@@ -169,6 +152,23 @@ class Profile extends React.Component {
                 onEditSave={projectActions.updateProject} 
                 onProjectSave={projectActions.createProject} 
                 onProjectDelete={projectActions.deleteProject} 
+              />
+            </div>
+
+            <div className='col-md-8 col-md-offset-2'>
+              <CardHeader
+                text='Interests'
+                addVisible={interests.addShow}
+                toggleAdd={interestActions.toggleInterestAdd}
+              />
+              <Interests
+                interests={interests.interests}
+                addVisible={interests.addShow}
+                errorMessage={messages.errorMessage}
+                toggleInterestAdd={interestActions.toggleInterestAdd}
+                onEditSave={interestActions.updateInterest} 
+                onInterestSave={interestActions.createInterest} 
+                onInterestDelete={interestActions.deleteInterest} 
               />
             </div>
 
