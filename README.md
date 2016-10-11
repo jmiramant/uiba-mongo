@@ -31,12 +31,7 @@ Unit tests for async (redux) actions, reducers, and stateless components with [e
 
 ## Application Workflow
 
-The path to apply is '/apply/<company-name-spaces-are-dashes>?rid=<recruiterId>'
-To allow an user to apply using Ubia, a company object must be create in the database.
-
-## Application Workflow
-
-The path to apply is '/apply/<company-name-spaces-are-dashes>?rid=<recruiterId>'
+The path to apply is `/apply/<company-name-spaces-are-dashes>?rid=<recruiterId>`
 
 To allow an user to apply using Ubia, a company object must be create in the database.
 
@@ -62,7 +57,8 @@ There are two ways to create an Company item in the `companies` collection.
           "logoImg": "images/truveris-logo.png"
         }
     ```
-  ##### 2. Using Shell
+    
+##### 2. Using Shell
   - SSH MLab Shell 
       - Staging: `mongo ds145405.mlab.com:45405/heroku_ntt4p0mr -u <dbuser> -p <dbpassword>
 `
