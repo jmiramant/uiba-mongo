@@ -1,5 +1,6 @@
 import User from '../models/user';
 import Profile from '../models/profile';
+import Recruiter from '../models/recruiter';
 import passport from 'passport';
 import async from 'async'
 import mailer from '../../utils/email.js'
