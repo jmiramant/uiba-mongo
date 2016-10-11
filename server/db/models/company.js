@@ -12,7 +12,7 @@ const CompanySchema = new mongoose.Schema({
 
 function lowerCaseName(next) {
   const user = this;
-  user.name_lower = name.toLowerCase();
+  if (user.name) user.name_lower = name.toLowerCase();
   return next();
 }
 
