@@ -33,7 +33,7 @@ Unit tests for async (redux) actions, reducers, and stateless components with [e
 
 The path to apply is `/apply/<company-name-spaces-are-dashes>?rid=<recruiterId>`
 
-To allow an user to apply using Ubia, a company object must be create in the database.
+To allow an user to apply using Uiba, a company object must be create in the database.
 
 #### Creating a Company Object
 

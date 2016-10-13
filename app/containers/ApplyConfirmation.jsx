@@ -35,11 +35,17 @@ export default class ApplyConfirmation extends React.Component {
       profile: {profile:{apply:{name}} }
     } = this.props;
 
+    const properName = function (str) {
+      return str.split('-').map((s) => {
+        return s.charAt(0).toUpperCase() + s.slice(1)
+      }).join(' ');
+    }
+
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
         <div className={cx('confirmation') + ' container'}>
           <div className={cx('paper')} >
-            <div className={cx('thanks')}>Thank you again for applying to {name}. We will follow up shortly to notify you of next steps.</div>
+            <div className={cx('thanks')}>Thank you again for applying to {properName(name)}. We will follow up shortly to notify you of next steps.</div>
             <div className={cx('btn-group')}>
               <RaisedButton className='pull-center' label="View/Edit Profile" onClick={this.navBack.bind(this)} primary={true} />
             </div>
