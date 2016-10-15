@@ -31,7 +31,7 @@ const sendEmailConfirmation = (user, host, cb) => {
       },
       (user, done) => {
         
-        let data = { "to" : {[user.email]: "Josh Miramant"},
+        let data = { "to" : {[user.email]: "Jason Cowell"},
           "from" : ["info@uiba.co", "The Uiba Team"],
           "subject" : "Welcome to Uiba! Please Verify your Email",
           "html" : "<h2>Welcome to Uiba!</h2><br/>Thank you for signing up.<br/>Please verify your email: <a href=" + host + "/validateEmail/" + user.verifyEmailToken + ">Click Here</a><br/><h4>The Uiba Team</h4>",
