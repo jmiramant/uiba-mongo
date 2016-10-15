@@ -14,6 +14,7 @@ export default (passport) => {
   }
 
   passport.use(new LocalStrategy({
-    usernameField: 'email'
+    usernameField: 'email', 
+    passReqToCallback: true
   }, dbPassport.local));
 };

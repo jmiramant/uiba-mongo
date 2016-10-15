@@ -10,6 +10,8 @@ import * as profileActionCreators from 'actions/profiles';
 import * as languagesActionCreators from 'actions/languages';
 import * as projectsActionCreators from 'actions/projects';
 import * as messagesActionCreators from 'actions/messages';
+import * as interestsActionCreators from 'actions/interests';
+import * as applyActionCreators from 'actions/apply';
 
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -20,7 +22,9 @@ import Jobs from 'components/jobs/JobList';
 import Schools from 'components/schools/SchoolList';
 import Skills from 'components/skills/SkillList';
 import Languages from 'components/language/LanguageList';
+import Interests from 'components/interests/InterestList';
 import Projects from 'components/projects/ProjectList';
+import ApplyBtn from 'components/ApplyBtn';
 import UserCard from 'components/userCard/UserCard';
 
 import styles from 'css/common/profile';
@@ -35,10 +39,15 @@ class Profile extends React.Component {
     skillsActionCreators.fetchSkills,
     languagesActionCreators.fetchLanguages,
     projectsActionCreators.fetchProjects,
+    interestsActionCreators.fetchInterests,
   ]
 
   constructor(props) {
     super(props)
+  }
+
+  handleApply () {
+    this.props.applyActions.sumbitApplication(this.props.profile.profile)
   }
 
   render() {
@@ -46,9 +55,11 @@ class Profile extends React.Component {
             jobs,      jobActions,
             schools,   schoolActions,
             skills,    skillActions,
+            interests, interestActions,
             languages, languageActions,
             projects, projectActions,
             messages, messageActions,
+            applyActions,
           } = this.props;
 
     return (
@@ -143,6 +154,32 @@ class Profile extends React.Component {
                 onProjectDelete={projectActions.deleteProject} 
               />
             </div>
+
+            <div className='col-md-8 col-md-offset-2'>
+              <CardHeader
+                text='Interests'
+                addVisible={interests.addShow}
+                toggleAdd={interestActions.toggleInterestAdd}
+              />
+              <Interests
+                interests={interests.interests}
+                addVisible={interests.addShow}
+                errorMessage={messages.errorMessage}
+                toggleInterestAdd={interestActions.toggleInterestAdd}
+                onEditSave={interestActions.updateInterest} 
+                onInterestSave={interestActions.createInterest} 
+                onInterestDelete={interestActions.deleteInterest} 
+              />
+            </div>
+
+            {profile.profile.apply && profile.profile.apply.applied ? (
+              <div className='col-md-8 col-md-offset-2'>
+                <ApplyBtn
+                  handleSubmit={this.handleApply.bind(this)}
+                />
+              </div> 
+            ) : (null)}
+
           </div>
         </div>
       </MuiThemeProvider>
@@ -158,7 +195,8 @@ function mapStateToProps(state) {
     skills: state.skill,
     languages: state.language,
     projects: state.project,
-    messages: state.message
+    messages: state.message,
+    interests: state.interest
   };
 }
 
@@ -171,6 +209,8 @@ function mapDispatchToProps (dispatch) {
     languageActions: bindActionCreators(languagesActionCreators, dispatch),
     projectActions: bindActionCreators(projectsActionCreators, dispatch),
     messageActions: bindActionCreators(messagesActionCreators, dispatch),
+    interestActions: bindActionCreators(interestsActionCreators, dispatch),
+    applyActions: bindActionCreators(applyActionCreators, dispatch),
 
   }
 }

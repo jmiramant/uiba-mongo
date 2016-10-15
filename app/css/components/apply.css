@@ -1,0 +1,43 @@
+@import './login';
+
+.welcome-text {
+  background-color: #fff;
+  text-align: center;
+  margin: 20px auto 0;
+  width: 70%;
+  min-width: 420px;
+  padding: 20px 40px;
+}
+
+.apply-header {
+  text-align: center;
+  margin: 25px;
+}
+
+.login-container {
+  background-color: #fff;
+  margin: 0 auto;
+  min-width: 420px;
+  padding: 20px 40px;
+  width: 70%;
+}
+
+.text {
+  padding: 5px 40px;
+}
+
+.big {
+  font-size: 20px;
+  padding-top: 20px;
+  padding-bottom: 0;
+}
+
+.login {
+  margin-top: 0px;
+}
+
+@media (max-width: 655px) {
+  .login-container {
+    padding: 20px 0;
+  }
+}

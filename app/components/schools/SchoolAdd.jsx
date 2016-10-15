@@ -166,7 +166,7 @@ export default class SchoolAdd extends React.Component {
             <TextField
               value={school.major}
               errorText={validationErrors.major}
-              hintText="Seperate multiple by comma"
+              hintText="Separate multiple by comma"
               floatingLabelText="Major"
               onChange={this.handleChange('major')}
             />
@@ -176,7 +176,7 @@ export default class SchoolAdd extends React.Component {
             <TextField
               value={school.minor}
               errorText={validationErrors.minor}
-              hintText="Seperate multiple by comma"
+              hintText="Separate multiple by comma"
               floatingLabelText="Minor"
               onChange={this.handleChange('minor')}
             />

@@ -96,7 +96,7 @@ export function manualLogin(data) {
           dispatch(loginSuccess(response.data.message));
           dispatch(push('/profile'));
         } else {
-          dispatch(loginError('Oops! Something went wrong!'));
+          dispatch(loginError({message: 'Oops! Something went wrong!'}));
         }
       })
       .catch(err => {

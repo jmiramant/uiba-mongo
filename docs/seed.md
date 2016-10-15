@@ -9,6 +9,15 @@ Here are some test seed mongo db inserst.
 db.companies.insertMany(
    [
     {
+      name: "Truveris",
+      name_lower: 'truveris',
+      location: "2 Park Ave #1500, New York, NY 10016",
+      description: "Brokers, health plans, unions, employers, pharmaceutical manufacturers, and consumers use our technology and insights to make smarter decisions.",
+      foundedDate: new Date(2009, 1, 1),
+      size: 100,
+      logoImg: "images/truveris-logo.png"
+    },
+    {
       name: "Blue Orange Digital",
       location: "The World",
       description: "Quinoa brooklyn echo park, trust fund meh viral pork belly.",

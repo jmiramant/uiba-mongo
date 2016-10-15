@@ -48,6 +48,84 @@ npm test:watch
 
 Unit tests for async (redux) actions, reducers, and stateless components with [enzyme](http://airbnb.io/enzyme).
 
+## Application Workflow
+
+The path to apply is `/apply/<company-name-spaces-are-dashes>?rid=<recruiterId>`
+
+To allow an user to apply using Uiba, a company object must be create in the database.
+
+#### Creating a Company Object
+
+There are two ways to create an Company item in the `companies` collection. 
+
+##### 1. Via MLab Portal 
+  - Access MLAB via Heroku SSL and
+  - Select the 'companies' collection
+  - Select Add Document from the upper right corner
+  - Create a document with data of the following values. name and name_lower are required.
+    ```javascript
+        {
+          "name": "Truveris",
+          "name_lower": "truveris",
+          "location": "2 Park Ave #1500, New York, NY 10016",
+          "description": "Brokers, health plans, unions, employers, pharmaceutical manufacturers, and consumers use our technology and insights to make smarter decisions.",
+          "foundedDate": {
+              "$date": "2009-02-01T07:00:00.000Z"
+          },
+          "size": 100,
+          "logoImg": "images/truveris-logo.png"
+        }
+    ```
+    
+##### 2. Using Shell
+  - SSH MLab Shell 
+      - Staging: `mongo ds145405.mlab.com:45405/heroku_ntt4p0mr -u <dbuser> -p <dbpassword>
+`
+      - Production: `mongo ds145405.mlab.com:45405/heroku_7xlg5vkl -u <dbuser> -p <dbpassword>
+`
+    - Insert company object through comand line
+         ```
+            db.companies.insert({
+                name: "Truveris",
+                name_lower: 'truveris',
+                location: "2 Park Ave #1500, New York, NY 10016",
+                description: "Brokers, health plans, unions, employers, pharmaceutical manufacturers, and consumers use our technology and insights to make smarter decisions.",
+                foundedDate: new Date(2009, 1, 1),
+                size: 100,
+                logoImg: "images/truveris-logo.png"
+            })
+        ```
+
+#### Creating a Recruiter Object
+To track applicants to a specific recruiter an recruiter must be generated in the database. The creation of this user will generate a `recruiterId`. This will be appeneded to the apply url to track attribution using the `rid` param :
+```
+/apply/<company-name>?rid=<recruiterId>
+```
+
+##### POST: Create Recruiter
+Create a Recruiter object to generate RecruiterId and track applications
+
+* **URL**: /api/v1/recruiter/create
+* **Method:** `POST`
+*  **Headers:** `{Content-Type: application/x-www-form-urlencoded}`
+*  **Required:**
+        `firstName=[string]`
+        `lastName=[string]`
+* **Response:** 
+    ```
+    {
+        "__v": 0
+        "updatedAt": "2016-10-10T17:22:34.872Z"
+        "createdAt": "2016-10-10T17:22:34.872Z"
+        "firstName": "asd"
+        "lastName": "asdas"
+        "key": "asdasdasa2x1or"
+        "_id": "57fbce5a379462a03ee97284"
+        "credit": [0]
+    }
+    ```
+![REST Client Example](/docs/recruiter_rest.png)
+
 ## Environment
 
 We are using heroku for our live staging and production instances; 

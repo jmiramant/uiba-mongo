@@ -1,8 +1,60 @@
 import User from '../models/user';
 import Profile from '../models/profile';
+import Recruiter from '../models/recruiter';
 import passport from 'passport';
 import async from 'async'
 import mailer from '../../utils/email.js'
+
+
+const isApply = (req) => {
+  return req.headers.referer.indexOf('/apply/') !== -1
+}
+
+const logRecruiter = (req) => {
+  if (req.headers.referer.split('/apply/').length > 1) {
+
+    const properString = (str) => {
+      return str.split('-').map((s) => {
+        return s.charAt(0).toUpperCase() + s.slice(1)
+      }).join(' ');
+    }
+
+    const company = properString(req.headers.referer.split('/apply/')[1].split('?')[0]);
+
+    if (req.headers.referer.split('/apply/')[1].split('?rid=')[1]) {
+
+      const rid = req.headers.referer.split('/apply/')[1].split('?rid=')[1].split('&')[0];
+
+      Recruiter.findOne({
+        key: rid
+      }).exec((err, recruiter) => {
+        const companyObj = _.find(recruiter.credit, (obj) => {
+          return obj.company === company
+        })
+
+        if (companyObj) {
+          companyObj.candidate.push(recruiter._id);
+        } else {
+          recruiter.credit.push({
+            company: company,
+            candidate: [recruiter._id]
+          });
+        }
+        recruiter.save()
+      });
+
+    }
+  }
+}
+
+const resolveApplyRedirect = (req, profile) => {
+  const _c = req.headers.referer.split('/apply/')[1].split('/')[0].split('?')[0];
+  profile.apply = {
+    applied: true,
+    name: _c,
+  };
+  logRecruiter(req);
+}
 
 /**
  * GET /user
@@ -27,14 +79,35 @@ export function login(req, res, next) {
       return res.status(401).json({ message: info.message });
     }
     if (user.isEmailVerified) {
+
       // Passport exposes a login() function on req (also aliased as
       // logIn()) that can be used to establish a login session
-      return req.logIn(user, (loginErr) => {
-        if (loginErr) return res.status(401).json({ message: loginErr });
-        return res.status(200).json({
-          message: 'You have been successfully logged in.'
+      const login = () => {
+        return req.logIn(user, (loginErr) => {
+          if (loginErr) return res.status(401).json({ message: loginErr });
+          return res.status(200).json({
+            message: 'You have been successfully logged in.'
+          });
         });
-      });
+      }
+
+      if (isApply(req)) {
+       return Profile.findOne({
+          service: 'email',
+          user_id: user._id
+        }, (profErr, _profile) => {
+          if (profErr) console.log(profErr)
+          resolveApplyRedirect(req, _profile)
+          _profile.save( (err, prof) => {
+            console.log(err)
+            login();
+          })
+        })
+      } else {
+        login();
+      }
+
+      
     } else {
       res.send(401, {message: 'This email is not yet verified. Please check your email to confirm the account.'});
     }
@@ -59,11 +132,13 @@ export function signUp(req, res, next) {
     email: req.body.email,
     password: req.body.password
   });
-
+  
   User.findOne({ email: req.body.email }, (findErr, existingUser) => {
     if (existingUser) {
       return res.status(409).json({ message: 'Account with this email address already exists. Did you sign up with LinkedIn?' });
     }
+
+  
     const _profile = new Profile({
       user_id: user.id,
       firstName: req.body.first,
@@ -75,6 +150,8 @@ export function signUp(req, res, next) {
     })
 
     user.profile_id = _profile._id;
+
+    if (isApply(req)) resolveApplyRedirect(req, _profile)
 
     return async.series({
       _profile: _profile.save,

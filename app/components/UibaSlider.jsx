@@ -110,7 +110,7 @@ export default class UibaSlider extends React.Component {
     ) : (null)
 
     return (
-      <div className={cx('ubia-slider-container')}>
+      <div className={cx('uiba-slider-container')}>
         <div className={cx('title')}>{title}</div>
         <Slider 
           step={1} 
