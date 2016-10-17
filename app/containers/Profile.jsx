@@ -32,15 +32,25 @@ import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
 class Profile extends React.Component {
-  static need = [  // eslint-disable-line
-    profileActionCreators.fetchProfile,
-    schoolsActionCreators.fetchSchools,
-    jobsActionCreators.fetchJobs,
-    skillsActionCreators.fetchSkills,
-    languagesActionCreators.fetchLanguages,
-    projectsActionCreators.fetchProjects,
-    interestsActionCreators.fetchInterests,
-  ]
+
+  componentWillMount() {
+    const { profileActions,
+            jobActions,
+            schoolActions,
+            skillActions,
+            interestActions,
+            languageActions,
+            projectActions,
+    } = this.props;
+
+    profileActions.fetchProfile()
+    schoolActions.fetchSchools()
+    jobActions.fetchJobs()
+    skillActions.fetchSkills()
+    languageActions.fetchLanguages()
+    projectActions.fetchProjects()
+    interestActions.fetchInterests()
+  }
 
   constructor(props) {
     super(props)
