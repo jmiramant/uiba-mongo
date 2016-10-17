@@ -20,11 +20,19 @@ const isFetching = (
 const projectOrder = (project, order = 'asc') => {
   if (order === 'asc') {
     return project.sort( (a,b) => {
-      return new Date(a.startDate) < new Date(b.startDate)
+      if (new Date(a.startDate) > new Date(b.startDate)) { 
+        return -1; 
+      } else {
+        return 1; 
+      }
     });    
   } else {
     return project.sort( (a,b) => {
-      return new Date(a.startDate) < new Date(b.startDate)
+      if (new Date(a.startDate) < new Date(b.startDate)) { 
+        return -1; 
+      } else {
+        return 1; 
+      }
     });    
   }
 }

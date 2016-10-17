@@ -20,11 +20,19 @@ const isFetching = (
 const jobOrder = (jobs, order = 'asc') => {
   if (order === 'asc') {
     return jobs.sort( (a,b) => {
-      return new Date(a.startDate) < new Date(b.startDate)
+      if (new Date(a.startDate) > new Date(b.startDate)) { 
+        return -1; 
+      } else {
+        return 1; 
+      }
     });    
   } else {
     return jobs.sort( (a,b) => {
-      return new Date(a.startDate) < new Date(b.startDate)
+      if (new Date(a.startDate) < new Date(b.startDate)) { 
+        return -1; 
+      } else {
+        return 1; 
+      }
     });    
   }
 }
@@ -67,6 +75,7 @@ const jobs = (
       return jobOrder(action.res.data)
     case types.CREATE_JOB_SUCCESS:
       const newJobs = state.concat(action.data);
+      console.log(jobOrder(newJobs))
       return jobOrder(newJobs)
     case types.CHANGE_JOBS:
       updatedJob = [...state]
