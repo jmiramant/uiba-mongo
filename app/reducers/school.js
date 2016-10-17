@@ -20,11 +20,19 @@ const isFetching = (
 const schoolOrder = (school, order = 'asc') => {
   if (order === 'asc') {
     return school.sort( (a,b) => {
-      return new Date(a.startDate) < new Date(b.startDate)
+      if (new Date(a.startDate) > new Date(b.startDate)) { 
+        return -1; 
+      } else {
+        return 1; 
+      }
     });    
   } else {
     return school.sort( (a,b) => {
-      return new Date(a.startDate) < new Date(b.startDate)
+      if (new Date(a.startDate) < new Date(b.startDate)) { 
+        return -1; 
+      } else {
+        return 1; 
+      }
     });    
   }
 }
