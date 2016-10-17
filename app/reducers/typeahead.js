@@ -7,6 +7,7 @@ const typeahead = (
 ) => {
   switch (action.type) {
     case types.UPDATE_RESULTS_SUCCESS:
+      console.log('client-ish', action.results)
       return action.results
     default:
       return [];

@@ -14,6 +14,7 @@ export function search(req, res) {
       if (err) {
         return res.status(500).send('Something went wrong getting the data from SchoolNames endpoint');
       }
+      console.log('server', results)
       return res.json(results);
   });
 }

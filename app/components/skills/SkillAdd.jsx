@@ -143,7 +143,7 @@ export default class SkillAdd extends React.Component {
               />
 
               <div className={cx('profile-btn-group')}>
-                <FlatButton className='pull-right' type="submit" label="Save" primary={true} />
+                <RaisedButton className='pull-right' type="submit" label="Save" primary={true} />
                 {this.props.handleDelete ? (
                   <FlatButton className='pull-left' label="Delete" onClick={this.props.handleDelete} primary={true} />
                 ) : (<span />)}
