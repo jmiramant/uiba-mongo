@@ -95,7 +95,7 @@ class Apply extends Component {
       company
     } = this.props;
 
-    return (
+    const applyPage = (
       <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
         <div>
           <div className={cx('welcome-text')}>
@@ -154,6 +154,18 @@ class Apply extends Component {
           </div>
         </div>
       </MuiThemeProvider> 
+    )
+
+    const loadingPage = (
+      <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
+        <div className={cx('welcome-text')}>
+          <p>Loading Career Protal</p>
+        </div>
+      </MuiThemeProvider> 
+    )
+
+    return (
+      company.name ? (applyPage) : (loadingPage)
     );
   }
 };
