@@ -30,8 +30,6 @@ class TypeaheadApp extends Component {
     }    
   }
 
-    
-
   render() {
     return (
       <TypeAhead

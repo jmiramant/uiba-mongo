@@ -21,9 +21,14 @@ export const externalAPISecret = {
   accessEmail: process.env.UIBA_API_SECRET || 'token@token.com'
 }
 
+export const zipCodeAPI = {
+  key: process.env.zipCodeAPI_key || 'JCqjDuMQP0YpfmZglzDHV5yQI3faL0FvD5OhzB7pB6PRsO8OnLvjR49A7pLSqqn4',
+}
+
 export default {
   sessionSecret,
   google,
   externalAPISecret,
-  linkedin
+  linkedin,
+  zipCodeAPI
 };
