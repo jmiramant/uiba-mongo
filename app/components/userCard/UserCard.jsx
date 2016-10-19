@@ -97,6 +97,7 @@ export default class UserCard extends React.Component {
                 </div>
               )}
             </div>
+            <AddressInput />
             {profile.service === 'linkedin' ? (null) : (
               <a 
                 className={cx('auto-complete')}
@@ -111,7 +112,6 @@ export default class UserCard extends React.Component {
           </div>
         </div>
 
-        <AddressInput />
 
       </div>
     )
