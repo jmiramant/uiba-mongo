@@ -37,7 +37,7 @@ class Address extends Component {
     if (autofill.city && autofill.state) {
       return (
         <div>
-          <h4>{autofill.city}, {autofill.state}</h4>
+          <div>{autofill.city}, {autofill.state}</div>
           {saveBtn}
         </div>
       )
@@ -48,7 +48,7 @@ class Address extends Component {
     } else if (address.city && address.state) {
       return (
         <div>
-          <h4>{address.city}, {address.state}</h4>
+          <div>{address.city}, {address.state}</div>
         </div>
       )
     }
