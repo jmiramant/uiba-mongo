@@ -28,11 +28,12 @@ class Address extends Component {
     this.props.onAddressSave(this.props.autofill);
   }
 
-  showAddress(autofill) {
+  showAddress(autofill, address) {
     let saveBtn;
     if (!this.props.address.zip_code) {
       saveBtn = (<RaisedButton onClick={this.handleSubmit} label="Save Address" primary={true} />)
     }
+
     if (autofill.city && autofill.state) {
       return (
         <div>
@@ -43,6 +44,12 @@ class Address extends Component {
     } else if (autofill.error_msg){
       return (
         <h4>{autofill.error_msg}</h4>
+      )
+    } else if (address.city && address.state) {
+      return (
+        <div>
+          <h4>{address.city}, {address.state}</h4>
+        </div>
       )
     }
   }
@@ -58,13 +65,14 @@ class Address extends Component {
 
   render() {
     const { 
-      autofill 
+      autofill,
+      address
     } = this.props;
 
     return (
       <div>
         {this.showZipEntry()}
-        {this.showAddress(autofill)}
+        {this.showAddress(autofill, address)}
       </div>
     );
   }

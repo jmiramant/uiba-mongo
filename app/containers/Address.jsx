@@ -19,6 +19,10 @@ class AddressAutofillApp extends Component {
     super(props);
   }
 
+  componentWillMount() {
+    this.actions.fetchAddress()
+  }  
+
   handleSave() {
     this.actions.createAddress(this.props.autofill)
   }

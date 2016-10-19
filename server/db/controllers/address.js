@@ -3,16 +3,6 @@ import Address from '../models/address';
 import { zipCodeAPI } from '../../config/secrets';
 import request from 'request';
 
-// export function post(req, res) {
-
-//   const address = req.body.address;
-
-//   Address.create(address, (err, address) => {
-//     if (err) return res.status(500).send({message: 'Address not able to save: ' + err.value});
-//     return res.json(address);
-//   });
-// }
-
 const handleError = (res, err) => {
   console.log(err);
   return res.status(401).json({ message: err });
@@ -33,8 +23,8 @@ export function me(req, res) {
     "profile_id": mongoose.Types.ObjectId(req.user.profile_id)
 
   }).exec((err, address) => {
-    
     if (err) return handleError(res, err);
+    if (!address) return handleError(res, 'No address');
     return res.status(200).json(address);
   
   });
@@ -62,6 +52,7 @@ export function get(req, res) {
 
 export function create(req, res) {
   Address.create({
+    profile_id: req.user.profile_id,
     zip_code: req.body.zip_code,
     lat: req.body.lat,
     lng: req.body.lng,

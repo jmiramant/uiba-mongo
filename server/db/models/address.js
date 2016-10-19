@@ -1,6 +1,8 @@
 import mongoose, { Schema } from 'mongoose';
+import { Profile } from './profile';
 
 const AddressSchema = new mongoose.Schema({
+  profile_id: {type: Schema.Types.ObjectId, ref: 'Profile', required: true },
   zip_code: String,
   lat: Number,
   lng: Number,
