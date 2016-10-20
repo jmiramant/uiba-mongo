@@ -30,7 +30,7 @@ export default class SplashHero extends React.Component {
         <div className={cx('hero--left') + ' col-md-6'}>
           <h1 className={cx('hero--title') + ' animated fadeInLeft'}>Launch your<br/>Career Path</h1>
           <p className={cx('hero--sub-title')+ ' animated fadeInLeft'}>Understand your Capabilities.<br/>Start building your future today.</p>
-          <Link to="/about" className={cx('button')+ ' animated fadeInLeft'}>About Us</Link>
+          <Link to="/login" className={cx('button')+ ' animated fadeInLeft'}>Get Started</Link>
         </div>
         <div className={cx('hero--right') + ' col-md-6 animated fadeInRight'}>
           <Rocket />

@@ -37,7 +37,9 @@ const Navigation = ({ user, logOut }) => {
           { user.authenticated ? (
             <Link onClick={logOut}
               className={cx('item')} to="/">Logout</Link>
-          ) : (null)}
+          ) : (
+            <Link className={cx('item')} to="/login">Get Started</Link>
+          )}
         </div>
         <NavDropdown title='' className={cx('navbar--resp-nav') + ' hidden-sm pull-right hidden-md hidden-lg'} id="responsive-nav-dropdown">
           { user.authenticated ? (
@@ -62,7 +64,13 @@ const Navigation = ({ user, logOut }) => {
                 Logout
               </MenuItem>
             </LinkContainer>
-          ) : (null)}
+          ) : (
+            <LinkContainer to="/login">
+              <MenuItem>
+                Get Started
+              </MenuItem>
+            </LinkContainer>
+          )}
 
         </NavDropdown>
       </nav>
