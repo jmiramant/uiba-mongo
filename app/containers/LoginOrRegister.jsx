@@ -88,7 +88,7 @@ class LoginOrRegister extends Component {
               >
               <div className={cx('li-btn-container')}>
                 <img src={linkedinLogo} />
-                <p>Log In Using LinkedIn</p>
+                <p>{isLogin ? ('Log In'):('Signup')} Using LinkedIn</p>
               </div>
               </a>
 
