@@ -31,7 +31,8 @@ export default class UserCard extends React.Component {
   }
 
   state = {
-    showEdit: false
+    showEdit: false,
+    showLi: false
   }
 
   editIconShow() {
@@ -54,12 +55,26 @@ export default class UserCard extends React.Component {
     this.props.toggleEdit(this.props.editMode)
   }
 
+  toggleLiLeave() {
+    this.setState({
+      showLi: false
+    });
+  }
+  
+  toggleLiEnter() {
+    this.setState({
+      showLi: true
+    });
+  }
+
   render () {
     const {
       profile,
       editMode,
       actions
     } = this.props;
+
+    const liClass = this.state.showLi ? " " + cx("show") : ''
     
     return (
       <div className={cx('userCard--container') + ' text-center'}>
@@ -72,6 +87,19 @@ export default class UserCard extends React.Component {
                 <DefaultUserIcon className={cx('userCard--default-icon')}/>            
               )}
             </div>
+            {profile.service === 'linkedin' ? (null) : (
+              <a 
+                className={cx('auto-complete')}
+                href="/auth/linkedin"
+                onMouseEnter={this.toggleLiEnter.bind(this)}
+                onMouseLeave={this.toggleLiLeave.bind(this)} 
+              >
+                <div className={cx('popup') + liClass}>Fetch Photo from LinkedIn</div>
+                <div className={cx('auto-complete-container')}>
+                  <img className={cx('li-img')} src={LiImg} />
+                </div>
+              </a>
+            )}
             <div 
               onDoubleClick={this.toggleEdit.bind(this)} 
               onMouseEnter={this.editIconShow.bind(this)} 
@@ -102,17 +130,6 @@ export default class UserCard extends React.Component {
               )}
             </div>
             <AddressInput />
-            {profile.service === 'linkedin' ? (null) : (
-              <a 
-                className={cx('auto-complete')}
-                href="/auth/linkedin"
-              >
-                <div className={cx('auto-complete-container')}>
-                  <img className={cx('li-img')} src={LiImg} />
-                  <p>AutoComplete with Linkedin</p>
-                </div>
-              </a>
-            )}
           </div>
         </div>
 
