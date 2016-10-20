@@ -17,6 +17,7 @@ const languagesController = controllers && controllers.languages;
 const interestsController = controllers && controllers.interests;
 const recruitersController = controllers && controllers.recruiters;
 const companysController = controllers && controllers.companys;
+const addressessController = controllers && controllers.addresses;
 
 const exportsController = controllers && controllers._exports;
 const tokensController = controllers && controllers.tokens;
@@ -40,6 +41,17 @@ export default (app) => {
     app.post('/resendValidationEmail', usersController.resendEmailConfirmation)
   } else {
     console.warn(unsupportedMessage('users routes'));
+  }
+
+  if (addressessController) {
+    app.get('/address/me', addressessController.me);
+    app.get('/address/autofill', addressessController.autofill);
+    app.get('/address/:id', addressessController.get);
+    app.post('/address', addressessController.create);
+    app.put('/address', addressessController.update);
+    app.delete('/address/:id', addressessController.remove);
+  } else {
+    console.warn(unsupportedMessage('addresses routes'));
   }
 
   if (jobsController) {

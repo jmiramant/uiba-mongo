@@ -3,6 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as profilesActionCreators from 'actions/profiles';
 
+import AddressInput from 'containers/Address'
+
 import LiImg from '../../images/linkedin-logo.svg';
 import CardEdit from 'components/userCard/UserCardEdit'
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
@@ -60,52 +62,61 @@ export default class UserCard extends React.Component {
     } = this.props;
     
     return (
-      <div className={cx('userCard--container') + ' text-center'} onMouseEnter={this.editIconShow.bind(this)} onMouseLeave={this.editIconHide.bind(this)}>
-        <div className={cx('profile--container')}>
-          <div className={cx('userCard--picture-container')}>
-            {profile.picture ? (
-              <img className={cx('userCard--picture-img')} src={profile.picture}/>
-            ) : (
-              <DefaultUserIcon className={cx('userCard--default-icon')}/>            
-            )}
-          </div>
-          <div onDoubleClick={this.toggleEdit.bind(this)}>
-            {editMode ? (
-              <CardEdit
-                profile={profile}
-                profileChange={actions.profileChange}
-                toggleEdit={this.toggleEdit}
-                onEditSave={this.handleEditSave}
-              />
-            ) : (
-              <div>
-                {this.state.showEdit ? (
-                  <EditIcon
-                    onClick={this.toggleEdit.bind(this)}
-                    color="#66747F"
-                    hoverColor="#f20253"
-                    className={cx("userCard--edit")}
-                  />
-                ) : (
-                  <span />            
-                )}
-                <div className={cx('userCard--name')}>{profile.name}</div>
-                <div>{profile.headline}</div>
-              </div>
-            )}
-          </div>
-          {profile.service === 'linkedin' ? (null) : (
-            <a 
-              className={cx('auto-complete')}
-              href="/auth/linkedin"
+      <div className={cx('userCard--container') + ' text-center'}>
+        <div>
+          <div className={cx('profile--container')}>
+            <div className={cx('userCard--picture-container')}>
+              {profile.picture ? (
+                <img className={cx('userCard--picture-img')} src={profile.picture}/>
+              ) : (
+                <DefaultUserIcon className={cx('userCard--default-icon')}/>            
+              )}
+            </div>
+            <div 
+              onDoubleClick={this.toggleEdit.bind(this)} 
+              onMouseEnter={this.editIconShow.bind(this)} 
+              onMouseLeave={this.editIconHide.bind(this)}
             >
-              <div className={cx('auto-complete-container')}>
-                <img className={cx('li-img')} src={LiImg} />
-                <p>AutoComplete with Linkedin</p>
-              </div>
-            </a>
-          )}
+              {editMode ? (
+                <CardEdit
+                  profile={profile}
+                  profileChange={actions.profileChange}
+                  toggleEdit={this.toggleEdit}
+                  onEditSave={this .handleEditSave}
+                />
+              ) : (
+                <div>
+                  {this.state.showEdit ? (
+                    <EditIcon
+                      onClick={this.toggleEdit.bind(this)}
+                      color="#66747F"
+                      hoverColor="#f20253"
+                      className={cx("userCard--edit")}
+                    />
+                  ) : (
+                    <span />            
+                  )}
+                  <div className={cx('userCard--name')}>{profile.name}</div>
+                  <div>{profile.headline}</div>
+                </div>
+              )}
+            </div>
+            <AddressInput />
+            {profile.service === 'linkedin' ? (null) : (
+              <a 
+                className={cx('auto-complete')}
+                href="/auth/linkedin"
+              >
+                <div className={cx('auto-complete-container')}>
+                  <img className={cx('li-img')} src={LiImg} />
+                  <p>AutoComplete with Linkedin</p>
+                </div>
+              </a>
+            )}
+          </div>
         </div>
+
+
       </div>
     )
   }

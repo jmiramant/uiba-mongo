@@ -105,7 +105,6 @@ export default class SkillAdd extends React.Component {
       <div>
         <form
           className={cx('skillAdd--form')}
-          onSubmit={this.handleSubmit}
         >
           <AutoComplete
             hintText='Add one skill at a time.'
@@ -143,7 +142,7 @@ export default class SkillAdd extends React.Component {
               />
 
               <div className={cx('profile-btn-group')}>
-                <RaisedButton className='pull-right' type="submit" label="Save" primary={true} />
+                <RaisedButton className='pull-right' onClick={this.handleSubmit} label="Save" primary={true} />
                 {this.props.handleDelete ? (
                   <FlatButton className='pull-left' label="Delete" onClick={this.props.handleDelete} primary={true} />
                 ) : (<span />)}

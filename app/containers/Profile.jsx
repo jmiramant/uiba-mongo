@@ -72,7 +72,7 @@ class Profile extends React.Component {
             applyActions,
           } = this.props;
 
-    return (
+    return (      
       <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
         <div>
           <UserCard 

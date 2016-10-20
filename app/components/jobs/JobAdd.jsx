@@ -99,9 +99,7 @@ export default class JobAdd extends React.Component {
 
     return (
       <div className={cx('jobAdd-container')}>
-        <form
-          onSubmit={this.handleSubmit}
-        >
+        <form>
 
           <div className="col-md-6">
             <TextField
@@ -158,7 +156,7 @@ export default class JobAdd extends React.Component {
           </div>
 
           <div className={cx('profile-btn-group')}>
-            <RaisedButton className='pull-right' type="submit" label="Save" primary={true} />
+            <RaisedButton className='pull-right' onClick={this.handleSubmit} label="Save" primary={true} />
             {this.props.handleDelete ? (
               <FlatButton className='pull-left' label="Delete" onClick={this.props.handleDelete} primary={true} />
             ) : (<span />)}

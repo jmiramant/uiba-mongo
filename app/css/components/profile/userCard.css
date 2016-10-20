@@ -1,5 +1,6 @@
 @import '../../common/colors';
 @import '../../common/card';
+@import '../../common/profile';
 
 .userCard--container {
   background: #fff;
