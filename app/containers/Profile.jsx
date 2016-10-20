@@ -151,7 +151,7 @@ class Profile extends React.Component {
 
             <div className='col-md-8 col-md-offset-2'>
               <CardHeader
-                text='Projects'
+                text='Projects and Volunteering'
                 addVisible={projects.addShow}
                 toggleAdd={projectActions.toggleProjectAdd}
               />

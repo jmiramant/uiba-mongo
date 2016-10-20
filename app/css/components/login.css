@@ -22,6 +22,10 @@
   }
 }
 
+.error {
+  color: red;
+}
+
 .toggle-container {
   margin: 30px auto 0;
   width: 60%;
@@ -57,18 +61,27 @@
 }
 
 .li-container {
-  margin: 20px 0px 0px;
+  margin: 2px 0px 0px;
   width: 100%;
   text-align: center;
-  height: 90px;
+  height: 57px;
 }
 
 .li-auth img {
-  height: 55px;
-  width: 55px;
+  height: 43px;
+  padding: 0px 0 4px 0;
+  width: 50px;
   transition: 0.1s all ease-in-out;
+}
+
+.li-btn-container {
+  background-color: #337ab7;
+  width: 58%;
+  margin: 0 auto;
+  border-radius: 3px;
+  color: #fff;
   &:hover {
-    transform: scale(1.1);
+    transform: scale(1.02);
   }
 }
 

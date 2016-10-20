@@ -68,7 +68,7 @@ export default class LoginFrom extends React.Component {
     } = this.state;
     return (
       <div>
-        <p>{user.message}</p>
+        {user.message.length ? (<p className={cx('error')}>{user.message}</p>) : (null)}
         <TextField
           fullWidth={true} 
           errorText={validationErrors.email}
