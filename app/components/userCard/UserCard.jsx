@@ -63,7 +63,7 @@ export default class UserCard extends React.Component {
     
     return (
       <div className={cx('userCard--container') + ' text-center'}>
-        <div onMouseEnter={this.editIconShow.bind(this)} onMouseLeave={this.editIconHide.bind(this)}>
+        <div>
           <div className={cx('profile--container')}>
             <div className={cx('userCard--picture-container')}>
               {profile.picture ? (
@@ -72,13 +72,17 @@ export default class UserCard extends React.Component {
                 <DefaultUserIcon className={cx('userCard--default-icon')}/>            
               )}
             </div>
-            <div onDoubleClick={this.toggleEdit.bind(this)}>
+            <div 
+              onDoubleClick={this.toggleEdit.bind(this)} 
+              onMouseEnter={this.editIconShow.bind(this)} 
+              onMouseLeave={this.editIconHide.bind(this)}
+            >
               {editMode ? (
                 <CardEdit
                   profile={profile}
                   profileChange={actions.profileChange}
                   toggleEdit={this.toggleEdit}
-                  onEditSave={this.handleEditSave}
+                  onEditSave={this .handleEditSave}
                 />
               ) : (
                 <div>

@@ -67,16 +67,15 @@ export function create(req, res) {
 }
 
 export function update(req, res) {
-  
-  return Address.findOne({"_id": req.body._id}).exec((err, address) => {
-
-    address.zip_code = req.body.zip_code
-    address.lat = req.body.lat
-    address.lng = req.body.lng
-    address.city = req.body.city
-    address.state = req.body.state
-    address.timezone = req.body.timezone
-    address.acceptable_city_names = req.body.acceptable_city_names
+  Address.findOne({"profile_id": mongoose.Types.ObjectId(req.user.profile_id)}).exec((err, address) => {
+    
+    address.zip_code = req.body.zip_code;
+    address.lat = req.body.lat;
+    address.lng = req.body.lng;
+    address.city = req.body.city;
+    address.state = req.body.state;
+    address.timezone = req.body.timezone["timezone_abbr"];
+    address.acceptable_city_names = req.body.acceptable_city_names;
 
     address.save( err => {
       if (err) return handleError(res, err);

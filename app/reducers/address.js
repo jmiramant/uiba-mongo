@@ -24,6 +24,54 @@ const autofill = (
   switch (action.type) {
     case types.UPDATE_ADDRESS_AUTOFILL_SUCCESS:
       return action.results.data;
+    case types.CREATE_ADDRESS_SUCCESS:
+    case types.UPDATE_ADDRESS_SUCCESS:
+    case types.UPDATE_ADDRESS_FAILURE:
+      return state;      
+    default:
+      return state;
+  }
+};
+
+const error = (
+  state = '',
+  action
+) => {
+  switch (action.type) {
+    case types.UPDATE_ADDRESS_AUTOFILL_SUCCESS:
+    case types.CREATE_ADDRESS_SUCCESS:    
+      return state;
+    case types.UPDATE_ADDRESS_FAILURE:
+      return action.error;
+    default:
+      return state;
+  }
+};
+
+const editIcon = (
+  state = false,
+  action
+) => {
+  switch (action.type) {
+    case types.SHOW_ADDRESS_EDIT_ICON:
+      return true;
+    case types.HIDE_ADDRESS_EDIT_ICON:
+      return false;
+    default:
+      return state;
+  }
+}
+
+const edit = (
+  state = false,
+  action
+) => {
+  switch (action.type) {
+    case types.TOGGLE_ADDRESS_EDIT:
+      return !action.data
+    case types.CREATE_ADDRESS_SUCCESS:
+    case types.UPDATE_ADDRESS_SUCCESS:
+      return false;
     default:
       return state;
   }
@@ -50,7 +98,10 @@ const address = (
 const addressReducer = combineReducers({
   isFetching,
   address,
-  autofill
+  autofill,
+  edit,
+  editIcon,
+  error
 });
 
 export default addressReducer;

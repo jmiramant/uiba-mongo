@@ -4,6 +4,24 @@ import * as types from 'types';
 
 polyfill();
 
+export function toggleAddressEdit () {
+  return {
+    type: types.TOGGLE_ADDRESS_EDIT
+  };
+}
+
+export function showAddressEditIcon () {
+  return {
+    type: types.SHOW_ADDRESS_EDIT_ICON
+  };
+}
+
+export function hideAddressEditIcon (data) {
+  return {
+    type: types.HIDE_ADDRESS_EDIT_ICON,
+    data: data
+  };
+}
 
 export function updateAddressAutofill(results) {
   return {
