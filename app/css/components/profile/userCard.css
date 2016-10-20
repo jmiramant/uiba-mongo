@@ -66,6 +66,7 @@ a.auto-complete {
   font-size: 11px;
   color: #111;
   margin: 31px 0 0 -5px;
+  transition: .25s all linear;
 }
 .popup.show {
   visibility: visible;
