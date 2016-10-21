@@ -182,9 +182,10 @@ class Profile extends React.Component {
               />
             </div>
 
-            {profile.profile.apply && profile.profile.apply.applied ? (
+            {profile.profile.apply && (profile.profile.apply.applied || profile.profile.apply.applyComplete) ? (
               <div className='col-md-8 col-md-offset-2'>
                 <ApplyBtn
+                  applyState={profile.profile.apply}
                   handleSubmit={this.handleApply.bind(this)}
                 />
               </div> 
