@@ -45,4 +45,10 @@
     margin: 4px 2px;
   }
 
+  --closed {
+    min-height: 78px;
+    width: 285px;
+    margin: 0 auto;
+  }
+  
 }

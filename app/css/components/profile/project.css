@@ -50,3 +50,6 @@
   width: 100% !important;
 }
 
+.closed {
+  @apply --closed;  
+}

@@ -16,6 +16,7 @@ import _ from 'lodash';
 import classNames from 'classnames/bind';
 import styles from 'css/components/profile/project';
 const cx = classNames.bind(styles);
+let timeout;
 
 export default class ProjectAdd extends React.Component {
 
@@ -49,12 +50,24 @@ export default class ProjectAdd extends React.Component {
   }
 
   changeProjectProps(field, value) {
+    if (!this.props.addVisible) {
+      this.handleExpand(value) 
+    }
     this.setState({validationErrors: {}})
     this.props.projectChange({
       field: field,
       value: value,
       id: this.props.project._id
     });  
+  }
+
+  handleExpand(next) {
+    if (this.props.project.name !== next) {
+      if(timeout) { clearTimeout(timeout); }
+      timeout = setTimeout(() => {
+        !this.props.addVisible && this.props.project.name ? this.props.toggleEdit() : null
+      }, 500)
+    } 
   }
 
   formatURL(url) {
@@ -103,10 +116,13 @@ export default class ProjectAdd extends React.Component {
 
     const {
             project,
+            addVisible
           } = this.props;
 
+    const isVisible = (project.description || addVisible) ? '' : ' ' + cx('closed');
+
     return (
-      <div className={cx('projectAdd-container')}>
+      <div className={cx('projectAdd-container') + isVisible}>
         <form
           onSubmit={this.handleSubmit}
         >
@@ -115,10 +131,12 @@ export default class ProjectAdd extends React.Component {
             <TextField
               value={project.name}
               errorText={validationErrors.name}
-              floatingLabelText="Project"
+              floatingLabelText="Add a Project"
               onChange={this.handleChange('name')}
             />
           </div>
+
+          { addVisible || project.description ? (<span>
 
           <div className="col-md-6">
             <TextField
@@ -172,7 +190,7 @@ export default class ProjectAdd extends React.Component {
             ) : (<span />)}
             <FlatButton className='pull-left' label="Close" onClick={this.props.toggleEdit} primary={true} />
           </div>
-
+          </span>) : (<span/>)}
         </form>
       </div>
     )

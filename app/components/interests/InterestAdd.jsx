@@ -109,7 +109,7 @@ export default class InterestAdd extends React.Component {
         >
           <TextField
             value={iText}
-            floatingLabelText="Interest"
+            floatingLabelText="Add a Interest"
             errorText={validationErrors.interest}
             onChange={this.handleChange('interest')}
           />

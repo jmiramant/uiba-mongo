@@ -44,22 +44,30 @@ const job = (
   switch (action.type) {
     case types.CREATE_NEW_JOB:
       return {
-        profile_id: undefined,
-        name: undefined,
-        major: undefined,
-        minor: undefined,
-        degree: undefined,
-        startDate: undefined,
-        endDate: undefined,
-        current: undefined
-      }
+        company_id: '',
+        profile_id: '',
+        companyName: '',
+        title: '',
+        headline: '',
+        description: '',
+        startDate: '',
+        endDate: '',
+        current: '',
+      };
     case types.CHANGE_JOB:
       const newStateOjb = {...state}
       newStateOjb[action.state.field] = action.state.value
       return newStateOjb;
     case types.CREATE_JOB_SUCCESS:
-    case types.TOGGLE_JOB_ADD:
-      return {}
+      return {
+        companyName: '',
+        title: '',
+        headline: '',
+        description: '',
+        startDate: '',
+        endDate: '',
+        current: '',
+      };
     default:
       return state;
   }
@@ -75,7 +83,6 @@ const jobs = (
       return jobOrder(action.res.data)
     case types.CREATE_JOB_SUCCESS:
       const newJobs = state.concat(action.data);
-      console.log(jobOrder(newJobs))
       return jobOrder(newJobs)
     case types.CHANGE_JOBS:
       updatedJob = [...state]

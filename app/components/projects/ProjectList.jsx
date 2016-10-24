@@ -69,16 +69,6 @@ class ProjectList extends React.Component {
     
     return ( <div className={cx('projectList--container')}>
       
-      { addVisible ? (
-        <ProjectAdd
-          project={project}
-          onProjectSave={this.handleSave} 
-          projectChange={actions.projectChange}
-          toggleEdit={this.toggleAddProject.bind(this)} 
-          addVisible={addVisible}
-        />
-      ) : (<span/>)}
-
       { projects.length ? (
         <div>
           {renderItems}
@@ -88,6 +78,14 @@ class ProjectList extends React.Component {
           <NullProfItem target="project" />
         </span>
       )}
+
+      <ProjectAdd
+        project={project}
+        onProjectSave={this.handleSave} 
+        projectChange={actions.projectChange}
+        toggleEdit={this.toggleAddProject.bind(this)} 
+        addVisible={addVisible}
+      />
 
     </div>)
   }

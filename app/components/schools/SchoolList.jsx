@@ -70,16 +70,6 @@ class SchoolList extends React.Component {
     return (
       <div className={cx('schoolList--container')}>
 
-        { addVisible ? (
-          <SchoolAdd 
-            school={school}
-            onSchoolSave={this.handleSave} 
-            schoolChange={actions.schoolChange}
-            toggleEdit={this.toggleAddSchool.bind(this)} 
-            addVisible={addVisible} 
-          />
-        ) : (<span/>)}
-
         { schools.length ? (
           <div>
             {renderItems}
@@ -89,6 +79,14 @@ class SchoolList extends React.Component {
             <NullProfItem target="school" />
           </span>
         )}
+        
+        <SchoolAdd 
+          school={school}
+          onSchoolSave={this.handleSave} 
+          schoolChange={actions.schoolChange}
+          toggleEdit={this.toggleAddSchool.bind(this)} 
+          addVisible={addVisible} 
+        />
 
       </div>
     )
