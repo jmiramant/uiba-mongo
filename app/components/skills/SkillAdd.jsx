@@ -86,6 +86,12 @@ export default class SkillAdd extends React.Component {
     this.changeSkillProps(field, value)
   }
 
+  disableEnter(e) {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+    }
+  }
+
   render () {
 
     const {
@@ -107,6 +113,7 @@ export default class SkillAdd extends React.Component {
           className={cx('skillAdd--form')}
         >
           <AutoComplete
+            onKeyDown={this.disableEnter}
             hintText='Add one skill at a time.'
             searchText={skill.type}
             floatingLabelText={skillText}
