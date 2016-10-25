@@ -54,10 +54,10 @@ class SchoolList extends React.Component {
 
     const renderItems = (
       <div>
-        {schools.map((school, i) => {
+        {schools.map((_school, i) => {
             return (<SchoolItem
-                      key={school._id} 
-                      school={school} 
+                      key={_school._id} 
+                      school={_school} 
                       schoolChange={actions.schoolsChange}
                       handleDelete={this.handleDelete}
                       saveSchoolEdit={this.handleEditSave} 

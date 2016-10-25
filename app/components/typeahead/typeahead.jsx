@@ -9,7 +9,7 @@ class Typeahead extends Component {
     results: PropTypes.array,
     fetchResults: PropTypes.func.isRequired,
     setSelection: PropTypes.func.isRequired,
-    selection: PropTypes.string.isRequired,
+    selection: PropTypes.string,
     onChange: PropTypes.func.isRequired,
     error: PropTypes.string,
   };

@@ -7,7 +7,6 @@ import * as actionCreators from 'actions/typeahead';
 @connect((state) => {
   return {
     results: state.typeahead.typeahead,
-    selection: state.typeahead.selection
   }
 })
 
@@ -31,6 +30,7 @@ class TypeaheadApp extends Component {
   }
 
   render() {
+
     return (
       <TypeAhead
         onChange={this.props.handleChange}

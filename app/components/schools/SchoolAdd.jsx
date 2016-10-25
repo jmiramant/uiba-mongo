@@ -123,6 +123,7 @@ export default class SchoolAdd extends React.Component {
         >
           <div className="col-md-6">
             <SchoolNameTypeahead 
+              selection={school.name}
               initial={school.name}
               error={validationErrors.name}
               handleChange={this.handleSchoolName.bind(this)}

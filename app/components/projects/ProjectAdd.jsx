@@ -122,6 +122,7 @@ export default class ProjectAdd extends React.Component {
     const isVisible = (project.description || addVisible) ? '' : ' ' + cx('closed');
 
     return (
+
       <div className={cx('projectAdd-container') + isVisible}>
         <form
           onSubmit={this.handleSubmit}

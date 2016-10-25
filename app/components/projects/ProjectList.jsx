@@ -54,10 +54,10 @@ class ProjectList extends React.Component {
 
     const renderItems = (
       <div>
-        {projects.map((project, i) => {
+        {projects.map((_project, i) => {
             return (<ProjectItem 
-                      key={project._id} 
-                      project={project} 
+                      key={_project._id} 
+                      project={_project} 
                       projectChange={actions.projectsChange}
                       handleDelete={this.handleDelete}
                       saveProjectEdit={this.handleEditSave} 

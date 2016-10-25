@@ -115,6 +115,7 @@ export default class UibaSlider extends React.Component {
         <Slider 
           step={1} 
           value={sliderValue()}
+          styles={{margin: '0 10px'}}
           sliderStyle={sliderStyle}
           min={0}
           max={stages.length - 1}

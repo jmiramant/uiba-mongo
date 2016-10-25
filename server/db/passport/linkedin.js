@@ -30,6 +30,7 @@ const setDefaultUserFields = (user, profile, accessToken) => {
 }
 
 const isApply = (req) => {
+  if (!req.headers.referer) { return false }
   return req.headers.referer.indexOf('/apply/') !== -1
 }
 
