@@ -20,7 +20,14 @@ const isFetching = (
 const jobOrder = (jobs, order = 'asc') => {
   if (order === 'asc') {
     return jobs.sort( (a,b) => {
-      if (new Date(a.startDate) > new Date(b.startDate)) { 
+      if (a.current || b.current) {
+        if (a.current && !b.current) {
+          return -1;
+        } else {
+          return 1;
+        }
+      }
+      else if (new Date(a.endDate) > new Date(b.endDate)) { 
         return -1; 
       } else {
         return 1; 
@@ -28,7 +35,7 @@ const jobOrder = (jobs, order = 'asc') => {
     });    
   } else {
     return jobs.sort( (a,b) => {
-      if (new Date(a.startDate) < new Date(b.startDate)) { 
+      if (new Date(a.endDate) < new Date(b.endDate)) { 
         return -1; 
       } else {
         return 1; 
@@ -98,6 +105,7 @@ const jobs = (
         return j._id !== action.data.id;
       })
     case types.CREATE_JOB_REQUEST:
+      debugger
       return {
         data: action.res.data,
       };
