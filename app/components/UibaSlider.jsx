@@ -53,7 +53,7 @@ export default class UibaSlider extends React.Component {
 
 
     let sliderStyle = {
-      width: "78%",
+      width: "73%",
       margin: '0 auto 10px'
     }
     
