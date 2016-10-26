@@ -28,6 +28,10 @@ const logRecruiter = (req) => {
       Recruiter.findOne({
         key: rid
       }).exec((err, recruiter) => {
+        if (!recruiter || err) {
+          if (err) {res.send(404, {message: err})}
+          res.send(404, {message: 'This recruiter is not found.'});
+        }
         const companyObj = _.find(recruiter.credit, (obj) => {
           return obj.company === company
         })

@@ -52,9 +52,8 @@ UserSchema.methods = {
       if (err) return cb(err);
       return cb(null, isMatch);
     });
-  }
+  },
 };
-
 /**
  * Statics
  */
