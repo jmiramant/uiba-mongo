@@ -28,6 +28,10 @@ const logRecruiter = (req) => {
       Recruiter.findOne({
         key: rid
       }).exec((err, recruiter) => {
+        if (!recruiter) {
+          console.log('no recruiter with this ID')
+          return false;
+        }
         const companyObj = _.find(recruiter.credit, (obj) => {
           return obj.company === company
         })
@@ -132,9 +136,7 @@ export function login(req, res, next) {
 
 
     } else {
-      res.send(401, {
-        message: 'This email is not yet verified. Please check our email to confirm.'
-      });
+      res.send(401, {message: 'This email is not yet verified. Please check your email to confirm the account.'});
     }
   })(req, res, next);
 }
