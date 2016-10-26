@@ -52,6 +52,12 @@ const logRecruiter = (req) => {
       Recruiter.findOne({
         key: rid
       }).exec((err, recruiter) => {
+
+        if (!recruiter) {
+          console.log('no recruiter with this ID')
+          return false;
+        }
+
         const companyObj = _.find(recruiter.credit, (obj) => {
           return obj.company === company
         })
