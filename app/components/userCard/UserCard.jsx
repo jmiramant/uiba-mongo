@@ -133,7 +133,6 @@ export default class UserCard extends React.Component {
           </div>
         </div>
 
-
       </div>
     )
   }
