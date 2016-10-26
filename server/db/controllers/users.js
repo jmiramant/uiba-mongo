@@ -60,12 +60,31 @@ const resolveApplyRedirect = (req, profile) => {
  * GET /user
  */
 export function me(req, res) {
-    if (!req.user) {
-      console.log('Error in user /me query');
+  if (!req.user) {
+    console.log('Error in user /me query');
+    return res.status(500).send('Something went wrong getting the data');
+  }
+
+  return res.json(req.user);
+}
+
+/**
+ * GET /create
+ */
+export function create(req, res) {
+  user = new User();
+  user.email = req.body.email;
+  user.role = req.body.role;
+  user.save(function(err, user) {
+
+    if (!user || err) {
+      console.log('Error in user /create');
       return res.status(500).send('Something went wrong getting the data');
     }
 
-    return res.json(req.user);
+    return res.json(user);
+
+  });
 }
 
 /**
@@ -76,7 +95,9 @@ export function login(req, res, next) {
   passport.authenticate('local', (authErr, user, info) => {
     if (authErr) return next(authErr);
     if (!user) {
-      return res.status(401).json({ message: info.message });
+      return res.status(401).json({
+        message: info.message
+      });
     }
     if (user.isEmailVerified) {
 
@@ -84,7 +105,9 @@ export function login(req, res, next) {
       // logIn()) that can be used to establish a login session
       const login = () => {
         return req.logIn(user, (loginErr) => {
-          if (loginErr) return res.status(401).json({ message: loginErr });
+          if (loginErr) return res.status(401).json({
+            message: loginErr
+          });
           return res.status(200).json({
             message: 'You have been successfully logged in.'
           });
@@ -92,13 +115,13 @@ export function login(req, res, next) {
       }
 
       if (isApply(req)) {
-       return Profile.findOne({
+        return Profile.findOne({
           service: 'email',
           user_id: user._id
         }, (profErr, _profile) => {
           if (profErr) console.log(profErr)
           resolveApplyRedirect(req, _profile)
-          _profile.save( (err, prof) => {
+          _profile.save((err, prof) => {
             console.log(err)
             login();
           })
@@ -107,9 +130,11 @@ export function login(req, res, next) {
         login();
       }
 
-      
+
     } else {
-      res.send(401, {message: 'This email is not yet verified. Please check our email to confirm.'});
+      res.send(401, {
+        message: 'This email is not yet verified. Please check our email to confirm.'
+      });
     }
   })(req, res, next);
 }
@@ -132,13 +157,17 @@ export function signUp(req, res, next) {
     email: req.body.email,
     password: req.body.password
   });
-  
-  User.findOne({ email: req.body.email }, (findErr, existingUser) => {
+
+  User.findOne({
+    email: req.body.email
+  }, (findErr, existingUser) => {
     if (existingUser) {
-      return res.status(409).json({ message: 'Account with this email address already exists. Did you sign up with LinkedIn?' });
+      return res.status(409).json({
+        message: 'Account with this email address already exists. Did you sign up with LinkedIn?'
+      });
     }
 
-  
+
     const _profile = new Profile({
       user_id: user.id,
       firstName: req.body.first,
@@ -156,17 +185,17 @@ export function signUp(req, res, next) {
     return async.series({
       _profile: _profile.save,
       user: user.save
-    }, function(saveErr, resp){
+    }, function(saveErr, resp) {
       if (saveErr) return next(saveErr);
       mailer.sendEmailConfirmation(user, req.headers.host)
       res.redirect(200, '/email-confirmation');
 
-    });      
+    });
 
   });
 }
 
-export function emailConfirmation (req, res, next) {
+export function emailConfirmation(req, res, next) {
 
   const token = req.params.token;
 
@@ -176,7 +205,7 @@ export function emailConfirmation (req, res, next) {
     });
   }
   User.findOne({
-    verifyEmailToken: token, 
+    verifyEmailToken: token,
     verifyEmailTokenExpires: {
       $gt: Date.now()
     }
@@ -189,29 +218,33 @@ export function emailConfirmation (req, res, next) {
     user.isEmailVerified = true;
     user.verifyEmailToken = undefined;
     user.verifyEmailTokenExpires = undefined;
-    user.save( (err) => {
+    user.save((err) => {
       if (err) return next(err);
       return req.logIn(user, (loginErr) => {
-        if (loginErr) return res.status(401).json({ message: loginErr });
+        if (loginErr) return res.status(401).json({
+          message: loginErr
+        });
         res.redirect('/profile');
       });
-    }) 
+    })
 
   });
 
 }
 
-export function resendEmailConfirmation (req, res, next) {
+export function resendEmailConfirmation(req, res, next) {
   const email = req.body.email;
-  
+
   User.findOne({
     'email': email,
     'isEmailVerified': false
   }, function(err, user) {
     let errMsg;
     !user ? (errMsg = 'We could not find this email or it as already been verifed.') : (errMsg = err)
-    if (err || !user) return res.status(401).json({ message: errMsg });
-    
+    if (err || !user) return res.status(401).json({
+      message: errMsg
+    });
+
     mailer.sendEmailConfirmation(user, req.headers.host, (err, resp) => {
       err ? res.status(404).json(err) : res.status(200).json(resp)
     });
@@ -224,7 +257,8 @@ export default {
   me,
   login,
   logout,
-  signUp, 
+  create,
+  signUp,
   emailConfirmation,
   resendEmailConfirmation
 };

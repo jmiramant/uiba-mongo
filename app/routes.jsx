@@ -11,6 +11,7 @@ import Profile from 'containers/Profile';
 import Confirmation from 'containers/Confirmation';
 import Apply from 'containers/Apply';
 import ApplyConfirmation from 'containers/ApplyConfirmation';
+import CompanyLogin from 'containers/CompanyLogin'
 
 export default (store) => {
   const requireAuth = (nextState, replace, callback) => {
@@ -38,6 +39,7 @@ export default (store) => {
     <Route path="/" component={App}>
       <IndexRoute component={Splash} />
       <Route path="login" component={LoginOrRegister} onEnter={redirectAuth}></Route>
+      <Route path="login/company" component={CompanyLogin} onEnter={redirectAuth}></Route>
       <Route path="applyConfirmation" component={ApplyConfirmation}></Route>
       <Route path="apply/:companyName" component={Apply} onEnter={redirectAuth}></Route>
       <Route path="profile" component={Profile} onEnter={requireAuth}></Route>
