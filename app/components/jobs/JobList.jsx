@@ -44,6 +44,15 @@ class JobList extends React.Component {
     this.props.onJobDelete(job);
   }
 
+  handleExpand(next) {
+    if (this.props.jobs.type !== next) {
+      if(timeout) { clearTimeout(timeout); }
+      timeout = setTimeout(() => {
+        !this.props.addVisible && this.props.skill.type ? this.props.toggleEdit() : null
+      }, 500)
+    } 
+  }
+
   render () {
     const { job,
             jobs,
@@ -70,16 +79,6 @@ class JobList extends React.Component {
     return (
       <div className={cx('jobList--container')}>
 
-        { addVisible ? (
-          <JobAdd
-            job={job}
-            onJobSave={this.handleSave} 
-            jobChange={actions.jobChange}
-            toggleEdit={this.toggleAddJob.bind(this)} 
-            addVisible={addVisible} 
-          />
-        ) : (<span/>)}
-
         { jobs.length ? (
           <div>
             {renderItems}
@@ -89,6 +88,14 @@ class JobList extends React.Component {
             <NullProfItem target="job" />
           </span>
         )}
+
+        <JobAdd
+          job={job}
+          onJobSave={this.handleSave} 
+          jobChange={actions.jobChange}
+          toggleEdit={this.toggleAddJob.bind(this)} 
+          addVisible={addVisible} 
+        />
 
       </div>
     )

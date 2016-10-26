@@ -69,7 +69,6 @@ const school = (
       const newStateOjb = {...state}
       newStateOjb[action.state.field] = action.state.value
       return newStateOjb;
-    case types.TOGGLE_SCHOOL_ADD:
     case types.CREATE_SCHOOL_SUCCESS:
       return {};
     default:
@@ -121,25 +120,13 @@ const addShow = (
       return state;
   }
 };
-// const message = (
-//   state = '',
-//   action
-// ) => {
-//   switch (action.type) {
-//     case types.DELETE_SCHOOL_SUCCESS:
-//     case types.DELETE_SCHOOL_FAILURE:
-//       return action.message;
-//     default:
-//       return state;
-//   }
-// };
 
 const schoolReducer = combineReducers({
   school,
   schools,
   addShow,
   validations,
-  isFetching
+  isFetching,
 });
 
 export default schoolReducer;

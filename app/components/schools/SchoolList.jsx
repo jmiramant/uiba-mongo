@@ -54,10 +54,10 @@ class SchoolList extends React.Component {
 
     const renderItems = (
       <div>
-        {schools.map((school, i) => {
+        {schools.map((_school, i) => {
             return (<SchoolItem
-                      key={school._id} 
-                      school={school} 
+                      key={_school._id} 
+                      school={_school} 
                       schoolChange={actions.schoolsChange}
                       handleDelete={this.handleDelete}
                       saveSchoolEdit={this.handleEditSave} 
@@ -70,16 +70,6 @@ class SchoolList extends React.Component {
     return (
       <div className={cx('schoolList--container')}>
 
-        { addVisible ? (
-          <SchoolAdd 
-            school={school}
-            onSchoolSave={this.handleSave} 
-            schoolChange={actions.schoolChange}
-            toggleEdit={this.toggleAddSchool.bind(this)} 
-            addVisible={addVisible} 
-          />
-        ) : (<span/>)}
-
         { schools.length ? (
           <div>
             {renderItems}
@@ -89,6 +79,14 @@ class SchoolList extends React.Component {
             <NullProfItem target="school" />
           </span>
         )}
+        
+        <SchoolAdd 
+          school={school}
+          onSchoolSave={this.handleSave} 
+          schoolChange={actions.schoolChange}
+          toggleEdit={this.toggleAddSchool.bind(this)} 
+          addVisible={addVisible} 
+        />
 
       </div>
     )

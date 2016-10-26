@@ -40,24 +40,43 @@
   position: absolute;
 }
 
+a.auto-complete {
+  position: absolute;
+  margin: -130px 28px 0;
+}
 .auto-complete-container {
   color: #fff;
-  width: 240px;
+  width: 35px;
+  height: 35px;
   background: rgb(22,134,176);
-  border-radius: 3px;
+  border-radius: 35px;
   margin: 30px auto 0;
   transition: all 0.450s cubic-bezier(0.23, 1, 0.32, 1) 0s;
   &:hover{ 
     background-color: var(--colorDarkBlue);
   }
 }
-
+.popup {
+  visibility: hidden;
+  position: absolute;
+  background-color: rgba(0,0,0,0.1);
+  border-radius: 46px 3px 3px 46px;
+  width: 128px;
+  padding: 2px 1px 2px 38px;
+  font-size: 11px;
+  color: #111;
+  margin: 31px 0 0 -5px;
+  transition: .25s all linear;
+}
+.popup.show {
+  visibility: visible;
+}
 a .li-img {
   display: inline-block;
-  width: 10%;
-  height: 28px;
+  width: 51%;
+  height: 16px;
   vertical-align: top;
-  margin-top: 12px;
+  margin-top: 8px;
   margin-left: 5%;
 }
 

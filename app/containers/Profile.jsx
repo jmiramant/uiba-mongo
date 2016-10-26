@@ -26,6 +26,7 @@ import Interests from 'components/interests/InterestList';
 import Projects from 'components/projects/ProjectList';
 import ApplyBtn from 'components/ApplyBtn';
 import UserCard from 'components/userCard/UserCard';
+import Loading from 'components/Loading';
 
 import styles from 'css/common/profile';
 import classNames from 'classnames/bind';
@@ -60,6 +61,14 @@ class Profile extends React.Component {
     this.props.applyActions.sumbitApplication(this.props.profile.profile)
   }
 
+  isProfileLoaded(profile) {
+    if (!profile.isFetching && Object.keys(profile.profile).length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   render() {
     const { profile,   profileActions,
             jobs,      jobActions,
@@ -72,7 +81,7 @@ class Profile extends React.Component {
             applyActions,
           } = this.props;
 
-    return (      
+    const profPage = (
       <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
         <div>
           <UserCard 
@@ -151,7 +160,7 @@ class Profile extends React.Component {
 
             <div className='col-md-8 col-md-offset-2'>
               <CardHeader
-                text='Projects'
+                text='Projects and Volunteering'
                 addVisible={projects.addShow}
                 toggleAdd={projectActions.toggleProjectAdd}
               />
@@ -182,9 +191,10 @@ class Profile extends React.Component {
               />
             </div>
 
-            {profile.profile.apply && profile.profile.apply.applied ? (
+            {profile.profile.apply && (profile.profile.apply.applied || profile.profile.apply.applyComplete) ? (
               <div className='col-md-8 col-md-offset-2'>
                 <ApplyBtn
+                  applyState={profile.profile.apply}
                   handleSubmit={this.handleApply.bind(this)}
                 />
               </div> 
@@ -193,6 +203,10 @@ class Profile extends React.Component {
           </div>
         </div>
       </MuiThemeProvider>
+    )
+
+    return (
+      this.isProfileLoaded(profile) ? (profPage) : (<Loading componentName='Profile'/>)
     );
   }
 };

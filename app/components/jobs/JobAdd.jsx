@@ -16,6 +16,7 @@ import _ from 'lodash';
 import styles from 'css/components/profile/jobAdd';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
+let timeout;
 
 export default class JobAdd extends React.Component {
   
@@ -61,7 +62,19 @@ export default class JobAdd extends React.Component {
     this.changeJobProps(field, value);
   }
 
+  handleExpand(next) {
+    if (this.props.job.companyName !== next) {
+      if(timeout) { clearTimeout(timeout); }
+      timeout = setTimeout(() => {
+        !this.props.addVisible && this.props.job.companyName ? this.props.toggleEdit() : null
+      }, 500)
+    } 
+  }
+
   handleChange = field => (e, uiVal) => {
+    if (!this.props.addVisible) {
+      this.handleExpand(value) 
+    }
     let value;
     if (uiVal) {
       if (typeof(Object.getPrototypeOf(uiVal).getTime) === 'function') {
@@ -92,24 +105,26 @@ export default class JobAdd extends React.Component {
           } = this.state;
 
     const {
+            addVisible,
             job,
           } = this.props;
 
-
+    const isVisible = (job.title || addVisible) ? '' : ' ' + cx('closed');
 
     return (
-      <div className={cx('jobAdd-container')}>
+      <div className={cx('jobAdd-container') + isVisible}>
         <form>
 
           <div className="col-md-6">
             <TextField
               value={job.companyName}
               errorText={validationErrors.companyName}
-              floatingLabelText="Company Name"
+              floatingLabelText="Add a Company"
               onChange={this.handleChange('companyName')}
             />
           </div>
           
+        { addVisible || job.title ? (<span>
           <div className="col-md-6">
             <TextField
               value={job.title}
@@ -125,7 +140,7 @@ export default class JobAdd extends React.Component {
             onDateChange={this.handleDateChange}
             validationErrors={validationErrors}
           />
-
+          
           { !job.current ? (
             <UibaDatePicker
               data={job.endDate}
@@ -162,7 +177,7 @@ export default class JobAdd extends React.Component {
             ) : (<span />)}
             <FlatButton className='pull-left' label="Close" onClick={this.props.toggleEdit} primary={true} />
           </div>
-
+        </span>) : (null)}
         </form>
       </div>
     )

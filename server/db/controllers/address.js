@@ -4,7 +4,6 @@ import { zipCodeAPI } from '../../config/secrets';
 import request from 'request';
 
 const handleError = (res, err) => {
-  console.log(err);
   return res.status(401).json({ message: err });
 }
 

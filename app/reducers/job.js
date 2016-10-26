@@ -20,7 +20,14 @@ const isFetching = (
 const jobOrder = (jobs, order = 'asc') => {
   if (order === 'asc') {
     return jobs.sort( (a,b) => {
-      if (new Date(a.startDate) > new Date(b.startDate)) { 
+      if (a.current || b.current) {
+        if (a.current && !b.current) {
+          return -1;
+        } else {
+          return 1;
+        }
+      }
+      else if (new Date(a.endDate) > new Date(b.endDate)) { 
         return -1; 
       } else {
         return 1; 
@@ -28,7 +35,7 @@ const jobOrder = (jobs, order = 'asc') => {
     });    
   } else {
     return jobs.sort( (a,b) => {
-      if (new Date(a.startDate) < new Date(b.startDate)) { 
+      if (new Date(a.endDate) < new Date(b.endDate)) { 
         return -1; 
       } else {
         return 1; 
@@ -44,22 +51,30 @@ const job = (
   switch (action.type) {
     case types.CREATE_NEW_JOB:
       return {
-        profile_id: undefined,
-        name: undefined,
-        major: undefined,
-        minor: undefined,
-        degree: undefined,
-        startDate: undefined,
-        endDate: undefined,
-        current: undefined
-      }
+        company_id: '',
+        profile_id: '',
+        companyName: '',
+        title: '',
+        headline: '',
+        description: '',
+        startDate: '',
+        endDate: '',
+        current: '',
+      };
     case types.CHANGE_JOB:
       const newStateOjb = {...state}
       newStateOjb[action.state.field] = action.state.value
       return newStateOjb;
     case types.CREATE_JOB_SUCCESS:
-    case types.TOGGLE_JOB_ADD:
-      return {}
+      return {
+        companyName: '',
+        title: '',
+        headline: '',
+        description: '',
+        startDate: '',
+        endDate: '',
+        current: '',
+      };
     default:
       return state;
   }
@@ -75,7 +90,6 @@ const jobs = (
       return jobOrder(action.res.data)
     case types.CREATE_JOB_SUCCESS:
       const newJobs = state.concat(action.data);
-      console.log(jobOrder(newJobs))
       return jobOrder(newJobs)
     case types.CHANGE_JOBS:
       updatedJob = [...state]
@@ -91,6 +105,7 @@ const jobs = (
         return j._id !== action.data.id;
       })
     case types.CREATE_JOB_REQUEST:
+      debugger
       return {
         data: action.res.data,
       };

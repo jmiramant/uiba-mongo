@@ -36,6 +36,17 @@
   margin-top: 0px;
 }
 
+.li-btn-container {
+  background-color: #337ab7;
+  width: 238px;
+  margin: 0 auto;
+  border-radius: 3px;
+  color: #fff;
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
 @media (max-width: 655px) {
   .login-container {
     padding: 20px 0;

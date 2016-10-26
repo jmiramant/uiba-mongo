@@ -10,13 +10,13 @@ import MenuItem from 'material-ui/MenuItem';
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
-import Divider from 'material-ui/Divider';
 
 import _ from 'lodash';
 
 import styles from 'css/components/profile/school';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
+let timeout;
 
 export default class SchoolAdd extends React.Component {
 
@@ -57,8 +57,20 @@ export default class SchoolAdd extends React.Component {
       id: this.props.school._id
     }); 
   }
+
+  handleExpand(next) {
+    if (this.props.school.name !== next) {
+      if(timeout) { clearTimeout(timeout); }
+      timeout = setTimeout(() => {
+        !this.props.addVisible && this.props.school.name ? this.props.toggleEdit() : null
+      }, 500)
+    } 
+  }
   
   handleSchoolName = val => {
+    if (!this.props.addVisible) {
+      this.handleExpand(val) 
+    }
     this.changeSchoolProps('name', val)
   }
 
@@ -98,21 +110,27 @@ export default class SchoolAdd extends React.Component {
 
     const {
             school,
+            addVisible
           } = this.props;
-    
+
+    const isVisible = (school.major || addVisible) ? '' : ' ' + cx('closed');
+
     return (
-      <div className={cx('schoolAdd-container')}>
+      <div className={cx('schoolAdd-container') + isVisible}>
 
         <form
           onSubmit={this.handleSubmit}
         >
           <div className="col-md-6">
             <SchoolNameTypeahead 
+              selection={school.name}
               initial={school.name}
               error={validationErrors.name}
               handleChange={this.handleSchoolName.bind(this)}
             />
           </div>
+
+         { addVisible || school.major  ? (<span>
 
           <div className="col-md-6">
             <SelectField
@@ -189,8 +207,9 @@ export default class SchoolAdd extends React.Component {
             ) : (<span />)}
             <FlatButton className='pull-left' label="Close" onClick={this.props.toggleEdit} primary={true} />
           </div>
+          </span>) : (<span/>)}
+
         </form>
-        <Divider />
       </div>
     )
   }

@@ -117,7 +117,7 @@ export default class LanguageAdd extends React.Component {
         >
           <AutoComplete
             searchText={language.language}
-            floatingLabelText="Language"
+            floatingLabelText="Add a Language"
             errorText={validationErrors.language}
             filter={AutoComplete.fuzzyFilter}
             dataSource={LangData}

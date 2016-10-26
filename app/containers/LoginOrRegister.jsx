@@ -86,8 +86,12 @@ class LoginOrRegister extends Component {
               <a className={cx('li-auth')}
                 href="/auth/linkedin"
               >
-              <img src={linkedinLogo} />
+              <div className={cx('li-btn-container')}>
+                <img src={linkedinLogo} />
+                <p>{isLogin ? ('Log In'):('Signup')} Using LinkedIn</p>
+              </div>
               </a>
+
             </div>
             <Divider/>
             

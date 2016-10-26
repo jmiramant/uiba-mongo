@@ -9,6 +9,7 @@ const cx = classNames.bind(styles);
 export default class ApplyBtn extends React.Component {
   
   static propTypes = {
+    applyState: PropTypes.object,
     handleSubmit: PropTypes.func,
   }
 
@@ -17,12 +18,16 @@ export default class ApplyBtn extends React.Component {
   }
 
   render () {
+
     const {
+      applyState: {applyComplete, applied},
       handleSubmit, 
     } = this.props;
+
+    const label = applyComplete ? 'Resubmit' : 'Submit'
     return (
       <div className={cx('apply-btn-group')}>
-        <RaisedButton className={cx('back-btn')} label="Submit Application" onClick={handleSubmit} primary={true} />
+        <RaisedButton className={cx('back-btn')} label={label + " Application"} onClick={handleSubmit} primary={true} />
       </div>
     )
 

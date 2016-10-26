@@ -26,7 +26,7 @@ const Confirmation = (props) => {
     <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
       <div className={cx('confirmation') + ' container'}>
         <div className={cx('paper')} >
-          <div className={cx('thanks')}>Thank you for registering with Uiba.</div>
+          <div className={cx('thanks')}>Thank you for registering!</div>
           <h4>You should receive an email shortly with a link to confirm your email.</h4>
 
           <p>If you do not receive a confirm please double check your spam filter or you can resend your email:</p>

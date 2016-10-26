@@ -11,7 +11,7 @@ const ProfileSchema = new mongoose.Schema({
   lastName: { type: String, default: '' },
   email: { type: String, default: '' },
   headline: { type: String, default: '' },
-  apply: { applied: {type: Boolean, default: false }, name: {type: String }},
+  apply: { applied: {type: Boolean, default: false }, name: {type: String }, applyComplete: {type: Boolean, default: false }},
   gender: { type: String, default: '' },
   location: { type: String, default: '' },
   website: { type: String, default: '' },

@@ -35,4 +35,8 @@
 
 .profile-btn-group {
   @apply --btngr;
-} 
+}
+
+.closed {
+  @apply --closed;
+}
