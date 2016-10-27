@@ -25,7 +25,7 @@ RoleSchema.pre('remove', (doc) => {
   UpdateCompanyOnRole(doc)
 });
 
-UserSchema.methods = {
+RoleSchema.methods = {
   incrementAppliedCount(cb) {
     this.appliedCount += 1;
     return cb(null);
