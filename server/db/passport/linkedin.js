@@ -98,17 +98,17 @@ const resolveApplyRedirect = (req, user, done) => {
 export default (req, accessToken, refreshToken, profile, done) => {
 
   if (req.user) {
-    console.log('there IS a user')
+
     return User.findOne({
       linkedin: profile.id
     }, (findOneErr, existingUser) => {
       //standard
       if (existingUser) {
-        console.log('exit1')
         return done(null, false, {
           message: 'There is already a linkedin account that belongs to you. Sign in with that account or delete it, then link it with your current account.'
         });
       }
+
       User.findOne({
         '_id': req.user.id
       }, (findByIdErr, _user) => {
@@ -169,13 +169,19 @@ export default (req, accessToken, refreshToken, profile, done) => {
       return User.findOne({
         email: profile._json.emailAddress
       }, (findByEmailErr, existingEmailUser) => {
-        if (existingEmailUser) {
+        if (existingEmailUser && !existingEmailUser.claim) {
           return done(null, false, {
             message: 'There is already an account using this email address. Sign in to that account and link it with linkedin manually from Account Settings.'
           });
         }
-        const user = new User();
+        
+        let user = new User();
         const _profile = new Profile();
+        
+        if (existingEmailUser.claim) {
+          user = existingEmailUser;
+          user.claim = false;
+        }
 
         user.email = profile._json.emailAddress;
 

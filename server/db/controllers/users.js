@@ -4,7 +4,7 @@ import Recruiter from '../models/recruiter';
 import passport from 'passport';
 import async from 'async'
 import mailer from '../../utils/email.js'
-
+import _ from 'lodash';
 
 const isApply = (req) => {
   return req.headers.referer.indexOf('/apply/') !== -1
@@ -73,25 +73,6 @@ export function me(req, res) {
 }
 
 /**
- * GET /create
- */
-export function create(req, res) {
-  user = new User();
-  user.email = req.body.email;
-  user.role = req.body.role;
-  user.save(function(err, user) {
-
-    if (!user || err) {
-      console.log('Error in user /create');
-      return res.status(500).send('Something went wrong getting the data');
-    }
-
-    return res.json(user);
-
-  });
-}
-
-/**
  * POST /login
  */
 export function login(req, res, next) {
@@ -136,7 +117,9 @@ export function login(req, res, next) {
 
 
     } else {
-      res.send(401, {message: 'This email is not yet verified. Please check your email to confirm the account.'});
+      res.send(401, {
+        message: 'This email is not yet verified. Please check your email to confirm the account.'
+      });
     }
   })(req, res, next);
 }
@@ -155,7 +138,7 @@ export function logout(req, res) {
  * Create a new local account
  */
 export function signUp(req, res, next) {
-  const user = new User({
+  let user = new User({
     email: req.body.email,
     password: req.body.password
   });
@@ -163,12 +146,18 @@ export function signUp(req, res, next) {
   User.findOne({
     email: req.body.email
   }, (findErr, existingUser) => {
-    if (existingUser) {
+    if (existingUser && !existingUser.claim) {
       return res.status(409).json({
         message: 'Account with this email address already exists. Did you sign up with LinkedIn?'
       });
     }
 
+    if (existingUser.claim) {
+      user = existingUser;
+      user.claim = false;
+      user.email = req.body.email;
+      user.password = req.body.password;
+    }
 
     const _profile = new Profile({
       user_id: user.id,
@@ -226,7 +215,8 @@ export function emailConfirmation(req, res, next) {
         if (loginErr) return res.status(401).json({
           message: loginErr
         });
-        res.redirect('/profile');
+        const path = user.role.includes(2) ? '/company-admin/dashboard' : '/profile'
+        res.redirect(path);
       });
     })
 
@@ -255,11 +245,72 @@ export function resendEmailConfirmation(req, res, next) {
 
 }
 
+
+/**
+ * POST /role
+ */
+
+export function role(req, res) {
+
+  const isRoleNumber = (role) => {
+    return typeof(Number(role)) === 'number';
+  };
+  if (isRoleNumber(req.body.role)) {
+    
+    const roleDigit = Number(req.body.role);
+
+    User.findOne({
+      email: req.body.email
+    }, (findErr, user) => {
+      if (!user) {
+        var user = new User();
+        user.claim = true;
+        user.email = req.body.email;
+        user.role = [1];
+      }
+      const targetIndex = user.role.indexOf(roleDigit);
+      const roleArr = user.role;
+
+      if (roleDigit > 1 && targetIndex === -1) {
+        _.uniq(roleArr.push(roleDigit));
+        user.role = roleArr;
+
+      } else if (roleDigit > 1) {
+
+        roleArr.splice(roleArr.indexOf(roleDigit), 1)
+        user.role = roleArr;
+
+      } else {
+
+        return res.status(404).send('Default value is 1 and cannot be removed.');
+
+      }
+
+      user.save((err, user) => {
+
+        if (!user || err) {
+          console.log('Error in user /create');
+          return res.status(500).send('Something went wrong getting the data');
+        }
+
+        return res.json(user);
+
+      });
+
+    });
+
+  } else {
+
+    return res.status(500).send('User role must be a number.');
+
+  }
+}
+
 export default {
   me,
   login,
   logout,
-  create,
+  role,
   signUp,
   emailConfirmation,
   resendEmailConfirmation

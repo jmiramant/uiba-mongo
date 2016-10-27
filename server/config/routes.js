@@ -35,9 +35,9 @@ export default (app) => {
   if (usersController) {
     app.get('/me', usersController.me);
     app.post('/login', usersController.login);
-    app.post('/api/v1/user/create', usersController.create);
     app.post('/signup', usersController.signUp);
     app.post('/logout', usersController.logout);
+    app.post('/api/v1/user/role', usersController.role);
     app.get('/validateEmail/:token', usersController.emailConfirmation);
     app.post('/resendValidationEmail', usersController.resendEmailConfirmation)
   } else {
