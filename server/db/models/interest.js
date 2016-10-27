@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import updateProfile from './profileUpdate'
+import { updateProfile } from './UpdateMiddleware';
 import { Profile } from './profile';
 
 const InterestSchema = new mongoose.Schema({

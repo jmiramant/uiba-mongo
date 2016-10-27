@@ -2,7 +2,9 @@ import mongoose, { Schema } from 'mongoose';
 import { Profile } from './profile';
 
 const AddressSchema = new mongoose.Schema({
-  profile_id: {type: Schema.Types.ObjectId, ref: 'Profile', required: true },
+  profile_id: {type: Schema.Types.ObjectId, ref: 'Profile' },
+  role_id: {type: Schema.Types.ObjectId, ref: 'Role' },
+  company_id: {type: Schema.Types.ObjectId, ref: 'Role' },
   zip_code: String,
   lat: Number,
   lng: Number,

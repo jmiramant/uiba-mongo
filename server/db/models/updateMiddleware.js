@@ -9,3 +9,12 @@ export default function updateProfile(doc) {
     }
   });
 }
+
+export default function UpdateCompanyOnRole(doc) {
+  mongoose.model("Company").findById(doc.profile_id, (err, prof) => {
+    if (prof) {
+      prof.roleUpdatedAt = new Date();
+      prof.save();
+    }
+  });
+}
