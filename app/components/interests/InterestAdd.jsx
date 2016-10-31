@@ -4,7 +4,6 @@ import { validateInterestHelper } from '../helpers/interestValidation';
 
 import AutoComplete from 'material-ui/AutoComplete';
 import TextField from 'material-ui/TextField';
-import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 

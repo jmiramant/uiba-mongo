@@ -3,22 +3,22 @@ import { combineReducers } from 'redux';
 import _ from 'lodash';
 
 const company = (
-  state = {},
+  state = {
+    name: "",
+    address_id: "",
+    description: "",
+    foundedDate: "",
+    size: "",
+    websiteUrl: "",
+    logoUrl: "",
+    specialties: "",
+    industry: ""
+  },
   action
 ) => {
   switch (action.type) {
   case types.CREATE_NEW_COMPANY:
-      return {
-        company_id: '',
-        profile_id: '',
-        companyName: '',
-        title: '',
-        headline: '',
-        description: '',
-        startDate: '',
-        endDate: '',
-        current: '',
-      };
+      return state;
     case types.CHANGE_COMPANY:
       const newStateOjb = {...state}
       newStateOjb[action.state.field] = action.state.value
@@ -42,6 +42,11 @@ const addShow = (
   switch (action.type) {
     case types.TOGGLE_COMPANY_ADD:
       return !action.data
+    case types.GET_COMPANY_SUCCESS:
+    case types.GET_COMPANY_FAILURE:
+      let resp = false;
+      if (!action.data) resp = true
+      return resp
     default:
       return state;
   }

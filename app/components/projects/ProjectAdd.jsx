@@ -4,8 +4,6 @@ import UibaDatePicker from '../../components/DatePicker';
 import { validateProjectHelper } from '../helpers/projectValidations';
 
 import TextField from 'material-ui/TextField';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
@@ -71,9 +69,9 @@ export default class ProjectAdd extends React.Component {
   }
 
   formatURL(url) {
-    const inHttps = url.includes('https')
-    const inHttp = url.includes('http')
-    if (!inHttp && !inHttps) {
+    const isHttps = url.includes('https')
+    const isHttp = url.includes('http')
+    if (!isHttp && !isHttps) {
       return "http://" + url
     } else {
       return url

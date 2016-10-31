@@ -1,9 +1,5 @@
 import React from 'react';
 
-import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-
 import Paper from 'material-ui/Paper';
 
 import styles from 'css/components/privacy';
@@ -12,7 +8,6 @@ const cx = classNames.bind(styles);
 
 const Privacy = () => {
   return (
-    <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
     <div className={cx('legal') + ' container'}>
       <Paper className={cx('paper')} zDepth={2} >
         <h1><strong>Uiba Privacy Summary</strong></h1>
@@ -127,7 +122,6 @@ const Privacy = () => {
         </ol>
         </Paper>
       </div>
-    </MuiThemeProvider>
   );
 };
 

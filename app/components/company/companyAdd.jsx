@@ -1,9 +1,12 @@
 import React, { PropTypes } from 'react';
 
-import UibaDatePicker from '../../components/DatePicker';
 import { validateCompanyHelper } from '../helpers/companyValidations';
 
+import industryData from './industryData';
+
+import UibaDatePicker from '../../components/DatePicker';
 import TextField from 'material-ui/TextField';
+import AutoComplete from 'material-ui/AutoComplete';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Checkbox from 'material-ui/Checkbox';
@@ -17,6 +20,8 @@ import styles from 'css/components/company/companyAdd';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 let timeout;
+
+const IndustryData = industryData();
 
 export default class CompanyAdd extends React.Component {
   
@@ -35,6 +40,12 @@ export default class CompanyAdd extends React.Component {
   state = {
     validationErrors: {},
   }
+
+  disableEnter(e) {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+    }
+  }
   
   handleSubmit = e => {
     e.preventDefault();
@@ -48,6 +59,16 @@ export default class CompanyAdd extends React.Component {
     this.setState({validationErrors: validationResp.errors});
     return validationResp.containsErrors;
   }
+  
+  formatURL(url) {
+    const isHttps = url.includes('https')
+    const isHttp = url.includes('http')
+    if (!isHttp && !isHttps) {
+      return "http://" + url
+    } else {
+      return url
+    }
+  }
 
   changeCompanyProps(field, value) {
     this.setState({validationErrors: {}})
@@ -58,45 +79,21 @@ export default class CompanyAdd extends React.Component {
     });  
   }
 
+  handleSize = (e, i, val) => {
+    this.changeCompanyProps('size', val)
+  }
+
   handleDateChange = (field, value) => {
     this.changeCompanyProps(field, value);
   }
 
-  handleExpand(next) {
-    if (this.props.company.companyName !== next) {
-      if(timeout) { clearTimeout(timeout); }
-      timeout = setTimeout(() => {
-        !this.props.addVisible && this.props.company.companyName ? this.props.toggleEdit() : null
-      }, 500)
-    } 
+  handleIndustryChange (value) {
+    this.changeCompanyProps('industry', value)
   }
 
-  handleChange = field => (e, uiVal) => {
-    if (!this.props.addVisible) {
-      this.handleExpand(value) 
-    }
-    let value;
-    if (uiVal) {
-      if (typeof(Object.getPrototypeOf(uiVal).getTime) === 'function') {
-        value = moment(new Date(uiVal)).format();
-      } else {
-        value = uiVal
-      }
-    } else if (e.value) {
-      value  = e.value[0];
-    } else {
-      value = e.target.value;
-    }
-
-    if (e && e.target && e.target.type === 'checkbox') {
-
-      this.changeCompanyProps(field, !this.props.company.current)
-
-    } else {
-
-      this.changeCompanyProps(field, value)
-
-    }
+  handleChange = field => (e, value) => {
+    if (field === 'websiteUrl') value = this.formatURL(value)
+    this.changeCompanyProps(field, value)
   }
 
   render () {
@@ -119,10 +116,73 @@ export default class CompanyAdd extends React.Component {
             <TextField
               value={company.name}
               errorText={validationErrors.name}
-              floatingLabelText="Add a Company"
-              onChange={this.handleChange('companyName')}
+              floatingLabelText="Company Name"
+              onChange={this.handleChange('name')}
             />
           </div>
+
+          <div className="col-md-6">
+            <TextField
+              value={company.description}
+              errorText={validationErrors.description}
+              floatingLabelText="Description"
+              onChange={this.handleChange('description')}
+            />
+          </div>
+
+          <UibaDatePicker
+            data={company.foundedDate}
+            name='founded'
+            onDateChange={this.handleDateChange}
+            validationErrors={validationErrors}
+          />
+
+          <SelectField
+            style={{minWidth: "320px"}}
+            errorText={validationErrors.size}
+            onChange={this.handleSize}
+            value={company.size}
+            floatingLabelText="Company Size"
+            hintText='Company Size'
+          >
+            <MenuItem value={'10'} primaryText="1-10" />
+            <MenuItem value={"20"} primaryText="11-20" />
+            <MenuItem value={'50'} primaryText="21-50" />
+            <MenuItem value={'100'} primaryText="51-100" />
+            <MenuItem value={'250'} primaryText="101-250" />
+            <MenuItem value={'500'} primaryText="251-500" />
+            <MenuItem value={'501'} primaryText=">500" />
+          </SelectField>
+
+          <div className="col-md-6">
+            <TextField
+              value={company.websiteUrl}
+              errorText={validationErrors.websiteUrl}
+              floatingLabelText="Website"
+              onChange={this.handleChange('websiteUrl')}
+            />
+          </div>
+
+          <TextField
+            value={company.specialties}
+            floatingLabelText="Specialties"
+            errorText={validationErrors.specialties}
+            onChange={this.handleChange('specialties')}
+          />
+
+          <AutoComplete
+            onKeyDown={this.disableEnter}
+            hintText='Industry'
+            searchText={company.industry}
+            floatingLabelText='Industry'
+            errorText={validationErrors.industry}
+            filter={AutoComplete.fuzzyFilter}
+            dataSource={IndustryData}
+            onNewRequest={this.handleIndustryChange.bind(this)}
+            onUpdateInput={this.handleIndustryChange.bind(this)}
+            maxSearchResults={5}
+          />
+
           
         </form>
       </div>

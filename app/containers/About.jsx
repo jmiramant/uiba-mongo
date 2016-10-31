@@ -1,9 +1,5 @@
 import React from 'react';
 
-import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-
 import _ from 'lodash';
 
 import classNames from 'classnames/bind';
@@ -12,7 +8,6 @@ const cx = classNames.bind(styles);
 
 const About = () => {
   return (
-    <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
     <div className={cx('about')}>
       <div className={cx('container')}>
         <div className={cx('paper')} zDepth={2} >
@@ -33,7 +28,6 @@ const About = () => {
         </div>
       </div>
     </div>
-  </MuiThemeProvider>
   );
 };
 
