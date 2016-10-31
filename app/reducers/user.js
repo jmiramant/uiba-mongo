@@ -15,12 +15,19 @@ const isFetching = (
 };
 
 const currentUser = (
-  state = [],
+  state = {},
   action
 ) => {
   switch (action.type) {
     case types.GET_CURRENT_USER_SUCCESS:
       return action.res.data;
+    case types.LOGIN_SUCCESS_USER:
+    case types.LOGOUT_ERROR_USER:
+      return true;
+    case types.LOGIN_ERROR_USER:
+    case types.SIGNUP_SUCCESS_USER:
+    case types.SIGNUP_ERROR_USER:
+    case types.LOGOUT_SUCCESS_USER:
     default:
       return state;
   }

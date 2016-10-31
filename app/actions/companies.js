@@ -30,16 +30,154 @@ export function fetchCompanyFailure(data) {
 }
 
 export function fetchCompany(companyName) {
+ 
   return (dispatch) => {
 
-    return makeCompaniesRequest('get', {}, '/companies/' + companyName)
+    const uri = companyName ? ('/company/' + companyName) : ('/company')
+
+    return makeCompaniesRequest('get', {}, uri)
       .then(res => {
         if (res.status === 200) {
           return dispatch(fetchCompanySuccess(res.data));
         }
       })
+      .catch((err) => {
+        return dispatch(fetchCompanyFailure(err));
+      });
+  }
+
+}
+
+export function newCompany() {
+  return {
+    type: types.NEW_COMPANY,
+  };
+}
+
+export function companyChange(state) {
+  return {
+    type: types.CHANGE_COMPANY,
+    state
+  };
+}
+
+export function toggleCompanyAdd (data) {
+  return {
+    type: types.TOGGLE_COMPANY_ADD,
+    data: data
+  };
+}
+
+export function createCompanyRequest(data) {
+  return {
+    type: types.CREATE_COMPANY,
+    data: data
+  };
+}
+
+export function createCompanySuccess(data) {
+  return {
+    type: types.CREATE_COMPANY_SUCCESS,
+    data: data
+  };
+}
+
+export function createCompanyFailure(data) {
+  return {
+    type: types.CREATE_COMPANY_FAILURE,
+    error: data.error
+  };
+}
+
+export function updateCompanyRequest(data) {
+  return {
+    type: types.UPDATE_COMPANY,
+    data: data
+  }
+}
+
+export function updateCompanySuccess(data) {
+  return {
+    type: types.UPDATE_COMPANY_SUCCESS,
+    data: data
+  }
+}
+
+export function updateCompanyFailure(data) {
+  return {
+    type: types.UPDATE_COMPANY_FAILURE,
+    error: data.error
+  };
+}
+
+export function createCompany(companyData) {
+  return (dispatch) => {
+    dispatch(createCompanyRequest(companyData));
+    
+    return makeCompanysRequest('post', companyData, '/companys')
+      .then(res => {
+        if (res.status === 200) {
+          return dispatch(createCompanySuccess(res.data));
+        }
+      })
       .catch(() => {
-        return dispatch(fetchCompanyFailure({ error: 'Oops! Something went wrong and we couldn\'t delete your school.'}));
+        return dispatch(createCompanyFailure({ error: 'Oops! Something went wrong and we couldn\'t create your company.'}));
+      });
+  }
+}
+
+export function updateCompany(companyData) {
+  return (dispatch) => {
+
+    dispatch(updateCompanyRequest(companyData));
+    
+    return makeCompanysRequest('put', companyData, '/companys')
+      .then(res => {
+        if (res.status === 200) {
+          return dispatch(updateCompanySuccess(res.data));
+        }
+      })
+      .catch(() => {
+        return dispatch(updateCompanyFailure({ error: 'Oops! Something went wrong and we couldn\'t create your company.'}));
+      });
+  }
+
+}
+
+export function deleteCompanyRequest (data) {
+  return {
+    type: types.DELETE_COMPANY_REQUEST,
+    data: data
+  }
+}
+
+export function deleteCompanySuccess (data) {
+  return {
+    type: types.DELETE_COMPANY_SUCCESS,
+    data: data
+  }
+}
+
+export function deleteCompanyFailure (data) {
+  return {
+    type: types.DELETE_COMPANY_FAILURE,
+    error: data.error
+  }
+}
+
+export function deleteCompany(company) {
+  return (dispatch) => {
+
+    dispatch(deleteCompanyRequest(company));
+
+    return makeCompanysRequest('delete', company, '/companys/' + company._id)
+      .then(res => {
+        if (res.status === 200) {
+          return dispatch(deleteCompanySuccess(res.data));
+        }
+      })
+      .catch(() => {
+        return dispatch(deleteCompanyFailure({ error: 'Oops! Something went wrong and we couldn\'t delete your company.'}));
       });
   }
 

@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 import { User } from './user';
-import { updateProfile } from './UpdateMiddleware';
+import { updateProfile } from './updateMiddleware';
 import { Job } from './job';
 
 const ProfileSchema = new mongoose.Schema({

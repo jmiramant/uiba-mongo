@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import { updateProfile } from './UpdateMiddleware';
+import { updateProfile } from './updateMiddleware';
 import { Profile } from './profile';
 
 const SchoolSchema = new mongoose.Schema({

@@ -152,7 +152,7 @@ export function signUp(req, res, next) {
       });
     }
 
-    if (existingUser.claim) {
+    if (existingUser && existingUser.claim) {
       user = existingUser;
       user.claim = false;
       user.email = req.body.email;

@@ -105,7 +105,6 @@ const jobs = (
         return j._id !== action.data.id;
       })
     case types.CREATE_JOB_REQUEST:
-      debugger
       return {
         data: action.res.data,
       };
