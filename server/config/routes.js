@@ -3,7 +3,10 @@
  */
 import passport from 'passport';
 import unsupportedMessage from '../db/unsupportedMessage';
-import { controllers, passport as passportConfig } from '../db';
+import {
+  controllers,
+  passport as passportConfig
+} from '../db';
 import jwtauth from './jwtauth';
 
 const adminController = controllers && controllers.admin;
@@ -136,6 +139,14 @@ export default (app) => {
     console.warn(unsupportedMessage('schoolNames routes'));
   }
 
+  app.use('/s3', require('react-s3-uploader/s3router')({
+    bucket: "uiba-test",
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    },
+    ACL: 'private' // this is default
+  }));
+
 
   if (passportConfig && passportConfig.google) {
     // google auth
@@ -166,23 +177,23 @@ export default (app) => {
 
     app.get('/auth/linkedin',
       passport.authenticate('linkedin'),
-      function(req, res){
-         // The request will be redirected to LinkedIn for authentication, so this
-         // function will not be called.
+      function(req, res) {
+        // The request will be redirected to LinkedIn for authentication, so this
+        // function will not be called.
       });
 
-    app.get('/auth/linkedin/callback', 
+    app.get('/auth/linkedin/callback',
       passport.authenticate('linkedin', {
         successRedirect: '/profile',
         failureRedirect: '/login'
       })
     );
-    
+
     app.get('/auth/linkedin/:companyName',
       passport.authenticate('linkedin'),
-      function(req, res){
-         // The request will be redirected to LinkedIn for authentication, so this
-         // function will not be called.
+      function(req, res) {
+        // The request will be redirected to LinkedIn for authentication, so this
+        // function will not be called.
       });
 
   }

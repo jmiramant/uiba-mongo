@@ -13,6 +13,7 @@ import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
+import DropzoneS3Uploader from 'react-dropzone-s3-uploader'
 
 import _ from 'lodash';
 
@@ -120,6 +121,14 @@ export default class CompanyAdd extends React.Component {
               onChange={this.handleChange('name')}
             />
           </div>
+
+          <DropzoneS3Uploader
+            signingUrl="/s3/sign"
+            accept="image/*"
+            s3Url='https://uiba-test.s3.amazonaws.com'
+            uploadRequestHeaders={{ 'x-amz-acl': 'public-read' }}
+            contentDisposition="auto"
+          />
 
           <div className="col-md-6">
             <TextField
