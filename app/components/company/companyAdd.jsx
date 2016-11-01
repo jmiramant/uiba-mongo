@@ -14,6 +14,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
 import DropzoneS3Uploader from 'react-dropzone-s3-uploader'
+import AddressInput from 'containers/Address'
 
 import _ from 'lodash';
 
@@ -191,6 +192,8 @@ export default class CompanyAdd extends React.Component {
             onUpdateInput={this.handleIndustryChange.bind(this)}
             maxSearchResults={5}
           />
+
+          <AddressInput />
 
           
         </form>
