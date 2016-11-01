@@ -11,8 +11,12 @@ db.companies.insertMany(
     {
       name: "Truveris",
       name_lower: 'truveris',
-      location: "2 Park Ave #1500, New York, NY 10016",
       description: "Brokers, health plans, unions, employers, pharmaceutical manufacturers, and consumers use our technology and insights to make smarter decisions.",
+      description: 'This is a super duper fantastic company, YO!'
+      logoUrl: 'https://uiba-test.s3.amazonaws.com/5932244f-7592-44bf-b5e1-61cabe9b9523_sailing.jpg',
+      websiteUrl: 'https://www.facebook.com',
+      specialties: ['Magic', 'Sex', 'Ducks', 'Rock n roll'],
+      industry: 'Awesome Sauce'
       foundedDate: new Date(2009, 1, 1),
       size: 100,
       logoImg: "images/truveris-logo.png"
@@ -20,8 +24,12 @@ db.companies.insertMany(
     {
       name: "Blue Orange Digital",
       name_lower: "blue_orange_digital",
-      location: "The World",
       description: "Quinoa brooklyn echo park, trust fund meh viral pork belly.",
+      description: 'This is a super duper fantastic company, YO!'
+      logoUrl: 'https://uiba-test.s3.amazonaws.com/5932244f-7592-44bf-b5e1-61cabe9b9523_sailing.jpg',
+      websiteUrl: 'https://www.facebook.com',
+      specialties: ['Magic', 'Sex', 'Ducks', 'Rock n roll'],
+      industry: 'Awesome Sauce'
       foundedDate: new Date(2010, 1, 20),
       size: 100,
       logoImg: "http://diylogodesigns.com/blog/wp-content/uploads/2016/04/google-logo-icon-PNG-Transparent-Background.png"
@@ -29,8 +37,12 @@ db.companies.insertMany(
     {
       name: "Good.Co",
       name_lower: "goodco",
-      location: "San Francisco",
       description: "Quinoa brooklyn echo park, trust fund meh viral pork belly.",
+      description: 'This is a super duper fantastic company, YO!'
+      logoUrl: 'https://uiba-test.s3.amazonaws.com/5932244f-7592-44bf-b5e1-61cabe9b9523_sailing.jpg',
+      websiteUrl: 'https://www.facebook.com',
+      specialties: ['Magic', 'Sex', 'Ducks', 'Rock n roll'],
+      industry: 'Awesome Sauce'
       foundedDate: new Date(2010, 1, 20),
       size: 100,
       logoImg: "http://diylogodesigns.com/blog/wp-content/uploads/2016/04/google-logo-icon-PNG-Transparent-Background.png"
@@ -38,8 +50,12 @@ db.companies.insertMany(
     {
       name: "EverFi, Inc",
       name_lower: "everfi_inc",
-      location: "Washington D.C.",
       description: "Quinoa brooklyn echo park, trust fund meh viral pork belly.",
+      description: 'This is a super duper fantastic company, YO!'
+      logoUrl: 'https://uiba-test.s3.amazonaws.com/5932244f-7592-44bf-b5e1-61cabe9b9523_sailing.jpg',
+      websiteUrl: 'https://www.facebook.com',
+      specialties: ['Magic', 'Sex', 'Ducks', 'Rock n roll'],
+      industry: 'Awesome Sauce'
       foundedDate: new Date(2010, 1, 20),
       size: 100,
       logoImg: "http://diylogodesigns.com/blog/wp-content/uploads/2016/04/google-logo-icon-PNG-Transparent-Background.png"

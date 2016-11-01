@@ -11,6 +11,7 @@ class Typeahead extends Component {
     setSelection: PropTypes.func.isRequired,
     selection: PropTypes.string,
     onChange: PropTypes.func.isRequired,
+    onSelect: PropTypes.func.isRequired,
     error: PropTypes.string,
     label: PropTypes.string,
   };
@@ -28,12 +29,10 @@ class Typeahead extends Component {
   }
 
   triggerSearch = (value) => {
-    this.props.fetchResults(value);
-    this.props.onChange(value);
-  }
-
-  onMenuSelect = (value) => {
-    this.props.onChange(value);
+    if (value.length > 1) {
+      this.props.fetchResults(value);
+      this.props.onChange(value);
+    }
   }
 
   render() {
@@ -45,7 +44,7 @@ class Typeahead extends Component {
         floatingLabelText={this.props.label}
         dataSource={this.state.results}
         onUpdateInput={this.triggerSearch}
-        onNewRequest={this.onMenuSelect}
+        onNewRequest={this.props.onSelect}
       />
     );
   }

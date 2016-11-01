@@ -216,3 +216,10 @@ export function fetchTypeaheadData(searchTerm) {
       });
   }
 }
+
+export function setCompanyFromTypeahead(company) {
+  return {
+    type: types.SET_COMPANY_FROM_TYPEAHEAD,
+    company
+  }
+}
