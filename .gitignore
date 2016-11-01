@@ -13,7 +13,6 @@ pids
 *.seed
 
 server/config/secrets.js
-/server/config/secrets.js
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
