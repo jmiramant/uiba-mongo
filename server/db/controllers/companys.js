@@ -43,21 +43,18 @@ export function get(req, res) {
 
 }
 
-export function list(req, res) {
-
-  const name = req.params.companyName
-
-  Company.findOne({"name_lower": name.toLowerCase()}).exec( (err, company) => {
-    if (!company || err) {
-      if (err) return res.status(500).send({message: 'Company resource not found: ' + err.value});
-      return res.status(404).send({error: 'This company does not exisit'});
-    }
-    return res.json(company);
-  });
+export function typeahead(req, res) {
+  const query = new RegExp(req.query.search, 'i');
+  Company
+    .find({name_lower: {$regex: query}})
+    .limit(10)
+    .exec((err, results) => {
+      if (err) return res.status(500).send({error: err});
+      return res.json(results);
+    })
 }
-
 
 export default {
   get,
-  list,
+  typeahead,
 };

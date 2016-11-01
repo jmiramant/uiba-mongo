@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import CompanyAdd from 'containers/CompanyAdd';
 
 import classNames from 'classnames/bind';
-import styles from 'css/components/navigation';
+import styles from 'css/components/company/companyAdminContainer';
 import * as companyActionCreator from 'actions/companies'
 
 const cx = classNames.bind(styles);
@@ -25,14 +25,16 @@ class CompanyContainer extends React.Component {
     } = this.props;
 
     return (
-      <div>
-        {addShow ? (
-          <CompanyAdd
-            addVisible={addShow}
-          />
-        ) : (
-         children
-        )}
+      <div className={cx('companyAdmin-container') + ' container'}>
+        <div className={cx('container-card') + ' col-md-12'}>
+          {addShow ? (
+            <CompanyAdd
+              addVisible={addShow}
+            />
+          ) : (
+           children
+          )}
+        </div>
       </div>
     );
   }

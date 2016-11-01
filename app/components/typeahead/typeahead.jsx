@@ -12,6 +12,7 @@ class Typeahead extends Component {
     selection: PropTypes.string,
     onChange: PropTypes.func.isRequired,
     error: PropTypes.string,
+    label: PropTypes.string,
   };
 
   constructor(props) {
@@ -41,7 +42,7 @@ class Typeahead extends Component {
         searchText={this.props.selection}
         errorText={this.props.error}
         filter={AutoComplete.caseInsensitiveFilter}
-        floatingLabelText="Add a School"
+        floatingLabelText={this.props.label}
         dataSource={this.state.results}
         onUpdateInput={this.triggerSearch}
         onNewRequest={this.onMenuSelect}

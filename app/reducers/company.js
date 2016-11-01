@@ -17,7 +17,7 @@ const company = (
   action
 ) => {
   switch (action.type) {
-  case types.CREATE_NEW_COMPANY:
+    case types.CREATE_NEW_COMPANY:
       return state;
     case types.CHANGE_COMPANY:
       const newStateOjb = {...state}
@@ -34,6 +34,31 @@ const company = (
   }
 };
 
+const typeahead = (
+  state = [],
+  action
+) => {
+  switch (action.type) {
+    case types.UPDATE_COMPANY_TYPEAHEAD_SUCCESS: 
+      return action.results;
+    default:
+      return state;
+  }
+};
+
+const selection = (
+  state = '',
+  action
+) => {
+  switch (action.type) {
+    case types.SET_INITIAL_COMPANY_SELECTION:
+      return (action.selection ? action.selection : '')
+    case types.UPDATE_COMPANY_SELECTION:
+      return action.selection
+    default:
+      return state;
+  } 
+};
 
 const addShow = (
   state = false,
@@ -54,7 +79,9 @@ const addShow = (
 
 const companyReducer = combineReducers({
   company,
-  addShow
+  addShow,
+  typeahead,
+  selection
 });
 
 export default companyReducer;

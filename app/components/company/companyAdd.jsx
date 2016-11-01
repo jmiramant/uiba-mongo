@@ -13,8 +13,10 @@ import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
+
 import DropzoneS3Uploader from 'react-dropzone-s3-uploader'
 import AddressInput from 'containers/Address'
+import CompanyNameTypeahead from '../../containers/CompanyNameTypeahead';
 
 import _ from 'lodash';
 
@@ -41,6 +43,7 @@ export default class CompanyAdd extends React.Component {
 
   state = {
     validationErrors: {},
+    showAddress: false
   }
 
   disableEnter(e) {
@@ -56,6 +59,11 @@ export default class CompanyAdd extends React.Component {
     }
   }
   
+  showAddress(e) {
+    console.log(e)
+    // this.setState({showAddress: true});
+  }
+
   validate() {
     const validationResp = validateCompanyHelper(this.props.company, this.state.validationErrors);
     this.setState({validationErrors: validationResp.errors});
@@ -83,6 +91,10 @@ export default class CompanyAdd extends React.Component {
 
   handleSize = (e, i, val) => {
     this.changeCompanyProps('size', val)
+  }
+  
+  handleName = val => {
+    this.changeCompanyProps('name', val)
   }
 
   handleDateChange = (field, value) => {
@@ -115,11 +127,11 @@ export default class CompanyAdd extends React.Component {
         <form>
 
           <div className="col-md-6">
-            <TextField
-              value={company.name}
-              errorText={validationErrors.name}
-              floatingLabelText="Company Name"
-              onChange={this.handleChange('name')}
+            <CompanyNameTypeahead 
+              selection={company.name}
+              initial={company.name}
+              error={validationErrors.name}
+              handleChange={this.handleName.bind(this)}
             />
           </div>
 
@@ -193,9 +205,6 @@ export default class CompanyAdd extends React.Component {
             maxSearchResults={5}
           />
 
-          <AddressInput />
-
-          
         </form>
       </div>
     )

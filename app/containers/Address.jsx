@@ -16,6 +16,8 @@ import * as actionCreators from 'actions/address';
 
 class AddressAutofillApp extends Component {
   static propTypes = {
+    type: PropTypes.string,
+    name: PropTypes.string
   };
 
   constructor(props) {
@@ -23,7 +25,11 @@ class AddressAutofillApp extends Component {
   }
 
   componentWillMount() {
-    this.actions.fetchAddress()
+    if (this.props.type === 'company') {
+      this.actions.fetchCompanyAddress({name: this.props.name.toLowerCase()})
+    } else {
+      this.actions.fetchAddress()
+    }
   }  
 
   handleSave() {

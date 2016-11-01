@@ -19,6 +19,7 @@ db.companies.insertMany(
     },
     {
       name: "Blue Orange Digital",
+      name_lower: "blue_orange_digital",
       location: "The World",
       description: "Quinoa brooklyn echo park, trust fund meh viral pork belly.",
       foundedDate: new Date(2010, 1, 20),
@@ -27,6 +28,7 @@ db.companies.insertMany(
     }, 
     {
       name: "Good.Co",
+      name_lower: "goodco",
       location: "San Francisco",
       description: "Quinoa brooklyn echo park, trust fund meh viral pork belly.",
       foundedDate: new Date(2010, 1, 20),
@@ -35,6 +37,7 @@ db.companies.insertMany(
     },
     {
       name: "EverFi, Inc",
+      name_lower: "everfi_inc",
       location: "Washington D.C.",
       description: "Quinoa brooklyn echo park, trust fund meh viral pork belly.",
       foundedDate: new Date(2010, 1, 20),
