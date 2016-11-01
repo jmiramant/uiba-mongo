@@ -25,6 +25,11 @@ export const zipCodeAPI = {
   key: process.env.zipCodeAPI_key || 'JCqjDuMQP0YpfmZglzDHV5yQI3faL0FvD5OhzB7pB6PRsO8OnLvjR49A7pLSqqn4',
 }
 
+export const aws = {
+  aws_access_key_id: process.env.AWS_ACCESS_KEY_ID || 'AKIAJASIXYLAVU34AGHQ',
+  aws_secret_access_key: process.env.AWS_SECRET_ACCESS_KEY || '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'
+}
+
 export default {
   sessionSecret,
   google,
