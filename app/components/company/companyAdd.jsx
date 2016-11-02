@@ -34,6 +34,7 @@ export default class CompanyAdd extends React.Component {
     companyChange: PropTypes.func.isRequired,
     toggleEdit: PropTypes.func.isRequired,
     addVisible: PropTypes.bool,
+    isExistingData: PropTypes.bool,
     onCompanySave: PropTypes.func.isRequired
   }
 
@@ -95,7 +96,9 @@ export default class CompanyAdd extends React.Component {
   }
   
   handleName = val => {
-    this.changeCompanyProps('name', val)
+    if (typeof(val) === 'string') {
+      this.changeCompanyProps('name', val)  
+    } 
   }
 
   handleDateChange = (field, value) => {
@@ -126,8 +129,9 @@ export default class CompanyAdd extends React.Component {
           } = this.state;
 
     const {
-            addVisible,
             company,
+            addVisible,
+            isExistingData,
           } = this.props;
 
     const isVisible = addVisible ? '' : ' ' + cx('closed');
@@ -166,6 +170,79 @@ export default class CompanyAdd extends React.Component {
         </div>
       </DropzoneS3Uploader>
     )
+
+    const addExpanded = (
+      <div>
+        <div className="col-md-6">
+          <TextField
+            value={company.description}
+            errorText={validationErrors.description}
+            floatingLabelText="Description"
+            onChange={this.handleChange('description')}
+          />
+        </div>
+
+        <div className="col-md-6">
+          <UibaDatePicker
+            data={company.foundedDate}
+            name='founded'
+            onDateChange={this.handleDateChange}
+            validationErrors={validationErrors}
+          />
+        </div>
+
+        <div className="col-md-6">
+          <SelectField
+            errorText={validationErrors.size}
+            onChange={this.handleSize}
+            value={company.size}
+            floatingLabelText="Company Size"
+            hintText='Company Size'
+          >
+            <MenuItem value={10} primaryText="1-10" />
+            <MenuItem value={20} primaryText="11-20" />
+            <MenuItem value={50} primaryText="21-50" />
+            <MenuItem value={100} primaryText="51-100" />
+            <MenuItem value={250} primaryText="101-250" />
+            <MenuItem value={500} primaryText="251-500" />
+            <MenuItem value={501} primaryText=">500" />
+          </SelectField>
+        </div>
+        <div className="col-md-6">
+          <TextField
+            value={company.websiteUrl}
+            errorText={validationErrors.websiteUrl}
+            floatingLabelText="Website"
+            onChange={this.handleChange('websiteUrl')}
+          />
+        </div>
+
+        <div className="col-md-6">
+          <TextField
+            value={company.specialties}
+            floatingLabelText="Specialties (Separate by Comma)"
+            errorText={validationErrors.specialties}
+            onChange={this.handleChange('specialties')}
+          />
+        </div>
+
+        <div className="col-md-6">
+          <AutoComplete
+            onKeyDown={this.disableEnter}
+            hintText='Industry'
+            searchText={company.industry}
+            floatingLabelText='Industry'
+            errorText={validationErrors.industry}
+            filter={AutoComplete.fuzzyFilter}
+            dataSource={IndustryData}
+            onNewRequest={this.handleIndustryChange.bind(this)}
+            onUpdateInput={this.handleIndustryChange.bind(this)}
+            maxSearchResults={5}
+          />
+        </div>
+      </div>
+    )
+
    
     return (
       <div className={cx('companyAdd-container') + isVisible}>
@@ -187,77 +264,11 @@ export default class CompanyAdd extends React.Component {
 
           </div>
 
-
-          <div className="col-md-6">
-            <TextField
-              value={company.description}
-              errorText={validationErrors.description}
-              floatingLabelText="Description"
-              onChange={this.handleChange('description')}
-            />
-          </div>
-
-          <UibaDatePicker
-            data={company.foundedDate}
-            name='founded'
-            onDateChange={this.handleDateChange}
-            validationErrors={validationErrors}
-          />
-
-          <SelectField
-            style={{minWidth: "320px"}}
-            errorText={validationErrors.size}
-            onChange={this.handleSize}
-            value={company.size}
-            floatingLabelText="Company Size"
-            hintText='Company Size'
-          >
-            <MenuItem value={'10'} primaryText="1-10" />
-            <MenuItem value={"20"} primaryText="11-20" />
-            <MenuItem value={'50'} primaryText="21-50" />
-            <MenuItem value={'100'} primaryText="51-100" />
-            <MenuItem value={'250'} primaryText="101-250" />
-            <MenuItem value={'500'} primaryText="251-500" />
-            <MenuItem value={'501'} primaryText=">500" />
-          </SelectField>
-
-          <div className="col-md-6">
-            <TextField
-              value={company.websiteUrl}
-              errorText={validationErrors.websiteUrl}
-              floatingLabelText="Website"
-              onChange={this.handleChange('websiteUrl')}
-            />
-          </div>
-
-          <div className="col-md-6">
-            <TextField
-              value={company.specialties}
-              floatingLabelText="Specialties"
-              errorText={validationErrors.specialties}
-              onChange={this.handleChange('specialties')}
-            />
-          </div>
-
-          <div className="col-md-6">
-            <AutoComplete
-              onKeyDown={this.disableEnter}
-              hintText='Industry'
-              searchText={company.industry}
-              floatingLabelText='Industry'
-              errorText={validationErrors.industry}
-              filter={AutoComplete.fuzzyFilter}
-              dataSource={IndustryData}
-              onNewRequest={this.handleIndustryChange.bind(this)}
-              onUpdateInput={this.handleIndustryChange.bind(this)}
-              maxSearchResults={5}
-            />
-          </div>
+          {isExistingData ? (null) : (addExpanded)}
 
           <div className={cx('btn-group-container')}>
             <div className={cx('btn-group')}>
-              <RaisedButton className='pull-right' onClick={this.handleSubmit} label="Save" primary={true} />
-              <FlatButton className='pull-left' label="Close" onClick={this.props.toggleEdit} primary={true} />
+              <RaisedButton className='text-center' onClick={this.handleSubmit} label={isExistingData ? ('Confirm') : ('Save')} primary={true} />
             </div>
           </div>
 

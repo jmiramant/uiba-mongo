@@ -26,16 +26,27 @@ const company = (
     case types.CREATE_COMPANY_SUCCESS:
       return {};
     case types.SET_COMPANY_FROM_TYPEAHEAD:
-      debugger
       return action.company;
     case types.GET_COMPANY_SUCCESS:
       return action.data;
-    case types.GET_COMPANY_FAILURE:
-      return state;
     default:
       return state;
   }
 };
+
+const isExistingData = (
+  state = false,
+  action
+) => {
+  switch (action.type) {
+    case types.CHANGE_COMPANY:
+      return false;
+    case types.SET_COMPANY_FROM_TYPEAHEAD:
+      return true;
+    default:
+      return state;
+  }
+}
 
 const typeahead = (
   state = [],
@@ -84,7 +95,8 @@ const companyReducer = combineReducers({
   company,
   addShow,
   typeahead,
-  selection
+  selection,
+  isExistingData
 });
 
 export default companyReducer;
