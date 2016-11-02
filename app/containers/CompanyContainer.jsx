@@ -5,7 +5,8 @@ import CompanyAdd from 'containers/CompanyAdd';
 
 import classNames from 'classnames/bind';
 import styles from 'css/components/company/companyAdminContainer';
-import * as companyActionCreator from 'actions/companies'
+import * as companyActionCreators from 'actions/companies'
+import { fetchProfile } from 'actions/profiles';
 
 const cx = classNames.bind(styles);
 
@@ -14,15 +15,14 @@ class CompanyContainer extends React.Component {
 
   componentWillMount() {
     this.props.companyActions.fetchCompany();
+    this.props.fetchProfile();
   }
   
   render() {
+
     const {
-      children,
-      company,
       addShow,
-      companyActions,
-      isExistingData
+      children,
     } = this.props;
 
     const setupCompany = (
@@ -30,10 +30,7 @@ class CompanyContainer extends React.Component {
         
         <p>You have successfully logged in to the Company Adminstrators Portal. Please begin by completing a company profile.</p>
         
-        <CompanyAdd
-          isExistingData={isExistingData}
-          addVisible={addShow}
-        />
+        <CompanyAdd/>
 
       </div>
     )
@@ -54,15 +51,15 @@ CompanyContainer.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    company: state.company.company,
-    addShow: state.company.addShow, 
-    isExistingData: state.company.isExistingData
+    addShow: state.company.addShow,
+
   };
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    companyActions: bindActionCreators(companyActionCreator, dispatch)
+    companyActions: bindActionCreators(companyActionCreators, dispatch),
+    fetchProfile: () => {dispatch(fetchProfile())}
   }
 }
 
