@@ -21,7 +21,8 @@ class CompanyContainer extends React.Component {
       children,
       company,
       addShow,
-      companyActions
+      companyActions,
+      isExistingData
     } = this.props;
 
     const setupCompany = (
@@ -30,6 +31,7 @@ class CompanyContainer extends React.Component {
         <p>You have successfully logged in to the Company Adminstrators Portal. Please begin by completing a company profile.</p>
         
         <CompanyAdd
+          isExistingData={isExistingData}
           addVisible={addShow}
         />
 
@@ -53,7 +55,8 @@ CompanyContainer.propTypes = {
 function mapStateToProps(state) {
   return {
     company: state.company.company,
-    addShow: state.company.addShow
+    addShow: state.company.addShow, 
+    isExistingData: state.company.isExistingData
   };
 }
 
