@@ -31,9 +31,8 @@ export default class CompanyAdd extends React.Component {
   
   static propTypes = {
     company: PropTypes.object.isRequired,
-    companyChange: PropTypes.func.isRequired,
     toggleEdit: PropTypes.func.isRequired,
-    addVisible: PropTypes.bool,
+    addShow: PropTypes.bool,
     isExistingData: PropTypes.bool,
     onCompanySave: PropTypes.func.isRequired
   }
@@ -130,11 +129,11 @@ export default class CompanyAdd extends React.Component {
 
     const {
             company,
-            addVisible,
+            addShow,
             isExistingData,
           } = this.props;
 
-    const isVisible = addVisible ? '' : ' ' + cx('closed');
+    const isVisible = addShow ? '' : ' ' + cx('closed');
     
     const style = {
       height: 125,
@@ -242,7 +241,6 @@ export default class CompanyAdd extends React.Component {
         </div>
       </div>
     )
-
    
     return (
       <div className={cx('companyAdd-container') + isVisible}>

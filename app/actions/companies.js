@@ -114,7 +114,7 @@ export function createCompany(companyData) {
   return (dispatch) => {
     dispatch(createCompanyRequest(companyData));
     
-    return makeCompanysRequest('post', companyData, '/companys')
+    return makeCompaniesRequest('post', companyData, '/company')
       .then(res => {
         if (res.status === 200) {
           return dispatch(createCompanySuccess(res.data));
@@ -131,7 +131,7 @@ export function updateCompany(companyData) {
 
     dispatch(updateCompanyRequest(companyData));
     
-    return makeCompanysRequest('put', companyData, '/companys')
+    return makeCompaniesRequest('put', companyData, '/company')
       .then(res => {
         if (res.status === 200) {
           return dispatch(updateCompanySuccess(res.data));
@@ -170,7 +170,7 @@ export function deleteCompany(company) {
 
     dispatch(deleteCompanyRequest(company));
 
-    return makeCompanysRequest('delete', company, '/companys/' + company._id)
+    return makeCompaniesRequest('delete', company, '/company/' + company._id)
       .then(res => {
         if (res.status === 200) {
           return dispatch(deleteCompanySuccess(res.data));

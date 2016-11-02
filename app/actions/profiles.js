@@ -14,7 +14,7 @@ export function profileChange(state) {
 }
 
 function makeProfileRequest(method, data, api = '/profile') {
-  return request[method](api, data);  
+  return request[method](api, data);
 }
 
 export function updateProfileRequest(data) {
@@ -67,6 +67,6 @@ export function updateProfile(profileData) {
 export function fetchProfile() {
   return {
     type: types.GET_PROFILE,
-    promise: makeProfileRequest('get', {}, 'profile/me')
+    promise: makeProfileRequest('get', {}, '/profile/me')
   };
 }

@@ -71,6 +71,9 @@ export default (app) => {
   if (companysController) {
     app.get('/company', companysController.get);
     app.get('/company/:companyName', companysController.get);
+    app.post('/company', companysController.create);
+    app.put('/company', companysController.update);
+    app.delete('/company/:id', companysController.remove);
     app.get('/companies/typeahead', companysController.typeahead);
   } else {
     console.warn(unsupportedMessage('companies routes'));

@@ -12,19 +12,32 @@ class CompanyAddApp extends Component {
   }
 
   toggleAddCompany = () => {
-    this.props.toggleCompanyAdd(this.props.addVisible)
+    this.props.actions.toggleCompanyAdd(this.props.addShow)
   }
 
   handleSave = (data) => {
-    this.props.onCompanySave(data);
-    this.props.toggleCompanyAdd(this.props.addVisible)
+    
+    const {
+      actions,
+      addShow
+
+    } = this.props;
+    
+    if (data._id) {
+      actions.updateCompany(data);
+    } else {
+      actions.createCompany(data);
+    }
+
+    this.toggleCompanyAdd()
   }
 
   render() {
     const {
       company,
       actions,
-      addVisible
+      addShow,
+      isExistingData
     } = this.props;
 
     return (
@@ -33,7 +46,8 @@ class CompanyAddApp extends Component {
         onCompanySave={this.handleSave} 
         companyChange={actions.companyChange}
         toggleEdit={this.toggleAddCompany.bind(this)} 
-        addVisible={addVisible} 
+        addShow={addShow}
+        isExistingData={isExistingData}
       />
     );
   }
@@ -41,7 +55,9 @@ class CompanyAddApp extends Component {
 
 function mapStateToProps(state) {
   return {
-    company: state.company.company
+    company: state.company.company,
+    addShow: state.company.addShow, 
+    isExistingData: state.company.isExistingData
   }
 }
 
