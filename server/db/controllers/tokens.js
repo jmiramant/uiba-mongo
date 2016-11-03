@@ -11,7 +11,7 @@ export function token(req, res) {
     if (req.headers.email.indexOf('@uiba.co') !== -1 || req.headers.email === externalAPISecret.accessEmail) {
       // Fetch the appropriate user, if they exist
       UserModel.findOne({ email: req.headers.email }, function(err, user) {
-        if (err) {    
+        if (err || !user) {    
           // user cannot be found; may wish to log that fact here. For simplicity, just return a 401
           res.send('Authentication error', 401)
         }
