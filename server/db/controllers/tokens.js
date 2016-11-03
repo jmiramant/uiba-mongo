@@ -15,6 +15,9 @@ export function token(req, res) {
           // user cannot be found; may wish to log that fact here. For simplicity, just return a 401
           res.send('Authentication error', 401)
         }
+        if (!user) {
+         res.send('This user is not autherized.', 401) 
+        }
         return user.comparePassword(req.headers.password, (err, isMatch) => {
           if (err) {
             // an error has occured checking the password. For simplicity, just return a 401
