@@ -1,5 +1,4 @@
-export const sessionSecret = process.env.SESSION_SECRET;
-
+export const sessionSecret = process.env.SESSION_SECRET
 export const linkedin = {
   clientID: process.env.LINKEDIN_CLIENTID,
   clientSecret: process.env.LINKEDIN_SECRET,
@@ -8,7 +7,6 @@ export const linkedin = {
 
 export const sendInBlue = {
   clientToken: process.env.SENDBLUE_TOKEN
-}
 
 export const externalAPISecret = {
   token: process.env.UIBA_API_SECRET,
@@ -16,7 +14,7 @@ export const externalAPISecret = {
 }
 
 export const zipCodeAPI = {
-  key: process.env.zipCodeAPI_key,
+  key: process.env.zipCodeAPI_key
 }
 
 export default {
