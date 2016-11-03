@@ -9,7 +9,7 @@ export const google = {
 export const linkedin = {
   clientID: process.env.LINKEDIN_CLIENTID,
   clientSecret: process.env.LINKEDIN_SECRET,
-  callbackURL: process.env.GOOGLE_CALLBACK
+  callbackURL: process.env.LINKEDIN_CALLBACK
 };
 
 export const sendInBlue = {
