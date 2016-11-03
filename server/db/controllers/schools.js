@@ -3,7 +3,7 @@ import School from '../models/school';
 import moment from 'moment';
 
 const handleError = (res, err) => {
-  return res.status(401).json({ message: err }); 
+  return res.status(404).json({ message: err }); 
 }
 
 /**
@@ -15,10 +15,10 @@ export function me(req, res) {
     
     "profile_id": mongoose.Types.ObjectId(req.user.profile_id)
 
-  }).exec((err, jobs) => {
+  }).exec((err, schools) => {
     
-    if (err) return handleError(res, err);
-    return res.status(200).json(jobs);
+    if (err || !schools) return handleError(res, err);
+    return res.status(200).json(schools);
   
   });
 
@@ -33,7 +33,7 @@ export function get(req, res) {
   School.find({"user_id": mongoose.Types.ObjectId(uid)}).exec((err, schools) => {
     if (err) {
       console.log('Error in "schools/me" query');
-      return res.status(500).send('Something went wrong getting the schools data');
+      return res.status(404).send('Something went wrong getting the schools data');
     }
     return res.status(200).json(schools);
   });

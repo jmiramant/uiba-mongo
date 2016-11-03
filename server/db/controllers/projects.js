@@ -3,8 +3,7 @@ import Project from '../models/project';
 import moment from 'moment';
 
 const handleError = (res, err) => {
-  console.log(err);
-  return res.status(401).json({ message: err });
+  return res.status(404).json({ message: err });
 }
 
 /**
@@ -18,7 +17,7 @@ export function me(req, res) {
 
   }).exec((err, projects) => {
     
-    if (err) return handleError(res, err);
+    if (err || !projects) return handleError(res, err);
     return res.status(200).json(projects);
   
   });
@@ -33,8 +32,8 @@ export function get(req, res) {
 
   Project.find({"user_id": mongoose.Types.ObjectId(uid)}).exec((err, projects) => {
     if (err) {
-      console.log('Error in "project/me" query');
-      return res.status(500).send('Something went wrong getting the projects data');
+      console.log('Error in "project/get" query');
+      return res.status(401).send('Something went wrong getting the projects data');
     }
     return res.status(200).json(projects);
   });

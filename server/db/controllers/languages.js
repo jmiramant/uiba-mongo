@@ -4,8 +4,7 @@ import Language from '../models/language';
 import moment from 'moment';
 
 const handleError = (res, err) => {
-  console.log(err);
-  return res.status(401).json({ message: err });
+  return res.status(404).json({ message: err });
 }
 
 /**
@@ -19,7 +18,7 @@ export function me(req, res) {
 
   }).exec((err, languages) => {
     
-    if (err) return handleError(res, err);
+    if (err || !languages) return handleError(res, err);
     return res.status(200).json(languages);
   
   });
@@ -34,8 +33,8 @@ export function get(req, res) {
 
   Language.find({"user_id": mongoose.Types.ObjectId(uid)}).exec((err, languages) => {
     if (err) {
-      console.log('Error in "language/me" query');
-      return res.status(500).send('Something went wrong getting the languages data');
+      console.log('Error in "language/get" query');
+      return res.status(412).send('Something went wrong getting the languages data');
     }
     return res.status(200).json(languages);
   });
@@ -61,7 +60,7 @@ export function create(req, res) {
     }
     if (containsType(req.body.language, existingLanguages)) {
       
-      return res.status(500).send('You have already added this language.');
+      return res.status(412).send('You have already added this language.');
     
     } else {
       Language.create({

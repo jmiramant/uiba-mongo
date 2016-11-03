@@ -5,7 +5,7 @@ import Company from '../models/company';
 import moment from 'moment';
 
 const handleError = (res, err) => {
-  return res.status(401).json({ message: err });
+  return res.status(404).json({ message: err });
 }
 
 /**
@@ -18,8 +18,7 @@ export function me(req, res) {
     "profile_id": mongoose.Types.ObjectId(req.user.profile_id)
 
   }).exec((err, jobs) => {
-    
-    if (err) return handleError(res, err);
+    if (err || !jobs) return handleError(res, err);
     return res.status(200).json(jobs);
   
   });
@@ -35,7 +34,7 @@ export function get(req, res) {
   Job.find({"profile_id": mongoose.Types.ObjectId(uid)}).exec((err, jobs) => {
     if (err) {
       console.log('Error in "jobs/me" query');
-      return res.status(500).send('Something went wrong getting the data');
+      return res.status(401).send('Something went wrong getting the data');
     }
     return res.status(200).json(jobs);
   });

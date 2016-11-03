@@ -66,7 +66,7 @@ const resolveApplyRedirect = (req, profile) => {
 export function me(req, res) {
     if (!req.user) {
       console.log('Error in user /me query');
-      return res.status(500).send('Something went wrong getting the data');
+      return res.status(404).send('Something went wrong getting the data');
     }
 
     return res.json(req.user);

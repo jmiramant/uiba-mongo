@@ -63,7 +63,7 @@ const exportQueryByDate = (req, res, queryDate, query) => {
 
   return async.parallel(parallels, (err, resp) => {
     if (err) {
-      return res.status(500).send('Something went wrong getting the skills data');
+      return res.status(404).send('Something went wrong getting the skills data');
     }
 
     const formatted = {
@@ -118,7 +118,7 @@ const exportQueryByProfiles = (req, res, profiles) => {
 
   return async.parallel(parallels, (err, resp) => {
     if (err) {
-      return res.status(500).send('Something went wrong getting this aggregate data');
+      return res.status(404).send('Something went wrong getting this aggregate data');
     }
 
     const formatted = {
