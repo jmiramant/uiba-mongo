@@ -10,11 +10,11 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name: ['uiba_web'],
+  app_name: ['uiba_staging'],
   /**
    * Your New Relic license key.
    */
-  license_key: '6e102bc34ac1937cd66a08162b522fab13f5ae90',
+  license_key: 'ab30a5bdf1608e1f8cf934d584148c1c78ade3dd',
   logging: {
     /**
      * Level at which to log. 'trace' is most useful to New Relic when diagnosing
