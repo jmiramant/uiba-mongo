@@ -6,24 +6,25 @@ import { externalAPISecret } from '../../config/secrets';
 
 export function token(req, res) {
 
-  if (req.headers.email && req.headers.password) {   
-  
+  if (req.headers.email && req.headers.password) {
+    console.log(req.headers.email, externalAPISecret.accessEmail)
+    console.log(req.headers.email === externalAPISecret.accessEmail)
     if (req.headers.email.indexOf('@uiba.co') !== -1 || req.headers.email === externalAPISecret.accessEmail) {
       // Fetch the appropriate user, if they exist
       UserModel.findOne({ email: req.headers.email }, function(err, user) {
 
         if (err || !user || !user.comparePassword) {    
           // user cannot be found; may wish to log that fact here. For simplicity, just return a 401
-          return res.status(401).send('Authentication')
+          return res.status(401).send('Authentication');
         } else {
           return user.comparePassword(req.headers.password, (err, isMatch) => {
             if (err) {
               // an error has occured checking the password. For simplicity, just return a 401
-              return res.status(401).send(err.response)
+              return res.status(401).send(err.response);
             }
             if (isMatch) {  
               // Great, user has successfully authenticated, so we can generate and send them a token.  
-              var expires = moment().add(7, 'days').valueOf()       
+              var expires = moment().add(7, 'days').valueOf(); 
 
               var token = jwt.encode(
                 {
@@ -38,16 +39,16 @@ export function token(req, res) {
                 user : user.toJSON()
               });
             } else {            
-              return res.status(401).send('Authentication error')
+              return res.status(401).send('Authentication error');
             }
           });
         }
       });
     } else {
-      return res.status(401).send('Authentication error: Account not whitelisted.')
+      return res.status(401).send('Authentication error: Account not whitelisted.');
     }
   } else {
-    return res.status(401).send('Authentication error')
+    return res.status(401).send('Authentication error');
   }
 
 }
