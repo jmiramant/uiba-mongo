@@ -12,6 +12,7 @@ import _exports from './export';
 import tokens from './tokens';
 import recruiters from './recruiters';
 import addresses from './address';
+import admin from './admin';
 
 
 export { companys, interests, users, profiles, jobs, schools, skills, languages, projects, _exports, tokens, recruiters, addresses};
@@ -30,5 +31,6 @@ export default {
   tokens,
   recruiters,
   companys,
-  addresses
+  addresses,
+  admin
 };
