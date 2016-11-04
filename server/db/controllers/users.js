@@ -2,6 +2,7 @@ import User from '../models/user';
 import Profile from '../models/profile';
 import Recruiter from '../models/recruiter';
 import passport from 'passport';
+import Company from '../models/company';
 import async from 'async'
 import mailer from '../../utils/email.js'
 
@@ -10,7 +11,7 @@ const isApply = (req) => {
   return req.headers.referer.indexOf('/apply/') !== -1
 }
 
-const logRecruiter = (req) => {
+const logRecruiter = (req, profId) => {
   if (req.headers.referer.split('/apply/').length > 1) {
 
     const properString = (str) => {
@@ -37,11 +38,11 @@ const logRecruiter = (req) => {
         })
 
         if (companyObj) {
-          companyObj.candidate.push(recruiter._id);
+          companyObj.candidate.push(profId);
         } else {
           recruiter.credit.push({
             company: company,
-            candidate: [recruiter._id]
+            candidate: [profId]
           });
         }
         recruiter.save()
@@ -51,13 +52,20 @@ const logRecruiter = (req) => {
   }
 }
 
-const resolveApplyRedirect = (req, profile) => {
+const resolveApplyRedirect = (req, profile, cb) => {
   const _c = req.headers.referer.split('/apply/')[1].split('/')[0].split('?')[0];
-  profile.apply = {
-    applied: true,
-    name: _c,
-  };
-  logRecruiter(req);
+  Company.findOne({
+    name_lower: _c
+  }, (companyErr, _company) => {
+    profile.apply = {
+      applied: true,
+      name: _c,
+      name_lower: _company.name_lower,
+      company_id: _company._id
+    };
+    logRecruiter(req, profile._id);
+    cb();
+  })
 }
 
 /**
@@ -101,11 +109,12 @@ export function login(req, res, next) {
           user_id: user._id
         }, (profErr, _profile) => {
           if (profErr) console.log(profErr)
-          resolveApplyRedirect(req, _profile)
-          _profile.save( (err, prof) => {
-            console.log(err)
-            login();
-          })
+          const cb = () => {
+            _profile.save( (err, prof) => {
+              login();
+            })
+          }
+          resolveApplyRedirect(req, _profile, cb)
         })
       } else {
         login();
@@ -141,7 +150,6 @@ export function signUp(req, res, next) {
     if (existingUser) {
       return res.status(409).json({ message: 'Account with this email address already exists. Did you sign up with LinkedIn?' });
     }
-
   
     const _profile = new Profile({
       user_id: user.id,
@@ -152,21 +160,24 @@ export function signUp(req, res, next) {
       service: 'email',
       isEmailVerified: false
     })
+    const saveResolve = () => {
+      return async.series({
+        _profile: _profile.save,
+        user: user.save
+      }, function(saveErr, resp){
+        if (saveErr) return next(saveErr);
+        mailer.sendEmailConfirmation(user, req.headers.host)
+        res.redirect(200, '/email-confirmation');
 
+      });      
+    }
     user.profile_id = _profile._id;
 
-    if (isApply(req)) resolveApplyRedirect(req, _profile)
-
-    return async.series({
-      _profile: _profile.save,
-      user: user.save
-    }, function(saveErr, resp){
-      if (saveErr) return next(saveErr);
-      mailer.sendEmailConfirmation(user, req.headers.host)
-      res.redirect(200, '/email-confirmation');
-
-    });      
-
+    if (isApply(req)) {
+      resolveApplyRedirect(req, _profile, saveResolve)
+    } else {
+      saveResolve()    
+    }
   });
 }
 

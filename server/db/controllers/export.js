@@ -9,6 +9,7 @@ import Job from '../models/job';
 import Interest from '../models/interest';
 import Language from '../models/language';
 import Company from '../models/company'
+import Recruiter from '../models/recruiter'
 import async from 'async'
 import moment from 'moment';
 import _ from 'lodash';
@@ -106,10 +107,14 @@ const exportQueryByProfiles = (req, res, profiles) => {
     job: Job
   };
 
-  
+
   _.forEach(models, (v, k) => {
     parallels[k] = (callback) => {
-      v.find({'profile_id': { $in: profIds}})
+      v.find({
+          'profile_id': {
+            $in: profIds
+          }
+        })
         .exec((err, asset) => {
           callback(err, asset);
         })
@@ -168,6 +173,42 @@ export function list(req, res) {
     return exportQueryByProfiles(req, res, profiles);
   })
 
+}
+
+export function recruiter(req, res) {
+  const rkey = req.params.key;
+  Recruiter.findOne({
+    key: rkey
+  }).exec((err, recruiter) => {
+    
+    let profIds = _.reduce(recruiter.credit, function(a, b) {
+      return a.concat(b.candidate);
+    }, []);
+
+    Array.prototype.unique = function() {
+      var a = this.concat();
+      for (var i = 0; i < a.length; ++i) {
+        for (var j = i + 1; j < a.length; ++j) {
+          if (a[i].toString() === a[j].toString())
+            a.splice(j--, 1);
+        }
+      }
+      return a;
+    };
+
+    profIds = profIds.unique()
+
+    Profile.find({
+      '_id': {
+        $in: profIds
+      }
+    }).exec((err, profs) => {
+      return exportQueryByProfiles(req, res, profs);
+    });
+
+  });
+
+
 
 }
 
@@ -175,4 +216,5 @@ export default {
   list,
   created,
   updated,
+  recruiter
 };

@@ -193,6 +193,7 @@ export default (app) => {
     app.get('/api/v1/export/updated/:datetime', jwtauth, exportsController.updated);
     app.get('/api/v1/export/created/:datetime', jwtauth, exportsController.created);
     app.get('/api/v1/export/list', exportsController.list);
+    app.get('/api/v1/export/recruiter/:key', exportsController.recruiter);
   } else {
     console.warn(unsupportedMessage('export API routes'));
   }

@@ -7,13 +7,14 @@ import { externalAPISecret } from '../../config/secrets';
 export function token(req, res) {
 
   if (req.headers.email && req.headers.password) {
-    console.log(req.headers.email, externalAPISecret.accessEmail)
-    console.log(req.headers.email === externalAPISecret.accessEmail)
-    if (req.headers.email.indexOf('@uiba.co') !== -1 || req.headers.email === externalAPISecret.accessEmail) {
+
+    const isApprovedEmail = req.headers.email === externalAPISecret.accessEmail;
+
+    if (req.headers.email.indexOf('@uiba.co') !== -1 || isApprovedEmail) {
       // Fetch the appropriate user, if they exist
       UserModel.findOne({ email: req.headers.email }, function(err, user) {
 
-        if (err || !user || !user.comparePassword) {    
+        if (err || !user || !user.comparePassword || ( !isApprovedEmail || !user.isEmailVerified)) {    
           // user cannot be found; may wish to log that fact here. For simplicity, just return a 401
           return res.status(401).send('Authentication');
         } else {
