@@ -1,4 +1,5 @@
 export const sessionSecret = process.env.SESSION_SECRET
+
 export const linkedin = {
   clientID: process.env.LINKEDIN_CLIENTID,
   clientSecret: process.env.LINKEDIN_SECRET,
