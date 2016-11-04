@@ -15,7 +15,7 @@ import addresses from './address';
 import admin from './admin';
 
 
-export { companys, interests, users, profiles, jobs, schools, skills, languages, projects, _exports, tokens, recruiters, addresses};
+export { companys, interests, users, profiles, jobs, schools, skills, languages, projects, _exports, tokens, recruiters, addresses, admin};
 
 export default {
   users,
