@@ -14,7 +14,7 @@ export function token(req, res) {
       // Fetch the appropriate user, if they exist
       UserModel.findOne({ email: req.headers.email }, function(err, user) {
 
-        if (err || !user || !user.comparePassword || ( !isApprovedEmail || !user.isEmailVerified)) {    
+        if (err || !user || !user.comparePassword || !user.isEmailVerified) {    
           // user cannot be found; may wish to log that fact here. For simplicity, just return a 401
           return res.status(401).send('Authentication');
         } else {
