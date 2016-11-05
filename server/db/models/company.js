@@ -11,8 +11,8 @@ const CompanySchema = new mongoose.Schema({
 }, {timestamps: true});
 
 function lowerCaseName(next) {
-  const user = this;
-  if (user.name) user.name_lower = name.toLowerCase();
+  const company = this;
+  if (company.name) company.name_lower = company.name.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").split(' ').join('_');
   return next();
 }
 

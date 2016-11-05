@@ -166,8 +166,9 @@ export function created(req, res) {
 }
 
 export function list(req, res) {
+  const lowerName = req.query.target.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-`~()]/g,"").split(' ').join('_')
   const query = {
-    ['apply.' + req.query.attr]: req.query.target
+    ['apply.' + req.query.attr]: {"$in": [lowerName, req.query.target]}
   }
   Profile.find(query).exec((err, profiles) => {
     return exportQueryByProfiles(req, res, profiles);
