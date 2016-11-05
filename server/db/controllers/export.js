@@ -37,7 +37,6 @@ const exportQueryByDate = (req, res, queryDate, query) => {
     job: Job
   };
 
-
   _.forEach(models, (v, k) => {
     parallels[k] = (callback) => {
       if (k === 'profile') {
@@ -152,17 +151,18 @@ export function updated(req, res, next) {
       $gte: queryDate
     }
   };
-  return exportQueryByDate(req, res, queryDate, );
+  return exportQueryByDate(req, res, queryDate, query);
 }
 
 export function created(req, res) {
   const queryDate = new Date(Number(req.params.datetime));
+
   const query = {
     createdAt: {
       $gte: queryDate
     }
   };
-  return exportQueryByDate(req, res, queryDate, );
+  return exportQueryByDate(req, res, queryDate, query);
 }
 
 export function list(req, res) {
@@ -176,14 +176,9 @@ export function list(req, res) {
 }
 
 export function recruiter(req, res) {
-  const rkey = req.params.key;
   Recruiter.findOne({
-    key: rkey
+    key: req.params.key
   }).exec((err, recruiter) => {
-    
-    let profIds = _.reduce(recruiter.credit, function(a, b) {
-      return a.concat(b.candidate);
-    }, []);
 
     Array.prototype.unique = function() {
       var a = this.concat();
@@ -195,7 +190,11 @@ export function recruiter(req, res) {
       }
       return a;
     };
-
+    
+    let profIds = _.reduce(recruiter.credit, function(a, b) {
+      return a.concat(b.candidate);
+    }, []);
+    
     profIds = profIds.unique()
 
     Profile.find({
