@@ -14,8 +14,19 @@ const cx = classNames.bind(styles);
 class CompanyContainer extends React.Component {
 
   componentWillMount() {
-    this.props.companyActions.fetchCompany();
     this.props.fetchProfile();
+  }
+
+  componentDidUpdate() {
+    const {
+      profile,
+      company,
+      companyActions
+    } = this.props;
+
+    if (profile && profile.company_id && company && !company._id) {
+      companyActions.fetchCompany(profile.company_id);
+    }
   }
   
   render() {
@@ -23,22 +34,31 @@ class CompanyContainer extends React.Component {
     const {
       addShow,
       children,
+      company
     } = this.props;
 
     const setupCompany = (
       <div>
-        
         <p>You have successfully logged in to the Company Adminstrators Portal. Please begin by completing a company profile.</p>
-        
-        <CompanyAdd/>
+        <CompanyAdd/>        
+      </div>
+    )
 
+    const companyTag = (
+      <div>
+        <div>Managing: {company.name}</div>
+        {children}
       </div>
     )
 
     return (
       <div className={cx('companyAdmin-container') + ' container'}>
         <div className={cx('container-card') + ' col-md-12'}>
-          {addShow ? (setupCompany) : (children)}
+          { company._id ? (
+            companyTag
+          ) : (
+            setupCompany
+          )}
         </div>
       </div>
     );
@@ -52,7 +72,8 @@ CompanyContainer.propTypes = {
 function mapStateToProps(state) {
   return {
     addShow: state.company.addShow,
-
+    profile: state.profile.profile,
+    company: state.company.company
   };
 }
 

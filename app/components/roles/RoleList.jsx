@@ -1,25 +1,26 @@
 import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as rolesActionCreators from 'actions/roles';
 
 import RoleItem from 'components/roles/RoleItem';
 import RoleAdd from 'components/roles/RoleAdd';
 import NullProfItem from 'components/ProfileNull';
 
 import classNames from 'classnames/bind';
-import styles from 'css/components/profile/roleList';
+import styles from 'css/components/role';
 import moment from 'moment';
 const cx = classNames.bind(styles);
 
 class RoleList extends React.Component {
   
   static propTypes = {
+    role: PropTypes.object,
     roles: PropTypes.array,
     addVisible: PropTypes.bool.isRequired,
     onEditSave: PropTypes.func.isRequired,
     toggleRoleAdd: PropTypes.func.isRequired,
     onRoleSave: PropTypes.func.isRequired,
+    roleChange: PropTypes.func.isRequired,
     onRoleDelete: PropTypes.func.isRequired
   }
 
@@ -48,7 +49,7 @@ class RoleList extends React.Component {
     const { role,
             roles,
             addVisible,
-            actions
+            roleChange
           } = this.props;
     const lengthIndex = roles.length - 1;
 
@@ -58,7 +59,7 @@ class RoleList extends React.Component {
             return (<RoleItem 
                       key={_role._id} 
                       role={_role} 
-                      roleChange={actions.rolesChange}
+                      roleChange={roleChange}
                       handleDelete={this.handleDelete}
                       saveRoleEdit={this.handleEditSave} 
                       isntLast={lengthIndex !== i} 
@@ -82,7 +83,7 @@ class RoleList extends React.Component {
       <RoleAdd
         role={role}
         onRoleSave={this.handleSave} 
-        roleChange={actions.roleChange}
+        roleChange={roleChange}
         toggleEdit={this.toggleAddRole.bind(this)} 
         addVisible={addVisible}
       />
@@ -91,19 +92,4 @@ class RoleList extends React.Component {
   }
 };
 
-function mapStateToProps(state) {
-  return {
-    role: state.role.role
-  }
-}
-
-function mapDispatchToProps (dispatch) {
-  return {
-    actions: bindActionCreators(rolesActionCreators, dispatch)
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(RoleList);
+export default RoleList

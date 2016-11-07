@@ -21,6 +21,7 @@ const interestsController = controllers && controllers.interests;
 const recruitersController = controllers && controllers.recruiters;
 const companysController = controllers && controllers.companys;
 const addressessController = controllers && controllers.addresses;
+const rolesController = controllers && controllers.roles;
 
 const exportsController = controllers && controllers._exports;
 const tokensController = controllers && controllers.tokens;
@@ -69,8 +70,8 @@ export default (app) => {
   }
 
   if (companysController) {
+    app.get('/company/:id', companysController.get);
     app.get('/company', companysController.get);
-    app.get('/company/:companyName', companysController.get);
     app.post('/company', companysController.create);
     app.put('/company', companysController.update);
     app.delete('/company/:id', companysController.remove);
@@ -107,6 +108,16 @@ export default (app) => {
     app.delete('/language/:id', languagesController.remove);
   } else {
     console.warn(unsupportedMessage('languages routes'));
+  }
+
+  if (rolesController) {
+    app.get('/roles/me', rolesController.me);
+    app.get('/roles/:id', rolesController.get);
+    app.post('/roles', rolesController.create);
+    app.put('/roles', rolesController.update);
+    app.delete('/role/:id', rolesController.remove);
+  } else {
+    console.warn(unsupportedMessage('roles routes'));
   }
 
   if (interestsController) {

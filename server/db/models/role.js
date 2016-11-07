@@ -2,7 +2,7 @@ import mongoose, { Schema } from 'mongoose';
 import { UpdateCompanyOnRole } from './updateMiddleware'
 import { Company } from './company';
 
-const degreeEnum = ['High School', 'Associate', 'Bachelor','Master','MBA','JD','MD','PhD','Engineer Degree','Certificate','Coursework','other'];
+const degreeEnum = ['High School', 'Associate', 'Bachelor','Master','MBA','JD','MD','PhD','Engineer Degree','Certificate','Coursework','Other'];
 
 const RoleSchema = new mongoose.Schema({
   company_id: {type: Schema.Types.ObjectId, ref: 'Company', required: true },
@@ -13,7 +13,7 @@ const RoleSchema = new mongoose.Schema({
   degreeMin: { type: String, enum: degreeEnum },
   degreeMax: { type: String, enum: degreeEnum },
   experienceMin: { type: Number },
-  experienceMin: {type: Number },
+  experienceMax: {type: Number },
   appliedCount: { type: Number, default: 0},
 }, {timestamps: true});
 

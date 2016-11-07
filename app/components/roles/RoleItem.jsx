@@ -8,7 +8,7 @@ import LinkIcon from 'material-ui/svg-icons/content/link';
 
 import moment from 'moment';
 import classNames from 'classnames/bind';
-import styles from 'css/components/profile/role';
+import styles from 'css/components/role';
 const cx = classNames.bind(styles);
 
 export default class RoleItem extends React.Component {
