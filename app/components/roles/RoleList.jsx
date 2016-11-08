@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import RoleItem from 'components/roles/RoleItem';
 import RoleAdd from 'components/roles/RoleAdd';
 import NullProfItem from 'components/ProfileNull';
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow} from 'material-ui/Table';
 
 import classNames from 'classnames/bind';
 import styles from 'css/components/role';
@@ -48,6 +49,7 @@ class RoleList extends React.Component {
   render () {
     const { role,
             roles,
+            company,
             addVisible,
             roleChange
           } = this.props;
@@ -55,16 +57,35 @@ class RoleList extends React.Component {
 
     const renderItems = (
       <div>
-        {roles.map((_role, i) => {
-            return (<RoleItem 
-                      key={_role._id} 
-                      role={_role} 
-                      roleChange={roleChange}
-                      handleDelete={this.handleDelete}
-                      saveRoleEdit={this.handleEditSave} 
-                      isntLast={lengthIndex !== i} 
-                    />);
-        })}
+        <h4>Created Roles:</h4>
+        <Table>
+          <TableHeader
+            displaySelectAll={false}
+            adjustForCheckbox={false}
+            >
+            <TableRow>
+              <TableHeaderColumn>Title</TableHeaderColumn>
+              <TableHeaderColumn>Create Date</TableHeaderColumn>
+              <TableHeaderColumn>Applicant Count</TableHeaderColumn>
+              <TableHeaderColumn>Apply Url</TableHeaderColumn>
+              <TableHeaderColumn>Delete</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody
+            showRowHover={true}
+          >
+            {roles.map((_role, i) => {
+              return (<RoleItem 
+                key={_role._id} 
+                role={_role} 
+                roleChange={roleChange}
+                handleDelete={this.handleDelete}
+                saveRoleEdit={this.handleEditSave} 
+                isntLast={lengthIndex !== i} 
+              />);
+            })}
+          </TableBody>
+        </Table>
       </div>
     )
     
@@ -82,6 +103,7 @@ class RoleList extends React.Component {
 
       <RoleAdd
         role={role}
+        company={company}
         onRoleSave={this.handleSave} 
         roleChange={roleChange}
         toggleEdit={this.toggleAddRole.bind(this)} 

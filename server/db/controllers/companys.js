@@ -27,8 +27,12 @@ export function get(req, res) {
     }
     return res.json(company);
   }
-  
-  Company.findById(req.params.id, respCb)
+
+  if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+    Company.findById(req.params.id, respCb)
+  } else {
+    Company.findOne({'name_lower': req.params.id}, respCb)
+  }
 
 }
 

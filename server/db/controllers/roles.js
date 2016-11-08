@@ -5,7 +5,7 @@ import Company from '../models/company';
 import moment from 'moment';
 
 const handleError = (res, err) => {
-  return res.status(401).json({ message: err });
+  return res.status(401).json({ message: err.message });
 }
 
 /**
@@ -46,31 +46,24 @@ export function get(req, res) {
  */
 
 export function create(req, res) {
-  
-  return Company.create({
-    name: req.body.company
-  }, function (err, company) {
+  console.log(req.body)
+  Roles.create({
+    profile_id: mongoose.Types.ObjectId(req.user.profile_id),
+    company_id: mongoose.Types.ObjectId(req.body.company_id),
+    title: req.body.title,
+    description: req.body.description,
+    degreeMin: req.body.degreeMin,
+    degreeMax: req.body.degreeMax,
+    experienceMin: req.body.experienceMin,
+    experienceMax: req.body.experienceMax
+  }, function (err, role) {
+    console.log(err)
+    if (err) return handleError(res, err);
 
-    if (err) return handleError(err);
+    return res.json(role);
 
-    Roles.create({
-      profile_id: req.user.profile_id,
-      company_id: company._id,
-      companyName: req.body.companyName,
-      description: req.body.description,
-      title: req.body.title,
-      current: req.body.current,
-      startDate: new Date(req.body.startDate),
-      endDate: new Date(req.body.endDate),
-    }, function (err, role) {
-
-      if (err) return handleError(err);
-    
-      return res.json(role);
-
-    })
   })
-
+  
 }
 
 export function update(req, res) {

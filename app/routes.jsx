@@ -64,13 +64,13 @@ export default (store) => {
       <Route path="login" component={LoginOrRegister} onEnter={redirectAuth}></Route>
       <Route path="login/company" component={CompanyLogin} onEnter={redirectAuth}></Route>
       <Route path="applyConfirmation" component={ApplyConfirmation}></Route>
+      <Route path="apply/:companyName/:roleCode" component={Apply} onEnter={redirectAuth}></Route>
       <Route path="apply/:companyName" component={Apply} onEnter={redirectAuth}></Route>
       <Route path="profile" component={Profile} onEnter={requireAuth}></Route>
       <Route path="email-confirmation" component={Confirmation} ></Route>
       <Route path="about" component={About}></Route>
       <Route path="terms" component={Terms}></Route>
       <Route path="privacy" component={Privacy}></Route>
-
       <Route path="company-admin" component={CompanyContainer} onEnter={requireCompanyAuth}>
         <Route path="dashboard" component={CompanyDashboard}></Route>
         <Route path="applicants" component={ApplicantList}></Route>

@@ -1,6 +1,7 @@
 import User from '../models/user';
 import Profile from '../models/profile';
 import Recruiter from '../models/recruiter';
+import Role from '../models/role';
 import passport from 'passport';
 import async from 'async'
 import mailer from '../../utils/email.js'
@@ -19,9 +20,23 @@ const logRecruiter = (req) => {
       }).join(' ');
     }
 
-    const company = properString(req.headers.referer.split('/apply/')[1].split('?')[0]);
+    const company = properString(req.headers.referer.split('/apply/')[1].split('/')[0]);
+    const role = req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[0];
+    let rid;
+    if (wre.split('/apply/')[1].split('/')[1].split('?')[1]) {
+      rid = req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[1].split('&')[0].split('=')[1]
+    } 
 
-    if (req.headers.referer.split('/apply/')[1].split('?rid=')[1]) {
+    if (role) {
+      Role.find({'applicantCode': role}, (err, role) => {
+        if (!err && role) {
+          role.addApplicant();
+          role.
+        }
+      })
+    }
+
+    if (rid) {
 
       const rid = req.headers.referer.split('/apply/')[1].split('?rid=')[1].split('&')[0];
 

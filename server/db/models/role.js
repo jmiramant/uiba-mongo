@@ -1,6 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import { UpdateCompanyOnRole } from './updateMiddleware'
-import { Company } from './company';
+// import { UpdateCompanyOnRole } from './updateMiddleware'
 
 const degreeEnum = ['High School', 'Associate', 'Bachelor','Master','MBA','JD','MD','PhD','Engineer Degree','Certificate','Coursework','Other'];
 
@@ -9,21 +8,34 @@ const RoleSchema = new mongoose.Schema({
   address_id: {type: Schema.Types.ObjectId, ref: 'Address' },
   title: { type: String, default: '', required: true},
   description: { type: String, default: '', required: true },
-  applicantCode: { type: String, unique: true},
+  applicantCode: { type: String },
   degreeMin: { type: String, enum: degreeEnum },
   degreeMax: { type: String, enum: degreeEnum },
   experienceMin: { type: Number },
   experienceMax: {type: Number },
   appliedCount: { type: Number, default: 0},
+  applicants: [{type: Schema.Types.ObjectId, ref: 'Profile' }]
 }, {timestamps: true});
 
-RoleSchema.post('save', (doc) => {
-  UpdateCompanyOnRole(doc)
-});
+function setApplicantCode(next) {
+  const role = this;
+  if (!role.applicantCode) { 
+    role.applicantCode = Math.random().toString(36).substring(7);
+  }
+  return next();
+};
 
-RoleSchema.pre('remove', (doc) => {
-  UpdateCompanyOnRole(doc)
-});
+RoleSchema.pre('save', setApplicantCode);
+
+// RoleSchema.post('save', (next) => {
+//   UpdateCompanyOnRole(next)
+//   return next();
+// });
+
+// RoleSchema.pre('remove', (next) => {
+//   UpdateCompanyOnRole(next)
+//   return next();
+// });
 
 RoleSchema.methods = {
   incrementAppliedCount(cb) {

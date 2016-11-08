@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 
 import UibaDatePicker from '../../components/DatePicker';
-import { validateProjectHelper } from '../helpers/roleValidations';
+import { validateJobHelper } from '../helpers/roleValidations';
 
 import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
@@ -22,6 +22,7 @@ export default class RoleAdd extends React.Component {
 
   static propTypes = {
     role: PropTypes.object.isRequired,
+    company: PropTypes.object.isRequired,
     roleChange: PropTypes.func.isRequired,
     toggleEdit: PropTypes.func.isRequired,
     addVisible: PropTypes.bool,
@@ -35,7 +36,18 @@ export default class RoleAdd extends React.Component {
   state = {
     validationErrors: {},
   }
+
+  componentDidMount() {
+    this.setCompanyId();
+  }
   
+  setCompanyId() {
+    this.props.roleChange({
+      field: 'company_id',
+      value: this.props.company._id,
+    });  
+  }
+
   handleSubmit = e => {
     e.preventDefault();
     if (!this.validate()) {
@@ -44,69 +56,74 @@ export default class RoleAdd extends React.Component {
   }
   
   validate() {
-    const validationResp = validateProjectHelper(this.props.role, this.state.validationErrors);
+    const validationResp = validateJobHelper(this.props.role, this.state.validationErrors);
     this.setState({validationErrors: validationResp.errors});
     return validationResp.containsErrors;
   }
 
   changeProjectProps(field, value) {
-    if (!this.props.addVisible) {
-      this.handleExpand(value) 
-    }
     this.setState({validationErrors: {}})
     this.props.roleChange({
       field: field,
       value: value,
       id: this.props.role._id
-    });  
+    });
+    if (!this.props.role.company_id) this.setCompanyId()
   }
 
-  handleExpand(next) {
-    if (this.props.role.name !== next) {
-      if(timeout) { clearTimeout(timeout); }
-      timeout = setTimeout(() => {
-        !this.props.addVisible && this.props.role.name ? this.props.toggleEdit() : null
-      }, 500)
-    } 
+  handlePicklistChange = field => (e, index, value) => {
+    this.changeProjectProps(field, value)
   }
 
-  formatURL(url) {
-    const inHttps = url.includes('https')
-    const inHttp = url.includes('http')
-    if (!inHttp && !inHttps) {
-      return "http://" + url
-    } else {
-      return url
-    }
+  handleChange = field => (e, value) => {
+    this.changeProjectProps(field, value)
   }
 
-  handleDateChange = (field, value) => {
-    this.changeProjectProps(field, value);
-  }
-
-  handleChange = field => (e, uiVal) => {
-    let value;
-    if (uiVal) {
-      value = uiVal
-    } else if (e.target) {
-      value = e.target.value      
-    } else {
-      value = e.value
-    }
-
-    if (field === 'roleUrl') {
-      value = this.formatURL(value)
-    }
-
-    if (e && e.target && e.target.type === 'checkbox') {
-
-      this.changeProjectProps('current', !this.props.role.current)
+  maxDegree(role, validationErrors) {
+    const degrees = ['High School', 'Associate', 'Bachelor','Master','MBA','JD','MD','PhD','Engineer Degree','Certificate','Coursework','Other'];
     
-    } else {
-  
-      this.changeProjectProps(field, value)
+    let splc = role.degreeMin ? degrees.indexOf(role.degreeMin) : 0
 
-    } 
+    const items = degrees.splice(splc, degrees.length).map((name) => {
+      return (<MenuItem value={name} primaryText={name}/>)
+    })
+
+    return (
+      <SelectField
+        errorText={validationErrors.degreeMax}
+        onChange={this.handlePicklistChange('degreeMax')}
+        value={role.degreeMax}
+        floatingLabelText="Max Education Level"
+        hintText='Max Education Level'
+      >
+        {items}
+      </SelectField>
+    )
+  }
+
+  maxExperience(role, validationErrors) {
+    const range = [0,1,2,3,4,5,6,7,8,9,10];
+    
+    const splc = role.experienceMin ? range.indexOf(role.experienceMin) : 0
+
+    const items = range.splice(splc, range.length).map((name) => {
+      let val = name;
+      if (name === 0) val = '>1';
+      if (name === 10) val = '10+';
+      return (<MenuItem value={name} primaryText={val.toString()}/>)
+    })
+
+    return (
+      <SelectField
+        errorText={validationErrors.experienceMax}
+        onChange={this.handlePicklistChange('experienceMax')}
+        value={role.experienceMax}
+        floatingLabelText="Max Education Level"
+        hintText='Max Education Level'
+      >
+        {items}
+      </SelectField>
+    )
   }
 
   render () {
@@ -120,7 +137,7 @@ export default class RoleAdd extends React.Component {
           } = this.props;
 
     const isVisible = (role.description || addVisible) ? '' : ' ' + cx('closed');
-
+    
     return (
 
       <div className={cx('roleAdd-container') + isVisible}>
@@ -131,35 +148,31 @@ export default class RoleAdd extends React.Component {
           <div className="col-md-6">
             <TextField
               value={role.title}
-              errorText={validationErrors.name}
-              floatingLabelText="Add a Role"
-              onChange={this.handleChange('name')}
-            />
-          </div>
-
-          <div className="col-md-6">
-            <TextField
-              value={role.roleUrl}
-              errorText={validationErrors.roleUrl}
-              floatingLabelText="URL"
-              onChange={this.handleChange('roleUrl')}
-            />
-          </div>
-
-          <div className="col-md-6">
-            <TextField
-              value={role.title}
               errorText={validationErrors.title}
               floatingLabelText="Title"
               onChange={this.handleChange('title')}
+              hintText='ie: Sr. Software Engineer'
             />
           </div>
-          
+
+          <div className="col-md-12">
+            <TextField
+              style={{width: '75%'}}
+              value={role.description}
+              className={cx('description')}
+              errorText={validationErrors.description}
+              floatingLabelText="Description"
+              onChange={this.handleChange('description')}
+              multiLine={true}
+              rows={1}
+            />
+          </div>
+
           <div className="col-md-6">
             <SelectField
               errorText={validationErrors.degreeMin}
-              onChange={this.handleSize}
-              value={company.degreeMin}
+              onChange={this.handlePicklistChange('degreeMin')}
+              value={role.degreeMin}
               floatingLabelText="Minimum Education Level"
               hintText='Minimum Education Level'
             >
@@ -179,40 +192,35 @@ export default class RoleAdd extends React.Component {
           </div>
           
           <div className="col-md-6">
+            {this.maxDegree(role, validationErrors)}
+          </div>
+
+          <div className="col-md-6">
             <SelectField
-              errorText={validationErrors.degreeMax}
-              onChange={this.handleSize}
-              value={company.degreeMax}
-              floatingLabelText="Maximum Education Level"
-              hintText='Maximum Education Level'
+              errorText={validationErrors.experienceMin}
+              onChange={this.handlePicklistChange('experienceMin')}
+              value={role.experienceMin}
+              floatingLabelText="Minimum Experience Level"
+              hintText='Minimum Experience Level'
             >
-              <MenuItem value={'High School'} primaryText='High School'/>
-              <MenuItem value={'Associate'} primaryText='Associate'/>
-              <MenuItem value={'Bachelor'} primaryText='Bachelor'/>
-              <MenuItem value={'Master'} primaryText='Master'/>
-              <MenuItem value={'MBA'} primaryText='MBA'/>
-              <MenuItem value={'JD'} primaryText='JD'/>
-              <MenuItem value={'MD'} primaryText='MD'/>
-              <MenuItem value={'PhD'} primaryText='PhD'/>
-              <MenuItem value={'Engineer Degree'} primaryText='Engineer Degree'/>
-              <MenuItem value={'Certificate'} primaryText='Certificate'/>
-              <MenuItem value={'Coursework'} primaryText='Coursework'/>
-              <MenuItem value={'Other'} primaryText='Other'/>
+              <MenuItem value={0} primaryText='>1'/>
+              <MenuItem value={1} primaryText='1'/>
+              <MenuItem value={2} primaryText='2'/>
+              <MenuItem value={3} primaryText='3'/>
+              <MenuItem value={4} primaryText='4'/>
+              <MenuItem value={5} primaryText='5'/>
+              <MenuItem value={6} primaryText='6'/>
+              <MenuItem value={7} primaryText='7'/>
+              <MenuItem value={8} primaryText='8'/>
+              <MenuItem value={9} primaryText='9'/>
+              <MenuItem value={10} primaryText='10+'/>
             </SelectField>
           </div>
-
-
-          <div className="col-md-12">
-            <TextField
-              value={role.description}
-              className={cx('description')}
-              errorText={validationErrors.description}
-              floatingLabelText="Description"
-              onChange={this.handleChange('description')}
-              multiLine={true}
-              rows={1}
-            />
+          
+          <div className="col-md-6">
+            {this.maxExperience(role, validationErrors)}
           </div>
+
 
           <div className={cx('profile-btn-group')}>
             <RaisedButton className='pull-right' type="submit" label="Save" primary={true} />
