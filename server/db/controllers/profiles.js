@@ -10,8 +10,8 @@ export function me(req, res) {
   Profile.findOne(query).exec( (err, profile) => {
     if (!profile || err) {
       console.log('Error in "profile/me" query');
-      if (err) return res.status(500).send({error: 'Profile resource not found: ' + err.value});
-      return res.status(500).send({error: 'Profile does not have a resource'});
+      if (err) return res.status(404).send({error: 'Profile resource not found: ' + err.value});
+      return res.status(401).send({error: 'Profile does not have a resource'});
     }
 
     return res.json(profile);
@@ -24,7 +24,7 @@ export function update(req, res) {
   const data = _.omit(req.body, omitKeys);
   return Profile.findOneAndUpdate(query, data, (err, profile) => {
     if (err) {
-      return res.status(500).send({error: err.response.status});
+      return res.status(404).send({error: err.response.status});
     }
 
     return res.status(200).json(profile);

@@ -5,7 +5,7 @@ import moment from 'moment';
 
 const handleError = (res, err) => {
   console.log(err);
-  return res.status(401).json({ message: err });
+  return res.status(404).json({ message: err });
 }
 
 /**
@@ -19,7 +19,7 @@ export function me(req, res) {
 
   }).exec((err, interests) => {
     
-    if (err) return handleError(res, err);
+    if (err || !interests) return handleError(res, err);
     return res.status(200).json(interests);
   
   });
@@ -35,7 +35,7 @@ export function get(req, res) {
   Interest.find({"user_id": mongoose.Types.ObjectId(uid)}).exec((err, interests) => {
     if (err) {
       console.log('Error in "interest/me" query');
-      return res.status(500).send('Something went wrong getting the interests data');
+      return res.status(412).send('Something went wrong getting the interests data');
     }
     return res.status(200).json(interests);
   });
@@ -61,7 +61,7 @@ export function create(req, res) {
     }
     if (containsType(req.body.interest, existingInterests)) {
       
-      return res.status(500).send('You have already added this interest.');
+      return res.status(412).send('You have already added this interest.');
     
     } else {
       Interest.create({

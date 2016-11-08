@@ -3,7 +3,7 @@ import Skill from '../models/skill';
 import moment from 'moment';
 
 const handleError = (res, err) => {
-  return res.status(500).send(err);
+  return res.status(404).send(err);
 }
 
 /**
@@ -16,8 +16,7 @@ export function me(req, res) {
     "profile_id": mongoose.Types.ObjectId(req.user.profile_id)
 
   }).exec((err, skills) => {
-    
-    if (err) return handleError(res, err);
+    if (err || !skills) return handleError(res, err);
     return res.status(200).json(skills);
   
   });
@@ -32,7 +31,7 @@ export function get(req, res) {
 
   Skill.find({"user_id": mongoose.Types.ObjectId(uid)}).exec((err, skills) => {
     if (err) {
-      return res.status(500).send('Something went wrong getting the skills data');
+      return res.status(404).send('Something went wrong getting the skills data');
     }
     return res.status(200).json(skills);
   });
@@ -57,7 +56,7 @@ export function create(req, res) {
     }
 
     if (containsType(req.body.type, existingSkills)) {
-      return res.status(500).send('You have already added this skill.');
+      return res.status(403).send('You have already added this skill.');
     
     } else {
 

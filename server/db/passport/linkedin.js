@@ -3,6 +3,7 @@ import _ from 'lodash'
 import User from '../models/user';
 import Profile from '../models/profile'
 import Recruiter from '../models/recruiter';
+import Company from '../models/company';
 import cookie from 'react-cookie';
 
 const setDefaultProfileFields = (prof, profile, userId) => {
@@ -34,7 +35,7 @@ const isApply = (req) => {
   return req.headers.referer.indexOf('/apply/') !== -1
 }
 
-const logRecruiter = (req) => {
+const logRecruiter = (req, profId) => {
   if (req.headers.referer.split('/apply/').length > 1) {
 
     const properString = (str) => {
@@ -63,11 +64,11 @@ const logRecruiter = (req) => {
         })
 
         if (companyObj) {
-          companyObj.candidate.push(recruiter._id);
+          companyObj.candidate.push(profId);
         } else {
           recruiter.credit.push({
             company: company,
-            candidate: [recruiter._id]
+            candidate: [profId]
           });
         }
         recruiter.save()
@@ -79,18 +80,24 @@ const logRecruiter = (req) => {
 
 const resolveApplyRedirect = (req, user, done) => {
   const _c = req.headers.referer.split('/apply/')[1].split('/')[0].split('?')[0];
-  return Profile.findOne({
-    service: 'linkedin',
-    user_id: user._id
-  }, (profErr, _profile) => {
-    _profile.apply = {
-      applied: true,
-      name: _c,
-    };
-    logRecruiter(req);
-    return _profile.save((err, prof) => {
-      done(null, user);
-    })
+  Company.findOne({
+    name_lower: _c
+  }, (companyErr, _company) => {
+    return Profile.findOne({
+      service: 'linkedin',
+      user_id: user._id
+    }, (profErr, _profile) => {
+      _profile.apply = {
+        applied: true,
+        name: _c,
+        name_lower: _company.name_lower,
+        company_id: _company._id
+      };
+      logRecruiter(req, _profile._id);
+      return _profile.save((err, prof) => {
+        done(null, user);
+      })
+    })  
   })  
 }
 

@@ -18,12 +18,8 @@ export function get(req, res) {
 
   const respCb = (err, company) => {
     if (!company || err) {
-      if (err) return res.status(500).send({
-        message: 'Company resource not found: ' + err.value
-      });
-      return res.status(404).send({
-        error: 'This company does not exist'
-      });
+      if (err) return res.status(403).send({message: 'Company resource not found: ' + err.value});
+      return res.status(412).send({error: 'This company does not exisit'});
     }
     return res.json(company);
   }

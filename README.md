@@ -207,6 +207,101 @@ Master branch deploys to production. Staging deploys to staging.
     });
   ```
 
+**Get: Export Updated Users**
+----
+  Export user data for all users that have updated content after a provided timestamp. Limited to 250.
+
+* **URL**
+
+  /api/v1/export/updated/:epoch_datetime
+
+* **Method:**
+
+  `GET`
+  
+*  **URL Params**
+
+   **Required:**
+ 
+   `epoch_datetime=[integer]`
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** ```{
+  "details": {
+    "timestamp": "2016-09-10T00:00:00.000Z",
+    "returnedUsers": 3,
+    "totalUsers": 3,
+    "paginated": false
+  },
+  "data": [{
+    "_id": "57d37851c62123309e64b4fb",
+    "updatedAt": "2016-09-10T03:04:49.337Z",
+    "createdAt": "2016-09-10T03:04:49.337Z",
+    "user_id": "57d37851c62123309e64b4fa",
+    "service": "email",
+    "picture": "",
+    "website": "",
+    "location": "",
+    "gender": "",
+    "headline": "",
+    "email": "qwe@qwe.com",
+    "lastName": "qwe",
+    "firstName": "qwe",
+    "name": "qwe qwe",
+    "language": [{
+      "_id": "57dc75ea635535483012c967",
+      "updatedAt": "2016-09-16T22:44:58.717Z",
+      "createdAt": "2016-09-16T22:44:58.717Z",
+      "profile_id": "57d37851c62123309e64b4fb",
+      "proficiency": "minimum professional proficiency",
+      "experience": 5,
+      "__v": 0,
+      "language": "Adyghe"
+    }],
+    "project": [],
+    "school": [],
+    "skill": [],
+    "job": [{
+      "_id": "57d9c3643854f59c081e9a65",
+      "updatedAt": "2016-09-14T21:40:57.538Z",
+      "createdAt": "2016-09-14T21:38:44.317Z",
+      "profile_id": "57d37851c62123309e64b4fb",
+      "company_id": "57d9c3643854f59c081e9a64",
+      "companyName": "d",
+      "startDate": "2016-02-01T22:38:23.000Z",
+      "endDate": "2016-03-01T22:38:23.000Z",
+      "__v": 0,
+      "current": false,
+      "description": "asdas",
+      "headline": "",
+      "title": "d"
+    }]
+  },
+  ...
+  ]
+}```
+ 
+* **Error Response:**
+
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ error : "You are unauthorized to make this request." }`
+
+* **Sample Call:**
+
+  ```javascript
+    $.ajax({
+      url: "/api/v1/export/updated/1473465600000",
+      headers: {
+        x-access-token: <TOKEN>
+      }
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
 **Get: Export New Users**
 ----
   Export user data for all new users after a provided timestamp. Limited to 500.
@@ -303,13 +398,13 @@ Master branch deploys to production. Staging deploys to staging.
     });
   ```
 
-**Get: Export Updated Users**
+**Get: Export New Users By Recruiter**
 ----
-  Export user data for all users that have updated content after a provided timestamp. Limited to 250.
+  Export profile and all nested data for all users applied by recruiterId. Limited to 500.
 
 * **URL**
 
-  /api/v1/export/updated/:epoch_datetime
+  /api/v1/export/recruiter/:recruiter_key
 
 * **Method:**
 
@@ -319,65 +414,49 @@ Master branch deploys to production. Staging deploys to staging.
 
    **Required:**
  
-   `epoch_datetime=[integer]`
+   `recruiter_key=[string]`
 
 * **Success Response:**
 
   * **Code:** 200 <br />
-    **Content:** ```{
-  "details": {
-    "timestamp": "2016-09-10T00:00:00.000Z",
-    "returnedUsers": 3,
-    "totalUsers": 3,
-    "paginated": false
-  },
-  "data": [{
-    "_id": "57d37851c62123309e64b4fb",
-    "updatedAt": "2016-09-10T03:04:49.337Z",
-    "createdAt": "2016-09-10T03:04:49.337Z",
-    "user_id": "57d37851c62123309e64b4fa",
-    "service": "email",
-    "picture": "",
-    "website": "",
-    "location": "",
-    "gender": "",
-    "headline": "",
-    "email": "qwe@qwe.com",
-    "lastName": "qwe",
-    "firstName": "qwe",
-    "name": "qwe qwe",
-    "language": [{
-      "_id": "57dc75ea635535483012c967",
-      "updatedAt": "2016-09-16T22:44:58.717Z",
-      "createdAt": "2016-09-16T22:44:58.717Z",
-      "profile_id": "57d37851c62123309e64b4fb",
-      "proficiency": "minimum professional proficiency",
-      "experience": 5,
-      "__v": 0,
-      "language": "Adyghe"
-    }],
-    "project": [],
-    "school": [],
-    "skill": [],
-    "job": [{
-      "_id": "57d9c3643854f59c081e9a65",
-      "updatedAt": "2016-09-14T21:40:57.538Z",
-      "createdAt": "2016-09-14T21:38:44.317Z",
-      "profile_id": "57d37851c62123309e64b4fb",
-      "company_id": "57d9c3643854f59c081e9a64",
-      "companyName": "d",
-      "startDate": "2016-02-01T22:38:23.000Z",
-      "endDate": "2016-03-01T22:38:23.000Z",
-      "__v": 0,
-      "current": false,
-      "description": "asdas",
-      "headline": "",
-      "title": "d"
-    }]
-  },
-  ...
-  ]
-}```
+    **Content:** 
+    ```
+      {
+        "details": {
+          "totalUsers": 1
+        }
+        "data": [1]
+        0: {
+          "_id": "581d3be4ffde6c5b4ae1feb2"
+          "updatedAt": "2016-11-05T01:54:44.647Z"
+          "createdAt": "2016-11-05T01:54:44.647Z"
+          "user_id": "581d3be4ffde6c5b4ae1feb1"
+          "service": "email"
+          "__v": 0 
+          "childUpdatedAt": "2016-11-05T02:05:25.258Z"
+          "picture": ""
+          "website": ""
+          "location": ""
+          "gender": ""
+          "apply": {
+            "company_id": "581d388a85b07bff55bb22bf"
+            "name": "everfi_inc"
+            "applyComplete": true "applied": false
+          }
+          "headline": ""
+          "email": "test3@gmail.com"
+          "lastName": "Test3"
+          "firstName": "Test3"
+          "name": "Test3 Test3"
+          "language": [1] ...
+          "project": [1] ...
+          "school": [1] ...
+          "interest": [1] ...
+          "skill": [1] ...
+          "job": [1] ...
+        }
+      }
+    ```
  
 * **Error Response:**
 
@@ -388,7 +467,86 @@ Master branch deploys to production. Staging deploys to staging.
 
   ```javascript
     $.ajax({
-      url: "/api/v1/export/updated/1473465600000",
+      url: "/api/v1/export/recruiter/testermctestygh9f6r",
+      headers: {
+        x-access-token: <TOKEN>
+      }
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+**Get: Export New Users By Company**
+----
+  Export profile and all nested data for all users applied by company name. Limited to 500.
+
+* **URL**
+
+  /api/v1/export/list?attr=<apply.attr>&target=<company.name_lower>
+
+* **Method:**
+
+  `GET`
+  
+*  **URL Params**
+    
+   `attr=[string]` - this is attribute under the apply attribute on the company object.
+   `target=[string]` - this is attribute under the apply attribute on the company object.
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```
+      {
+        "details": {
+          "totalUsers": 1
+        }
+        "data": [1]
+        0: {
+          "_id": "581d3be4ffde6c5b4ae1feb2"
+          "updatedAt": "2016-11-05T01:54:44.647Z"
+          "createdAt": "2016-11-05T01:54:44.647Z"
+          "user_id": "581d3be4ffde6c5b4ae1feb1"
+          "service": "email"
+          "__v": 0 
+          "childUpdatedAt": "2016-11-05T02:05:25.258Z"
+          "picture": ""
+          "website": ""
+          "location": ""
+          "gender": ""
+          "apply": {
+            "company_id": "581d388a85b07bff55bb22bf"
+            "name": "everfi_inc"
+            "applyComplete": true "applied": false
+          }
+          "headline": ""
+          "email": "test3@gmail.com"
+          "lastName": "Test3"
+          "firstName": "Test3"
+          "name": "Test3 Test3"
+          "language": [1] ...
+          "project": [1] ...
+          "school": [1] ...
+          "interest": [1] ...
+          "skill": [1] ...
+          "job": [1] ...
+        }
+      }
+    ```
+ 
+* **Error Response:**
+
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ error : "You are unauthorized to make this request." }`
+
+* **Sample Call:**
+
+  ```javascript
+    $.ajax({
+      url: "/api/v1/export/list?attr=name&target=truveris",
       headers: {
         x-access-token: <TOKEN>
       }

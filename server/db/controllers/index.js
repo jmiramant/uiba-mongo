@@ -13,9 +13,9 @@ import tokens from './tokens';
 import recruiters from './recruiters';
 import addresses from './address';
 import roles from './roles';
+import admin from './admin';
 
-
-export { companys, interests, users, profiles, jobs, schools, skills, languages, projects, _exports, tokens, recruiters, addresses, roles};
+export { companys, interests, users, profiles, jobs, schools, skills, languages, projects, _exports, tokens, recruiters, addresses, admin, roles};
 
 export default {
   users,
@@ -33,4 +33,5 @@ export default {
   companys,
   addresses,
   roles
+  admin
 };

@@ -53,3 +53,11 @@ export function sumbitApplication(profile) {
   }
 
 }
+
+export function recoveryCapture(rid) {
+  if (rid) {
+    return request['post']('/admin/recovery', {
+      recruiterKey: rid
+    });
+  }
+}

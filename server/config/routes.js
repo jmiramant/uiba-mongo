@@ -9,6 +9,7 @@ import {
 } from '../db';
 import jwtauth from './jwtauth';
 
+const adminController = controllers && controllers.admin;
 const usersController = controllers && controllers.users;
 const profilesController = controllers && controllers.profiles;
 const jobsController = controllers && controllers.jobs;
@@ -211,6 +212,13 @@ export default (app) => {
 
   }
 
+  if (adminController) {
+    app.post('/admin/recovery', adminController.recovery)
+    app.get('/admin/delete-user/:profile_id', jwtauth, adminController.deleteUser);
+  } else {
+    console.warn(unsupportedMessage('admin routes'));
+  }
+
   if (tokensController) {
     app.get('/api/v1/token', tokensController.token);
   } else {
@@ -220,6 +228,8 @@ export default (app) => {
   if (exportsController) {
     app.get('/api/v1/export/updated/:datetime', jwtauth, exportsController.updated);
     app.get('/api/v1/export/created/:datetime', jwtauth, exportsController.created);
+    app.get('/api/v1/export/list', jwtauth, exportsController.list);
+    app.get('/api/v1/export/recruiter/:key', jwtauth, exportsController.recruiter);
   } else {
     console.warn(unsupportedMessage('export API routes'));
   }

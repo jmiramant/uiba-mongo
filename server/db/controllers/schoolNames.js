@@ -12,7 +12,7 @@ export function search(req, res) {
     .limit(10)
     .exec((err, results) => {
       if (err) {
-        return res.status(500).send('Something went wrong getting the data from SchoolNames endpoint');
+        return res.status(404).send('Something went wrong getting the data from SchoolNames endpoint');
       }
       return res.json(results);
   });

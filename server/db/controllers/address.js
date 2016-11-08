@@ -64,7 +64,7 @@ export function get(req, res) {
   Address.find({query}).exec((err, address) => {
     if (err) {
       console.log('Error in "address/me" query');
-      return res.status(500).send('Something went wrong getting the address data');
+      return res.status(404).send('Something went wrong getting the address data');
     }
     return res.status(200).json(address);
   });

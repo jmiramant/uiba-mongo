@@ -19,6 +19,9 @@ import ApplicantShow from 'containers/ApplicantShow'
 
 import {fetchCurrentUser} from 'actions/users';
 
+import { recoveryCapture } from 'actions/apply';
+
+
 export default (store) => {
   const requireAuth = (nextState, replace, callback) => {
     const { user: { authenticated }} = store.getState();
@@ -57,6 +60,21 @@ export default (store) => {
     }
     callback();
   };
+
+
+  const tempApplyredirectAuth = (nextState, replace, callback) => {
+    const { user: { authenticated }} = store.getState();
+    
+    if (authenticated) {
+      if (nextState.location && nextState.location.query && nextState.location.query) {
+        recoveryCapture(nextState.location.query.rid)
+      }
+      replace({
+        pathname: '/profile'
+      });
+    }
+    callback();
+  };
   
   return (
     <Route path="/" component={App}>
@@ -64,8 +82,8 @@ export default (store) => {
       <Route path="login" component={LoginOrRegister} onEnter={redirectAuth}></Route>
       <Route path="login/company" component={CompanyLogin} onEnter={redirectAuth}></Route>
       <Route path="applyConfirmation" component={ApplyConfirmation}></Route>
-      <Route path="apply/:companyName/:roleCode" component={Apply} onEnter={redirectAuth}></Route>
-      <Route path="apply/:companyName" component={Apply} onEnter={redirectAuth}></Route>
+      <Route path="apply/:companyName/:roleCode" component={Apply} onEnter={tempApplyredirectAuth}></Route>
+      <Route path="apply/:companyName" component={Apply} onEnter={tempApplyredirectAuth}></Route>
       <Route path="profile" component={Profile} onEnter={requireAuth}></Route>
       <Route path="email-confirmation" component={Confirmation} ></Route>
       <Route path="about" component={About}></Route>

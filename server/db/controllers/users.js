@@ -3,6 +3,7 @@ import Profile from '../models/profile';
 import Recruiter from '../models/recruiter';
 import Role from '../models/role';
 import passport from 'passport';
+import Company from '../models/company';
 import async from 'async'
 import mailer from '../../utils/email.js'
 import _ from 'lodash';
@@ -11,7 +12,7 @@ const isApply = (req) => {
   return req.headers.referer.indexOf('/apply/') !== -1
 }
 
-const logRecruiter = (req) => {
+const logRecruiter = (req, profId) => {
   if (req.headers.referer.split('/apply/').length > 1) {
 
     const properString = (str) => {
@@ -52,11 +53,11 @@ const logRecruiter = (req) => {
         })
 
         if (companyObj) {
-          companyObj.candidate.push(recruiter._id);
+          companyObj.candidate.push(profId);
         } else {
           recruiter.credit.push({
             company: company,
-            candidate: [recruiter._id]
+            candidate: [profId]
           });
         }
         recruiter.save()
@@ -66,22 +67,30 @@ const logRecruiter = (req) => {
   }
 }
 
-const resolveApplyRedirect = (req, profile) => {
+const resolveApplyRedirect = (req, profile, cb) => {
   const _c = req.headers.referer.split('/apply/')[1].split('/')[0].split('?')[0];
-  profile.apply = {
-    applied: true,
-    name: _c,
-  };
-  logRecruiter(req);
+  Company.findOne({
+    name_lower: _c
+  }, (companyErr, _company) => {
+    profile.apply = {
+      applied: true,
+      name: _c,
+      name_lower: _company.name_lower,
+      company_id: _company._id
+    };
+    logRecruiter(req, profile._id);
+    cb();
+  })
 }
 
 /**
  * GET /user
  */
 export function me(req, res) {
+  
   if (!req.user) {
     console.log('Error in user /me query');
-    return res.status(500).send('Something went wrong getting the data');
+    return res.status(404).send('Something went wrong getting the data');
   }
 
   return res.json(req.user);
@@ -120,11 +129,12 @@ export function login(req, res, next) {
           user_id: user._id
         }, (profErr, _profile) => {
           if (profErr) console.log(profErr)
-          resolveApplyRedirect(req, _profile)
-          _profile.save((err, prof) => {
-            console.log(err)
-            login();
-          })
+          const cb = () => {
+            _profile.save( (err, prof) => {
+              login();
+            })
+          }
+          resolveApplyRedirect(req, _profile, cb)
         })
       } else {
         login();
@@ -173,7 +183,7 @@ export function signUp(req, res, next) {
       user.email = req.body.email;
       user.password = req.body.password;
     }
-
+  
     const _profile = new Profile({
       user_id: user.id,
       firstName: req.body.first,
@@ -183,20 +193,24 @@ export function signUp(req, res, next) {
       service: 'email',
       isEmailVerified: false
     })
+    const saveResolve = () => {
+      return async.series({
+        _profile: _profile.save,
+        user: user.save
+      }, function(saveErr, resp){
+        if (saveErr) return next(saveErr);
+        mailer.sendEmailConfirmation(user, req.headers.host)
+        res.redirect(200, '/email-confirmation');
 
+      });      
+    }
     user.profile_id = _profile._id;
 
-    if (isApply(req)) resolveApplyRedirect(req, _profile)
-
-    return async.series({
-      _profile: _profile.save,
-      user: user.save
-    }, function(saveErr, resp) {
-      if (saveErr) return next(saveErr);
-      mailer.sendEmailConfirmation(user, req.headers.host)
-      res.redirect(200, '/email-confirmation');
-
-    });
+    if (isApply(req)) {
+      resolveApplyRedirect(req, _profile, saveResolve)
+    } else {
+      saveResolve()    
+    }
 
   });
 }
