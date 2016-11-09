@@ -91,7 +91,7 @@ const resolveApplyRedirect = (req, user, done) => {
     }, (profErr, _profile) => {
       _profile.apply = {
         applied: true,
-        name: _c,
+        name: companyName,
         name_lower: _company.name_lower,
         company_id: _company._id
       };
