@@ -61,7 +61,7 @@ const resolveApplyRedirect = (req, profile, cb) => {
     if (companyErr) return res.status(401).json({ message: companyErr });
     profile.apply = {
       applied: true,
-      name: _companyName,
+      name: companyName,
       name_lower: _company.name_lower,
       company_id: _company._id
     };
