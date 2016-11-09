@@ -5,6 +5,7 @@ import Profile from '../models/profile';
  * List
  */
 export function me(req, res) {
+  if (!req.user || !req.user.profile_id) return res.status(404).send({error: 'No Current Profile'});
   const query = {"_id": mongoose.Types.ObjectId(req.user.profile_id)};
   
   Profile.findOne(query).exec( (err, profile) => {

@@ -36,10 +36,12 @@ function makeProjectsRequest(method, data, api = '/projects') {
   return request[method](api, data);
 }
 
-export function fetchProjects() {
+export function fetchProjects(profId) {
+  let path = '/projects/me'
+  if (profId) path = '/projects/' + profId
   return {
     type: types.GET_PROJECTS,
-    promise: makeProjectsRequest('get', {}, '/projects/me')
+    promise: makeProjectsRequest('get', {}, path)
   };
 }
 

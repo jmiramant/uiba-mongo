@@ -13,13 +13,20 @@ import "css/lib/caretOverrides.less";
 
 const cx = classNames.bind(styles);
 
-const Navigation = ({ user, logOut, currentUser}) => {
-    
-    const isAdmin = () => {
-      if (currentUser.role) {
-        return currentUser.role.indexOf(2) !== 0;
-      }
+class Navigation extends React.Component {
+
+  isAdmin() {
+    const {currentUser} = this.props;
+    if (currentUser.role) {
+      return currentUser.role.indexOf(2) !== -1;
+    } else {
+      return false
     }
+  }
+
+  render() {
+
+    const {logOut, user, currentUser} = this.props;
 
     return (
       <nav className={cx('navigation')} role="navigation">
@@ -38,7 +45,7 @@ const Navigation = ({ user, logOut, currentUser}) => {
         )}
 
         <div className={cx('nav--items-right') + ' pull-right hidden-xs'}>
-          { (isAdmin()) ? ( <Link className={cx('item')} to="/company-admin/dashboard">Admin</Link> ) : (<span />)}
+          { (this.isAdmin()) ? ( <Link className={cx('item')} to="/company-admin/dashboard">Admin</Link> ) : (<span />)}
 
           { user.authenticated ? ( <Link className={cx('item')} to="/profile">Profile</Link> ) : (<span />)}
           <Link to="/about" className={cx('item')} activeClassName={cx('active')}>About</Link>
@@ -50,7 +57,7 @@ const Navigation = ({ user, logOut, currentUser}) => {
           )}
         </div>
         <NavDropdown title='' className={cx('navbar--resp-nav') + ' hidden-sm pull-right hidden-md hidden-lg'} id="responsive-nav-dropdown">
-          { (isAdmin()) ? ( 
+          { (this.isAdmin()) ? ( 
             <LinkContainer to="/company-admin/dashboard">
               <MenuItem>
                 Admin
@@ -87,7 +94,8 @@ const Navigation = ({ user, logOut, currentUser}) => {
 
         </NavDropdown>
       </nav>
-    );
+    )
+  }
 };
 
 Navigation.propTypes = {

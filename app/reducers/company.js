@@ -24,8 +24,7 @@ const company = (
       newStateOjb[action.state.field] = action.state.value
       return newStateOjb;
     case types.CREATE_COMPANY_SUCCESS:
-      debugger
-      return {};
+      return action.data;
     case types.SET_COMPANY_FROM_TYPEAHEAD:
       return action.company;
     case types.GET_COMPANY_SUCCESS:

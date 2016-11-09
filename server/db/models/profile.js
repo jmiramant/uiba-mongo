@@ -5,6 +5,7 @@ import { Job } from './job';
 
 const ProfileSchema = new mongoose.Schema({
   user_id: {type: Schema.Types.ObjectId, ref: 'User'},
+  company_id: {type: Schema.Types.ObjectId, ref: 'Company'},
   name: { type: String, default: '' },
   firstName: { type: String, default: '' },
   lastName: { type: String, default: '' },

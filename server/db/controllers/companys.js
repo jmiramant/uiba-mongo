@@ -53,7 +53,6 @@ export function create(req, res) {
 
   Company.create({
     name: req.body.name,
-    address_id: req.body.address_id,
     description: req.body.description,
     foundedDate: req.body.foundedDate,
     size: req.body.size,
@@ -64,8 +63,18 @@ export function create(req, res) {
   }, function(err, company) {
 
     if (err) return handleError(res, err);
-
-    return res.json(company);
+ 
+    if (req.user.profile_id) {
+      Profile.findById(req.user.profile_id, (err, prof) => {
+        if (err) return handleError(res, err);
+        if (!prof) return res.status(404).json({message: 'Profile Not Found in Company Assoc.'});
+        prof.company_id = company._id
+        prof.save();
+        return res.json(company);
+      })
+    } else {
+      return res.json(company);
+    }
 
   })
 
@@ -78,7 +87,7 @@ export function update(req, res) {
   }).exec((err, company) => {
 
     if (req.body.name) company.name = req.body.name;
-    if (req.body.address_id) company.address_id = req.body.address_id;
+    if (req.body.address_id) company.address_id = mongoose.Types.ObjectId(req.body.address_id);
     if (req.body.description) company.description = req.body.description;
     if (req.body.foundedDate) company.foundedDate = req.body.foundedDate;
     if (req.body.size) company.size = req.body.size;
@@ -86,10 +95,20 @@ export function update(req, res) {
     if (req.body.logoUrl) company.logoUrl = req.body.logoUrl;
     if (req.body.specialties) company.specialties = req.body.specialties;
     if (req.body.industr) company.industry = req.body.industry;
-    
+
     company.save(err => {
       if (err) return handleError(res, err);
-      return res.json(job);
+      if (req.user.profile_id) {
+        Profile.findById(req.user.profile_id, (err, prof) => {
+          if (err) return handleError(res, err);
+          if (!prof) return res.status(404).json({message: 'Profile Not Found in Company Assoc.'});
+          prof.company_id = company._id
+          prof.save();
+          return res.json(company);
+        })
+      } else {
+        return res.json(company);
+      }
     });
 
   });

@@ -30,7 +30,7 @@ export function me(req, res) {
 export function get(req, res) {
   var uid = req.params.id
 
-  School.find({"user_id": mongoose.Types.ObjectId(uid)}).exec((err, schools) => {
+  School.find({"profile_id": mongoose.Types.ObjectId(uid)}).exec((err, schools) => {
     if (err) {
       console.log('Error in "schools/me" query');
       return res.status(404).send('Something went wrong getting the schools data');

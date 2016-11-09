@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-// import { UpdateCompanyOnRole } from './updateMiddleware'
+import { UpdateCompanyOnRole } from './updateMiddleware'
 
 const degreeEnum = ['High School', 'Associate', 'Bachelor','Master','MBA','JD','MD','PhD','Engineer Degree','Certificate','Coursework','Other'];
 
@@ -14,7 +14,8 @@ const RoleSchema = new mongoose.Schema({
   experienceMin: { type: Number },
   experienceMax: {type: Number },
   appliedCount: { type: Number, default: 0},
-  applicants: [{type: Schema.Types.ObjectId, ref: 'Profile' }]
+  applicants: [{type: Schema.Types.ObjectId, ref: 'Profile'}],
+  isArchived: {type: Boolean, default: false}
 }, {timestamps: true});
 
 function setApplicantCode(next) {
@@ -27,21 +28,18 @@ function setApplicantCode(next) {
 
 RoleSchema.pre('save', setApplicantCode);
 
-// RoleSchema.post('save', (next) => {
-//   UpdateCompanyOnRole(next)
-//   return next();
-// });
+RoleSchema.post('save', (next) => {
+  UpdateCompanyOnRole(next)
+});
 
-// RoleSchema.pre('remove', (next) => {
-//   UpdateCompanyOnRole(next)
-//   return next();
-// });
+RoleSchema.pre('remove', (next) => {
+  UpdateCompanyOnRole(next)
+});
 
-RoleSchema.methods = {
-  incrementAppliedCount(cb) {
-    this.appliedCount += 1;
-    return cb(null);
-  },
+RoleSchema.methods.addApplicant = (cb) => {
+  this.appliedCount += 1;
+  console.log(cb)
+  return cb(null);
 };
 
 export default mongoose.model('Role', RoleSchema);

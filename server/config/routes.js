@@ -23,7 +23,7 @@ const recruitersController = controllers && controllers.recruiters;
 const companysController = controllers && controllers.companys;
 const addressessController = controllers && controllers.addresses;
 const rolesController = controllers && controllers.roles;
-
+const applicantsController = controllers && controllers.applicants;
 const exportsController = controllers && controllers._exports;
 const tokensController = controllers && controllers.tokens;
 
@@ -113,12 +113,19 @@ export default (app) => {
 
   if (rolesController) {
     app.get('/roles/me', rolesController.me);
-    app.get('/roles/:id', rolesController.get);
+    app.get('/role/:id', rolesController.get);
+    app.get('/roles/:id', rolesController.list);
     app.post('/roles', rolesController.create);
     app.put('/roles', rolesController.update);
     app.delete('/role/:id', rolesController.remove);
   } else {
     console.warn(unsupportedMessage('roles routes'));
+  }
+
+  if (applicantsController) {
+    app.get('/applicants/:id', applicantsController.list);
+  } else {
+    console.warn(unsupportedMessage('applicants routes'));
   }
 
   if (interestsController) {

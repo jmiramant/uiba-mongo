@@ -22,7 +22,7 @@ class RoleList extends React.Component {
     toggleRoleAdd: PropTypes.func.isRequired,
     onRoleSave: PropTypes.func.isRequired,
     roleChange: PropTypes.func.isRequired,
-    onRoleDelete: PropTypes.func.isRequired
+    rolesChange: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -42,23 +42,21 @@ class RoleList extends React.Component {
     this.props.onEditSave(data);
   }
 
-  handleDelete = (role) => {
-    this.props.onRoleDelete(role);
-  }
-
   render () {
     const { role,
             roles,
             company,
             addVisible,
-            roleChange
+            roleChange,
+            rolesChange
           } = this.props;
-    const lengthIndex = roles.length - 1;
 
     const renderItems = (
       <div>
         <h4>Created Roles:</h4>
-        <Table>
+        <Table
+          selectable={true}
+        >
           <TableHeader
             displaySelectAll={false}
             adjustForCheckbox={false}
@@ -68,20 +66,21 @@ class RoleList extends React.Component {
               <TableHeaderColumn>Create Date</TableHeaderColumn>
               <TableHeaderColumn>Applicant Count</TableHeaderColumn>
               <TableHeaderColumn>Apply Url</TableHeaderColumn>
-              <TableHeaderColumn>Delete</TableHeaderColumn>
+              <TableHeaderColumn></TableHeaderColumn>
+              <TableHeaderColumn></TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody
             showRowHover={true}
+            stripedRows={true}
           >
             {roles.map((_role, i) => {
-              return (<RoleItem 
+              return (<RoleItem
                 key={_role._id} 
-                role={_role} 
-                roleChange={roleChange}
-                handleDelete={this.handleDelete}
-                saveRoleEdit={this.handleEditSave} 
-                isntLast={lengthIndex !== i} 
+                role={_role}
+                company={company}
+                rolesChange={rolesChange}
+                onRoleSave={this.handleEditSave} 
               />);
             })}
           </TableBody>

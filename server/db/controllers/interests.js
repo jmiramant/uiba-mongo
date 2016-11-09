@@ -32,7 +32,7 @@ export function me(req, res) {
 export function get(req, res) {
   var uid = req.params.id
 
-  Interest.find({"user_id": mongoose.Types.ObjectId(uid)}).exec((err, interests) => {
+  Interest.find({"profile_id": mongoose.Types.ObjectId(uid)}).exec((err, interests) => {
     if (err) {
       console.log('Error in "interest/me" query');
       return res.status(412).send('Something went wrong getting the interests data');

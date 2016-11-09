@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, IndexRoute } from 'react-router';
+import { Route, IndexRoute, NotFoundRoute } from 'react-router';
 
 import App from 'containers/App';
 import Splash from 'containers/Splash';
@@ -16,6 +16,7 @@ import CompanyContainer from 'containers/CompanyContainer'
 import CompanyDashboard from 'containers/CompanyDashboard'
 import ApplicantList from 'containers/ApplicantList'
 import ApplicantShow from 'containers/ApplicantShow'
+import NotFound from 'containers/NotFound'
 
 import {fetchCurrentUser} from 'actions/users';
 
@@ -91,11 +92,9 @@ export default (store) => {
       <Route path="privacy" component={Privacy}></Route>
       <Route path="company-admin" component={CompanyContainer} onEnter={requireCompanyAuth}>
         <Route path="dashboard" component={CompanyDashboard}></Route>
-        <Route path="applicants" component={ApplicantList}></Route>
-        <Route path='applicant/:userId' component={ApplicantShow}></Route>
+        <Route path="applicants/:roleId" component={ApplicantList}></Route>
+        <Route path='applicant/:profId' component={ApplicantShow}></Route>
       </Route>
-
-
     </Route>
   );
 };

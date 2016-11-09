@@ -13,6 +13,7 @@ import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
+import CircularProgress from 'material-ui/CircularProgress';
 
 import DropzoneS3Uploader from 'react-dropzone-s3-uploader'
 import AddressInput from 'containers/Address'
@@ -55,16 +56,12 @@ export default class CompanyAdd extends React.Component {
   
   handleSubmit = e => {
     e.preventDefault();
+    console.log(!this.validate())
     if (!this.validate()) {
       this.props.onCompanySave(this.props.company);
     }
   }
   
-  showAddress(e) {
-    console.log(e)
-    // this.setState({showAddress: true});
-  }
-
   validate() {
     const validationResp = validateCompanyHelper(this.props.company, this.state.validationErrors);
     this.setState({validationErrors: validationResp.errors});
@@ -270,7 +267,7 @@ export default class CompanyAdd extends React.Component {
 
           <div className={cx('btn-group-container')}>
             <div className={cx('btn-group')}>
-              <RaisedButton className='text-center' onClick={this.handleSubmit} label={isExistingData ? ('Confirm') : ('Save')} primary={true} />
+              <RaisedButton className='text-center' onClick={this.handleSubmit.bind(this)} label={isExistingData ? ('Confirm') : ('Save')} primary={true} />
             </div>
           </div>
 

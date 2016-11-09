@@ -64,9 +64,11 @@ export function updateProfile(profileData) {
 
 }
 
-export function fetchProfile() {
+export function fetchProfile(profId) {
+  let path = '/profile/me';
+  if (profId) path = 'profile/' + profId;
   return {
     type: types.GET_PROFILE,
-    promise: makeProfileRequest('get', {}, '/profile/me')
+    promise: makeProfileRequest('get', {}, path)
   };
 }
