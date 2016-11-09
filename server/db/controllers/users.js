@@ -53,7 +53,7 @@ const logRecruiter = (req, profId) => {
 }
 
 const resolveApplyRedirect = (req, profile, cb) => {
-  const companyName = req.headers.referer.split('/apply/')[1].split('/')[0].split('?')[0].toLowercase;
+  const companyName = req.headers.referer.split('/apply/')[1].split('/')[0].split('?')[0];
   const nameLower = companyName.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").split(' ').join('_')
   Company.findOne({
     name_lower: nameLower
