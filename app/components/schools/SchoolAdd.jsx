@@ -94,7 +94,7 @@ export default class SchoolAdd extends React.Component {
       this.changeSchoolProps('current', !this.props.school.current)
     } else {
       
-      if (['major', 'minor'].includes(field)) {
+      if (['major', 'minor'].indexOf(field) !== -1) {
         value = value.split(',');
       }
       
