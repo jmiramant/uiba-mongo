@@ -79,10 +79,12 @@ const logRecruiter = (req, profId) => {
 }
 
 const resolveApplyRedirect = (req, user, done) => {
-  const _c = req.headers.referer.split('/apply/')[1].split('/')[0].split('?')[0];
+  const companyName = req.headers.referer.split('/apply/')[1].split('/')[0].split('?')[0].toLowercase;
+  const nameLower = companyName.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").split(' ').join('_')
   Company.findOne({
-    name_lower: _c
+    name_lower: nameLower
   }, (companyErr, _company) => {
+    if (companyErr) return res.status(401).json({ message: companyErr });
     return Profile.findOne({
       service: 'linkedin',
       user_id: user._id
