@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react';
 
-import UibaDatePicker from '../../components/DatePicker';
 import { validateJobHelper } from '../helpers/roleValidations';
+import UibaDatePicker from '../../components/DatePicker';
+import MulitselectPopover from '../../components/MulitselectPopover';
+import Skills from 'components/skills/SkillList';
 
 import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
@@ -169,30 +171,11 @@ export default class RoleAdd extends React.Component {
           </div>
 
           <div className="col-md-6">
-            <SelectField
-              errorText={validationErrors.degreeMin}
-              onChange={this.handlePicklistChange('degreeMin')}
-              value={role.degreeMin}
-              floatingLabelText="Minimum Education Level"
-              hintText='Minimum Education Level'
-            >
-              <MenuItem value={'High School'} primaryText='High School'/>
-              <MenuItem value={'Associate'} primaryText='Associate'/>
-              <MenuItem value={'Bachelor'} primaryText='Bachelor'/>
-              <MenuItem value={'Master'} primaryText='Master'/>
-              <MenuItem value={'MBA'} primaryText='MBA'/>
-              <MenuItem value={'JD'} primaryText='JD'/>
-              <MenuItem value={'MD'} primaryText='MD'/>
-              <MenuItem value={'PhD'} primaryText='PhD'/>
-              <MenuItem value={'Engineer Degree'} primaryText='Engineer Degree'/>
-              <MenuItem value={'Certificate'} primaryText='Certificate'/>
-              <MenuItem value={'Coursework'} primaryText='Coursework'/>
-              <MenuItem value={'Other'} primaryText='Other'/>
-            </SelectField>
-          </div>
-          
-          <div className="col-md-6">
-            {this.maxDegree(role, validationErrors)}
+            <MulitselectPopover
+              data={['High School','Associate','Bachelor','Master','MBA','JD','MD','PhD','Engineer Degree','Certificate','Coursework','Other']}
+              selected={role.degreeRequirements}
+              buttonText='Education Requirements'
+            />
           </div>
 
           <div className="col-md-6">
@@ -221,6 +204,9 @@ export default class RoleAdd extends React.Component {
             {this.maxExperience(role, validationErrors)}
           </div>
 
+          <div className="col-md-6">
+
+          </div>
 
           <div className={cx('profile-btn-group')}>
             <RaisedButton className='pull-right' type="submit" label="Save" primary={true} />

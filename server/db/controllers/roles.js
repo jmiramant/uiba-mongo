@@ -65,8 +65,7 @@ export function create(req, res) {
     company_id: mongoose.Types.ObjectId(req.body.company_id),
     title: req.body.title,
     description: req.body.description,
-    degreeMin: req.body.degreeMin,
-    degreeMax: req.body.degreeMax,
+    degreeRequirements: req.body.degreeRequirements,
     experienceMin: req.body.experienceMin,
     experienceMax: req.body.experienceMax
   }, function(err, role) {

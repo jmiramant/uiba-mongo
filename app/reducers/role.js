@@ -53,7 +53,7 @@ const role = (
         title: undefined,
         description: undefined,
         applicantCode: undefined,
-        degreeMin: undefined,
+        degreeRequirements: undefined,
         degreeMax: undefined,
         experienceMin: undefined,
         experienceMin: undefined,

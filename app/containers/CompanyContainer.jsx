@@ -5,6 +5,7 @@ import { browserHistory } from 'react-router'
 
 import CompanyAdd from 'containers/CompanyAdd';
 import FlatButton from 'material-ui/FlatButton';
+import Loader from 'components/Loader';
 
 import classNames from 'classnames/bind';
 import styles from 'css/components/company/companyAdminContainer';
@@ -41,15 +42,6 @@ class CompanyContainer extends React.Component {
       company
     } = this.props;
 
-    const setupCompany = (
-      <div>
-        <p>You have successfully logged in to the Company Adminstrators Portal. Please begin by completing a company profile.</p>
-        <CompanyAdd
-          profile={profile}
-        />        
-      </div>
-    )
-
     const companyTag = (
       <div>
         <div>Managing: {company.name}</div>
@@ -64,7 +56,7 @@ class CompanyContainer extends React.Component {
           { profile.company_id && company._id ? (
             companyTag
           ) : (
-            setupCompany
+            <Loader />
           )}
         </div>
       </div>
