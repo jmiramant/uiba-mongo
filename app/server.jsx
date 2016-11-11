@@ -157,7 +157,7 @@ export default function render(req, res) {
             } >
             < RouterContext {...props
             }
-            /> < /Provider >
+            /> < /Provider>
           );
 
           return res.status(200).send(`
@@ -167,12 +167,12 @@ export default function render(req, res) {
               ${header.title.toString()}
               ${header.meta.toString()}
               ${header.link.toString()}
+              ${mixpanelScript}
             </head>
             <body>
               <div id="app">${componentHTML}</div>
               <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};</script>
               ${analtyicsScript}
-              ${mixpanelScript}
               <script type="text/javascript" charset="utf-8" src="/assets/app.js"></script>
             </body>
           </html>
