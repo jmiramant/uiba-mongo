@@ -26,12 +26,11 @@ const clientConfig = {
 };
 
 // configure baseURL for axios requests (for serverside API calls)
-if (process.env.NODE_ENV === 'development ') {
+if (process.env.NODE_ENV === 'development') {
   axios.defaults.baseURL = `http://${clientConfig.host}:${clientConfig.port}`;
 } else {
   axios.defaults.baseURL = `http://${clientConfig.host}`;
 }
-
 
 global.navigator = global.navigator || {};
 global.navigator.userAgent = global.navigator.userAgent || 'all';
