@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import cookie from 'react-cookie';
 
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -41,6 +42,8 @@ class Apply extends Component {
   handleOnSubmit(data) {
     const { manualLogin, signUp} = this.props.userActions
     const { user: { isLogin } } = this.props;
+
+    cookie.remove('applyPath');
 
     if (isLogin) {
       manualLogin(data);

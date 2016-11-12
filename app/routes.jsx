@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
+import cookie from 'react-cookie';
 
 import App from 'containers/App';
 import Splash from 'containers/Splash';
@@ -29,9 +30,15 @@ export default (store) => {
 
   const redirectAuth = (nextState, replace, callback) => {
     const { user: { authenticated }} = store.getState();
+    const applyCookie = cookie.load('applyPath');
+
     if (authenticated) {
       replace({
         pathname: '/profile'
+      });
+    } else if (applyCookie) {
+      replace({
+        pathname: applyCookie
       });
     }
     callback();
@@ -41,6 +48,13 @@ export default (store) => {
   const tempApplyredirectAuth = (nextState, replace, callback) => {
     const { user: { authenticated }} = store.getState();
     
+    let path = nextState.location.pathname;
+    if (nextState.location.search) {
+      path = path + nextState.location.search
+    }
+
+    cookie.save('applyPath', path)
+
     if (authenticated) {
       if (nextState.location && nextState.location.query && nextState.location.query) {
         recoveryCapture(nextState.location.query.rid)
