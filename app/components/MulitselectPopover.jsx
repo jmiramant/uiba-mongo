@@ -21,11 +21,11 @@ class MulitselectPopover extends React.Component {
   }
 
   buildTableData(){
-    const { data, selectd } = this.props;
+    const { data, selected } = this.props;
     return data.map( (dItem) => {
-      let selected = false;
-      if (selected) selected = (selected.indexOf(dItem) !== -1);  
-      return {name: dItem, selected}
+      let sel = false;
+      if (selected) sel = (selected.indexOf(dItem) !== -1);  
+      return {name: dItem, selected: sel}
     })
   }
   
@@ -42,8 +42,15 @@ class MulitselectPopover extends React.Component {
     this.setState({open: false});
   }
 
-  asd () {
-    debugger
+  onToggleSelect (i, bool, e) {
+    e.preventDefault();
+    const data = this.buildTableData()
+    this.props.onToggleSelect(data[i].name)
+  }
+
+  handleSet() {
+    this.closePopover();
+    this.props.handleSet();
   }
 
   render() {
@@ -67,17 +74,18 @@ class MulitselectPopover extends React.Component {
           anchorOrigin={{horizontal: 'left', vertical: 'top'}}
           targetOrigin={{horizontal: 'left', vertical: 'bottom'}}
           anchorEl={this.state.anchorEl}
-          style={{height: '300', width: '300'}}
+          style={{height: '300px', width: '300px'}}
         >
         <Table
             height='240px'
-            onChange={this.asd}
             fixedFooter={true}
             selectable={true}
             multiSelectable={true}
+            onCellClick={this.onToggleSelect.bind(this)} 
           >
             <TableBody
               displayRowCheckbox={true}
+              deselectOnClickaway={false}
               showRowHover={true}
             >
               {tableData.map( (row, index) => (
@@ -91,7 +99,7 @@ class MulitselectPopover extends React.Component {
               <TableRow>
                 <TableRowColumn colSpan="3" style={{textAlign: 'center'}}>
                   <FlatButton className='pull-left' label="Close" onClick={this.closePopover.bind(this)} primary={true} />
-                  <FlatButton className='pull-right' label="Select" onClick={this.props.handleSet} primary={true} />
+                  <FlatButton className='pull-right' label="Select" onClick={this.handleSet.bind(this)} primary={true} />
                 </TableRowColumn>
               </TableRow>
             </TableFooter>
@@ -108,8 +116,9 @@ class MulitselectPopover extends React.Component {
 MulitselectPopover.propTypes = {
   data: PropTypes.array.isRequired,
   selected: PropTypes.array,
-  buttonText: PropTypes.array.isRequired,
-  // handleSet: PropTypes.function.isRequired,
+  buttonText: PropTypes.string,
+  onToggleSelect: PropTypes.func.isRequired,
+  handleSet: PropTypes.func.isRequired,
 };
 
 export default MulitselectPopover;

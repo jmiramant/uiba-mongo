@@ -164,3 +164,10 @@ export function deleteRole(role) {
   }
 
 }
+
+export function toggleEduReqSelect(data) {
+  return {
+    type: types.TOGGLE_ROLE_EDU_REQUIREMENT,  
+    data: data
+  }
+}

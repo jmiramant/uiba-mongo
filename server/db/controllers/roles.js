@@ -4,6 +4,7 @@ import mongoose, {
 import Profile from '../models/profile';
 import Roles from '../models/role';
 import Company from '../models/company';
+import Skills from '../models/skill';
 import moment from 'moment';
 
 const handleError = (res, err) => {
@@ -106,10 +107,9 @@ export function remove(req, res) {
     return res.status(200).json({
         id: req.params.id,
         message: 'This role has been deleted.'
-      }) // ...
+      }) 
   })
 }
-
 
 export default {
   me,
@@ -117,5 +117,5 @@ export default {
   list,
   create,
   update,
-  remove
+  remove,
 };
