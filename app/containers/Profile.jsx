@@ -14,7 +14,7 @@ import * as messagesActionCreators from 'actions/messages';
 import * as interestsActionCreators from 'actions/interests';
 import * as applyActionCreators from 'actions/apply';
 
-import { mixpanelTrack } from 'middlewares/mixpanelTrackers';
+// import { mixpanelTrack } from 'middlewares/mixpanelTrackers';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -56,10 +56,11 @@ class Profile extends React.Component {
     interestActions.fetchInterests();
     userActions.fetchCurrentUser();
 
-    mixpanelTrack("PROFILE[load]:init")
   }
 
-
+  componentDidMount() {
+    mixpanelTrack("PROFILE[load]:init")
+  }
 
   constructor(props) {
     super(props)

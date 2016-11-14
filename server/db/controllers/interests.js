@@ -13,6 +13,8 @@ const handleError = (res, err) => {
  */
 export function me(req, res) {
   
+  if (!req.user || !req.user.profile_id) {return res.status(403).json({ message: "There is no currentUser" })}
+
   Interest.find({
     
     "profile_id": mongoose.Types.ObjectId(req.user.profile_id)

@@ -11,8 +11,6 @@ import { sessionSecret, externalAPISecret } from './secrets';
 import { DB_TYPE, ENV } from './appConfig';
 import { session as dbSession } from '../db';
 import gzip from 'compression';
-import 'newrelic';
-
 
 export default (app) => {
   app.set('port', (process.env.PORT || 3000));

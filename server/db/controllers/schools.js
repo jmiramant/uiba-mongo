@@ -10,7 +10,7 @@ const handleError = (res, err) => {
  * Me
  */
 export function me(req, res) {
-
+  if (!req.user || !req.user.profile_id) {return res.status(403).json({ message: "There is no logged in user" })}
   School.find({
     
     "profile_id": mongoose.Types.ObjectId(req.user.profile_id)
