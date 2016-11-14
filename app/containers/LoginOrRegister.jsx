@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import { manualLogin, signUp, toggleLoginMode } from 'actions/users';
+import { mixpanelURLTrack } from 'middlewares/mixpanelTrackers';
 
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -24,6 +25,10 @@ class LoginOrRegister extends Component {
     super(props);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.props.toggleLoginMode(this.props.user.isLogin)
+  }
+
+  componentDidMount() {
+    mixpanelURLTrack('LOGIN[load]:init');
   }
 
   state = {

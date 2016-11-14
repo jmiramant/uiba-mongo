@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import * as usersActionCreators from 'actions/users';
 import * as profilesActionCreators from 'actions/profiles';
 import * as jobsActionCreators from 'actions/jobs';
 import * as schoolsActionCreators from 'actions/schools';
@@ -13,6 +14,7 @@ import * as messagesActionCreators from 'actions/messages';
 import * as interestsActionCreators from 'actions/interests';
 import * as applyActionCreators from 'actions/apply';
 
+import { mixpanelTrack } from 'middlewares/mixpanelTrackers';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -37,6 +39,7 @@ class Profile extends React.Component {
   componentWillMount() {
     const { profileActions,
             jobActions,
+            userActions,
             schoolActions,
             skillActions,
             interestActions,
@@ -44,14 +47,19 @@ class Profile extends React.Component {
             projectActions,
     } = this.props;
 
-    profileActions.fetchProfile()
-    schoolActions.fetchSchools()
-    jobActions.fetchJobs()
-    skillActions.fetchSkills()
-    languageActions.fetchLanguages()
-    projectActions.fetchProjects()
-    interestActions.fetchInterests()
+    profileActions.fetchProfile();
+    schoolActions.fetchSchools();
+    jobActions.fetchJobs();
+    skillActions.fetchSkills();
+    languageActions.fetchLanguages();
+    projectActions.fetchProjects();
+    interestActions.fetchInterests();
+    userActions.fetchCurrentUser();
+
+    mixpanelTrack("PROFILE[load]:init")
   }
+
+
 
   constructor(props) {
     super(props)
@@ -63,6 +71,7 @@ class Profile extends React.Component {
 
   isProfileLoaded(profile) {
     if (!profile.isFetching && Object.keys(profile.profile).length > 0) {
+      profile.profile
       return true;
     } else {
       return false;
@@ -226,6 +235,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps (dispatch) {
   return {
+    userActions: bindActionCreators(usersActionCreators, dispatch),
     profileActions: bindActionCreators(profilesActionCreators, dispatch),
     schoolActions: bindActionCreators(schoolsActionCreators, dispatch),
     jobActions: bindActionCreators(jobsActionCreators, dispatch),
