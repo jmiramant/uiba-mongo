@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { logOut } from 'actions/users';
@@ -13,7 +13,11 @@ import "css/lib/caretOverrides.less";
 
 const cx = classNames.bind(styles);
 
-const Navigation = ({ user, logOut }) => {
+class Navigation extends Component {
+
+  render() {
+
+    const { user, logOut } = this.props;
     
     return (
       <nav className={cx('navigation')} role="navigation">
@@ -75,6 +79,7 @@ const Navigation = ({ user, logOut }) => {
         </NavDropdown>
       </nav>
     );
+  }
 };
 
 Navigation.propTypes = {

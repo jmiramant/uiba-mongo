@@ -40,7 +40,7 @@ export default (store) => {
 
   const tempApplyredirectAuth = (nextState, replace, callback) => {
     const { user: { authenticated }} = store.getState();
-    
+
     if (authenticated) {
       if (nextState.location && nextState.location.query && nextState.location.query) {
         recoveryCapture(nextState.location.query.rid)
@@ -51,7 +51,7 @@ export default (store) => {
     }
     callback();
   };
-  
+
   return (
     <Route path="/" component={App}>
       <IndexRoute component={Splash} />

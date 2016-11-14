@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import { mixpanelURLTrack } from 'middlewares/mixpanelTrackers';
 
 import Toggle from 'material-ui/Toggle';
 import Divider from 'material-ui/Divider';
@@ -30,6 +31,10 @@ class Apply extends Component {
     this.fetchCompanyData()
   }
 
+  componentDidMount() {
+    mixpanelURLTrack("APPLY[load]:init");
+  }
+
   fetchCompanyData() {
     this.props.companyActions.fetchCompany(this.props.params.companyName)
   }
@@ -41,6 +46,8 @@ class Apply extends Component {
   handleOnSubmit(data) {
     const { manualLogin, signUp} = this.props.userActions
     const { user: { isLogin } } = this.props;
+
+    mixpanelURLTrack('APPLY[click]:emailBtn');
 
     if (isLogin) {
       manualLogin(data);
@@ -87,6 +94,10 @@ class Apply extends Component {
     });  
   }
 
+  trackLinkedAuth() {
+    mixpanelURLTrack('APPLY[click]:linkedinBtn');
+  }
+
   render () {
     const { 
       userActions: { toggleLoginMode }, 
@@ -111,6 +122,7 @@ class Apply extends Component {
             })}>
               <div className={cx('li-container')}>
                 <a className={cx('li-auth')}
+                  onClick={ this.trackLinkedAuth }
                   href="/auth/linkedin"
                 >
                 <div className={cx('li-btn-container')}>

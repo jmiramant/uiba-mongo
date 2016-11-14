@@ -1,5 +1,6 @@
 import * as types from 'types';
 import { combineReducers } from 'redux';
+import { indentifyUser, setUser } from 'middlewares/mixpanelTrackers';
 
 const isFetching = (
   state = false,
@@ -15,11 +16,13 @@ const isFetching = (
 };
 
 const currentUser = (
-  state = [],
+  state = {},
   action
 ) => {
   switch (action.type) {
     case types.GET_CURRENT_USER_SUCCESS:
+      indentifyUser(action.res.data.email);
+      setUser(action.res.data.email, action.res.data);
       return action.res.data;
     default:
       return state;

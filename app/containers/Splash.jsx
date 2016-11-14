@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import classNames from 'classnames/bind';
 import styles from 'css/components/splash';
+
+import { mixpanelURLTrack } from 'middlewares/mixpanelTrackers';
 
 import Hero from 'components/splash/hero';
 import Succeed from 'components/splash/succeed';
@@ -11,37 +13,45 @@ import Together from 'components/splash/together';
 
 const cx = classNames.bind(styles);
 
-const Splash = () => {
+class Splash extends Component {
 
-  return (
-    <div className={cx('splash-container')}>
+  componentDidMount() {
+    mixpanelURLTrack('INDEX[load]:init');
+  }
+
+  render() {
+
+    return (
+      <div className={cx('splash-container')}>
+        
+        <section className={cx('section--darkBlue', 'section--hero')}> 
+          <Hero/>
+        </section>
+
+        <section className={cx('section--white', 'section--no-padding') + ' animated fadeInSlow'}>
+          <Succeed/>
+        </section>
+
+        <section className={cx('section--tan', 'section--works')}>
+          <Works/>
+        </section>
+
+        <section className={cx('section--darkBlue', 'section--companies')}>
+          <Companies/>
+        </section>
+
+        <section className={cx('section--white', 'section--numbers')}>
+          <Numbers/>
+        </section>
+        
+        <section className={cx('section--tan', 'section--together')}>
+          <Together/>
+        </section>
       
-      <section className={cx('section--darkBlue', 'section--hero')}> 
-        <Hero/>
-      </section>
-
-      <section className={cx('section--white', 'section--no-padding') + ' animated fadeInSlow'}>
-        <Succeed/>
-      </section>
-
-      <section className={cx('section--tan', 'section--works')}>
-        <Works/>
-      </section>
-
-      <section className={cx('section--darkBlue', 'section--companies')}>
-        <Companies/>
-      </section>
-
-      <section className={cx('section--white', 'section--numbers')}>
-        <Numbers/>
-      </section>
-      
-      <section className={cx('section--tan', 'section--together')}>
-        <Together/>
-      </section>
-    
-    </div>
-  );
+      </div>
+    );
+  
+  }
 };
 
 export default Splash;
