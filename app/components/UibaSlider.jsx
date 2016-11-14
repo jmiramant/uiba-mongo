@@ -41,7 +41,6 @@ export default class UibaSlider extends React.Component {
   }
 
   render () {
-
     const { 
             title,
             dataSource,
@@ -112,7 +111,7 @@ export default class UibaSlider extends React.Component {
     return (
       <div className={cx('uiba-slider-container')}>
         <div className={cx('title')}>{title}</div>
-        <Slider 
+        <Slider
           step={1} 
           value={sliderValue()}
           sliderStyle={sliderStyle}
