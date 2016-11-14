@@ -47,7 +47,6 @@ export default (store) => {
 
   const tempApplyredirectAuth = (nextState, replace, callback) => {
     const { user: { authenticated }} = store.getState();
-<<<<<<< HEAD
     
     let path = nextState.location.pathname;
     if (nextState.location.search) {
@@ -55,8 +54,6 @@ export default (store) => {
     }
 
     cookie.save('applyPath', path)
-=======
->>>>>>> master
 
     if (authenticated) {
       if (nextState.location && nextState.location.query && nextState.location.query) {
