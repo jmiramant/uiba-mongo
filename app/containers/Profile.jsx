@@ -14,7 +14,7 @@ import * as messagesActionCreators from 'actions/messages';
 import * as interestsActionCreators from 'actions/interests';
 import * as applyActionCreators from 'actions/apply';
 
-// import { mixpanelTrack } from 'middlewares/mixpanelTrackers';
+import { mixpanelTrack } from 'middlewares/mixpanelTrackers';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
