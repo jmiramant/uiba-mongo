@@ -182,3 +182,37 @@ export function deleteCompany(company) {
   }
 
 }
+
+export function setTypeaheadData(selection) {
+  return {
+    type: types.UPDATE_COMPANY_SELECTION,
+    selection
+  };
+}
+
+
+export function setInitialTypeaheadData(selection) {
+  return {
+    type: types.SET_INITIAL_COMPANY_SELECTION,
+    selection
+  };
+}
+
+export function updateTypeahead(results) {
+  return {
+    type: types.UPDATE_COMPANY_TYPEAHEAD_SUCCESS,
+    results
+  };
+}
+
+export function fetchTypeaheadData(searchTerm) {
+  const apiUrl = "/companies/typeahead" + "?search=" + searchTerm.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").split(' ').join('_')
+  
+  return dispatch => {
+
+    makeCompaniesRequest('get', null,  apiUrl)
+      .then(response => {
+        dispatch(updateTypeahead(response.data))
+      });
+  }
+}

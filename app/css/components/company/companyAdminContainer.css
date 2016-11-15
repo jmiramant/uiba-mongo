@@ -1,0 +1,22 @@
+@import '../../common/card';
+@import '../../common/colors';
+
+:root {
+
+  --companyAdmin--container {
+    @apply --card;
+    background: #fff;
+    margin-bottom: 20px;
+    padding: 15px 30px;
+  }
+
+}
+
+.companyAdmin-container { 
+  margin: 25px auto;
+}
+
+.container-card {
+  @apply --companyAdmin--container;
+}
+

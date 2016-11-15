@@ -19,7 +19,7 @@ db.companies.insertMany(
     },
     {
       name: "Blue Orange Digital",
-      name: "blue_orange_digital",
+      name_lower: "blue_orange_digital",
       location: "The World",
       description: "Quinoa brooklyn echo park, trust fund meh viral pork belly.",
       foundedDate: new Date(2010, 1, 20),

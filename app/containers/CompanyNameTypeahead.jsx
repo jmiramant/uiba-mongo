@@ -2,11 +2,11 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import TypeAhead from '../components/typeahead/typeahead';
-import * as actionCreators from 'actions/typeahead';
+import * as actionCreators from 'actions/companies';
 
 @connect((state) => {
   return {
-    results: state.typeahead.typeahead,
+    results: state.company.typeahead,
   }
 })
 
@@ -39,7 +39,7 @@ class TypeaheadApp extends Component {
         results={this.props.results} 
         selection={this.props.selection}
         error={this.props.error}
-        label="Add a School"
+        label="Company Name"
       />
     );
   }

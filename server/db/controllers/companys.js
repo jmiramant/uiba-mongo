@@ -54,10 +54,19 @@ export function list(req, res) {
     }
     return res.json(company);
   });
-}
 
+export function typeahead(req, res) {
+  const query = new RegExp(req.query.search, 'i');
+  Company
+    .find({name_lower: {$regex: query}})
+    .limit(10)
+    .exec((err, results) => {
+      if (err) return res.status(500).send({error: err});
+      return res.json(results);
+    })
+}
 
 export default {
   get,
-  list,
+  typeahead,
 };

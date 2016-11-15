@@ -72,7 +72,7 @@ export default (app) => {
   if (companysController) {
     app.get('/company', companysController.get);
     app.get('/company/:companyName', companysController.get);
-    app.get('/companies/:companyName', companysController.list);
+    app.get('/companies/typeahead', companysController.typeahead);
   } else {
     console.warn(unsupportedMessage('companies routes'));
   }

@@ -52,6 +52,20 @@ export function fetchAddress() {
   };
 }
 
+export function fetchCompanyAddress(companyId) {
+  return {
+    type: types.GET_ADDRESS,
+    promise: makeAddressRequest('get', {}, '/address/' + companyId + '?type=company')
+  };
+}
+
+export function fetchAddressByCompany(companyName) {
+  return {
+    type: types.GET_ADDRESS,
+    promise: makeAddressRequest('get', {}, '/address/companyName')
+  };
+}
+
 export function createAddressRequest(data) {
   return {
     type: types.CREATE_ADDRESS,
