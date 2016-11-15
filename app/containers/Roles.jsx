@@ -18,15 +18,17 @@ class RolesApp extends Component {
 
   render() {
     const {
+      role,
       roles,
+      addShow,
       actions
     } = this.props;
 
     return (
       <RoleList
-        role={roles.role}
-        roles={roles.roles}
-        addVisible={roles.addShow}
+        role={role}
+        roles={roles}
+        addVisible={addShow}
         onEditSave={actions.updateRole}
         toggleRoleAdd={actions.toggleRoleAdd}
         roleChange={actions.roleChange}
@@ -40,7 +42,9 @@ class RolesApp extends Component {
 
 function mapStateToProps(state) {
   return {
-    roles: state.role,
+    role: state.role.role,
+    roles: state.role.roles,
+    addShow: state.role.addShow,
     company: state.company.company
   }
 }

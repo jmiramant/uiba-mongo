@@ -60,7 +60,7 @@ export function createRoleSuccess(data) {
 export function createRoleFailure(data) {
   return {
     type: types.CREATE_ROLE_FAILURE,
-    error: data.error
+    error: data.err
   };
 }
 
@@ -95,8 +95,8 @@ export function createRole(roleData) {
           return dispatch(createRoleSuccess(res.data));
         }
       })
-      .catch(() => {
-        return dispatch(createRoleFailure({ error: 'Oops! Something went wrong and we couldn\'t create your role.'}));
+      .catch((err) => {
+        return dispatch(createRoleFailure({ err }));
       });
   }
 }

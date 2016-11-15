@@ -1,6 +1,7 @@
 import User from '../models/user';
 import Profile from '../models/profile';
 import Recruiter from '../models/recruiter';
+import Role from '../models/role';
 import passport from 'passport';
 import Company from '../models/company';
 import async from 'async'
@@ -14,9 +15,29 @@ const isApply = (req) => {
 const logRecruiter = (req, profId) => {
   if (req.headers.referer.split('/apply/').length > 1) {
 
-    const company = req.headers.referer.split('/apply/')[1].split('?')[0].toLowerCase();
+    const properString = (str) => {
+      return str.split('-').map((s) => {
+        return s.charAt(0).toUpperCase() + s.slice(1)
+      }).join(' ');
+    }
 
-    if (req.headers.referer.split('/apply/')[1].split('?rid=')[1]) {
+    const company = properString(req.headers.referer.split('/apply/')[1].split('/')[0]);
+    const role = req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[0];
+    let rid;
+    if (wre.split('/apply/')[1].split('/')[1].split('?')[1]) {
+      rid = req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[1].split('&')[0].split('=')[1]
+    } 
+
+    if (role) {
+      Role.find({'applicantCode': role}, (err, role) => {
+        if (!err && role) {
+          role.addApplicant();
+          role.
+        }
+      })
+    }
+
+    if (rid) {
 
       const rid = req.headers.referer.split('/apply/')[1].split('?rid=')[1].split('&')[0];
 

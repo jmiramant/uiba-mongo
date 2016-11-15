@@ -11,7 +11,7 @@ export function updateProfile(doc) {
 }
 
 export function UpdateCompanyOnRole(doc) {
-  mongoose.model("Company").findById(doc.profile_id, (err, prof) => {
+  mongoose.model("Company").findById(doc.company_id, (err, prof) => {
     if (prof) {
       prof.roleUpdatedAt = new Date();
       prof.save();
