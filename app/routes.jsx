@@ -1,10 +1,6 @@
 import React from 'react';
-<<<<<<< b2c46ac0c0e32c5868628ae95157a902142eb0e8
-import { Route, IndexRoute } from 'react-router';
-import cookie from 'react-cookie';
-=======
 import { Route, IndexRoute, NotFoundRoute } from 'react-router';
->>>>>>> outline push for applicant show and list
+import cookie from 'react-cookie';
 
 import App from 'containers/App';
 import Splash from 'containers/Splash';
@@ -21,15 +17,10 @@ import CompanyContainer from 'containers/CompanyContainer'
 import CompanyDashboard from 'containers/CompanyDashboard'
 import ApplicantList from 'containers/ApplicantList'
 import ApplicantShow from 'containers/ApplicantShow'
-<<<<<<< b2c46ac0c0e32c5868628ae95157a902142eb0e8
-=======
 import NotFound from 'containers/NotFound'
 
 import {fetchCurrentUser} from 'actions/users';
-
->>>>>>> outline push for applicant show and list
 import { recoveryCapture } from 'actions/apply';
-import {fetchCurrentUser} from 'actions/users';
 
 export default (store) => {
   const requireAuth = (nextState, replace, callback) => {
@@ -104,8 +95,8 @@ export default (store) => {
       <Route path="login" component={LoginOrRegister} onEnter={redirectAuth}></Route>
       <Route path="login/company" component={CompanyLogin} onEnter={redirectAuth}></Route>
       <Route path="applyConfirmation" component={ApplyConfirmation}></Route>
-      <Route path="apply/:companyName/:roleCode" component={Apply} onEnter={redirectAuth}></Route>
-      <Route path="apply/:companyName" component={Apply} onEnter={redirectAuth}></Route>
+      <Route path="apply/:companyName/:roleCode" component={Apply} onEnter={tempApplyredirectAuth}></Route>
+      <Route path="apply/:companyName" component={Apply} onEnter={tempApplyredirectAuth}></Route>
       <Route path="profile" component={Profile} onEnter={requireAuth}></Route>
       <Route path="email-confirmation" component={Confirmation} ></Route>
       <Route path="about" component={About}></Route>

@@ -89,28 +89,12 @@ const resolveApplyRedirect = (req, profile, cb) => {
 /**
  * GET /user
  */
-export function me(req, res) {
-  if (!req.user) {return res.status(403).json({ message: "There is no currentUser" })}
+export function me(req, res) {  
+  if (!req.user) {
+    console.log('Error in user /me query');
+    return res.status(404).send('Something went wrong getting the data');
+  }
   return res.json(req.user);
-}
-
-/**
- * GET /create
- */
-export function create(req, res) {
-  user = new User();
-  user.email = req.body.email;
-  user.role = req.body.role;
-  user.save(function(err, user) {
-
-    if (!user || err) {
-      console.log('Error in user /create');
-      return res.status(500).send('Something went wrong getting the data');
-    }
-
-    return res.json(user);
-
-  });
 }
 
 /**
@@ -228,6 +212,7 @@ export function signUp(req, res, next) {
     } else {
       saveResolve()    
     }
+
   });
 }
 
@@ -334,7 +319,7 @@ export function role(req, res) {
       user.save((err, user) => {
 
         if (!user || err) {
-          console.log('Error in user /create');
+          console.log('Error saving user in role');
           return res.status(500).send('Something went wrong getting the data');
         }
 

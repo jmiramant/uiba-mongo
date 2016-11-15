@@ -94,11 +94,7 @@ class Navigation extends React.Component {
 
         </NavDropdown>
       </nav>
-<<<<<<< b2c46ac0c0e32c5868628ae95157a902142eb0e8
     );
-=======
-    )
->>>>>>> outline push for applicant show and list
   }
 };
 

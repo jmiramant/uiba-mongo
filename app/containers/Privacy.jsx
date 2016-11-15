@@ -1,19 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 
 import Paper from 'material-ui/Paper';
-<<<<<<< b92d05d3c3db46ac84a856f8d8e26e9867ad9176
 import { mixpanelURLTrack } from 'middlewares/mixpanelTrackers';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-=======
->>>>>>> company
 
 import styles from 'css/components/privacy';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
-<<<<<<< b92d05d3c3db46ac84a856f8d8e26e9867ad9176
 class Privacy extends Component {
 
   componentDidMount() {

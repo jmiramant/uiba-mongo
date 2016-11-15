@@ -12,8 +12,8 @@ import _exports from './export';
 import tokens from './tokens';
 import recruiters from './recruiters';
 import addresses from './address';
-import admin from './admin';
 import roles from './roles';
+import admin from './admin';
 import applicants from './applicants';
 
 export {
@@ -50,8 +50,7 @@ export default {
   recruiters,
   companys,
   addresses,
-  admin
-  roles
   admin,
+  roles,
   applicants
 };

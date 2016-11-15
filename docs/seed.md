@@ -24,6 +24,7 @@ db.companies.insertMany(
     {
       name: "Blue Orange Digital",
       name_lower: "blue_orange_digital",
+      location: "The World",
       description: "Quinoa brooklyn echo park, trust fund meh viral pork belly.",
       description: 'This is a super duper fantastic company, YO!'
       logoUrl: 'https://uiba-test.s3.amazonaws.com/5932244f-7592-44bf-b5e1-61cabe9b9523_sailing.jpg',
