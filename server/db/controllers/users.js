@@ -14,7 +14,7 @@ const isApply = (req) => {
 const logRecruiter = (req, profId) => {
   if (req.headers.referer.split('/apply/').length > 1) {
 
-    const company = req.headers.referer.split('/apply/')[1].split('?')[0];
+    const company = req.headers.referer.split('/apply/')[1].split('?')[0].toLowerCase();
 
     if (req.headers.referer.split('/apply/')[1].split('?rid=')[1]) {
 
@@ -28,7 +28,7 @@ const logRecruiter = (req, profId) => {
           return false;
         }
         const companyObj = _.find(recruiter.credit, (obj) => {
-          return obj.company.toLowerCase() === company.toLowerCase()
+          return obj.company.toLowerCase() === company
         })
 
         if (companyObj) {
