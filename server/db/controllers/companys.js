@@ -27,27 +27,8 @@ export function get(req, res) {
     }
     return res.json(company);
   }
-
-  if (req.params.companyName) {
-    Company.findOne({
-      "name_lower": req.params.companyName.toLowerCase()
-    }).exec(respCb);
-  } else {
-    if (!req.user || !req.user.profile_id) {
-      return res.status(403).send({
-        error: 'No currentUser.'
-      });
-    } else {
-      Profile.findById(req.user.profile_id, (err, prof) => {
-        if (!prof) {
-          return res.status(404).send({
-            error: 'No company associated with this currentUser.'
-          });
-        }
-        Company.findById(prof.company_id, respCb)
-      })
-    }
-  }
+  
+  Company.findById(req.params.id, respCb)
 
 }
 

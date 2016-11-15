@@ -7,12 +7,14 @@ import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
 import moment from 'moment';
 import _ from 'lodash';
 
 import classNames from 'classnames/bind';
-import styles from 'css/components/profile/role';
+import styles from 'css/components/role';
 const cx = classNames.bind(styles);
 let timeout;
 
@@ -23,7 +25,7 @@ export default class RoleAdd extends React.Component {
     roleChange: PropTypes.func.isRequired,
     toggleEdit: PropTypes.func.isRequired,
     addVisible: PropTypes.bool,
-    onProjectSave: PropTypes.func.isRequired
+    onRoleSave: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -37,7 +39,7 @@ export default class RoleAdd extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     if (!this.validate()) {
-      this.props.onProjectSave(this.props.role);
+      this.props.onRoleSave(this.props.role);
     }
   }
   
@@ -128,14 +130,12 @@ export default class RoleAdd extends React.Component {
 
           <div className="col-md-6">
             <TextField
-              value={role.name}
+              value={role.title}
               errorText={validationErrors.name}
-              floatingLabelText="Add a Project"
+              floatingLabelText="Add a Role"
               onChange={this.handleChange('name')}
             />
           </div>
-
-          { addVisible || role.description ? (<span>
 
           <div className="col-md-6">
             <TextField
@@ -145,35 +145,67 @@ export default class RoleAdd extends React.Component {
               onChange={this.handleChange('roleUrl')}
             />
           </div>
-          
-          <UibaDatePicker
-            data={role.startDate}
-            name='start'
-            onDateChange={this.handleDateChange}
-            validationErrors={validationErrors}
-          />
 
-          { !role.current ? (
-            <UibaDatePicker
-              data={role.endDate}
-              name='end'
-              onDateChange={this.handleDateChange}
-              validationErrors={validationErrors}
-            />
-          ) : (null)}
-
-          <div className='col-md-6 col-md-offset-6'>
-            <Checkbox
-              label="Current"
-              checked={role.current}
-              onCheck={this.handleChange('current')}
+          <div className="col-md-6">
+            <TextField
+              value={role.title}
+              errorText={validationErrors.title}
+              floatingLabelText="Title"
+              onChange={this.handleChange('title')}
             />
           </div>
           
+          <div className="col-md-6">
+            <SelectField
+              errorText={validationErrors.degreeMin}
+              onChange={this.handleSize}
+              value={company.degreeMin}
+              floatingLabelText="Minimum Education Level"
+              hintText='Minimum Education Level'
+            >
+              <MenuItem value={'High School'} primaryText='High School'/>
+              <MenuItem value={'Associate'} primaryText='Associate'/>
+              <MenuItem value={'Bachelor'} primaryText='Bachelor'/>
+              <MenuItem value={'Master'} primaryText='Master'/>
+              <MenuItem value={'MBA'} primaryText='MBA'/>
+              <MenuItem value={'JD'} primaryText='JD'/>
+              <MenuItem value={'MD'} primaryText='MD'/>
+              <MenuItem value={'PhD'} primaryText='PhD'/>
+              <MenuItem value={'Engineer Degree'} primaryText='Engineer Degree'/>
+              <MenuItem value={'Certificate'} primaryText='Certificate'/>
+              <MenuItem value={'Coursework'} primaryText='Coursework'/>
+              <MenuItem value={'Other'} primaryText='Other'/>
+            </SelectField>
+          </div>
+          
+          <div className="col-md-6">
+            <SelectField
+              errorText={validationErrors.degreeMax}
+              onChange={this.handleSize}
+              value={company.degreeMax}
+              floatingLabelText="Maximum Education Level"
+              hintText='Maximum Education Level'
+            >
+              <MenuItem value={'High School'} primaryText='High School'/>
+              <MenuItem value={'Associate'} primaryText='Associate'/>
+              <MenuItem value={'Bachelor'} primaryText='Bachelor'/>
+              <MenuItem value={'Master'} primaryText='Master'/>
+              <MenuItem value={'MBA'} primaryText='MBA'/>
+              <MenuItem value={'JD'} primaryText='JD'/>
+              <MenuItem value={'MD'} primaryText='MD'/>
+              <MenuItem value={'PhD'} primaryText='PhD'/>
+              <MenuItem value={'Engineer Degree'} primaryText='Engineer Degree'/>
+              <MenuItem value={'Certificate'} primaryText='Certificate'/>
+              <MenuItem value={'Coursework'} primaryText='Coursework'/>
+              <MenuItem value={'Other'} primaryText='Other'/>
+            </SelectField>
+          </div>
+
+
           <div className="col-md-12">
             <TextField
               value={role.description}
-              className={cx('description') + ' col-md-12'}
+              className={cx('description')}
               errorText={validationErrors.description}
               floatingLabelText="Description"
               onChange={this.handleChange('description')}
@@ -189,7 +221,6 @@ export default class RoleAdd extends React.Component {
             ) : (<span />)}
             <FlatButton className='pull-left' label="Close" onClick={this.props.toggleEdit} primary={true} />
           </div>
-          </span>) : (<span/>)}
         </form>
       </div>
     )

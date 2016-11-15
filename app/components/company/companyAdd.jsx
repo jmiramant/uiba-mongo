@@ -162,7 +162,11 @@ export default class CompanyAdd extends React.Component {
       >
         <div className={cx('upload-text')}>
           {this.state.uploaderProgress ? (
-            this.state.uploaderProgress + '%'
+            <CircularProgress
+              mode="determinate"
+              value={this.state.uploaderProgress}
+            />
+            
           ) : (
             'Drop or click to upload Company Logo.'
           )}

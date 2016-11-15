@@ -7,10 +7,10 @@ function makeCompaniesRequest(method, data, api = '/companies') {
   return request[method](api, data);
 }
 
-export function fetchCompanyRequest(companyName) {
+export function fetchCompanyRequest(id) {
   return {
     type: types.GET_COMPANY,
-    promise: makeCompaniesRequest('get', {}, '/companies/' + companyName)
+    promise: makeCompaniesRequest('get', {}, '/companies/' + id)
   };
 }
 
@@ -29,11 +29,11 @@ export function fetchCompanyFailure(data) {
   };
 }
 
-export function fetchCompany(companyName) {
+export function fetchCompany(id) {
  
   return (dispatch) => {
 
-    const uri = companyName ? ('/company/' + companyName) : ('/company')
+    const uri = id ? ('/company/' + id) : ('/company')
 
     return makeCompaniesRequest('get', {}, uri)
       .then(res => {

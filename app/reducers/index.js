@@ -13,6 +13,7 @@ import skill from 'reducers/skill';
 import company from 'reducers/company';
 import confirmation from 'reducers/confirmation';
 import address from 'reducers/address';
+import role from 'reducers/role';
 import { routerReducer as routing } from 'react-router-redux';
 
 // Combine reducers with routeReducer which keeps track of
@@ -32,7 +33,8 @@ const rootReducer = combineReducers({
   skill,
   confirmation,
   company,
-  address
+  address,
+  role
 });
 
 export default rootReducer;
