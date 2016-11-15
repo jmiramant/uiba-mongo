@@ -20,23 +20,20 @@ class CompanyContainer extends React.Component {
     const {
       children,
       company,
+      addShow,
       companyActions
     } = this.props;
 
-    const isCompany = (company) => { 
-      return Object.keys(company).length > 0
-    };
-
     return (
-      <nav className={cx('navigation')} role="navigation">
-        {isCompany(company) ? (
-          children
-        ) : (
+      <div>
+        {addShow ? (
           <CompanyAdd
-            addVisible={true}
+            addVisible={addShow}
           />
+        ) : (
+         children
         )}
-      </nav>
+      </div>
     );
   }
 };
@@ -47,7 +44,8 @@ CompanyContainer.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    company: state.company.company
+    company: state.company.company,
+    addShow: state.company.addShow
   };
 }
 

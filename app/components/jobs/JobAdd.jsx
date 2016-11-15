@@ -4,8 +4,6 @@ import UibaDatePicker from '../../components/DatePicker';
 import { validateJobHelper } from '../helpers/jobValidations';
 
 import TextField from 'material-ui/TextField';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
