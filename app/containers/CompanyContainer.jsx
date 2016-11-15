@@ -24,16 +24,22 @@ class CompanyContainer extends React.Component {
       companyActions
     } = this.props;
 
+    const setupCompany = (
+      <div>
+        
+        <p>You have successfully logged in to the Company Adminstrators Portal. Please begin by completing a company profile.</p>
+        
+        <CompanyAdd
+          addVisible={addShow}
+        />
+
+      </div>
+    )
+
     return (
       <div className={cx('companyAdmin-container') + ' container'}>
         <div className={cx('container-card') + ' col-md-12'}>
-          {addShow ? (
-            <CompanyAdd
-              addVisible={addShow}
-            />
-          ) : (
-           children
-          )}
+          {addShow ? (setupCompany) : (children)}
         </div>
       </div>
     );

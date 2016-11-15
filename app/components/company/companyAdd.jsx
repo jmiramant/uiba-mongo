@@ -43,7 +43,8 @@ export default class CompanyAdd extends React.Component {
 
   state = {
     validationErrors: {},
-    showAddress: false
+    isCompanySet: false,
+    uploaderProgress: null
   }
 
   disableEnter(e) {
@@ -110,6 +111,15 @@ export default class CompanyAdd extends React.Component {
     this.changeCompanyProps(field, value)
   }
 
+  uploaderFinish(resp) {
+    this.changeCompanyProps('logoUrl', 'https://uiba-test.s3.amazonaws.com/' + resp.filename)
+  }
+
+  uploaderProgress(progress) {
+    this.setState({uploaderProgress: progress})
+  }
+
+
   render () {
     const {
             validationErrors
@@ -121,27 +131,62 @@ export default class CompanyAdd extends React.Component {
           } = this.props;
 
     const isVisible = addVisible ? '' : ' ' + cx('closed');
+    
+    const style = {
+      height: 125,
+      width: 125,
+      border: 'dashed 2px #999',
+      borderRadius: 5,
+      position: 'relative',
+      cursor: 'pointer',
+      margin: '0px auto'
+    }
 
+    const uploaderProps = {
+      style,
+    }
+
+    const logoUploader = (
+      <DropzoneS3Uploader
+        uploadRequestHeaders={{ 'x-amz-acl': 'public-read' }}
+        s3Url={'https://uiba-test.s3.amazonaws.com'}
+        accept={"image/*"}
+        signingUrl={"/s3/sign"}
+        contentDisposition={"auto"}
+        onProgress={this.uploaderProgress.bind(this)}
+        onFinish={this.uploaderFinish.bind(this)}
+        {...uploaderProps}
+      >
+        <div className={cx('upload-text')}>
+          {this.state.uploaderProgress ? (
+            this.state.uploaderProgress + '%'
+          ) : (
+            'Drop or click to upload Company Logo.'
+          )}
+        </div>
+      </DropzoneS3Uploader>
+    )
+   
     return (
       <div className={cx('companyAdd-container') + isVisible}>
         <form>
+          
+          <div className={cx("logo-container")}>
+            {company.logoUrl ? (
+              <div style={{backgroundImage: 'url(' + company.logoUrl + ')'}} className={cx("company-logo")}/>
+            ) : (logoUploader)}
+          </div>
 
-          <div className="col-md-6">
+          <div className="col-md-12">
             <CompanyNameTypeahead 
               selection={company.name}
               initial={company.name}
               error={validationErrors.name}
               handleChange={this.handleName.bind(this)}
             />
+
           </div>
 
-          <DropzoneS3Uploader
-            signingUrl="/s3/sign"
-            accept="image/*"
-            s3Url='https://uiba-test.s3.amazonaws.com'
-            uploadRequestHeaders={{ 'x-amz-acl': 'public-read' }}
-            contentDisposition="auto"
-          />
 
           <div className="col-md-6">
             <TextField
@@ -185,25 +230,36 @@ export default class CompanyAdd extends React.Component {
             />
           </div>
 
-          <TextField
-            value={company.specialties}
-            floatingLabelText="Specialties"
-            errorText={validationErrors.specialties}
-            onChange={this.handleChange('specialties')}
-          />
+          <div className="col-md-6">
+            <TextField
+              value={company.specialties}
+              floatingLabelText="Specialties"
+              errorText={validationErrors.specialties}
+              onChange={this.handleChange('specialties')}
+            />
+          </div>
 
-          <AutoComplete
-            onKeyDown={this.disableEnter}
-            hintText='Industry'
-            searchText={company.industry}
-            floatingLabelText='Industry'
-            errorText={validationErrors.industry}
-            filter={AutoComplete.fuzzyFilter}
-            dataSource={IndustryData}
-            onNewRequest={this.handleIndustryChange.bind(this)}
-            onUpdateInput={this.handleIndustryChange.bind(this)}
-            maxSearchResults={5}
-          />
+          <div className="col-md-6">
+            <AutoComplete
+              onKeyDown={this.disableEnter}
+              hintText='Industry'
+              searchText={company.industry}
+              floatingLabelText='Industry'
+              errorText={validationErrors.industry}
+              filter={AutoComplete.fuzzyFilter}
+              dataSource={IndustryData}
+              onNewRequest={this.handleIndustryChange.bind(this)}
+              onUpdateInput={this.handleIndustryChange.bind(this)}
+              maxSearchResults={5}
+            />
+          </div>
+
+          <div className={cx('btn-group-container')}>
+            <div className={cx('btn-group')}>
+              <RaisedButton className='pull-right' onClick={this.handleSubmit} label="Save" primary={true} />
+              <FlatButton className='pull-left' label="Close" onClick={this.props.toggleEdit} primary={true} />
+            </div>
+          </div>
 
         </form>
       </div>

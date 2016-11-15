@@ -2,3 +2,39 @@
   min-height: 600px;
   background-color: #fff;
 }
+
+.btn-group-container {
+  width: 100%;
+  float: left;
+  height: 40px;
+}
+
+.upload-text {
+  padding: 15px 10px;
+  text-align: center;
+  color: #a6a6a6;
+}
+
+.logo-container {
+  width: 100%;
+}
+
+.company-logo {
+  width: 125px;
+  height: 125px;
+  border: 2px solid #a6a6a6;
+  margin: 0 auto;
+  overflow: hidden;
+  background-position: 50% 50%;
+  background-size: 100%;
+}
+
+.logo-img {
+  width: 100%;
+}
+
+
+.btn-group {
+  width: 300px;
+  margin: 20px auto;
+}

@@ -23,6 +23,12 @@ class TypeaheadApp extends Component {
 
   actions = bindActionCreators(actionCreators, this.props.dispatch);
   
+  handleTypeaheadChange(item) {
+    const _item = _.find(this.props.results, (i) => { return i.name === item });
+    this.actions.setCompanyFromTypeahead(_item);
+    this.props.handleChange(this)
+  }
+
   componentDidMount() {
     if (this.props.initial !== "") {
       this.actions.setInitialTypeaheadData(this.props.initial)
@@ -39,6 +45,7 @@ class TypeaheadApp extends Component {
         results={this.props.results} 
         selection={this.props.selection}
         error={this.props.error}
+        onSelect={this.handleTypeaheadChange.bind(this)}
         label="Company Name"
       />
     );

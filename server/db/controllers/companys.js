@@ -59,7 +59,7 @@ export function typeahead(req, res) {
   const query = new RegExp(req.query.search, 'i');
   Company
     .find({name_lower: {$regex: query}})
-    .limit(10)
+    .limit(5)
     .exec((err, results) => {
       if (err) return res.status(500).send({error: err});
       return res.json(results);
