@@ -19,6 +19,11 @@ const UserSchema = new mongoose.Schema({
   resetPasswordExpires: Date,
   google: {},
   linkedin: {},
+  role: { 
+    type: Array,
+    enum: [1,2,3],
+    default: [1]
+  },
   profile_id: {type: Schema.Types.ObjectId, ref: 'Profile'},
   isEmailVerified: { type: Boolean, default: false },
   verifyEmailToken: String,
