@@ -122,18 +122,7 @@ class Apply extends Component {
             <div className={cx('login', {
               waiting: isWaiting
             })}>
-              <div className={cx('li-container')}>
-                <a className={cx('li-auth')}
-                  onClick={ this.trackLinkedAuth }
-                  href="/auth/linkedin"
-                >
-                <div className={cx('li-btn-container')}>
-                  <img src={linkedinLogo} />
-                  <p>{isLogin ? ('Log In'):('Signup')} Using LinkedIn</p>
-                </div>
-                </a>
 
-              </div>
               <Divider/>
               
 
