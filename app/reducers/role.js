@@ -1,7 +1,5 @@
 import * as types from 'types';
-import {
-  combineReducers
-} from 'redux';
+import { combineReducers } from 'redux';
 import _ from 'lodash';
 
 const isFetching = (
@@ -47,19 +45,19 @@ const role = (
       newStateOjb[action.state.field] = action.state.value
       return newStateOjb;
     case types.CREATE_ROLE_SUCCESS:
-      return {
+      const blank =  {
         company_id: undefined,
         address_id: undefined,
         title: undefined,
         description: undefined,
         applicantCode: undefined,
         degreeRequirements: undefined,
-        degreeMax: undefined,
         experienceMin: undefined,
         experienceMin: undefined,
         appliedCount: undefined,
         isArchived: undefined
-      };
+      }
+      return blank;
     default:
       return state;
   }
@@ -105,7 +103,6 @@ const roles = (
   }
 };
 
-
 const addShow = (
   state = false,
   action
@@ -118,6 +115,23 @@ const addShow = (
   }
 };
 
+const eduRequirements = (
+  state = [],
+  action
+) => {
+  switch (action.type) {
+    case types.GET_ROLE_SUCCESS:
+      return action.res.data
+    case types.TOGGLE_ROLE_EDU_REQUIREMENT:
+      const requirments = [...state];
+      const dupIndex = requirments.indexOf(action.data);
+      dupIndex !== -1 ? requirments.splice(dupIndex, 1) : requirments.push(action.data)
+      return requirments
+    default:
+      return state;
+  }
+};
+
 const skill = (
   state = {},
   action
@@ -125,8 +139,7 @@ const skill = (
   switch (action.type) {
     case types.CREATE_NEW_ROLE_SKILL:
       return {
-        role_id: undefined,
-        type: undefined,
+        type: '', 
         proficiency: undefined,
         lengthOfUse: undefined,
       }
@@ -181,31 +194,12 @@ const skills = (
   }
 };
 
-const eduRequirements = (
-  state = [],
-  action
-) => {
-  switch (action.type) {
-    case types.GET_ROLE_SUCCESS:
-      debugger
-      return action.res.data
-    case types.TOGGLE_ROLE_EDU_REQUIREMENT:
-      const requirments = [...state];
-      const dupIndex = requirments.indexOf(action.data);
-      dupIndex !== -1 ? requirments.splice(dupIndex, 1) : requirments.push(action.data)
-      return requirments
-    default:
-      return state;
-  }
-};
 
 const roleReducer = combineReducers({
   isFetching,
   role,
   roles,
   addShow,
-  skill,
-  skills,
   eduRequirements
 });
 

@@ -1,0 +1,38 @@
+@import '../common/colors';
+
+.uiba-slider-container {
+  color: rgba(0, 0, 0, 0.298039);
+  margin: 24px 0;
+}
+
+.title {
+  margin-bottom: 12px;
+}
+
+.stage-label-container {
+  width: 109%;
+  margin-left: -20px;
+  padding-top: 17px;
+}
+
+.stage-label {
+  text-align: center;
+  display: inline-block;
+  font-size: 12px;
+  cursor: pointer;
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  &.active {
+    color: var(--colorMuiSlider);
+  }
+  &:hover {
+    color: var(--colorBrightPink);
+  }
+}
+
+@media (max-width: 508px) { 
+  .stage-label {
+    font-size: 7px;
+  }
+}

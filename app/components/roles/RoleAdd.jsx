@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { validateJobHelper } from '../helpers/roleValidations';
 import UibaDatePicker from '../../components/DatePicker';
 import MulitselectPopover from '../../components/MulitselectPopover';
+import DuelSlider from '../../components/DuelSlider';
 import Skills from 'components/skills/SkillList';
 
 import TextField from 'material-ui/TextField';
@@ -76,6 +77,11 @@ export default class RoleAdd extends React.Component {
     if (!this.props.role.company_id) this.setCompanyId()
   }
 
+  sliderChange(val) {
+    this.changeProjectProps('experienceMin', val[0])
+    this.changeProjectProps('experienceMax', val[1])
+  }
+
   handlePicklistChange = field => (e, index, value) => {
     this.changeProjectProps(field, value)
   }
@@ -86,53 +92,6 @@ export default class RoleAdd extends React.Component {
 
   onSetEduReq() {
     this.changeProjectProps('degreeRequirements', this.props.eduRequirements)
-  }
-
-  maxDegree(role, validationErrors) {
-    const degrees = ['High School', 'Associate', 'Bachelor','Master','MBA','JD','MD','PhD','Engineer Degree','Certificate','Coursework','Other'];
-    
-    let splc = role.degreeMin ? degrees.indexOf(role.degreeMin) : 0
-
-    const items = degrees.splice(splc, degrees.length).map((name) => {
-      return (<MenuItem value={name} primaryText={name}/>)
-    })
-
-    return (
-      <SelectField
-        errorText={validationErrors.degreeMax}
-        onChange={this.handlePicklistChange('degreeMax')}
-        value={role.degreeMax}
-        floatingLabelText="Max Education Level"
-        hintText='Max Education Level'
-      >
-        {items}
-      </SelectField>
-    )
-  }
-
-  maxExperience(role, validationErrors) {
-    const range = [0,1,2,3,4,5,6,7,8,9,10];
-    
-    const splc = role.experienceMin ? range.indexOf(role.experienceMin) : 0
-
-    const items = range.splice(splc, range.length).map((name) => {
-      let val = name;
-      if (name === 0) val = '>1';
-      if (name === 10) val = '10+';
-      return (<MenuItem value={name} primaryText={val.toString()}/>)
-    })
-
-    return (
-      <SelectField
-        errorText={validationErrors.experienceMax}
-        onChange={this.handlePicklistChange('experienceMax')}
-        value={role.experienceMax}
-        floatingLabelText="Max Education Level"
-        hintText='Max Education Level'
-      >
-        {items}
-      </SelectField>
-    )
   }
 
   render () {
@@ -190,33 +149,15 @@ export default class RoleAdd extends React.Component {
           </div>
 
           <div className="col-md-6">
-            <SelectField
-              errorText={validationErrors.experienceMin}
-              onChange={this.handlePicklistChange('experienceMin')}
-              value={role.experienceMin}
-              floatingLabelText="Minimum Experience Level"
-              hintText='Minimum Experience Level'
-            >
-              <MenuItem value={0} primaryText='>1'/>
-              <MenuItem value={1} primaryText='1'/>
-              <MenuItem value={2} primaryText='2'/>
-              <MenuItem value={3} primaryText='3'/>
-              <MenuItem value={4} primaryText='4'/>
-              <MenuItem value={5} primaryText='5'/>
-              <MenuItem value={6} primaryText='6'/>
-              <MenuItem value={7} primaryText='7'/>
-              <MenuItem value={8} primaryText='8'/>
-              <MenuItem value={9} primaryText='9'/>
-              <MenuItem value={10} primaryText='10+'/>
-            </SelectField>
-          </div>
-          
-          <div className="col-md-6">
-            {this.maxExperience(role, validationErrors)}
-          </div>
-
-          <div className="col-md-6">
-
+            <DuelSlider
+              dataSource={[role.experienceMin, role.experienceMax]}
+              title="Length of Use (Yrs)"
+              field={'lengthOfUse'}
+              style={{width: '90%'}}
+              handleChange={this.sliderChange.bind(this)}
+              storeValue={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+              stages={['>1', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10+']}
+            />
           </div>
 
           <div className={cx('profile-btn-group')}>
