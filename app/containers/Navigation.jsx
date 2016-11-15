@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { logOut } from 'actions/users';
+import { logOut, fetchCurrentUser } from 'actions/users';
 import { NavDropdown, MenuItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
@@ -17,8 +17,14 @@ class Navigation extends Component {
 
   render() {
 
-    const { user, logOut } = this.props;
+    const { user, logOut, currentUser} = this.props;
     
+    const isAdmin = () => {
+      if (currentUser.role) {
+        return currentUser.role.indexOf(2) !== 0;
+      }
+    }
+
     return (
       <nav className={cx('navigation')} role="navigation">
         { user.authenticated ? (
@@ -36,6 +42,8 @@ class Navigation extends Component {
         )}
 
         <div className={cx('nav--items-right') + ' pull-right hidden-xs'}>
+          { (isAdmin()) ? ( <Link className={cx('item')} to="/company-admin/dashboard">Admin</Link> ) : (<span />)}
+
           { user.authenticated ? ( <Link className={cx('item')} to="/profile">Profile</Link> ) : (<span />)}
           <Link to="/about" className={cx('item')} activeClassName={cx('active')}>About</Link>
           { user.authenticated ? (
@@ -46,15 +54,20 @@ class Navigation extends Component {
           )}
         </div>
         <NavDropdown title='' className={cx('navbar--resp-nav') + ' hidden-sm pull-right hidden-md hidden-lg'} id="responsive-nav-dropdown">
+          { (isAdmin()) ? ( 
+            <LinkContainer to="/company-admin/dashboard">
+              <MenuItem>
+                Admin
+              </MenuItem>
+            </LinkContainer>
+          ) : (null)}
           { user.authenticated ? (
             <LinkContainer to="/profile">
               <MenuItem>
                 Profile
               </MenuItem>
             </LinkContainer>
-          ) : (
-            <span />
-          )}
+          ) : (null)}
 
           <LinkContainer to="/about">
             <MenuItem>
@@ -89,10 +102,18 @@ Navigation.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    user: state.user
+    user: state.user,
+    currentUser: state.user.currentUser
   };
 }
 
-export default connect(mapStateToProps, {
-  logOut
-})(Navigation);
+function mapDispatchToProps (dispatch) {
+  return {
+    logOut
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Navigation);

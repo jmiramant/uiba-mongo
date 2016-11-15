@@ -67,7 +67,9 @@ export default (app) => {
   }
 
   if (companysController) {
-    app.get('/companies/:companyName', companysController.get);
+    app.get('/company', companysController.get);
+    app.get('/company/:companyName', companysController.get);
+    app.get('/companies/:companyName', companysController.list);
   } else {
     console.warn(unsupportedMessage('companies routes'));
   }

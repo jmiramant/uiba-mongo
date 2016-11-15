@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 import { Profile } from './profile';
-import { updateProfile } from './UpdateMiddleware';
+import { updateProfile } from './updateMiddleware';
 import { User } from './user';
 
 const SkillSchema = new mongoose.Schema({

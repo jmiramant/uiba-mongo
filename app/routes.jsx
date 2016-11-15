@@ -17,13 +17,15 @@ import CompanyContainer from 'containers/CompanyContainer'
 import CompanyDashboard from 'containers/CompanyDashboard'
 import ApplicantList from 'containers/ApplicantList'
 import ApplicantShow from 'containers/ApplicantShow'
-
 import { recoveryCapture } from 'actions/apply';
-
+import {fetchCurrentUser} from 'actions/users';
 
 export default (store) => {
   const requireAuth = (nextState, replace, callback) => {
     const { user: { authenticated }} = store.getState();
+
+    store.dispatch(fetchCurrentUser());
+
     if (!authenticated) {
       replace({
         pathname: '/login',
@@ -35,6 +37,9 @@ export default (store) => {
 
   const requireCompanyAuth = (nextState, replace, callback) => {
     const { user: { authenticated }} = store.getState();
+    
+    store.dispatch(fetchCurrentUser());
+    
     if (!authenticated ) {
       replace({
         pathname: '/login/company',
@@ -94,6 +99,7 @@ export default (store) => {
       <Route path="about" component={About}></Route>
       <Route path="terms" component={Terms}></Route>
       <Route path="privacy" component={Privacy}></Route>
+
       <Route path="company-admin" component={CompanyContainer} onEnter={requireCompanyAuth}>
         <Route path="dashboard" component={CompanyDashboard}></Route>
         <Route path="applicants" component={ApplicantList}></Route>

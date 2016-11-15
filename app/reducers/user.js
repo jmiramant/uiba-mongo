@@ -24,6 +24,13 @@ const currentUser = (
       indentifyUser(action.res.data.email);
       setUser(action.res.data.email, action.res.data);
       return action.res.data;
+    case types.LOGIN_SUCCESS_USER:
+    case types.LOGOUT_ERROR_USER:
+      return true;
+    case types.LOGIN_ERROR_USER:
+    case types.SIGNUP_SUCCESS_USER:
+    case types.SIGNUP_ERROR_USER:
+    case types.LOGOUT_SUCCESS_USER:
     default:
       return state;
   }

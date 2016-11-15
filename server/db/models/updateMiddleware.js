@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 import { Profile } from './profile';
 
-export default function updateProfile(doc) {
+export function updateProfile(doc) {
   mongoose.model("Profile").findById(doc.profile_id, (err, prof) => {
     if (prof) {
       prof.childUpdatedAt = new Date();
@@ -10,11 +10,16 @@ export default function updateProfile(doc) {
   });
 }
 
-export default function UpdateCompanyOnRole(doc) {
+export function UpdateCompanyOnRole(doc) {
   mongoose.model("Company").findById(doc.profile_id, (err, prof) => {
     if (prof) {
       prof.roleUpdatedAt = new Date();
       prof.save();
     }
   });
+}
+
+export default {
+  UpdateCompanyOnRole,
+  updateProfile
 }
