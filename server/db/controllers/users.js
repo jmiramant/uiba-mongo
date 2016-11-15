@@ -5,7 +5,7 @@ import passport from 'passport';
 import Company from '../models/company';
 import async from 'async'
 import mailer from '../../utils/email.js'
-
+import _ from 'lodash';
 
 const isApply = (req) => {
   return req.headers.referer.indexOf('/apply/') !== -1
@@ -68,15 +68,7 @@ const resolveApplyRedirect = (req, profile, cb) => {
  * GET /user
  */
 export function me(req, res) {
-<<<<<<< 4683aede92399a7174e859c707aca28bae0745aa
   if (!req.user) {return res.status(403).json({ message: "There is no currentUser" })}
-  return res.json(req.user);
-=======
-  if (!req.user) {
-    console.log('Error in user /me query');
-    return res.status(500).send('Something went wrong getting the data');
-  }
-
   return res.json(req.user);
 }
 
@@ -97,7 +89,6 @@ export function create(req, res) {
     return res.json(user);
 
   });
->>>>>>> user create state
 }
 
 /**
@@ -133,20 +124,12 @@ export function login(req, res, next) {
           user_id: user._id
         }, (profErr, _profile) => {
           if (profErr) console.log(profErr)
-<<<<<<< 4683aede92399a7174e859c707aca28bae0745aa
           const cb = () => {
             _profile.save( (err, prof) => {
               login();
             })
           }
           resolveApplyRedirect(req, _profile, cb)
-=======
-          resolveApplyRedirect(req, _profile)
-          _profile.save((err, prof) => {
-            console.log(err)
-            login();
-          })
->>>>>>> user create state
         })
       } else {
         login();
@@ -154,13 +137,9 @@ export function login(req, res, next) {
 
 
     } else {
-<<<<<<< 4683aede92399a7174e859c707aca28bae0745aa
-      res.send(401, {message: 'This email is not yet verified. Please check your email to confirm the account.'});
-=======
       res.send(401, {
-        message: 'This email is not yet verified. Please check our email to confirm.'
+        message: 'This email is not yet verified. Please check your email to confirm the account.'
       });
->>>>>>> user create state
     }
   })(req, res, next);
 }
@@ -179,7 +158,7 @@ export function logout(req, res) {
  * Create a new local account
  */
 export function signUp(req, res, next) {
-  const user = new User({
+  let user = new User({
     email: req.body.email,
     password: req.body.password
   });
@@ -187,10 +166,17 @@ export function signUp(req, res, next) {
   User.findOne({
     email: req.body.email
   }, (findErr, existingUser) => {
-    if (existingUser) {
+    if (existingUser && !existingUser.claim) {
       return res.status(409).json({
         message: 'Account with this email address already exists. Did you sign up with LinkedIn?'
       });
+    }
+
+    if (existingUser.claim) {
+      user = existingUser;
+      user.claim = false;
+      user.email = req.body.email;
+      user.password = req.body.password;
     }
 
     const _profile = new Profile({
@@ -252,7 +238,8 @@ export function emailConfirmation(req, res, next) {
         if (loginErr) return res.status(401).json({
           message: loginErr
         });
-        res.redirect('/profile');
+        const path = user.role.includes(2) ? '/company-admin/dashboard' : '/profile'
+        res.redirect(path);
       });
     })
 
@@ -281,11 +268,72 @@ export function resendEmailConfirmation(req, res, next) {
 
 }
 
+
+/**
+ * POST /role
+ */
+
+export function role(req, res) {
+
+  const isRoleNumber = (role) => {
+    return typeof(Number(role)) === 'number';
+  };
+  if (isRoleNumber(req.body.role)) {
+    
+    const roleDigit = Number(req.body.role);
+
+    User.findOne({
+      email: req.body.email
+    }, (findErr, user) => {
+      if (!user) {
+        var user = new User();
+        user.claim = true;
+        user.email = req.body.email;
+        user.role = [1];
+      }
+      const targetIndex = user.role.indexOf(roleDigit);
+      const roleArr = user.role;
+
+      if (roleDigit > 1 && targetIndex === -1) {
+        _.uniq(roleArr.push(roleDigit));
+        user.role = roleArr;
+
+      } else if (roleDigit > 1) {
+
+        roleArr.splice(roleArr.indexOf(roleDigit), 1)
+        user.role = roleArr;
+
+      } else {
+
+        return res.status(404).send('Default value is 1 and cannot be removed.');
+
+      }
+
+      user.save((err, user) => {
+
+        if (!user || err) {
+          console.log('Error in user /create');
+          return res.status(500).send('Something went wrong getting the data');
+        }
+
+        return res.json(user);
+
+      });
+
+    });
+
+  } else {
+
+    return res.status(500).send('User role must be a number.');
+
+  }
+}
+
 export default {
   me,
   login,
   logout,
-  create,
+  role,
   signUp,
   emailConfirmation,
   resendEmailConfirmation

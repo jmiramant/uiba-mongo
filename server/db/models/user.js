@@ -19,6 +19,7 @@ const UserSchema = new mongoose.Schema({
   resetPasswordExpires: Date,
   google: {},
   linkedin: {},
+  claim: { type: Boolean, default: false },
   role: { 
     type: Array,
     enum: [1,2,3],
