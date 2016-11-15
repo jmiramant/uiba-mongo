@@ -1,4 +1,6 @@
 import React, { PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 import { validateJobHelper } from '../helpers/roleValidations';
 import UibaDatePicker from '../../components/DatePicker';
@@ -28,7 +30,8 @@ export default class RoleAdd extends React.Component {
     roleChange: PropTypes.func.isRequired,
     toggleEdit: PropTypes.func.isRequired,
     addVisible: PropTypes.bool,
-    onRoleSave: PropTypes.func.isRequired
+    onRoleSave: PropTypes.func.isRequired,
+    onToggleEduReqSelect: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -79,6 +82,10 @@ export default class RoleAdd extends React.Component {
 
   handleChange = field => (e, value) => {
     this.changeProjectProps(field, value)
+  }
+
+  onSetEduReq() {
+    this.changeProjectProps('degreeRequirements', this.props.eduRequirements)
   }
 
   maxDegree(role, validationErrors) {
@@ -135,7 +142,9 @@ export default class RoleAdd extends React.Component {
 
     const {
             role,
-            addVisible
+            addVisible,
+            eduRequirements,
+            onToggleEduReqSelect,
           } = this.props;
 
     const isVisible = (role.description || addVisible) ? '' : ' ' + cx('closed');
@@ -173,8 +182,10 @@ export default class RoleAdd extends React.Component {
           <div className="col-md-6">
             <MulitselectPopover
               data={['High School','Associate','Bachelor','Master','MBA','JD','MD','PhD','Engineer Degree','Certificate','Coursework','Other']}
-              selected={role.degreeRequirements}
+              selected={eduRequirements}
               buttonText='Education Requirements'
+              onToggleSelect={onToggleEduReqSelect}
+              handleSet={this.onSetEduReq.bind(this)}
             />
           </div>
 
@@ -220,3 +231,11 @@ export default class RoleAdd extends React.Component {
     )
   }
 };
+
+function mapStateToProps(state) {
+  return {
+    eduRequirements: state.role.eduRequirements,
+  };
+}
+
+export default connect(mapStateToProps, {})(RoleAdd);

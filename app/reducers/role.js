@@ -118,11 +118,95 @@ const addShow = (
   }
 };
 
+const skill = (
+  state = {},
+  action
+) => {
+  switch (action.type) {
+    case types.CREATE_NEW_ROLE_SKILL:
+      return {
+        role_id: undefined,
+        type: undefined,
+        proficiency: undefined,
+        lengthOfUse: undefined,
+      }
+    case types.CHANGE_ROLE_SKILL:
+      const newStateOjb = {...state}
+      newStateOjb[action.state.field] = action.state.value
+      return newStateOjb;
+    case types.CREATE_ROLE_SKILL_SUCCESS:
+    case types.CREATE_ROLE_SKILL_FAILURE:
+      return {};
+    case types.TOGGLE_ROLE_SKILL_ADD:
+      if (!action.data && action.persist) {
+        return action.persist
+      } else {
+        return {};
+      }
+    default:
+      return state;
+  }
+};
+
+const skills = (
+  state = [],
+  action
+) => {
+  let updatedSkill
+  switch (action.type) {
+    case types.GET_ROLE_SKILLS_SUCCESS:
+      return skillOrder(action.res.data)
+    case types.CREATE_ROLE_SKILL_SUCCESS:
+      const newSchools = state.concat(action.data);
+      return skillOrder(newSchools)
+    case types.UPDATE_ROLE_SKILL_SUCCESS:
+      updatedSkill = state.slice()
+      updatedSkill[_.findIndex(state, function(j) { return j._id === action.data._id; })] = action.data
+      return skillOrder(updatedSkill)
+    case types.CHANGE_ROLE_SKILLS:
+      updatedSkill = [...state]
+      updatedSkill[_.findIndex(updatedSkill, {_id: action.state.id})][action.state.field] = updatedSkill[_.findIndex(updatedSkill, {_id: action.state.id})][action.state.field] = action.state.value
+      return skillOrder(updatedSkill)
+    case types.DELETE_ROLE_SKILL_SUCCESS:
+      const newState = state.slice();
+      return newState.filter( j => {
+        return j._id !== action.data.id;
+      })
+    case types.CREATE_ROLE_SKILL_REQUEST:
+      return {
+        data: action.res.data,
+      };
+    default:
+      return state;
+  }
+};
+
+const eduRequirements = (
+  state = [],
+  action
+) => {
+  switch (action.type) {
+    case types.GET_ROLE_SUCCESS:
+      debugger
+      return action.res.data
+    case types.TOGGLE_ROLE_EDU_REQUIREMENT:
+      const requirments = [...state];
+      const dupIndex = requirments.indexOf(action.data);
+      dupIndex !== -1 ? requirments.splice(dupIndex, 1) : requirments.push(action.data)
+      return requirments
+    default:
+      return state;
+  }
+};
+
 const roleReducer = combineReducers({
   isFetching,
   role,
   roles,
   addShow,
+  skill,
+  skills,
+  eduRequirements
 });
 
 export default roleReducer;

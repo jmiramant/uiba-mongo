@@ -23,6 +23,8 @@ class RoleList extends React.Component {
     onRoleSave: PropTypes.func.isRequired,
     roleChange: PropTypes.func.isRequired,
     rolesChange: PropTypes.func.isRequired,
+    onToggleEduReqSelect: PropTypes.func.isRequired,
+
   }
 
   constructor(props) {
@@ -48,7 +50,8 @@ class RoleList extends React.Component {
             company,
             addVisible,
             roleChange,
-            rolesChange
+            rolesChange,
+            onToggleEduReqSelect
           } = this.props;
 
     const renderItems = (
@@ -107,6 +110,7 @@ class RoleList extends React.Component {
         roleChange={roleChange}
         toggleEdit={this.toggleAddRole.bind(this)} 
         addVisible={addVisible}
+        onToggleEduReqSelect={onToggleEduReqSelect}
       />
 
     </div>)

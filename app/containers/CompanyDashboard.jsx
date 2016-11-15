@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
-import { Link } from 'react-router';
 import { connect } from 'react-redux';
 
 import Roles from 'containers/Roles'
@@ -40,6 +39,7 @@ class Dashboard extends Component {
           roleChange={actions.roleChange}
           rolesChange={actions.rolesChange}
           onRoleSave={actions.createRole}
+          onToggleEduReqSelect={actions.toggleEduReqSelect}
         />
       </div>
     )
