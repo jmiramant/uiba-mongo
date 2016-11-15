@@ -31,7 +31,7 @@ export function me(req, res) {
 export function get(req, res) {
   var uid = req.params.id
 
-  Skill.find({"user_id": mongoose.Types.ObjectId(uid)}).exec((err, skills) => {
+  Skill.find({"profile_id": mongoose.Types.ObjectId(uid)}).exec((err, skills) => {
     if (err) {
       return res.status(404).send('Something went wrong getting the skills data');
     }

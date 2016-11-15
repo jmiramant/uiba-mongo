@@ -24,15 +24,16 @@ const logRecruiter = (req, profId) => {
     const company = properString(req.headers.referer.split('/apply/')[1].split('/')[0]);
     const role = req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[0];
     let rid;
-    if (wre.split('/apply/')[1].split('/')[1].split('?')[1]) {
+    if (req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[1]) {
       rid = req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[1].split('&')[0].split('=')[1]
     } 
 
     if (role) {
-      Role.find({'applicantCode': role}, (err, role) => {
-        if (!err && role) {
-          role.addApplicant();
-          role.
+      Role.findOne({'applicantCode': role}, (err, _role) => {
+        if (!err && _role) {
+          _role.applicants.push(profId);
+          _role.appliedCount += 1;
+          _role.save();
         }
       })
     }

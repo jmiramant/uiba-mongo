@@ -1,11 +1,15 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, {
+  Schema
+} from 'mongoose';
 import Profile from '../models/profile';
 import Roles from '../models/role';
 import Company from '../models/company';
 import moment from 'moment';
 
 const handleError = (res, err) => {
-  return res.status(401).json({ message: err.message });
+  return res.status(401).json({
+    message: err.message
+  });
 }
 
 /**
@@ -14,39 +18,48 @@ const handleError = (res, err) => {
 export function me(req, res) {
 
   Roles.find({
-    
+
     "company_id": mongoose.Types.ObjectId(req.user.company_id)
 
   }).exec((err, roles) => {
-    
+
     if (err) return handleError(res, err);
     return res.status(200).json(roles);
-  
+
   });
 
 }
 
-/**
- * Get
- */
+
 export function get(req, res) {
   var uid = req.params.id
 
-  Roles.find({"company_id": mongoose.Types.ObjectId(uid)}).exec((err, roles) => {
+  Roles.findById(uid, (err, role) => {
+
+    if (err) return res.status(500).send('Something went wrong getting the data');
+    if (!role) return res.status(401).send('There is not role from this ID');
+
+    return res.status(200).json(role);
+
+  });
+}
+
+export function list(req, res) {
+  var uid = req.params.id
+
+  Roles.find({
+    "company_id": mongoose.Types.ObjectId(uid),
+  }).exec((err, roles) => {
     if (err) {
-      console.log('Error in "roles/me" query');
+      console.log('Error in "roles/list" query');
       return res.status(500).send('Something went wrong getting the data');
     }
     return res.status(200).json(roles);
   });
 }
 
-/**
- * Create
- */
-
 export function create(req, res) {
-  console.log(req.body)
+
   Roles.create({
     profile_id: mongoose.Types.ObjectId(req.user.profile_id),
     company_id: mongoose.Types.ObjectId(req.body.company_id),
@@ -56,84 +69,53 @@ export function create(req, res) {
     degreeMax: req.body.degreeMax,
     experienceMin: req.body.experienceMin,
     experienceMax: req.body.experienceMax
-  }, function (err, role) {
-    console.log(err)
+  }, function(err, role) {
+
     if (err) return handleError(res, err);
 
     return res.json(role);
 
   })
-  
+
 }
 
 export function update(req, res) {
-  
-  return Roles.findOne({"_id": req.body._id}).exec((err, role) => {
-    
-    role.description = req.body.description;
+
+  return Roles.findOne({
+    "_id": req.body._id
+  }).exec((err, role) => {
+
+    role.company_id = mongoose.Types.ObjectId(req.body.company_id);
     role.title = req.body.title;
-    
-    if (req.body.startDate) {
-      role.startDate = new Date(req.body.startDate);
-    }
-    
-    if (req.body.endDate) {
-      role.endDate = new Date(req.body.endDate);
-    }
+    role.description = req.body.description;
+    role.appliedCount = req.body.appliedCount;
+    role.isArchived = req.body.isArchived;
 
-    if (role.companyName !== req.body.companyName) {
+    role.save(err => {
+      if (err) return handleError(err);
+      return res.json(role);
+    });
 
-      const company_id = mongoose.Types.ObjectId(req.body._id);
-      
-      return Company.findOne({"name": company_id}).exec((err, company) => { 
-      
-        if (err) {
-          
-          role.current = company.current;
-          role.companyName = company.name;
-          role.company_id = company.company_id;
-          role.save( err => {
-            if (err) return handleError(err);
-            return res.json(role);
-          });
-      
-        } else {
-      
-          return Company.create({
-            name: req.body.companyName
-          }, function (err, company) {
-            role.companyName = req.body.companyName;
-            role.company_id = req.body.company_id;
-            role.save( err => {
-              if (err) return handleError(err);
-              return res.json(role);
-            });
-          })
-      
-        }
-      })
-    } else {
-     
-     role.save( err => {
-        if (err) return handleError(err);
-        return res.json(role);
-      });
-
-    }
   })
 }
 
-export function remove (req, res) {
-    Roles.findByIdAndRemove(req.params.id, function (err,offer){
-      if(err) { throw err; }
-      return res.status(200).json({id: req.params.id, message: 'This role has been deleted.'})// ...
-    })
+export function remove(req, res) {
+  Roles.findByIdAndRemove(req.params.id, function(err, offer) {
+    if (err) {
+      throw err;
+    }
+    return res.status(200).json({
+        id: req.params.id,
+        message: 'This role has been deleted.'
+      }) // ...
+  })
 }
 
 
 export default {
   me,
   get,
+  list,
   create,
   update,
   remove

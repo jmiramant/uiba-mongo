@@ -14,6 +14,7 @@ import company from 'reducers/company';
 import confirmation from 'reducers/confirmation';
 import address from 'reducers/address';
 import role from 'reducers/role';
+import applicant from 'reducers/applicant';
 import { routerReducer as routing } from 'react-router-redux';
 
 // Combine reducers with routeReducer which keeps track of
@@ -34,7 +35,8 @@ const rootReducer = combineReducers({
   confirmation,
   company,
   address,
-  role
+  role,
+  applicant
 });
 
 export default rootReducer;

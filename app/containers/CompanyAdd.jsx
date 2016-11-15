@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import * as profileActionCreators from 'actions/profiles';
 import * as companyActionCreator from 'actions/companies'
 import CompanyAdd from 'components/company/CompanyAdd';
 
@@ -19,8 +20,8 @@ class CompanyAddApp extends Component {
     
     const {
       actions,
-      addShow
-
+      addShow,
+      profile,
     } = this.props;
     
     if (data._id) {
@@ -34,6 +35,7 @@ class CompanyAddApp extends Component {
 
   render() {
     const {
+
       company,
       actions,
       addShow,
@@ -43,7 +45,7 @@ class CompanyAddApp extends Component {
     return (
       <CompanyAdd 
         company={company}
-        onCompanySave={this.handleSave} 
+        onCompanySave={this.handleSave.bind(this)} 
         companyChange={actions.companyChange}
         toggleEdit={this.toggleAddCompany.bind(this)} 
         addShow={addShow}
@@ -63,7 +65,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators(companyActionCreator, dispatch)
+    actions: bindActionCreators(companyActionCreator, dispatch),
   }
 }
 

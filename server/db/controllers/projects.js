@@ -31,7 +31,7 @@ export function me(req, res) {
 export function get(req, res) {
   var uid = req.params.id
 
-  Project.find({"user_id": mongoose.Types.ObjectId(uid)}).exec((err, projects) => {
+  Project.find({"profile_id": mongoose.Types.ObjectId(uid)}).exec((err, projects) => {
     if (err) {
       console.log('Error in "project/get" query');
       return res.status(401).send('Something went wrong getting the projects data');

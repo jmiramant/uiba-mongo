@@ -37,10 +37,12 @@ function makeSkillsRequest(method, data, api = '/skills') {
   return request[method](api, data);
 }
 
-export function fetchSkills() {
+export function fetchSkills(profId) {
+  let path = '/skills/me';
+  if (profId) path = '/skills/' + profId;
   return {
     type: types.GET_SKILLS,
-    promise: makeSkillsRequest('get', {}, '/skills/me')
+    promise: makeSkillsRequest('get', {}, path)
   };
 }
 

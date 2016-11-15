@@ -16,6 +16,7 @@ const cx = classNames.bind(styles);
 class Dashboard extends Component {
 
   componentDidMount() {
+    console.log(this.props.company._id)
     this.props.actions.fetchRoles(this.props.company._id)
   }
 
@@ -38,8 +39,8 @@ class Dashboard extends Component {
           onEditSave={actions.updateRole}
           toggleRoleAdd={actions.toggleRoleAdd}
           roleChange={actions.roleChange}
+          rolesChange={actions.rolesChange}
           onRoleSave={actions.createRole}
-          onRoleDelete={actions.deleteRole}
         />
       </div>
     )

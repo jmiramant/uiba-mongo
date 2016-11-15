@@ -3,6 +3,7 @@ import _ from 'lodash'
 import User from '../models/user';
 import Profile from '../models/profile'
 import Recruiter from '../models/recruiter';
+import Role from '../models/role';
 import Company from '../models/company';
 import cookie from 'react-cookie';
 
@@ -38,9 +39,30 @@ const isApply = (req) => {
 const logRecruiter = (req, profId) => {
   if (req.headers.referer.split('/apply/').length > 1) {
 
-    const company = req.headers.referer.split('/apply/')[1].split('?')[0].toLowerCase();
+    const properString = (str) => {
+      return str.split('-').map((s) => {
+        return s.charAt(0).toUpperCase() + s.slice(1)
+      }).join(' ');
+    }
 
-    if (req.headers.referer.split('/apply/')[1].split('?rid=')[1]) {
+    const company = properString(req.headers.referer.split('/apply/')[1].split('/')[0]);
+    const role = req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[0];
+    let rid;
+    if (req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[1]) {
+      rid = req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[1].split('&')[0].split('=')[1]
+    } 
+
+    if (role) {
+      Role.findOne({'applicantCode': role}, (err, _role) => {
+        if (!err && _role) {
+          _role.applicants.push(profId);
+          _role.appliedCount += 1;
+          _role.save();
+        }
+      })
+    }
+    
+    if (rid) {
 
       const rid = req.headers.referer.split('/apply/')[1].split('?rid=')[1].split('&')[0];
 
@@ -173,7 +195,7 @@ export default (req, accessToken, refreshToken, profile, done) => {
       return User.findOne({
         email: profile._json.emailAddress
       }, (findByEmailErr, existingEmailUser) => {
-        if (existingEmailUser && !existingEmailUser.claim) {
+        if (!existingEmailUser || !existingEmailUser.claim) {
           return done(null, false, {
             message: 'There is already an account using this email address. Sign in to that account and link it with linkedin manually from Account Settings.'
           });

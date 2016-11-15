@@ -4,7 +4,7 @@ import isURL from 'validator/lib/isURL';
 import _ from 'lodash';
 
 export function validateCompanyHelper (company, errorStore) {
-  const cantBeNull = ['name', 'description', 'foundedDate', 'size', 'websiteUrl', 'logoUrl', 'specialties', 'industry'];
+  const cantBeNull = ['name', 'description', 'foundedDate', 'size'];
   var errors = setValidationErrorObject(errorStore);
   
   _.forEach(cantBeNull, (v, i) => {

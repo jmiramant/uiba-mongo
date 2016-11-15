@@ -10,9 +10,12 @@ const isFetching = (
 ) => {
   switch (action.type) {
     case types.GET_ROLES_REQUEST:
+    case types.GET_ROLE_REQUEST:
       return true;
     case types.GET_ROLES_SUCCESS:
     case types.GET_ROLES_FAILURE:
+    case types.GET_ROLE_SUCCESS:
+    case types.GET_ROLE_FAILURE:
       return false;
     default:
       return state;
@@ -34,6 +37,8 @@ const role = (
   action
 ) => {
   switch (action.type) {
+    case types.GET_ROLE_SUCCESS:
+      return action.res.data;
     case types.CREATE_NEW_ROLE:
       return state;
     case types.CHANGE_ROLE:
@@ -52,7 +57,8 @@ const role = (
         degreeMax: undefined,
         experienceMin: undefined,
         experienceMin: undefined,
-        appliedCount: undefined
+        appliedCount: undefined,
+        isArchived: undefined
       };
     default:
       return state;
@@ -63,27 +69,28 @@ const roles = (
   state = [],
   action
 ) => {
-  let updatedRole;
+  let updatedRole, unarchived;
   switch (action.type) {
     case types.GET_ROLES_SUCCESS:
-      return roleOrder(action.res.data)
+      unarchived = _.filter(action.res.data, {'isArchived': false})
+      return roleOrder(unarchived)
     case types.CREATE_ROLE_SUCCESS:
       const newRoles = state.concat(action.data);
       return roleOrder(newRoles)
     case types.CHANGE_ROLES:
       updatedRole = [...state]
-      updatedRole[_.findIndex(updatedRole, {
-        _id: action.state.id
-      })][action.state.field] = updatedRole[_.findIndex(updatedRole, {
-        _id: action.state.id
-      })][action.state.field] = action.state.value
+      const index = _.findIndex(state, {
+        _id: action.state._id
+      })
+      updatedRole[index] = {...updatedRole[index], ...action.state}
       return roleOrder(updatedRole)
     case types.UPDATE_ROLE_SUCCESS:
       updatedRole = state.slice()
       updatedRole[_.findIndex(state, function(j) {
         return j._id === action.data._id;
       })] = action.data
-      return roleOrder(updatedRole)
+      unarchived = _.filter(updatedRole, {'isArchived': false})
+      return roleOrder(unarchived)
     case types.DELETE_ROLE_SUCCESS:
       const newState = state.slice();
       return newState.filter(j => {

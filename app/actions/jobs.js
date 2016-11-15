@@ -36,10 +36,12 @@ function makeJobsRequest(method, data, api = '/jobs') {
   return request[method](api, data);
 }
 
-export function fetchJobs() {
+export function fetchJobs(profId) {
+  let path = '/jobs/me'
+  if (profId) path = '/jobs/' + profId
   return {
     type: types.GET_JOBS,
-    promise: makeJobsRequest('get', {}, '/jobs/me')
+    promise: makeJobsRequest('get', {}, path)
   };
 }
 

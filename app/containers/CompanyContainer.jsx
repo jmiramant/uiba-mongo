@@ -1,7 +1,10 @@
 import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router'
+
 import CompanyAdd from 'containers/CompanyAdd';
+import FlatButton from 'material-ui/FlatButton';
 
 import classNames from 'classnames/bind';
 import styles from 'css/components/company/companyAdminContainer';
@@ -32,6 +35,7 @@ class CompanyContainer extends React.Component {
   render() {
 
     const {
+      profile,
       addShow,
       children,
       company
@@ -40,13 +44,16 @@ class CompanyContainer extends React.Component {
     const setupCompany = (
       <div>
         <p>You have successfully logged in to the Company Adminstrators Portal. Please begin by completing a company profile.</p>
-        <CompanyAdd/>        
+        <CompanyAdd
+          profile={profile}
+        />        
       </div>
     )
 
     const companyTag = (
       <div>
         <div>Managing: {company.name}</div>
+        <FlatButton onClick={browserHistory.goBack} label="Back" primary={true} />
         {children}
       </div>
     )
@@ -54,7 +61,7 @@ class CompanyContainer extends React.Component {
     return (
       <div className={cx('companyAdmin-container') + ' container'}>
         <div className={cx('container-card') + ' col-md-12'}>
-          { company._id ? (
+          { profile.company_id && company._id ? (
             companyTag
           ) : (
             setupCompany

@@ -36,10 +36,12 @@ function makeSchoolsRequest(method, data, api = '/schools') {
   return request[method](api, data);
 }
 
-export function fetchSchools() {
+export function fetchSchools(profId) {
+  let path = '/schools/me'
+  if (profId) path = '/schools/' + profId
   return {
     type: types.GET_SCHOOLS,
-    promise: makeSchoolsRequest('get', {}, '/schools/me')
+    promise: makeSchoolsRequest('get', {}, path)
   };
 }
 

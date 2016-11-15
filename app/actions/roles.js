@@ -5,6 +5,10 @@ import * as types from 'types';
 
 polyfill();
 
+function makeRolesRequest(method, data, api = '/roles') {
+  return request[method](api, data);
+}
+
 export function newRole() {
   return {
     type: types.NEW_ROLE,
@@ -32,8 +36,11 @@ export function toggleRoleAdd (data) {
   };
 }
 
-function makeRolesRequest(method, data, api = '/roles') {
-  return request[method](api, data);
+export function fetchRole(id) {
+  return {
+    type: types.GET_ROLE,
+    promise: makeRolesRequest('get', {}, '/role/' + id)
+  };
 }
 
 export function fetchRoles(id) {

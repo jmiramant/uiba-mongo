@@ -37,10 +37,12 @@ function makeInterestsRequest(method, data, api = '/interests') {
   return request[method](api, data);
 }
 
-export function fetchInterests() {
+export function fetchInterests(profId) {
+  let path = '/interests/me'
+  if (profId) path = '/interests/' + profId
   return {
     type: types.GET_INTERESTS,
-    promise: makeInterestsRequest('get', {}, '/interests/me')
+    promise: makeInterestsRequest('get', {}, path)
   };
 }
 
