@@ -14,21 +14,19 @@ import { createMemoryHistory, match, RouterContext } from 'react-router';
 
 polyfill();
 
-// Needed for onTouchTap
-// http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin()
 
 const hostName = process.env.HOSTNAME;
 const clientConfig = {
-  host: (hostName && hostName.substr(0, hostName.length-1)) || 'localhost',
+  host: (hostName && hostName.substr(0, hostName.length - 1)) || 'localhost',
   port: process.env.PORT || '3000'
 };
 
 // configure baseURL for axios requests (for serverside API calls)
-if (process.env.NODE_ENV === 'development') {
-  axios.defaults.baseURL = `http://${clientConfig.host}:${clientConfig.port}`;
-} else {
+if (process.env.NODE_ENV === 'production') {
   axios.defaults.baseURL = `http://${clientConfig.host}`;
+} else {
+  axios.defaults.baseURL = `http://${clientConfig.host}:${clientConfig.port}`;
 }
 
 global.navigator = global.navigator || {};
@@ -94,11 +92,14 @@ export default function render(req, res) {
    */
 
 
-  if(authenticated){
-   ssrAuth(req.headers.cookie);
+  if (authenticated) {
+    ssrAuth(req.headers.cookie);
   }
 
-  match({routes, location: req.url}, (err, redirect, props) => {
+  match({
+    routes,
+    location: req.url
+  }, (err, redirect, props) => {
     if (err) {
       res.status(500).json(err);
     } else if (redirect) {
@@ -107,43 +108,46 @@ export default function render(req, res) {
       // This method waits for all render component
       // promises to resolve before returning to browser
       preRenderMiddleware(
-        store.dispatch,
-        props.components,
-        props.params
-      )
-      .then(() => {
-        //after preRendering is complete, we destroy the interceptors
-        authenticated ? ssrAuth() : null;
-      })
-      .then(() => {
-        return new Promise((resolve, reject) => {  
-          let initialState = store.getState();
-
-          const waitForFetching = () => {
-            initialState = store.getState();
-            let fetching = (_.reduce(initialState, (prev, next) => {
-              prev.push(next.isFetching);
-              return prev
-            }, []).indexOf(true) !== -1);
-            
-            if (fetching) {
-              setTimeout(waitForFetching, 250);
-            } else {
-              resolve( store.getState() );
-            }
-          }
-
-          return waitForFetching();
+          store.dispatch,
+          props.components,
+          props.params
+        )
+        .then(() => {
+          //after preRendering is complete, we destroy the interceptors
+          authenticated ? ssrAuth() : null;
         })
-      })
-      .then((initialState) => {
-        const componentHTML = renderToString(
-          <Provider store={store}>
-            <RouterContext {...props} />
-          </Provider>
-        );
+        .then(() => {
+          return new Promise((resolve, reject) => {
+            let initialState = store.getState();
 
-        return res.status(200).send(`
+            const waitForFetching = () => {
+              initialState = store.getState();
+
+              let fetching = (_.reduce(initialState, (prev, next) => {
+                prev.push(next.isFetching);
+                return prev
+              }, []).indexOf(true) !== -1);
+
+              if (fetching) {
+                setTimeout(waitForFetching, 250);
+              } else {
+                resolve(store.getState());
+              }
+            }
+
+            return waitForFetching();
+          })
+        })
+        .then((initialState) => {
+          const componentHTML = renderToString( < Provider store = {
+              store
+            } >
+            < RouterContext {...props
+            }
+            /> < /Provider >
+          );
+
+          return res.status(200).send(`
           <!doctype html>
           <html ${header.htmlAttributes.toString()}>
             <head>
@@ -159,11 +163,11 @@ export default function render(req, res) {
               <script type="text/javascript" charset="utf-8" src="/assets/app.js"></script>
             </body>
           </html>
-        `);   
-      })
-      .catch((err) => {
-        res.status(500).json(err);
-      });
+        `);
+        })
+        .catch((err) => {
+          res.status(500).json(err);
+        });
     } else {
       res.sendStatus(404);
     }

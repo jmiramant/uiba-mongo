@@ -16,7 +16,6 @@ const cx = classNames.bind(styles);
 class Dashboard extends Component {
 
   componentDidMount() {
-    console.log(this.props.company._id)
     this.props.actions.fetchRoles(this.props.company._id)
   }
 
