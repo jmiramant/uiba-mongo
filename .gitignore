@@ -20,3 +20,6 @@ pids
 newrelic_agent.log
 newrelic.js
 
+server/config/secrets.js
+config/secrets.js
+*/secrets.js
