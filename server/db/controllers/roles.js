@@ -17,6 +17,8 @@ const handleError = (res, err) => {
  * Me
  */
 export function me(req, res) {
+  
+  if (!req.user || !req.user.company_id) {return res.status(403).json({ message: "There is no current user or company_id" })}
 
   Roles.find({
 

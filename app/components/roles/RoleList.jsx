@@ -63,6 +63,7 @@ class RoleList extends React.Component {
           <TableHeader
             displaySelectAll={false}
             adjustForCheckbox={false}
+            selectable={true}
             >
             <TableRow>
               <TableHeaderColumn>Title</TableHeaderColumn>
@@ -112,6 +113,8 @@ class RoleList extends React.Component {
         addVisible={addVisible}
         onToggleEduReqSelect={onToggleEduReqSelect}
       />
+
+      
 
     </div>)
   }

@@ -45,7 +45,10 @@ class CompanyContainer extends React.Component {
     const companyTag = (
       <div>
         <div>Managing: {company.name}</div>
-        <FlatButton onClick={browserHistory.goBack} label="Back" primary={true} />
+        { window.location.pathname !== "/company-admin/dashboard" ? (
+          <FlatButton onClick={browserHistory.goBack} label="Back" primary={true} />
+        ) : (null)}
+        
         {children}
       </div>
     )

@@ -21,7 +21,11 @@ class Loader extends React.Component {
 
     return (
       <div>
-      <p>Fetching{" " + target}...</p>
+      {target ? (
+        <p>Fetching{" " + target}...</p>
+      ) : (
+        <p>Fetching...</p>
+      )}
       { percent ?  (
         <CircularProgress
           mode="determinate"

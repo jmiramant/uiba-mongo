@@ -5,10 +5,8 @@ import Role from '../models/role';
 import Profile from '../models/profile';
 
 export function list(req, res) {
-  console.log(req.params.id)
 
   Role.findById(req.params.id, (err, role) => {
-    console.log(role.applicants)
     Profile.find({
       '_id': {
         '$in': role.applicants

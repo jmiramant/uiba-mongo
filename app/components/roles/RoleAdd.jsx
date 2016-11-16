@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import * as roleActionCreators from 'actions/roles';
+
 import { validateJobHelper } from '../helpers/roleValidations';
 import UibaDatePicker from '../../components/DatePicker';
 import MulitselectPopover from '../../components/MulitselectPopover';
@@ -101,6 +103,9 @@ export default class RoleAdd extends React.Component {
 
     const {
             role,
+            roles,
+            actions,
+            messages,
             addVisible,
             eduRequirements,
             onToggleEduReqSelect,
@@ -160,6 +165,18 @@ export default class RoleAdd extends React.Component {
             />
           </div>
 
+          <div className='col-md-8 col-md-offset-2'>
+            <Skills 
+              skills={roles.skills}
+              addVisible={roles.addShow}
+              errorMessage={messages.errorMessage}
+              toggleSkillAdd={actions.toggleSkillAdd}
+              onEditSave={actions.updateSkill} 
+              onSkillSave={actions.createSkill} 
+              onSkillDelete={actions.deleteSkill} 
+            />
+          </div>
+
           <div className={cx('profile-btn-group')}>
             <RaisedButton className='pull-right' type="submit" label="Save" primary={true} />
             {this.props.handleDelete ? (
@@ -175,8 +192,19 @@ export default class RoleAdd extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    roles: state.role,
+    messages: state.message,
     eduRequirements: state.role.eduRequirements,
   };
 }
 
-export default connect(mapStateToProps, {})(RoleAdd);
+function mapDispatchToProps (dispatch) {
+  return {
+    actions: bindActionCreators(roleActionCreators, dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RoleAdd);

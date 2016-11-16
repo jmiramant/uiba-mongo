@@ -60,37 +60,37 @@ export default class ApplicantShow extends React.Component {
 
           {schools.map((school) => {
             return (
-              <div>{school.name}</div>
+              <div key={school.name}>{school.name}</div>
             )
           })}
 
           {jobs.map((job) => {
             return (
-              <div>{job.title}</div>
+              <div key={job.title}>{job.title}</div>
             )
           })}
           
           {skills.map((skill) => {
             return (
-              <div>{skill.type}</div>
+              <div key={skill.type}>{skill.type}</div>
             )
           })}
 
           {languages.map((language) => {
             return (
-              <div>{language.language}</div>
+              <div key={language.language}>{language.language}</div>
             )
           })}
 
           {projects.map((project) => {
             return (
-              <div>{project.name}</div>
+              <div key={project.name}>{project.name}</div>
             )
           })}
 
           {interests.map((interest) => {
             return (
-              <div>{interest.interest}</div>
+              <div key={interest.interest}>{interest.interest}</div>
             )
           })}
         </div>

@@ -121,7 +121,7 @@ const eduRequirements = (
 ) => {
   switch (action.type) {
     case types.GET_ROLE_SUCCESS:
-      return action.res.data
+      return action.res.data.degreeRequirements
     case types.TOGGLE_ROLE_EDU_REQUIREMENT:
       const requirments = [...state];
       const dupIndex = requirments.indexOf(action.data);
@@ -200,7 +200,9 @@ const roleReducer = combineReducers({
   role,
   roles,
   addShow,
-  eduRequirements
+  eduRequirements,
+  skill,
+  skills
 });
 
 export default roleReducer;

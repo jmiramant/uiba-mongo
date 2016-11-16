@@ -24,7 +24,7 @@ class MulitselectPopover extends React.Component {
     const { data, selected } = this.props;
     return data.map( (dItem) => {
       let sel = false;
-      if (selected) sel = (selected.indexOf(dItem) !== -1);  
+      if (selected && selected.length > 0) sel = (selected.indexOf(dItem) !== -1);  
       return {name: dItem, selected: sel}
     })
   }
