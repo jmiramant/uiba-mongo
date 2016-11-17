@@ -132,6 +132,30 @@ const eduRequirements = (
   }
 };
 
+const showSkillAdd = (
+  state = false,
+  action
+) => {
+  switch (action.type) {
+    case types.TOGGLE_ROLE_SKILL_ADD:
+      return !state;
+    default:
+      return state;
+  }
+};
+
+const skillOrder = (skill, order = 'asc') => {
+  if (order === 'asc') {
+    return skill.sort( (a,b) => {
+      return new Date(a.startDate) < new Date(b.startDate)
+    });    
+  } else {
+    return skill.sort( (a,b) => {
+      return new Date(a.startDate) < new Date(b.startDate)
+    });    
+  }
+}
+
 const skill = (
   state = {},
   action
@@ -147,8 +171,7 @@ const skill = (
       const newStateOjb = {...state}
       newStateOjb[action.state.field] = action.state.value
       return newStateOjb;
-    case types.CREATE_ROLE_SKILL_SUCCESS:
-    case types.CREATE_ROLE_SKILL_FAILURE:
+    case types.CREATE_ROLE_SKILL:
       return {};
     case types.TOGGLE_ROLE_SKILL_ADD:
       if (!action.data && action.persist) {
@@ -156,6 +179,12 @@ const skill = (
       } else {
         return {};
       }
+    case types.CREATE_ROLE_SUCCESS:
+      return {
+        type: '', 
+        proficiency: undefined,
+        lengthOfUse: undefined,
+      };
     default:
       return state;
   }
@@ -167,28 +196,26 @@ const skills = (
 ) => {
   let updatedSkill
   switch (action.type) {
-    case types.GET_ROLE_SKILLS_SUCCESS:
-      return skillOrder(action.res.data)
-    case types.CREATE_ROLE_SKILL_SUCCESS:
-      const newSchools = state.concat(action.data);
-      return skillOrder(newSchools)
-    case types.UPDATE_ROLE_SKILL_SUCCESS:
+    case types.CREATE_ROLE_SKILL:
+      return skillOrder([...state, action.skillData])
+    case types.UPDATE_ROLE_SKILL:
+      debugger
       updatedSkill = state.slice()
       updatedSkill[_.findIndex(state, function(j) { return j._id === action.data._id; })] = action.data
       return skillOrder(updatedSkill)
     case types.CHANGE_ROLE_SKILLS:
       updatedSkill = [...state]
-      updatedSkill[_.findIndex(updatedSkill, {_id: action.state.id})][action.state.field] = updatedSkill[_.findIndex(updatedSkill, {_id: action.state.id})][action.state.field] = action.state.value
+      debugger
+      updatedSkill[_.findIndex(updatedSkill, {type: action.state.type})][action.state.field] = updatedSkill[_.findIndex(updatedSkill, {type: action.state.type})][action.state.field] = action.state.value
       return skillOrder(updatedSkill)
-    case types.DELETE_ROLE_SKILL_SUCCESS:
+    case types.DELETE_ROLE_SKILL:
+      debugger
       const newState = state.slice();
       return newState.filter( j => {
         return j._id !== action.data.id;
       })
-    case types.CREATE_ROLE_SKILL_REQUEST:
-      return {
-        data: action.res.data,
-      };
+    case types.CREATE_ROLE_SUCCESS:
+      return [];
     default:
       return state;
   }
@@ -202,7 +229,8 @@ const roleReducer = combineReducers({
   addShow,
   eduRequirements,
   skill,
-  skills
+  skills,
+  showSkillAdd
 });
 
 export default roleReducer;

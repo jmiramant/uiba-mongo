@@ -38,15 +38,15 @@ export default class RoleItem extends React.Component {
     }
   }
 
-  handleCandidateView(){
-
-  }
-
   handleArchive() {
     const val = {...this.props.role}
     val.isArchived = true;
     this.props.rolesChange(val)
     this.archiveConfirm(val)
+  }
+
+  applicantViewActive(role) {
+    return role.appliedCount > 0 ? false : true
   }
 
   render () {
@@ -71,9 +71,13 @@ export default class RoleItem extends React.Component {
         </TableRowColumn>
         <TableRowColumn><FlatButton onClick={this.handleArchive.bind(this)} label="Archive" primary={true} /></TableRowColumn>
         <TableRowColumn>
-          <Link to={'/company-admin/applicants/' + role._id }>
-            <FlatButton label="View Applicants" primary={true} />
-          </Link>
+          {this.applicantViewActive(role) ? (
+              <FlatButton label="View Applicants" primary={true} disabled={this.applicantViewActive(role)} />
+          ) : (
+            <Link to={'/company-admin/applicants/' + role._id }>
+              <FlatButton label="View Applicants" primary={true} disabled={this.applicantViewActive(role)} />
+            </Link>
+          )}
         </TableRowColumn>
       </TableRow>
     )

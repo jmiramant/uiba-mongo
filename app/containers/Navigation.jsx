@@ -15,6 +15,10 @@ const cx = classNames.bind(styles);
 
 class Navigation extends React.Component {
 
+  componentWillMount() {
+    this.props.fetchCurrentUser();
+  }
+
   isAdmin() {
     const {currentUser} = this.props;
     if (currentUser.role) {
@@ -112,6 +116,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps (dispatch) {
   return {
+    fetchCurrentUser: () => {dispatch(fetchCurrentUser())},
     logOut
   }
 }

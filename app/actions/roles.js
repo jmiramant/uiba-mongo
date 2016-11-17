@@ -171,3 +171,46 @@ export function toggleEduReqSelect(data) {
     data: data
   }
 }
+
+export function toggleRoleSkillsAdd (data, persist = false) {
+  return {
+    type: types.TOGGLE_ROLE_SKILL_ADD,
+    data: data,
+    persist: persist
+  };
+}
+
+export function skillChange(state) {
+  return {
+    type: types.CHANGE_ROLE_SKILL,
+    state
+  };
+}
+
+export function skillsChange(state) {
+  return {
+    type: types.CHANGE_ROLE_SKILLS,
+    state
+  };
+}
+
+export function createSkill(skillData) {
+  return {
+    type: types.CREATE_ROLE_SKILL,
+    skillData
+  };
+}
+
+export function updateSkill(skillData) {
+  return {
+    type: types.UPDATE_ROLE_SKILL,
+    skillData
+  };
+}
+
+export function deleteSkill(skillData) {
+  return {
+    type: types.DELETE_ROLE_SKILL,
+    skillData
+  };
+}

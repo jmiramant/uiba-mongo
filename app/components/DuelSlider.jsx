@@ -73,7 +73,7 @@ class DuelSlider extends React.Component {
 
     return (
       <div className='duel-slider-container'>
-      <div style={{height: '200px'}}>
+      <div style={{height: '40px'}}>
         <ReactSlider style={sliderStyle} min={0} max={10} onAfterChange={this.handleChange.bind(this)} defaultValue={[0, 10]} withBars ></ReactSlider>
         {labelItems}
       </div>

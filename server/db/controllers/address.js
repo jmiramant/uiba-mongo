@@ -35,6 +35,19 @@ const typeRequest = (type, target) => {
 export function autofill(req, res) {
   const url = 'http://www.zipcodeapi.com/rest/' + zipCodeAPI.key + '/info.json/' + req.query.search + '/radians'
   request(url, (error, response, body) => {
+    if (error) return res.status(404).json({
+      message: error
+    });
+    return res.json(JSON.parse(body));
+  })
+}
+
+export function zipInRadius(req, res) {
+  const url = 'http://www.zipcodeapi.com/rest/' + zipCodeAPI.key + '/radius.json/' + req.query.zip + '/' + req.query.range + '/mile';
+  request(url, (error, response, body) => {
+    if (error) return res.status(404).json({
+      message: error
+    });
     return res.json(JSON.parse(body));
   })
 }
@@ -128,4 +141,5 @@ export default {
   update,
   remove,
   autofill,
+  zipInRadius,
 };

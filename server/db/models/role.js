@@ -14,6 +14,7 @@ const RoleSchema = new mongoose.Schema({
   experienceMax: {type: Number },
   appliedCount: { type: Number, default: 0},
   applicants: [{type: Schema.Types.ObjectId, ref: 'Profile'}],
+  skills: [{type: Schema.Types.ObjectId, ref: 'Skill'}],
   isArchived: {type: Boolean, default: false}
 }, {timestamps: true});
 

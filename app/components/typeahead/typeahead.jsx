@@ -11,7 +11,7 @@ class Typeahead extends Component {
     setSelection: PropTypes.func.isRequired,
     selection: PropTypes.string,
     onChange: PropTypes.func.isRequired,
-    onSelect: PropTypes.func.isRequired,
+    onSelect: PropTypes.func,
     error: PropTypes.string,
     label: PropTypes.string,
   };

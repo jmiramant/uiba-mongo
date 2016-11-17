@@ -4,8 +4,9 @@ import mongoose, {
 import Profile from '../models/profile';
 import Roles from '../models/role';
 import Company from '../models/company';
-import Skills from '../models/skill';
+import Skill from '../models/skill';
 import moment from 'moment';
+import async from 'async'
 
 const handleError = (res, err) => {
   return res.status(401).json({
@@ -17,8 +18,12 @@ const handleError = (res, err) => {
  * Me
  */
 export function me(req, res) {
-  
-  if (!req.user || !req.user.company_id) {return res.status(403).json({ message: "There is no current user or company_id" })}
+
+  if (!req.user || !req.user.company_id) {
+    return res.status(403).json({
+      message: "There is no current user or company_id"
+    })
+  }
 
   Roles.find({
 
@@ -70,12 +75,42 @@ export function create(req, res) {
     description: req.body.description,
     degreeRequirements: req.body.degreeRequirements,
     experienceMin: req.body.experienceMin,
-    experienceMax: req.body.experienceMax
+    experienceMax: req.body.experienceMax,
   }, function(err, role) {
-
     if (err) return handleError(res, err);
 
-    return res.json(role);
+    if (req.body.skills && req.body.skills.length > 0) {
+
+      const skillCreates = [];
+      
+      _.each(req.body.skills, (skill) => {
+        const s = new Skill();
+        s.type = skill.type;
+        s.role_id = role._id
+        s.proficiency = skill.proficiency;
+        s.lengthOfUse = skill.lengthOfUse;
+        skillCreates.push(s.save);
+      })
+
+      async.parallel(skillCreates, (err, resp) => {
+        if (err) return res.status(404).send('Something went wrong saving skills.')
+
+        role.skills = resp.map((s) => {
+          return s[0]._id
+        });
+
+        role.save((err, _role) => {
+          if (err) return handleError(res, err);
+          return res.json(_role);
+        })
+
+      });
+
+    } else {
+
+      return res.json(role);
+
+    }
 
   })
 
@@ -107,9 +142,9 @@ export function remove(req, res) {
       throw err;
     }
     return res.status(200).json({
-        id: req.params.id,
-        message: 'This role has been deleted.'
-      }) 
+      id: req.params.id,
+      message: 'This role has been deleted.'
+    })
   })
 }
 
