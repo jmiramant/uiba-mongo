@@ -129,13 +129,13 @@ export default (req, accessToken, refreshToken, profile, done) => {
             updatedProfile.user_id = secondUser._id;
             _user.profile_id = updatedProfile._id;
             secondUser.profile_id = updatedProfile._id;
-            console.log(updatedProfile)
-            console.log(secondUser)
-            console.log(_user)
+            console.log('updatedProfile', updatedProfile)
+            console.log('secondUser', secondUser)
+            console.log('_user', _user)
             return async.series({
               _profile: updatedProfile.save,
               secondUser: secondUser.save,
-              user: _user.save,
+              user: _user.update,
             }, function(err, res) {
               console.log(err)
               console.log(res)
