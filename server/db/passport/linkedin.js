@@ -114,7 +114,7 @@ export default (req, accessToken, refreshToken, profile, done) => {
         });
       }
       User.findOne({
-        '_id': req.user.id
+        '_id': req.user._id
       }, (findByIdErr, _user) => {
         if (req.user.tokens.length === 0) {
 
