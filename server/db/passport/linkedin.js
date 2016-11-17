@@ -20,6 +20,7 @@ const setDefaultProfileFields = (prof, profile, userId) => {
 }
 
 const setDefaultUserFields = (user, profile, accessToken) => {
+  user.email = profile._json.emailAddress;
   user.linkedin = profile.id;
   if (!user.tokens) {
     user.tokens = [];
@@ -38,7 +39,7 @@ const isApply = (req) => {
 const logRecruiter = (req, profId) => {
   if (req.headers.referer.split('/apply/').length > 1) {
 
-    const company = req.headers.referer.split('/apply/')[1].split('?')[0];
+    const company = req.headers.referer.split('/apply/')[1].split('?')[0].toLowerCase();
 
     if (req.headers.referer.split('/apply/')[1].split('?rid=')[1]) {
 
@@ -54,7 +55,7 @@ const logRecruiter = (req, profId) => {
         }
 
         const companyObj = _.find(recruiter.credit, (obj) => {
-          return obj.company.toLowerCase() === company.toLowerCase()
+          return obj.company.toLowerCase() === company;
         })
 
         if (companyObj) {
@@ -83,6 +84,7 @@ const resolveApplyRedirect = (req, user, done) => {
       service: 'linkedin',
       user_id: user._id
     }, (profErr, _profile) => {
+      if (profErr) return res.status(401).json({ message: profErr });
       _profile.apply = {
         applied: true,
         name: companyName,
@@ -101,25 +103,25 @@ const resolveApplyRedirect = (req, user, done) => {
 export default (req, accessToken, refreshToken, profile, done) => {
 
   if (req.user) {
-    console.log('there IS a user')
     return User.findOne({
       linkedin: profile.id
     }, (findOneErr, existingUser) => {
       //standard
       if (existingUser) {
-        console.log('exit1')
         return done(null, false, {
           message: 'There is already a linkedin account that belongs to you. Sign in with that account or delete it, then link it with your current account.'
         });
       }
       User.findOne({
-        '_id': req.user.id
+        '_id': req.user._id
       }, (findByIdErr, _user) => {
         if (req.user.tokens.length === 0) {
 
           const secondUser = new User();
           Profile.findById(req.user.profile_id, (err, updatedProfile) => {
-
+            if (err) return done(null, false, {
+              message: 'There was an error finding a profile associated with this user.'
+            });
             setDefaultUserFields(secondUser, profile, accessToken)
             setDefaultUserFields(_user, profile, accessToken)
             setDefaultProfileFields(updatedProfile, profile, _user._id);
@@ -127,7 +129,6 @@ export default (req, accessToken, refreshToken, profile, done) => {
             updatedProfile.user_id = secondUser._id;
             _user.profile_id = updatedProfile._id;
             secondUser.profile_id = updatedProfile._id;
-
             return async.series({
               _profile: updatedProfile.save,
               secondUser: secondUser.save,
@@ -154,6 +155,7 @@ export default (req, accessToken, refreshToken, profile, done) => {
               _profile: _profile.save,
               user: user.save,
             }, function(err, res) {
+              console.log(res)
               done(err, res.user[0])
             });
 
