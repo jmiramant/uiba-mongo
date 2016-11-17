@@ -108,7 +108,6 @@ export default (req, accessToken, refreshToken, profile, done) => {
     }, (findOneErr, existingUser) => {
       //standard
       if (existingUser) {
-        console.log('exit1')
         return done(null, false, {
           message: 'There is already a linkedin account that belongs to you. Sign in with that account or delete it, then link it with your current account.'
         });
@@ -130,12 +129,15 @@ export default (req, accessToken, refreshToken, profile, done) => {
             updatedProfile.user_id = secondUser._id;
             _user.profile_id = updatedProfile._id;
             secondUser.profile_id = updatedProfile._id;
-
+            console(updatedProfile)
+            console(secondUser)
+            console(_user)
             return async.series({
               _profile: updatedProfile.save,
               secondUser: secondUser.save,
               user: _user.save,
             }, function(err, res) {
+              console.log(err)
               console.log(res)
               done(err, res.user[0])
             });
