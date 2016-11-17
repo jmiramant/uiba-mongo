@@ -20,6 +20,7 @@ const setDefaultProfileFields = (prof, profile, userId) => {
 }
 
 const setDefaultUserFields = (user, profile, accessToken) => {
+  user.email = profile._json.emailAddress;
   user.linkedin = profile.id;
   if (!user.tokens) {
     user.tokens = [];
@@ -135,7 +136,7 @@ export default (req, accessToken, refreshToken, profile, done) => {
             return async.series({
               _profile: updatedProfile.save,
               secondUser: secondUser.save,
-              user: _user.update,
+              user: _user.save,
             }, function(err, res) {
               console.log(err)
               console.log(res)
