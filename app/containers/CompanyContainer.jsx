@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router'
 
 import CompanyAdd from 'containers/CompanyAdd';
 import FlatButton from 'material-ui/FlatButton';
@@ -10,7 +9,7 @@ import Loader from 'components/Loader';
 import classNames from 'classnames/bind';
 import styles from 'css/components/company/companyAdminContainer';
 import * as companyActionCreators from 'actions/companies'
-import { fetchProfile } from 'actions/profiles';
+import * as profileActionCreators from 'actions/profiles'
 
 const cx = classNames.bind(styles);
 
@@ -18,7 +17,7 @@ const cx = classNames.bind(styles);
 class CompanyContainer extends React.Component {
 
   componentWillMount() {
-    this.props.fetchProfile();
+    this.props.profileActions.fetchProfile();
   }
 
   componentDidUpdate() {
@@ -45,10 +44,6 @@ class CompanyContainer extends React.Component {
     const companyTag = (
       <div>
         <div>Managing: {company.name}</div>
-        { window.location.pathname !== "/company-admin/dashboard" ? (
-          <FlatButton onClick={browserHistory.goBack} label="Back" primary={true} />
-        ) : (null)}
-        
         {children}
       </div>
     )
@@ -73,16 +68,16 @@ CompanyContainer.propTypes = {
 
 function mapStateToProps(state) {
   return {
+    company: state.company.company,
     addShow: state.company.addShow,
-    profile: state.profile.profile,
-    company: state.company.company
+    profile: state.profile.profile
   };
 }
 
 function mapDispatchToProps (dispatch) {
   return {
     companyActions: bindActionCreators(companyActionCreators, dispatch),
-    fetchProfile: () => {dispatch(fetchProfile())}
+    profileActions: bindActionCreators(profileActionCreators, dispatch),
   }
 }
 

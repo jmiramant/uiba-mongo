@@ -66,6 +66,7 @@ class MulitselectPopover extends React.Component {
     return (
       <div>
         <RaisedButton
+          labelStyle={{fontSize: '10px', paddingLeft: '9px', paddingRight: '9px'}}
           onClick={this.openMultiSelect}
           label={buttonText}
         />

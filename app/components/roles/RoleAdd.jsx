@@ -10,6 +10,7 @@ import MulitselectPopover from '../../components/MulitselectPopover';
 import DuelSlider from '../../components/DuelSlider';
 import RoleSkills from 'components/roles/RoleSkillList';
 
+import AddressInput from 'containers/Address'
 import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -45,7 +46,8 @@ export default class RoleAdd extends React.Component {
   state = {
     validationErrors: {},
     experience: { open: false, anchorEl: null },
-    skill: { open: false, anchorEl: null }
+    skill: { open: false, anchorEl: null },
+    location: { open: false, anchorEl: null },
   }
 
   componentDidMount() {
@@ -167,7 +169,7 @@ export default class RoleAdd extends React.Component {
             />
           </div>
 
-          <div className={cx('req-btns') +" col-md-4"}>
+          <div className={cx('req-btns') +" col-md-3"}>
             <MulitselectPopover
               data={['High School','Associate','Bachelor','Master','MBA','JD','MD','PhD','Engineer Degree','Certificate','Coursework','Other']}
               selected={eduRequirements}
@@ -177,8 +179,9 @@ export default class RoleAdd extends React.Component {
             />
           </div>
 
-          <div className={cx('req-btns') +" col-md-4"}>
+          <div className={cx('req-btns') +" col-md-3"}>
             <RaisedButton
+              labelStyle={{fontSize: '10px', paddingLeft: '9px', paddingRight: '9px'}}
               onClick={(e) => {this.openMultiSelect('experience', e)}}
               label='Exp Requirements'
             />
@@ -206,8 +209,9 @@ export default class RoleAdd extends React.Component {
             </Popover>
           </div>
 
-          <div className={cx('req-btns') +' col-md-4'}>
+          <div className={cx('req-btns') +' col-md-3'}>
             <RaisedButton
+              labelStyle={{fontSize: '10px', paddingLeft: '9px', paddingRight: '9px'}}
               onClick={(e) => {this.openMultiSelect('skill', e)}}
               label='Skill Requirements'
             />
@@ -216,7 +220,7 @@ export default class RoleAdd extends React.Component {
               anchorOrigin={{horizontal: 'left', vertical: 'top'}}
               targetOrigin={{horizontal: 'left', vertical: 'bottom'}}
               anchorEl={this.state.skill.anchorEl}
-              style={{height: '450px', width: '800px'}}
+              style={{width: '700px'}}
             >
               <RoleSkills 
                 skills={roles.skills}
@@ -227,8 +231,29 @@ export default class RoleAdd extends React.Component {
                 onSkillSave={actions.createSkill} 
                 onSkillDelete={actions.deleteSkill} 
               />
+              <FlatButton className='pull-right' label="set" onClick={() => {this.closePopover('skill')}} primary={true} />
             </Popover>
           </div>
+
+
+          <div className={cx('req-btns') +" col-md-3"}>
+            <RaisedButton
+              labelStyle={{fontSize: '10px', paddingLeft: '9px', paddingRight: '9px'}}
+              onClick={(e) => {this.openMultiSelect('location', e)}}
+              label='Location Range'
+            />
+            <Popover
+              open={this.state.location.open}
+              anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+              targetOrigin={{horizontal: 'left', vertical: 'bottom'}}
+              anchorEl={this.state.location.anchorEl}
+              style={{height: '150px', width: '400px'}}
+            >
+              <AddressInput/>
+              <FlatButton className='pull-right' label="set" onClick={() => {this.closePopover('location')}} primary={true} />
+            </Popover>
+          </div>
+
 
           <div className={cx('profile-btn-group')}>
             <RaisedButton className='pull-right' type="submit" label="Save" primary={true} />
@@ -237,6 +262,7 @@ export default class RoleAdd extends React.Component {
             ) : (<span />)}
             <FlatButton className='pull-left' label="Close" onClick={this.props.toggleEdit} primary={true} />
           </div>
+
         </form>
       </div>
     )

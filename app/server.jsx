@@ -44,7 +44,7 @@ if (process.env.NODE_ENV === 'production') {
     ga('create', 'UA-87261456-1', 'auto');
     ga('send', 'pageview');
   </script>`;
-
+  
   mixpanelScript = `<!-- start Mixpanel --><script type="text/javascript">(function(e,a){if(!a.__SV){var b=window;try{var c,l,i,j=b.location,g=j.hash;c=function(a,b){return(l=a.match(RegExp(b+"=([^&]*)")))?l[1]:null};g&&c(g,"state")&&(i=JSON.parse(decodeURIComponent(c(g,"state"))),"mpeditor"===i.action&&(b.sessionStorage.setItem("_mpcehash",g),history.replaceState(i.desiredHash||"",e.title,j.pathname+j.search)))}catch(m){}var k,h;window.mixpanel=a;a._i=[];a.init=function(b,c,f){function e(b,a){var c=a.split(".");2==c.length&&(b=b[c[0]],a=c[1]);b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,
   0)))}}var d=a;"undefined"!==typeof f?d=a[f]=[]:f="mixpanel";d.people=d.people||[];d.toString=function(b){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);b||(a+=" (stub)");return a};d.people.toString=function(){return d.toString(1)+".people (stub)"};k="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
     for(h=0;h<k.length;h++)e(d,k[h]);a._i.push([b,c,f])};a.__SV=1.2;b=e.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";c=e.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}})(document,window.mixpanel||[]);
@@ -71,7 +71,7 @@ export default function render(req, res) {
 
   /*
    * From the react-router docs:
-   *
+   *  
    * This function is to be used for server-side rendering. It matches a set of routes to
    * a location, without rendering, and calls a callback(err, redirect, props)
    * when it's done.
@@ -81,12 +81,12 @@ export default function render(req, res) {
    * of `parseQueryString` and `stringifyQuery` to control query string parsing and serializing.
    * You can also pass in an already instantiated `history` object, which can be constructured
    * however you like.
-   *
+   *  
    * The three arguments to the callback function you pass to `match` are:
    * - err:       A javascript Error object if an error occured, `undefined` otherwise.
-   * - redirect:  A `Location` object if the route is a redirect, `undefined` otherwise
+   * - redirect:  A `Location` object if the route is a redirect, `undefined` ot  herwise
    * - props:     The props you should pass to the routing context if the route matched,
-   *              `undefined` otherwise.
+   *              `undefined` otherwise.  
    * If all three parameters are `undefined`, this means that there was no route found matching the
    * given location.
    */

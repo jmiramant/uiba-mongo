@@ -6,10 +6,13 @@ const isFetching = (
   action
 ) => {
   switch (action.type) {
-    case types.GET_PROFILE_REQUEST:
+    case types.GET_APPLICANTS_REQUEST:
+    case types.GET_APPLICANT_REQUEST:
       return true;
-    case types.GET_PROFILE_SUCCESS:
-    case types.GET_PROFILE_FAILURE:
+    case types.GET_APPLICANTS_SUCCESS:
+    case types.GET_APPLICANT_SUCCESS:
+    case types.GET_APPLICANTS_FAILURE:
+    case types.GET_APPLICANT_FAILURE:
       return false;
     default:
       return state;
@@ -25,6 +28,28 @@ const order = (applicants, order = 'asc') => {
     }
   });
 }
+
+const applicant = (
+  state = {},
+  action
+) => {
+  let updatedProfile;
+  switch (action.type) {
+    case types.GET_APPLICANT_SUCCESS:
+      return action.res.data;
+    case types.CHANGE_APPLICANT:
+      const newStateOjb = {...state}
+      newStateOjb[action.state.field] = action.state.value
+      return newStateOjb;
+    case types.GET_APPLICANT_FAILURE:
+      return state;
+    case types.UPDATE_APPLICANT_SUCCESS:
+      return {...state}
+    default:
+      return state;
+  }
+};
+
 
 const applicants = (
   state = [],
@@ -66,6 +91,7 @@ const applicants = (
 
 const profileReducer = combineReducers({
   isFetching,
+  applicant,
   applicants,
 });
 

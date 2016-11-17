@@ -9,7 +9,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import Toggle from 'material-ui/Toggle';
 import Divider from 'material-ui/Divider';
-import linkedinLogo from '../images/linkedin.svg';
 
 import LoginForm from 'components/login/loginForm';
 import SignupForm from 'components/login/signupForm';
@@ -85,20 +84,6 @@ class LoginOrRegister extends Component {
           <div className={cx('login', {
             waiting: isWaiting
           })}>
-
-            <div className={cx('li-container')}>
-              <a className={cx('li-auth')}
-                href="/auth/linkedin"
-              >
-              <div className={cx('li-btn-container')}>
-                <img src={linkedinLogo} />
-                <p>{isLogin ? ('Log In'):('Signup')} Using LinkedIn</p>
-              </div>
-              </a>
-
-            </div>
-            <Divider/>
-            
 
               <div>
                 <div className={cx('toggle-container')}>

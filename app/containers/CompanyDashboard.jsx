@@ -12,7 +12,11 @@ import styles from 'css/components/navigation';
 
 const cx = classNames.bind(styles);
 
-class Dashboard extends Component {
+class CompanyDashboard extends Component {
+
+  constructor(props) {
+    super(props)
+  }
 
   componentWillMount() {
     this.props.actions.fetchRoles(this.props.company._id)
@@ -46,11 +50,10 @@ class Dashboard extends Component {
   }
 };
 
-Dashboard.propTypes = {
+CompanyDashboard.propTypes = {
   role: PropTypes.object,
   roles: PropTypes.array,
   addShow: PropTypes.bool,
-  role: PropTypes.object,
 };
 
 function mapStateToProps(state) {
@@ -71,4 +74,4 @@ function mapDispatchToProps (dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Dashboard);
+)(CompanyDashboard);

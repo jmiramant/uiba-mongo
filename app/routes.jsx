@@ -19,7 +19,7 @@ import ApplicantList from 'containers/ApplicantList'
 import ApplicantShow from 'containers/ApplicantShow'
 import NotFound from 'containers/NotFound'
 
-import {fetchCurrentUser} from 'actions/users';
+import { fetchCurrentUser } from 'actions/users';
 import { recoveryCapture } from 'actions/apply';
 
 export default (store) => {

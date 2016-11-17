@@ -18,6 +18,7 @@ const ProfileSchema = new mongoose.Schema({
     company_id: {type: Schema.Types.ObjectId, ref: 'Company'}
   },
   gender: { type: String, default: '' },
+  claim: { type: Boolean, default: false },
   location: { type: String, default: '' },
   website: { type: String, default: '' },
   picture: { type: String, default: '' },

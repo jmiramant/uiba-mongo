@@ -3,7 +3,6 @@ import _ from 'lodash'
 import User from '../models/user';
 import Profile from '../models/profile'
 import Recruiter from '../models/recruiter';
-import Role from '../models/role';
 import Company from '../models/company';
 import cookie from 'react-cookie';
 
@@ -21,6 +20,7 @@ const setDefaultProfileFields = (prof, profile, userId) => {
 }
 
 const setDefaultUserFields = (user, profile, accessToken) => {
+  user.email = profile._json.emailAddress;
   user.linkedin = profile.id;
   if (!user.tokens) {
     user.tokens = [];
@@ -39,30 +39,9 @@ const isApply = (req) => {
 const logRecruiter = (req, profId) => {
   if (req.headers.referer.split('/apply/').length > 1) {
 
-    const properString = (str) => {
-      return str.split('-').map((s) => {
-        return s.charAt(0).toUpperCase() + s.slice(1)
-      }).join(' ');
-    }
+    const company = req.headers.referer.split('/apply/')[1].split('?')[0].toLowerCase();
 
-    const company = properString(req.headers.referer.split('/apply/')[1].split('/')[0]);
-    const role = req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[0];
-    let rid;
-    if (req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[1]) {
-      rid = req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[1].split('&')[0].split('=')[1]
-    } 
-
-    if (role) {
-      Role.findOne({'applicantCode': role}, (err, _role) => {
-        if (!err && _role) {
-          _role.applicants.push(profId);
-          _role.appliedCount += 1;
-          _role.save();
-        }
-      })
-    }
-    
-    if (rid) {
+    if (req.headers.referer.split('/apply/')[1].split('?rid=')[1]) {
 
       const rid = req.headers.referer.split('/apply/')[1].split('?rid=')[1].split('&')[0];
 
@@ -124,7 +103,6 @@ const resolveApplyRedirect = (req, user, done) => {
 export default (req, accessToken, refreshToken, profile, done) => {
 
   if (req.user) {
-
     return User.findOne({
       linkedin: profile.id
     }, (findOneErr, existingUser) => {
@@ -134,15 +112,16 @@ export default (req, accessToken, refreshToken, profile, done) => {
           message: 'There is already a linkedin account that belongs to you. Sign in with that account or delete it, then link it with your current account.'
         });
       }
-
       User.findOne({
-        '_id': req.user.id
+        '_id': req.user._id
       }, (findByIdErr, _user) => {
         if (req.user.tokens.length === 0) {
 
           const secondUser = new User();
           Profile.findById(req.user.profile_id, (err, updatedProfile) => {
-
+            if (err) return done(null, false, {
+              message: 'There was an error finding a profile associated with this user.'
+            });
             setDefaultUserFields(secondUser, profile, accessToken)
             setDefaultUserFields(_user, profile, accessToken)
             setDefaultProfileFields(updatedProfile, profile, _user._id);
@@ -150,7 +129,6 @@ export default (req, accessToken, refreshToken, profile, done) => {
             updatedProfile.user_id = secondUser._id;
             _user.profile_id = updatedProfile._id;
             secondUser.profile_id = updatedProfile._id;
-
             return async.series({
               _profile: updatedProfile.save,
               secondUser: secondUser.save,
@@ -177,6 +155,7 @@ export default (req, accessToken, refreshToken, profile, done) => {
               _profile: _profile.save,
               user: user.save,
             }, function(err, res) {
+              console.log(res)
               done(err, res.user[0])
             });
 
@@ -195,19 +174,13 @@ export default (req, accessToken, refreshToken, profile, done) => {
       return User.findOne({
         email: profile._json.emailAddress
       }, (findByEmailErr, existingEmailUser) => {
-        if (!existingEmailUser || !existingEmailUser.claim) {
+        if (existingEmailUser) {
           return done(null, false, {
             message: 'There is already an account using this email address. Sign in to that account and link it with linkedin manually from Account Settings.'
           });
         }
-        
-        let user = new User();
+        const user = new User();
         const _profile = new Profile();
-        
-        if (existingEmailUser.claim) {
-          user = existingEmailUser;
-          user.claim = false;
-        }
 
         user.email = profile._json.emailAddress;
 

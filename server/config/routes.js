@@ -32,6 +32,7 @@ export default (app) => {
 
   if (profilesController) {
     app.get('/profile/me', profilesController.me);
+    app.get('/profile/:id', profilesController.get);
     app.put('/profile', profilesController.update);
   } else {
     console.warn(unsupportedMessage('profile routes'));
@@ -43,6 +44,7 @@ export default (app) => {
     app.post('/signup', usersController.signUp);
     app.post('/logout', usersController.logout);
     app.post('/api/v1/user/role', usersController.role);
+    app.post('/api/v1/user/company', usersController.company);
     app.get('/validateEmail/:token', usersController.emailConfirmation);
     app.post('/resendValidationEmail', usersController.resendEmailConfirmation)
   } else {

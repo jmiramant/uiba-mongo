@@ -19,6 +19,17 @@ export function me(req, res) {
   });
 }
 
+export function get(req, res) {
+  var uid = req.params.id
+
+  Profile.findOne({"_id": mongoose.Types.ObjectId(uid)}).exec((err, profile) => {
+    if (err) return res.status(500).send({error: err.value});
+    if (!profile) return res.status(404).send({error: 'Profile resource not found: ' + err.value});
+    return res.json(profile);
+  });
+
+}
+
 export function update(req, res) {
   const query = { _id: req.body._id };
   const omitKeys = ['id', '_id', '_v'];
@@ -34,5 +45,6 @@ export function update(req, res) {
 
 export default {
   me,
+  get,
   update
 };

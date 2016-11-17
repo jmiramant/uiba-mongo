@@ -26,10 +26,12 @@ const logRecruiter = (req, profId) => {
     let rid;
     if (req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[1]) {
       rid = req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[1].split('&')[0].split('=')[1]
-    } 
+    }
 
     if (role) {
-      Role.findOne({'applicantCode': role}, (err, _role) => {
+      Role.findOne({
+        'applicantCode': role
+      }, (err, _role) => {
         if (!err && _role) {
           _role.applicants.push(profId);
           _role.appliedCount += 1;
@@ -70,11 +72,13 @@ const logRecruiter = (req, profId) => {
 
 const resolveApplyRedirect = (req, profile, cb) => {
   const companyName = req.headers.referer.split('/apply/')[1].split('/')[0].split('?')[0];
-  const nameLower = companyName.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-`~()]/g,"").split(' ').join('_')
+  const nameLower = companyName.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-`~()]/g, "").split(' ').join('_')
   Company.findOne({
     name_lower: nameLower
   }, (companyErr, _company) => {
-    if (companyErr) return res.status(401).json({ message: companyErr });
+    if (companyErr) return res.status(401).json({
+      message: companyErr
+    });
     profile.apply = {
       applied: true,
       name: companyName,
@@ -89,18 +93,14 @@ const resolveApplyRedirect = (req, profile, cb) => {
 /**
  * GET /user
  */
-export function me(req, res) {  
+export function me(req, res) {
   if (!req.user) {
     return res.status(404).send('Something went wrong getting the data');
   }
   return res.json(req.user);
 }
 
-/**
- * POST /login
- */
 export function login(req, res, next) {
-  // Do email and password validation for the server
   passport.authenticate('local', (authErr, user, info) => {
     if (authErr) return next(authErr);
     if (!user) {
@@ -110,8 +110,6 @@ export function login(req, res, next) {
     }
     if (user.isEmailVerified) {
 
-      // Passport exposes a login() function on req (also aliased as
-      // logIn()) that can be used to establish a login session
       const login = () => {
         return req.logIn(user, (loginErr) => {
           if (loginErr) return res.status(401).json({
@@ -130,7 +128,7 @@ export function login(req, res, next) {
         }, (profErr, _profile) => {
           if (profErr) console.log(profErr)
           const cb = () => {
-            _profile.save( (err, prof) => {
+            _profile.save((err, prof) => {
               login();
             })
           }
@@ -149,19 +147,12 @@ export function login(req, res, next) {
   })(req, res, next);
 }
 
-/**
- * POST /logout
- */
 export function logout(req, res) {
-  // Do email and password validation for the server
+  console.log('buy')
   req.logout();
   res.redirect('/');
 }
 
-/**
- * POST /signup
- * Create a new local account
- */
 export function signUp(req, res, next) {
   let user = new User({
     email: req.body.email,
@@ -184,34 +175,46 @@ export function signUp(req, res, next) {
       user.password = req.body.password;
     }
 
-    const _profile = new Profile({
-      user_id: user.id,
-      firstName: req.body.first,
-      lastName: req.body.last,
-      email: req.body.email,
-      name: req.body.first + ' ' + req.body.last,
-      service: 'email',
-      isEmailVerified: false
-    })
-    const saveResolve = () => {
-      return async.series({
-        _profile: _profile.save,
-        user: user.save
-      }, function(saveErr, resp){
-        if (saveErr) return next(saveErr);
-        mailer.sendEmailConfirmation(user, req.headers.host)
-        res.redirect(200, '/email-confirmation');
+    Profile.findOne({
+      email: req.body.email
+    }, (profErr, claimProfile) => {
+      if (profErr) return res.status(500).send(profErr);
+      
+      let _profile = new Profile();
+      
+      if (claimProfile) {
+        _profile = claimProfile;
+        _profile.claim = false;
+      } 
 
-      });      
-    }
-    user.profile_id = _profile._id;
+      _profile.user_id = user.id;
+      _profile.firstName = req.body.first;
+      _profile.lastName = req.body.last;
+      _profile.email = req.body.email;
+      _profile.name = req.body.first + ' ' + req.body.last;
+      _profile.service = 'email';
+      _profile.isEmailVerified = false;
 
-    if (isApply(req)) {
-      resolveApplyRedirect(req, _profile, saveResolve)
-    } else {
-      saveResolve()    
-    }
+      const saveResolve = () => {
+        return async.series({
+          _profile: _profile.save,
+          user: user.save
+        }, function(saveErr, resp) {
+          if (saveErr) return next(saveErr);
+          mailer.sendEmailConfirmation(user, req.headers.host)
+          res.redirect(200, '/email-confirmation');
 
+        });
+      }
+      user.profile_id = _profile._id;
+
+      if (isApply(req)) {
+        resolveApplyRedirect(req, _profile, saveResolve)
+      } else {
+        saveResolve()
+      }
+
+    });
   });
 }
 
@@ -274,18 +277,13 @@ export function resendEmailConfirmation(req, res, next) {
 
 }
 
-
-/**
- * POST /role
- */
-
 export function role(req, res) {
 
   const isRoleNumber = (role) => {
     return typeof(Number(role)) === 'number';
   };
   if (isRoleNumber(req.body.role)) {
-    
+
     const roleDigit = Number(req.body.role);
 
     User.findOne({
@@ -335,10 +333,61 @@ export function role(req, res) {
   }
 }
 
+export function company(req, res) {
+
+  Company.findOne({
+    name_lower: req.body.companyName
+  }).exec((cErr, company) => {
+    if (cErr) return res.status(500).send(cErr);
+    if (!company) return res.status(404).send('Could not find that company.');
+    
+    Profile.findOne({
+      email: req.body.email
+    }, (profErr, _prof) => {
+
+      if (profErr) return res.status(500).send(profErr);
+      
+      User.findOne({
+        email: req.body.email
+      }, (uErr, _user) => {
+        if (uErr) return res.status(500).send(uErr);
+
+        let user = _user;
+        let prof = _prof;
+
+        if (!prof) {
+          prof = new Profile();
+          prof.claim = true;
+          prof.email = req.body.email;
+        }
+        prof.company_id = company._id;
+
+        if (!user) {
+          user = new User();
+          user.claim = true;
+          user.email = req.body.email;
+        }
+        user.role = [1,2];
+
+        async.parallel({
+          user: user.save,
+          profile: prof.save
+        }, (err, resp) => { 
+          if (err) return res.status(500).send(err)
+          return res.json(resp.profile);
+        })
+
+      });
+    });
+  });
+
+}
+
 export default {
   me,
   login,
   logout,
+  company,
   role,
   signUp,
   emailConfirmation,
