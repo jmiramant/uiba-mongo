@@ -120,7 +120,9 @@ export default (req, accessToken, refreshToken, profile, done) => {
 
           const secondUser = new User();
           Profile.findById(req.user.profile_id, (err, updatedProfile) => {
-
+            if (err) return done(null, false, {
+              message: 'There was an error finding a profile associated with this user.'
+            });
             setDefaultUserFields(secondUser, profile, accessToken)
             setDefaultUserFields(_user, profile, accessToken)
             setDefaultProfileFields(updatedProfile, profile, _user._id);
@@ -134,6 +136,7 @@ export default (req, accessToken, refreshToken, profile, done) => {
               secondUser: secondUser.save,
               user: _user.save,
             }, function(err, res) {
+              console.log(res)
               done(err, res.user[0])
             });
 
@@ -155,6 +158,7 @@ export default (req, accessToken, refreshToken, profile, done) => {
               _profile: _profile.save,
               user: user.save,
             }, function(err, res) {
+              console.log(res)
               done(err, res.user[0])
             });
 
