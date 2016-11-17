@@ -103,7 +103,6 @@ const resolveApplyRedirect = (req, user, done) => {
 export default (req, accessToken, refreshToken, profile, done) => {
 
   if (req.user) {
-    console.log('there IS a user')
     return User.findOne({
       linkedin: profile.id
     }, (findOneErr, existingUser) => {
@@ -130,16 +129,11 @@ export default (req, accessToken, refreshToken, profile, done) => {
             updatedProfile.user_id = secondUser._id;
             _user.profile_id = updatedProfile._id;
             secondUser.profile_id = updatedProfile._id;
-            console.log('updatedProfile', updatedProfile)
-            console.log('secondUser', secondUser)
-            console.log('_user', _user)
             return async.series({
               _profile: updatedProfile.save,
               secondUser: secondUser.save,
               user: _user.save,
             }, function(err, res) {
-              console.log(err)
-              console.log(res)
               done(err, res.user[0])
             });
 
