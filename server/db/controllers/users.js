@@ -22,13 +22,15 @@ const logRecruiter = (req, profId) => {
     }
 
     const company = properString(req.headers.referer.split('/apply/')[1].split('/')[0]);
-    const role = req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[0];
+    const isRole = req.headers.referer.split('/apply/')[1].split('/').length > 0
+    if (isRole) role = req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[0];
+    
     let rid;
     if (req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[1]) {
       rid = req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[1].split('&')[0].split('=')[1]
     }
 
-    if (role) {
+    if (isRole) {
       Role.findOne({
         'applicantCode': role
       }, (err, _role) => {

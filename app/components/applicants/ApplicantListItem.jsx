@@ -27,10 +27,10 @@ export default class ApplicantListItem extends React.Component {
 
   render () {
     const { 
-            company,
-            applicant,
-            handleArchive
-          } = this.props;
+      company,
+      applicant,
+      handleArchive
+    } = this.props;
 
     return (
       <TableRow>
