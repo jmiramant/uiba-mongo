@@ -15,22 +15,13 @@ const isApply = (req) => {
 const logRecruiter = (req, profId) => {
   if (req.headers.referer.split('/apply/').length > 1) {
 
-    const properString = (str) => {
-      return str.split('-').map((s) => {
-        return s.charAt(0).toUpperCase() + s.slice(1)
-      }).join(' ');
-    }
-
-    const company = properString(req.headers.referer.split('/apply/')[1].split('/')[0]);
-    const isRole = req.headers.referer.split('/apply/')[1].split('/').length > 0
-    if (isRole) role = req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[0];
+    const company = req.headers.referer.split('/apply/')[1].split('/')[0];
     
-    let rid;
-    if (req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[1]) {
-      rid = req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[1].split('&')[0].split('=')[1]
-    }
+    const isRole = req.headers.referer.split('/apply/')[1].split('/').length > 1
+    if (isRole) role = req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[0];
 
     if (isRole) {
+
       Role.findOne({
         'applicantCode': role
       }, (err, _role) => {
@@ -42,9 +33,11 @@ const logRecruiter = (req, profId) => {
       })
     }
 
-    if (rid) {
+    const isRid = req.headers.referer.split('/apply/')[1].split('?')[1]
 
-      const rid = req.headers.referer.split('/apply/')[1].split('?rid=')[1].split('&')[0];
+    if (isRid) {
+      
+      const rid = isRid.split('&')[0].split('=')[1];
 
       Recruiter.findOne({
         key: rid
@@ -150,7 +143,6 @@ export function login(req, res, next) {
 }
 
 export function logout(req, res) {
-  console.log('buy')
   req.logout();
   res.redirect('/');
 }

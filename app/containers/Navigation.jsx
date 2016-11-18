@@ -117,7 +117,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps (dispatch) {
   return {
     fetchCurrentUser: () => {dispatch(fetchCurrentUser())},
-    logOut
+    logOut: () => {dispatch(logOut())},
   }
 }
 

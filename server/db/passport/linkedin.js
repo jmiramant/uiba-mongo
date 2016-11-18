@@ -2,6 +2,7 @@ import async from 'async'
 import _ from 'lodash'
 import User from '../models/user';
 import Profile from '../models/profile'
+import Role from '../models/role';
 import Recruiter from '../models/recruiter';
 import Company from '../models/company';
 import cookie from 'react-cookie';
@@ -39,23 +40,39 @@ const isApply = (req) => {
 const logRecruiter = (req, profId) => {
   if (req.headers.referer.split('/apply/').length > 1) {
 
-    const company = req.headers.referer.split('/apply/')[1].split('?')[0].toLowerCase();
+    const company = req.headers.referer.split('/apply/')[1].split('/')[0];
+    
+    const isRole = req.headers.referer.split('/apply/')[1].split('/').length > 1
+    if (isRole) role = req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[0];
 
-    if (req.headers.referer.split('/apply/')[1].split('?rid=')[1]) {
+    if (isRole) {
 
-      const rid = req.headers.referer.split('/apply/')[1].split('?rid=')[1].split('&')[0];
+      Role.findOne({
+        'applicantCode': role
+      }, (err, _role) => {
+        if (!err && _role) {
+          _role.applicants.push(profId);
+          _role.appliedCount += 1;
+          _role.save();
+        }
+      })
+    }
+
+    const isRid = req.headers.referer.split('/apply/')[1].split('?')[1]
+
+    if (isRid) {
+      
+      const rid = isRid.split('&')[0].split('=')[1];
 
       Recruiter.findOne({
         key: rid
       }).exec((err, recruiter) => {
-
         if (!recruiter) {
           console.log('no recruiter with this ID')
           return false;
         }
-
         const companyObj = _.find(recruiter.credit, (obj) => {
-          return obj.company.toLowerCase() === company;
+          return obj.company.toLowerCase() === company
         })
 
         if (companyObj) {
