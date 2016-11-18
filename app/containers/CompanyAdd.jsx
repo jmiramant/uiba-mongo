@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import * as profileActionCreators from 'actions/profiles';
 import * as companyActionCreator from 'actions/companies'
+
 import CompanyAdd from 'components/company/CompanyAdd';
 
 class CompanyAddApp extends Component {

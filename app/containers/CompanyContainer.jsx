@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import CompanyAdd from 'containers/CompanyAdd';
 import FlatButton from 'material-ui/FlatButton';
 import Loader from 'components/Loader';
 
