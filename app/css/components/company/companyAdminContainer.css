@@ -13,10 +13,16 @@
 }
 
 .companyAdmin-container { 
-  margin: 25px auto;
+  margin: 0px auto;
 }
 
 .container-card {
   @apply --companyAdmin--container;
 }
 
+.portal-title {
+  font-size: 20px;
+  margin: 10px 0;
+  text-align: center;
+  color: #D6D6D6;
+}

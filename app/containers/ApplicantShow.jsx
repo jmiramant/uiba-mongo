@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
 import { browserHistory } from 'react-router'
 
 import * as jobsActionCreators from 'actions/jobs';
@@ -12,7 +11,9 @@ import * as languagesActionCreators from 'actions/languages';
 import * as projectsActionCreators from 'actions/projects';
 import * as interestsActionCreators from 'actions/interests';
 
-import CardHeader from 'components/CardHeader';
+import {Card, CardHeader} from 'material-ui/Card';
+import DefaultUserIcon from 'material-ui/svg-icons/action/account-circle';
+import UibaCardHeader from 'components/CardHeader';
 import SchoolItem from 'components/applicants/SchoolItem';
 import JobItem from 'components/applicants/JobItem';
 import LanguageItem from 'components/applicants/LanguageItem';
@@ -61,12 +62,19 @@ export default class ApplicantShow extends React.Component {
 
     return (
       <div>
-        <h4>User Profile</h4>
         <div className={cx('applicant-container')}>
-          <p className={cx('name')}>{applicant.firstName} {applicant.lastName}</p>
+
+          <Card className='col-md-8 col-md-offset-2'>
+            <CardHeader
+              title={applicant.firstName  + ' ' + applicant.lastName}
+              avatar={applicant.picture || <DefaultUserIcon/>}
+              titleStyle={{fontSize: '20px'}}
+            />
+          </Card>
+          <p className={cx('name')}></p>
 
             <div className='col-md-8 col-md-offset-2'>
-              <CardHeader
+              <UibaCardHeader
                 text='Education'
               />
               {schools.length === 0 ? (
@@ -83,7 +91,7 @@ export default class ApplicantShow extends React.Component {
             </div>
 
             <div className='col-md-8 col-md-offset-2'>
-              <CardHeader
+              <UibaCardHeader
                 text='Employment'
               />
                 {jobs.length === 0 ? (
@@ -100,7 +108,7 @@ export default class ApplicantShow extends React.Component {
             </div>
           
             <div className='col-md-8 col-md-offset-2'>
-              <CardHeader
+              <UibaCardHeader
                 text='Knowledge, Skills, Abilities'
               />
                 {skills.length === 0 ? (
@@ -117,7 +125,7 @@ export default class ApplicantShow extends React.Component {
             </div>
           
             <div className='col-md-8 col-md-offset-2'>
-              <CardHeader
+              <UibaCardHeader
                 text='Languages'
               />
                 {languages.length === 0 ? (
@@ -134,7 +142,7 @@ export default class ApplicantShow extends React.Component {
             </div>
 
             <div className='col-md-8 col-md-offset-2'>
-              <CardHeader
+              <UibaCardHeader
                 text='Projects'
               />
                 {projects.length === 0 ? (
@@ -151,7 +159,7 @@ export default class ApplicantShow extends React.Component {
             </div>
 
             <div className='col-md-8 col-md-offset-2'>
-              <CardHeader
+              <UibaCardHeader
                 text='Interests'
               />
                 {interests.length === 0 ? (

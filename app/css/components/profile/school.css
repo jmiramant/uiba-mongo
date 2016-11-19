@@ -1,6 +1,7 @@
 @import '../../common/colors';
 @import '../../common/button';
 @import '../../common/profile';
+@import '../../common/admin';
 
 .schoolList--container {
   @apply --profile--container;

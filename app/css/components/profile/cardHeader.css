@@ -12,14 +12,14 @@
   width: 75%;
   display: inline-block;
   border-radius: 3px 3px 0 0;
-  padding: 15px 30px;
-  font-size: 20px;
+  padding: 10px 30px;
+  font-size: 16px;
   background-color: var(--colorDarkBlue);
 }
 
 .icon {
-  height: 52px !important;
-  width: 52px !important;
+  height: 37px !important;
+  width: 37px !important;
   color: var(--colorLightText) !important;
-  padding: 10px !important;
+  padding: 3px !important;
 }
