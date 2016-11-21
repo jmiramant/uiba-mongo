@@ -6,9 +6,11 @@ import { push } from 'react-router-redux';
 
 import FlatButton from 'material-ui/FlatButton';
 import Loader from 'components/Loader';
+import Divider from 'material-ui/Divider';
 import {
   Step,
   Stepper,
+  StepLabel,
   StepButton,
 } from 'material-ui/Stepper';
 
@@ -83,27 +85,29 @@ class CompanyContainer extends React.Component {
           <div className={cx('portal-title')}>{company.name} Admin Portal</div>
         ) : (null)}
 
-        { steps.length > 1 ? (
-          <Stepper 
-            linear={false}
-            style={{width: '50%', margin: '0 auto'}}
-          >
-
-            {steps.map( (step, i) => {
-              return (<Step key={i + stepNames[i]} active={true}>
-                  <StepButton onClick={() => {this.stepNavHandler(i)} }>
-                    {stepNames[i]}
-                  </StepButton>
-              </Step>)
-              }) 
-            }
-
-          </Stepper>
-        ) : (null)}
-
         <div className={cx('container-card') + ' col-md-12'}>
           { profile.company_id && company._id ? (
             <div>
+              { steps.length > 1 ? (
+                <span>
+                <Stepper
+                  linear={false}
+                  style={{width: '50%', margin: '-12px auto 0', height: '40px'}}
+                >
+
+                  {steps.map( (step, i) => {
+                    return (<Step key={i + stepNames[i]} active={true}>
+                        <StepButton style={{height: '40px'}} onClick={() => {this.stepNavHandler(i)} }>
+                          <StepLabel style={{marginTop: '-15px'}}>{stepNames[i]}</StepLabel>
+                        </StepButton>
+                    </Step>)
+                    }) 
+                  }
+
+                </Stepper>
+                <Divider />
+                </span>
+              ) : (null)}
               {children}
             </div>
           ) : (

@@ -30,6 +30,18 @@ const roleOrder = (roles, order = 'asc') => {
   });
 }
 
+const blank =  {
+  company_id: null,
+  address_id: null,
+  title: '',
+  description: '',
+  applicantCode: '',
+  degreeRequirements: [],
+  experienceMin: 0,
+  experienceMin: 10,
+  appliedCount: 0
+}
+
 const role = (
   state = {},
   action
@@ -40,23 +52,11 @@ const role = (
     case types.CREATE_NEW_ROLE:
       return state;
     case types.CHANGE_ROLE:
-      const newStateOjb = {...state
-      }
+      const newStateOjb = {...state}
       newStateOjb[action.state.field] = action.state.value
       return newStateOjb;
+    case types.GET_ROLES_SUCCESS:
     case types.CREATE_ROLE_SUCCESS:
-      const blank =  {
-        company_id: undefined,
-        address_id: undefined,
-        title: undefined,
-        description: undefined,
-        applicantCode: undefined,
-        degreeRequirements: undefined,
-        experienceMin: undefined,
-        experienceMin: undefined,
-        appliedCount: undefined,
-        isArchived: undefined
-      }
       return blank;
     default:
       return state;

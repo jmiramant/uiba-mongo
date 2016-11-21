@@ -205,6 +205,7 @@ export default class RoleAdd extends React.Component {
                   stages={['>1', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10+']}
                 />
                 <FlatButton className='pull-right' label="set" onClick={() => {this.closePopover('experience')}} primary={true} />
+                <FlatButton className='pull-right' label="close" onClick={() => {this.closePopover('experience')}} primary={true} />
               </div>
             </Popover>
           </div>
@@ -232,6 +233,7 @@ export default class RoleAdd extends React.Component {
                 onSkillDelete={actions.deleteSkill} 
               />
               <FlatButton className='pull-right' label="set" onClick={() => {this.closePopover('skill')}} primary={true} />
+              <FlatButton className='pull-right' label="close" onClick={() => {this.closePopover('skill')}} primary={true} />
             </Popover>
           </div>
 
@@ -250,7 +252,8 @@ export default class RoleAdd extends React.Component {
               style={{height: '150px', width: '400px'}}
             >
               <AddressInput/>
-              <FlatButton className='pull-right' label="set" onClick={() => {this.closePopover('location')}} primary={true} />
+              <FlatButton className='pull-right' label="set" onClick={() => {this.closePopover('skill')}} primary={true} />
+              <FlatButton className='pull-right' label="close" onClick={() => {this.closePopover('skill')}} primary={true} />
             </Popover>
           </div>
 

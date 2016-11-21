@@ -6,6 +6,7 @@ import RoleItem from 'components/roles/RoleItem';
 import RoleAdd from 'components/roles/RoleAdd';
 import NullProfItem from 'components/ProfileNull';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow} from 'material-ui/Table';
+import Divider from 'material-ui/Divider';
 
 import classNames from 'classnames/bind';
 import styles from 'css/components/role';
@@ -53,6 +54,8 @@ class RoleList extends React.Component {
             rolesChange,
             onToggleEduReqSelect
           } = this.props;
+
+    console.log('role: ', role)
 
     const renderItems = (
       <div>

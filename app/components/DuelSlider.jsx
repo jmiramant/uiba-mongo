@@ -39,7 +39,7 @@ class DuelSlider extends React.Component {
     }
     
     if (this.props.style) {
-      sliderStyle = Object.assign({}, sliderStyle, this.props.style)
+      sliderStyle = {...sliderStyle, ...this.props.style}
     }
 
     const itemStyle = {
@@ -73,10 +73,19 @@ class DuelSlider extends React.Component {
 
     return (
       <div className='duel-slider-container'>
-      <div style={{height: '40px'}}>
-        <ReactSlider style={sliderStyle} min={0} max={10} onAfterChange={this.handleChange.bind(this)} defaultValue={[0, 10]} withBars ></ReactSlider>
-        {labelItems}
-      </div>
+        <div style={{height: '40px'}}>
+          <ReactSlider 
+            style={sliderStyle} 
+            min={0} 
+            max={10}
+            step={1}
+            minDistance={1}
+            onAfterChange={this.handleChange.bind(this)} 
+            defaultValue={[0, 10]} 
+            withBars
+          />
+          {labelItems}
+        </div>
       </div>
     );
 
