@@ -9,6 +9,10 @@
   color: var(--colorBlack);
   font-size: var(--fontMedium);
   text-align: center;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
 }
 
 .show {
@@ -18,4 +22,14 @@
 .success {
   background-color: rgb(129,210,235);
   color: var(--colorWhite);
+}
+
+.error {
+  background-color: rgb(244, 67, 54);
+  color: var(--colorWhite);
+}
+
+.icon {
+  margin-right: 20px;
+  color: #fff !important;
 }

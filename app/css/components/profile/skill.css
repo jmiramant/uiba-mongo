@@ -45,6 +45,25 @@
   border-left: 1px solid rgba(0, 0, 0, 0.298039);
 }
 
+.cta {
+  color: #7e7e7e;
+  text-align: left;
+  margin: 0 10px 10px;
+}
+
+.info-icon {
+  display: inline-block;
+  width: 10% !important;
+  height: 55px !important;
+  color: #FFC107 !important;
+}
+
+.msg {
+  display: inline-block;
+  padding-left: 20px;
+  width: 90%;
+}
+
 .horizontal {
   display: inline-block;
   vertical-align: top;

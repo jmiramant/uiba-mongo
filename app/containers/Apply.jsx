@@ -3,9 +3,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import cookie from 'react-cookie';
 
-import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { mixpanelURLTrack } from 'middlewares/mixpanelTrackers';
 
 import Toggle from 'material-ui/Toggle';
@@ -109,77 +106,73 @@ class Apply extends Component {
     } = this.props;
 
     const applyPage = (
-      <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
-        <div>
-          <div className={cx('welcome-text')}>
-            <h3 className={cx('apply-header')}>Welcome to the {company.name} Career Portal</h3>
-            <p className={cx('text')}>We’re excited you’re applying to {company.name}. To ensure we understand your qualifications, please create a profile and fill out the requested information. It is important you complete as much information as possible because the profile, not your resume, will be used to assess your qualifications.</p>
-            <p className={cx('text')}>Once you’re finished, simply click submit and you’ll receive an automated message thanking you. We will follow up with you shortly to notify you of next steps. </p>
-            <Divider />
-            <p className={cx('text', 'big')}>Please get started by registering:</p>
-          </div>
-          <div className={cx('login-container')}>
-            <div className={cx('login', {
-              waiting: isWaiting
-            })}>
-              <div className={cx('li-container')}>
-                <a className={cx('li-auth')}
-                  onClick={ this.trackLinkedAuth }
-                  href="/auth/linkedin"
-                >
-                <div className={cx('li-btn-container')}>
-                  <img src={linkedinLogo} />
-                  <p>{isLogin ? ('Log In'):('Signup')} Using LinkedIn</p>
-                </div>
-                </a>
-
+      <div>
+        <div className={cx('welcome-text')}>
+          <h3 className={cx('apply-header')}>Welcome to the {company.name} Career Portal</h3>
+          <p className={cx('text')}>We’re excited you’re applying to {company.name}. To ensure we understand your qualifications, please create a profile and fill out the requested information. It is important you complete as much information as possible because the profile, not your resume, will be used to assess your qualifications.</p>
+          <p className={cx('text')}>Once you’re finished, simply click submit and you’ll receive an automated message thanking you. We will follow up with you shortly to notify you of next steps. </p>
+          <Divider />
+          <p className={cx('text', 'big')}>Please get started by registering:</p>
+        </div>
+        <div className={cx('login-container')}>
+          <div className={cx('login', {
+            waiting: isWaiting
+          })}>
+            <div className={cx('li-container')}>
+              <a className={cx('li-auth')}
+                onClick={ this.trackLinkedAuth }
+                href="/auth/linkedin"
+              >
+              <div className={cx('li-btn-container')}>
+                <img src={linkedinLogo} />
+                <p>{isLogin ? ('Log In'):('Signup')} Using LinkedIn</p>
               </div>
-              <Divider/>
-              
+              </a>
 
-                <div>
-                  <div className={cx('toggle-container')}>
-                    <p 
-                      onClick={() => { this.setLoginState('true')}}
-                      className={cx('toggle', {
-                        'active': isLogin
-                      })}
-                    >
-                      Log In
-                    </p>
-                    <Toggle
-                      className={cx('toggle')}
-                      onToggle={toggleLoginMode}
-                      style={{width: 50}}
-                      toggled={!isLogin}
-                    />
-                    <p 
-                      onClick={() => { this.setLoginState('false')}}
-                      className={cx('toggle', {
-                        'active': !isLogin
-                      })}
-                    >
-                      Sign Up
-                    </p>
-                  </div>
+            </div>
+            <Divider/>
+            
 
-                <div className={cx('email-container')}>
-                  { this.renderForm() }
+              <div>
+                <div className={cx('toggle-container')}>
+                  <p 
+                    onClick={() => { this.setLoginState('true')}}
+                    className={cx('toggle', {
+                      'active': isLogin
+                    })}
+                  >
+                    Log In
+                  </p>
+                  <Toggle
+                    className={cx('toggle')}
+                    onToggle={toggleLoginMode}
+                    style={{width: 50}}
+                    toggled={!isLogin}
+                  />
+                  <p 
+                    onClick={() => { this.setLoginState('false')}}
+                    className={cx('toggle', {
+                      'active': !isLogin
+                    })}
+                  >
+                    Sign Up
+                  </p>
                 </div>
 
+              <div className={cx('email-container')}>
+                { this.renderForm() }
               </div>
+
             </div>
           </div>
         </div>
-      </MuiThemeProvider> 
+      </div>
     )
 
     const loadingPage = (
-      <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
-        <div className={cx('welcome-text')}>
-          <p>Loading Career Protal</p>
-        </div>
-      </MuiThemeProvider> 
+      <div className={cx('welcome-text')}>
+        <p>Loading Career Protal</p>
+      </div>
     )
 
     return (

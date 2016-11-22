@@ -18,8 +18,7 @@ class Terms extends Component {
 
   render() {
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
-        <div className={cx('terms') + ' container'}>
+      <div className={cx('terms') + ' container'}>
         <Paper className={cx('paper')} zDepth={2} >
           <p><strong>Uiba </strong><strong><br /></strong><strong>Terms of Use</strong></p>
           <p><span>These Terms of Use (</span><strong>&ldquo;Agreement&rdquo;</strong><span>) sets forth the legally binding terms for your use of the Uiba website (the "Website") and related services (the "Service"), and are an agreement between you and Uiba, Inc. (the Company, Website, and Service are collectively referenced as "we" or "us"). By accessing or using the Site or Services, you are accepting this Agreement (on behalf of yourself or the entity that you represent) and you represent and warrant that you have the right, authority, and capacity to enter into this Agreement (on behalf of yourself or the entity that you represent). You may not access or use the Site or Services or accept the Agreement if you are not at least 18 years old. If you do not agree with all of the provisions of this Agreement, do not access and/or use the Site or Services. </span></p>
@@ -122,8 +121,7 @@ class Terms extends Component {
           <p><span>The product and brand names referenced on this website are trademarks of their respective owners and do not imply affiliation with, sponsorship, or endorsement by owners.</span></p>
 
         </Paper>
-        </div>
-      </MuiThemeProvider>
+      </div>
     );
   }
 };

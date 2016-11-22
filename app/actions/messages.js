@@ -11,3 +11,10 @@ export function dismissError() {
       type: types.DISMISS_ERROR 
   };  
 }
+
+export function createMessage(data) {
+  return { 
+      type: types.CREATE_ERROR,
+      data
+  };  
+}

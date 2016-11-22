@@ -2,9 +2,6 @@ import React, { Component, PropTypes } from 'react';
 
 import Paper from 'material-ui/Paper';
 import { mixpanelURLTrack } from 'middlewares/mixpanelTrackers';
-import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import styles from 'css/components/privacy';
 import classNames from 'classnames/bind';
@@ -18,7 +15,6 @@ class Privacy extends Component {
   
   render() {
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
       <div className={cx('legal') + ' container'}>
         <Paper className={cx('paper')} zDepth={2} >
           <h1><strong>Uiba Privacy Summary</strong></h1>
@@ -131,9 +127,8 @@ class Privacy extends Component {
             <li><strong>Contact Information.</strong><span> Uiba welcomes your comments or questions regarding this Privacy Policy. or you need further assistance with respect to the access or use of the Website or Services, please contact us at the following email </span><span>address: support@uiba.co</span></li>
             <li><strong>Changes to This Privacy Policy.</strong><span> We may amend this Privacy Policy at any time at our sole discretion and without prior notice. If we make any material amendments, we will advise you about those changes by notifying you in a prominent place on our Website. You should check back with us from time to time in order to confirm that there have been no significant changes. Please note that the use of information that we gather is subject to the Privacy Policy then in effect at the time of use.</span></li>
           </ol>
-          </Paper>
-        </div>
-        </MuiThemeProvider>
+        </Paper>
+      </div>
     )
   }
 };
