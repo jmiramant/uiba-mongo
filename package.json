@@ -140,6 +140,7 @@
     "react-scroll": "^1.4.4",
     "react-select": "^1.0.0-beta14",
     "react-select-popover": "^0.1.1",
+    "react-slider": "^0.7.0",
     "react-sticky": "^5.0.4",
     "react-tap-event-plugin": "^1.0.0",
     "react-transform-hmr": "^1.0.4",
