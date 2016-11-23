@@ -15,7 +15,6 @@ import * as interestsActionCreators from 'actions/interests';
 import * as applyActionCreators from 'actions/apply';
 
 import { mixpanelTrack } from 'middlewares/mixpanelTrackers';
-
 import { Card } from 'material-ui/Card';
 import CardHeader from 'components/CardHeader';
 import Jobs from 'components/jobs/JobList';
@@ -27,10 +26,13 @@ import Projects from 'components/projects/ProjectList';
 import ApplyBtn from 'components/ApplyBtn';
 import UserCard from 'components/userCard/UserCard';
 import Loading from 'components/Loading';
+import { validateSubmitHelper } from 'components/helpers/submitValidations';
 
+import Scroll from 'react-scroll';
 import styles from 'css/common/profile';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
+const scroll = Scroll.animateScroll;
 
 class Profile extends React.Component {
 
@@ -63,9 +65,36 @@ class Profile extends React.Component {
   constructor(props) {
     super(props)
   }
+  
+  state = {
+    validationErrors: {}
+  }
+
+  isValidated() {
+    const errorStore = validateSubmitHelper(this.props, this.state.validationErrors);
+
+    if (errorStore.containsErrors) {
+      this.handleValidationErrors(errorStore.errors);
+    }
+
+    return errorStore.containsErrors;
+  }
 
   handleApply () {
-    this.props.applyActions.sumbitApplication(this.props.profile.profile)
+    if (!this.isValidated()) {
+      this.props.applyActions.sumbitApplication(this.props.profile.profile)
+    } else {
+    }
+  }
+
+  handleValidationErrors(errors) {
+    _.each(errors, (err) => {
+      this.props.messageActions.createMessage(err);
+    })
+    
+    if (errors.skills) {
+      scroll.scrollTo(100);
+    }
   }
 
   isProfileLoaded(profile) {
@@ -98,7 +127,6 @@ class Profile extends React.Component {
           onEditSave={profileActions.updateProfile} 
         />
         <div className={cx('about') + ' container'}>
-
           <div className='col-md-8 col-md-offset-2'>
             <CardHeader
               text='Knowledge, Skills, Abilities'

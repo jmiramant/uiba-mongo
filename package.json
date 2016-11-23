@@ -137,6 +137,7 @@
     "react-router-redux": "^4.0.0",
     "react-router-scroll": "^0.3.1",
     "react-s3-uploader": "^3.3.0",
+    "react-scroll": "^1.4.4",
     "react-select": "^1.0.0-beta14",
     "react-select-popover": "^0.1.1",
     "react-sticky": "^5.0.4",

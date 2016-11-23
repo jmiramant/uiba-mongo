@@ -2,10 +2,6 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 
@@ -42,16 +38,14 @@ class ApplyConfirmation extends React.Component {
     }
 
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
-        <div className={cx('confirmation') + ' container'}>
-          <div className={cx('paper')} >
-            <div className={cx('thanks')}>Thank you again for applying to {properName(name)}. We will follow up shortly to notify you of next steps.</div>
-            <div className={cx('btn-group')}>
-              <RaisedButton className='pull-center' label="View/Edit Profile" onClick={this.navBack.bind(this)} primary={true} />
-            </div>
+      <div className={cx('confirmation') + ' container'}>
+        <div className={cx('paper')} >
+          <div className={cx('thanks')}>Thank you again for applying to {properName(name)}. We will follow up shortly to notify you of next steps.</div>
+          <div className={cx('btn-group')}>
+            <RaisedButton className='pull-center' label="View/Edit Profile" onClick={this.navBack.bind(this)} primary={true} />
           </div>
         </div>
-      </MuiThemeProvider>
+      </div>
     )
   }
 

@@ -7,6 +7,7 @@ import SkillItem from 'components/skills/SkillItem';
 import SkillAdd from 'components/skills/SkillAdd';
 import NullProfItem from 'components/ProfileNull';
 import ErrorMessage from 'components/ErrorMessage';
+import InfoIcon from 'material-ui/svg-icons/action/info-outline';
 
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import AddIcon from 'material-ui/svg-icons/content/add';
@@ -101,6 +102,11 @@ class SkillList extends React.Component {
     return (
       <div className={cx('skillList--bootstrap-container')}>
         <div className={cx('skillList--container')}>
+
+          <div className={cx('cta')}>
+            <InfoIcon className={cx('info-icon')}/>
+            <p className={cx('msg')}>This section is the core of your profile. Please include all knowledge, skills, & abilities developed during your work and non-work experience, whether you believe they are relevant or not. Your assessment takes everything into account.</p>
+          </div>
 
           { skills.length ? (
             <div className={listClass}>
