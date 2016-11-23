@@ -26,7 +26,7 @@ import styles from 'css/components/applicantShow';
 
 const cx = classNames.bind(styles);
 
-export default class ApplicantShow extends React.Component {
+class ApplicantShow extends React.Component {
 
   componentWillMount() {
     const { params,

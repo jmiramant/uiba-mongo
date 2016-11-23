@@ -13,7 +13,7 @@ import classNames from 'classnames/bind';
 import styles from 'css/components/applicantList';
 const cx = classNames.bind(styles);
 
-export default class ApplicantList extends React.Component {
+class ApplicantList extends React.Component {
 
   componentDidMount() {
     const {
