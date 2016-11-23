@@ -24,10 +24,15 @@ export const aws = {
   aws_secret_access_key: process.env.AWS_SECRET_ACCESS_KEY || 'ZC3CCvIyJ8jcdHkEvVmJap0Y5JgNJoAmDMPvovQK'
 }
 
+export const arkhamApi = {
+  arkham_access_token: process.env.ARKHAM_ACCESS_TOKEN || 'fPhO2F3WfI2j8ujBbe5hR1IJ4JT0z9mj1yLgwbS1',
+}
+
 export default {
   sessionSecret,
   externalAPISecret,
   linkedin,
   zipCodeAPI,
-  aws
+  aws,
+  arkhamApi
 };

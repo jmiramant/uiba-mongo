@@ -52,6 +52,8 @@ export default class RoleAdd extends React.Component {
 
   componentDidMount() {
     this.setCompanyId();
+    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('resize', this.handleResize);
   }
   
   setCompanyId() {
@@ -117,9 +119,85 @@ export default class RoleAdd extends React.Component {
       }
     });
   };
+  
+  openExperience(e) {
+    const sty = this.getAnchorPosition(e.currentTarget)
+    this.setState({ experience: {
+        open: true,
+        anchorEl: e.currentTarget,
+        style: {
+          top: sty.top - 152,
+          left: sty.left
+        }
+      }
+    });
+  }
+  
+  experienceReposition() {
+    if (this.state.experience.anchorEl) {
+      const sty = this.getAnchorPosition(this.state.experience.anchorEl)
+      this.setState({ experience: {
+          open: true,
+          anchorEl: this.state.experience.anchorEl,
+          style: {
+            top: sty.top - 152,
+            left: sty.left
+          }
+        }
+      });
+    } else {
+      return false;
+    }
+  }
+
+  componentWillUnmount(){
+    window.removeEventListener('resize', this.handleResize);
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
+  getAnchorPosition(el) {
+    if (!el) {
+      el = ReactDOM.findDOMNode(this);
+    }
+
+    const rect = el.getBoundingClientRect();
+    const a = {
+      top: rect.top,
+      left: rect.left,
+      width: el.offsetWidth,
+      height: el.offsetHeight,
+    };
+
+    a.right = rect.right || a.left + a.width;
+    a.bottom = rect.bottom || a.top + a.height;
+    a.middle = a.left + ((a.right - a.left) / 2);
+    a.center = a.top + ((a.bottom - a.top) / 2);
+
+    return a;
+  }
+
+  getTargetPosition(targetEl) {
+    return {
+      top: 0,
+      center: targetEl.offsetHeight / 2,
+      bottom: targetEl.offsetHeight,
+      left: 0,
+      middle: targetEl.offsetWidth / 2,
+      right: targetEl.offsetWidth,
+    };
+  }
+
+  handleResize = () => {
+    this.experienceReposition();
+  };
+
+  handleScroll = () => {
+    this.experienceReposition()
+  };
 
   render () {
     const {
+            experience,
             validationErrors
           } = this.state;
 
@@ -182,32 +260,31 @@ export default class RoleAdd extends React.Component {
           <div className={cx('req-btns') +" col-md-3"}>
             <RaisedButton
               labelStyle={{fontSize: '10px', paddingLeft: '9px', paddingRight: '9px'}}
-              onClick={(e) => {this.openMultiSelect('experience', e)}}
+              onClick={(e) => {this.openExperience(e)}}
               label='Exp Requirements'
             />
-            <Popover
-              open={this.state.experience.open}
-              anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-              targetOrigin={{horizontal: 'left', vertical: 'bottom'}}
-              anchorEl={this.state.experience.anchorEl}
-              style={{height: '150px', width: '400px'}}
-            >
-              <div className={cx('experience-selector')}>
-                <h5 className={cx('experience-title')}>Experience Range Selector</h5>
-                <p className={cx('experience-sub-title')}>Length of Use (Yrs)</p>
-                <DuelSlider
-                  dataSource={[role.experienceMin, role.experienceMax]}
-                  title="Length of Use (Yrs)"
-                  field={'lengthOfUse'}
-                  style={{width: '90%'}}
-                  handleChange={this.sliderChange.bind(this)}
-                  storeValue={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
-                  stages={['>1', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10+']}
-                />
-                <FlatButton className='pull-right' label="set" onClick={() => {this.closePopover('experience')}} primary={true} />
-                <FlatButton className='pull-right' label="close" onClick={() => {this.closePopover('experience')}} primary={true} />
-              </div>
-            </Popover>
+            {experience.open ? (
+              <div className={cx('experience-selector')} style={{...experience.style}}>
+                  <h5 className={cx('experience-title')}>Experience Range Selector</h5>
+                  <p className={cx('experience-sub-title')}>Length of Use (Yrs)</p>
+                  <DuelSlider
+                    dataSource={[role.experienceMin, role.experienceMax]}
+                    title="Length of Use (Yrs)"
+                    field={'lengthOfUse'}
+                    style={{width: '90%', zIndex: 100}}
+                    handleChange={this.sliderChange.bind(this)}
+                    storeValue={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+                    stages={['>1', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10+']}
+                  >
+                    <div className="handle handle-0"/>
+                    <div className="handle handle-1"/>
+                  </DuelSlider>
+                  
+                  <FlatButton className='pull-right' label="set" onClick={() => {this.closePopover('experience')}} primary={true} />
+                  <FlatButton className='pull-right' label="close" onClick={() => {this.closePopover('experience')}} primary={true} />
+                </div>
+              ) : (null)}
+
           </div>
 
           <div className={cx('req-btns') +' col-md-3'}>
@@ -252,8 +329,8 @@ export default class RoleAdd extends React.Component {
               style={{height: '150px', width: '400px'}}
             >
               <AddressInput/>
-              <FlatButton className='pull-right' label="set" onClick={() => {this.closePopover('skill')}} primary={true} />
-              <FlatButton className='pull-right' label="close" onClick={() => {this.closePopover('skill')}} primary={true} />
+              <FlatButton className='pull-right' label="set" onClick={() => {this.closePopover('location')}} primary={true} />
+              <FlatButton className='pull-right' label="close" onClick={() => {this.closePopover('location')}} primary={true} />
             </Popover>
           </div>
 
