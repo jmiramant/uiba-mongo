@@ -20,6 +20,8 @@ export default class RoleItem extends React.Component {
     company: PropTypes.object.isRequired,
     rolesChange: PropTypes.func.isRequired,
     onRoleSave: PropTypes.func.isRequired,
+    copiedLabel:  PropTypes.string.isRequired,
+    copiedPath: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -51,13 +53,14 @@ export default class RoleItem extends React.Component {
 
   render () {
     const { 
-            role,
-            company,
-            handleArchive
-          } = this.props;
-    
-    return (
+      role,
+      company,
+      copiedLabel,
+      copiedPath,
+      handleArchive
+    } = this.props;
 
+    return (
         
       <TableRow>
         <TableRowColumn>{role.title}</TableRowColumn>
@@ -65,8 +68,8 @@ export default class RoleItem extends React.Component {
         <TableRowColumn>{role.appliedCount}</TableRowColumn>
         <TableRowColumn>
           <CopyToClipboard text={window.location.origin + '/apply/' + company.name_lower + '/' + role.applicantCode}
-            onCopy={() => this.setState({copied: true})}>
-            <span>{company.name_lower}/{role.applicantCode}</span>
+            onCopy={() => { this.setState({copied: true}); copiedPath(role.applicantCode)}}>
+              <FlatButton label={copiedLabel} primary={true} disabled={copiedLabel === 'Copied'} />
           </CopyToClipboard>
         </TableRowColumn>
         <TableRowColumn><FlatButton onClick={this.handleArchive.bind(this)} label="Archive" primary={true} /></TableRowColumn>

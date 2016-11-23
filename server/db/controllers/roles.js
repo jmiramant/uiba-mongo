@@ -40,16 +40,23 @@ export function me(req, res) {
 
 
 export function get(req, res) {
-  var uid = req.params.id
-
-  Roles.findById(uid, (err, role) => {
-
+  
+  const respCb = (err, role) => {
     if (err) return res.status(500).send('Something went wrong getting the data');
     if (!role) return res.status(401).send('There is not role from this ID');
 
     return res.status(200).json(role);
+  }
 
-  });
+  if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+    
+    Roles.findById(req.params.id, respCb)
+  
+  } else {
+
+    Roles.findOne({'applicantCode': req.params.id}, respCb)
+  
+  }
 }
 
 export function list(req, res) {

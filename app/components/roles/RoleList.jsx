@@ -31,6 +31,10 @@ class RoleList extends React.Component {
   constructor(props) {
     super(props);
   }
+
+  state = {
+    copiedPath: ''
+  }
   
   toggleAddRole = () => {
     this.props.toggleRoleAdd(this.props.addVisible)
@@ -45,6 +49,10 @@ class RoleList extends React.Component {
     this.props.onEditSave(data);
   }
 
+  handleCopied(path) {
+    this.setState({copiedPath: path})
+  }
+
   render () {
     const { role,
             roles,
@@ -54,6 +62,8 @@ class RoleList extends React.Component {
             rolesChange,
             onToggleEduReqSelect
           } = this.props;
+
+    const { copiedPath } = this.state
 
     const renderItems = (
       <div>
@@ -80,9 +90,12 @@ class RoleList extends React.Component {
             stripedRows={true}
           >
             {roles.map((_role, i) => {
+    
               return (<RoleItem
                 key={_role._id} 
                 role={_role}
+                copiedPath={this.handleCopied.bind(this)}
+                copiedLabel={copiedPath === _role.applicantCode ? 'Copied' : 'Copy Share Link'}
                 company={company}
                 rolesChange={rolesChange}
                 onRoleSave={this.handleEditSave} 

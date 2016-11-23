@@ -14,6 +14,7 @@ import SignupForm from 'components/login/signupForm';
 
 import * as userActionCreators from 'actions/users';
 import * as companyActionCreators from 'actions/companies';
+import * as roleActionCreators from 'actions/roles';
 
 import styles from 'css/components/apply';
 import classNames from 'classnames/bind';
@@ -25,8 +26,9 @@ class Apply extends Component {
   constructor(props) {
     super(props);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
-    this.props.userActions.toggleLoginMode(this.props.user.isLogin)
-    this.fetchCompanyData()
+    this.props.userActions.toggleLoginMode(this.props.user.isLogin);
+    this.fetchCompanyData();
+    if (this.props.params.roleCode) this.fetchRoleData();
   }
 
   componentDidMount() {
@@ -35,6 +37,10 @@ class Apply extends Component {
 
   fetchCompanyData() {
     this.props.companyActions.fetchCompany(this.props.params.companyName)
+  }
+
+  fetchRoleData() {
+    this.props.roleActions.fetchRole(this.props.params.roleCode)
   }
 
   state = {
@@ -98,7 +104,8 @@ class Apply extends Component {
   }
 
   render () {
-    const { 
+    const {
+      role,
       userActions: { toggleLoginMode }, 
       user: { isWaiting, message, isLogin }, 
       location: { query: { rid } }, 
@@ -111,6 +118,23 @@ class Apply extends Component {
           <h3 className={cx('apply-header')}>Welcome to the {company.name} Career Portal</h3>
           <p className={cx('text')}>We’re excited you’re applying to {company.name}. To ensure we understand your qualifications, please create a profile and fill out the requested information. It is important you complete as much information as possible because the profile, not your resume, will be used to assess your qualifications.</p>
           <p className={cx('text')}>Once you’re finished, simply click submit and you’ll receive an automated message thanking you. We will follow up with you shortly to notify you of next steps. </p>
+          
+          { company._id ? (
+            <div >
+              <h4>Company Description</h4>
+              <p>{company.description}</p>
+            </div>
+          ) : (null)}
+
+          { role._id ? (
+            <span>
+              <div>
+                <h4>Role: {role.title}</h4>
+                <p>{role.description}</p>
+              </div>
+            </span>
+          ) : (null)}
+
           <Divider />
           <p className={cx('text', 'big')}>Please get started by registering:</p>
         </div>
@@ -186,13 +210,15 @@ function mapStateToProps(state) {
   return {
     user: state.user,
     company: state.company.company,
+    role: state.role.role
   };
 }
 
 function mapDispatchToProps (dispatch) {
   return {
     userActions: bindActionCreators(userActionCreators, dispatch),
-    companyActions: bindActionCreators(companyActionCreators, dispatch)
+    companyActions: bindActionCreators(companyActionCreators, dispatch),
+    roleActions: bindActionCreators(roleActionCreators, dispatch),
   }
 }
 
