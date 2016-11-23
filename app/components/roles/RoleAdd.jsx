@@ -27,7 +27,7 @@ import styles from 'css/components/role';
 const cx = classNames.bind(styles);
 let timeout;
 
-export default class RoleAdd extends React.Component {
+class RoleAdd extends React.Component {
 
   static propTypes = {
     role: PropTypes.object.isRequired,
