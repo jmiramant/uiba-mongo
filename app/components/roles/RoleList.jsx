@@ -55,8 +55,6 @@ class RoleList extends React.Component {
             onToggleEduReqSelect
           } = this.props;
 
-    console.log('role: ', role)
-
     const renderItems = (
       <div>
         <h4>Created Roles:</h4>
