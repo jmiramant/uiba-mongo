@@ -6,7 +6,7 @@ import { browserHistory } from 'react-router'
 import * as jobsActionCreators from 'actions/jobs';
 import * as schoolsActionCreators from 'actions/schools';
 import * as skillsActionCreators from 'actions/skills';
-import * as applicantActionCreators from 'actions/applicants';
+import * as applicantActionCreators from 'actions/appers';
 import * as languagesActionCreators from 'actions/languages';
 import * as projectsActionCreators from 'actions/projects';
 import * as interestsActionCreators from 'actions/interests';
@@ -81,9 +81,9 @@ class ApplicantShow extends React.Component {
                 <div>{applicant.firstName} hasn't added any items in the education section.</div>
               ) : (
                 <span>
-                {schools.map((school) => {
+                {schools.map((school, i) => {
                   return (
-                    <SchoolItem school={school} />
+                    <SchoolItem key={school.name + i} school={school} />
                   )
                 })}
                 </span>
@@ -98,9 +98,9 @@ class ApplicantShow extends React.Component {
                   <div>{applicant.firstName} hasn't added any items in the education section.</div>
                 ) : (
                 <span>
-                  {jobs.map((job) => {
+                  {jobs.map((job, i) => {
                     return (
-                      <JobItem job={job} />
+                      <JobItem key={job.title + i} job={job} />
                     )
                   })}
                 </span>
@@ -115,9 +115,9 @@ class ApplicantShow extends React.Component {
                   <div>{applicant.firstName} hasn't added any items in the education section.</div>
                 ) : (
                 <span>
-                  {skills.map((skill) => {
+                  {skills.map((skill, i) => {
                     return (
-                      <SkillItem skill={skill} />
+                      <SkillItem key={skill.type + i} skill={skill} />
                     )
                   })}
                 </span>
@@ -132,9 +132,9 @@ class ApplicantShow extends React.Component {
                   <div>{applicant.firstName} hasn't added any items in the education section.</div>
                 ) : (
                 <span>
-                  {languages.map((language) => {
+                  {languages.map((language, i) => {
                     return (
-                      <LanguageItem language={language} />
+                      <LanguageItem key={language + i} language={language} />
                     )
                   })}
                 </span>
@@ -149,9 +149,9 @@ class ApplicantShow extends React.Component {
                   <div>{applicant.firstName} hasn't added any items in the education section.</div>
                 ) : (
                 <span>
-                  {projects.map((project) => {
+                  {projects.map((project, i) => {
                     return (
-                      <ProjectItem project={project} />
+                      <ProjectItem key={project.name + i} project={project} />
                     )
                   })}
                 </span>
@@ -166,9 +166,9 @@ class ApplicantShow extends React.Component {
                   <div>{applicant.firstName} hasn't added any items in the education section.</div>
                 ) : (
                 <span>
-                  {interests.map((interest) => {
+                  {interests.map((interest, i) => {
                     return (
-                      <InterestItem interest={interest} />
+                      <InterestItem key={interest.interest + i} interest={interest} />
                     )
                   })}
                 </span>

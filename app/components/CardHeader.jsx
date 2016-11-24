@@ -13,7 +13,7 @@ export default class CardHeader extends React.Component {
   
   static propTypes = {
     text: PropTypes.string.isRequired,
-    addVisible: PropTypes.bool.isRequired,
+    addVisible: PropTypes.bool,
     toggleAdd: PropTypes.func,
   }
 

@@ -7,7 +7,7 @@ import ApplicantListItem from 'components/applicants/ApplicantListItem';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow} from 'material-ui/Table';
 
 import * as roleActionCreator from 'actions/roles'
-import * as applicantActionCreator from 'actions/applicants'
+import * as applicantActionCreator from 'actions/appers'
 
 import classNames from 'classnames/bind';
 import styles from 'css/components/applicantList';
