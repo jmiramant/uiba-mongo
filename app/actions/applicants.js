@@ -9,12 +9,12 @@ function makeApplicantRequest(method, data, api = '/applicant') {
   return request[method](api, data);
 }
 
-export function fetchApplicant(id) {
-  return {
-    type: types.GET_APPLICANTS,
-    promise: makeApplicantRequest('get', {}, '/applicants/' + id)
-  }
-}
+// export function fetchApplicant(id) {
+//   return {
+//     type: types.GET_APPLICANTS,
+//     promise: makeApplicantRequest('get', {}, '/applicants/' + id)
+//   }
+// }
 
 export function fetchApplicants(id) {
   return {
