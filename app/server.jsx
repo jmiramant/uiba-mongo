@@ -8,13 +8,13 @@ import { polyfill } from 'es6-promise';
 import { renderToString } from 'react-dom/server';
 import configureStore from 'store/configureStore';
 import ssrAuth from 'api/preRenderAuthentication.js';
-import injectTapEventPlugin from 'react-tap-event-plugin'
+// import injectTapEventPlugin from 'react-tap-event-plugin'
 import preRenderMiddleware from 'middlewares/preRenderMiddleware';
 import { createMemoryHistory, match, RouterContext } from 'react-router';
 
 polyfill();
 
-injectTapEventPlugin()
+// injectTapEventPlugin()
 
 const hostName = process.env.HOSTNAME;
 const clientConfig = {
