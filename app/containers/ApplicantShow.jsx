@@ -6,7 +6,6 @@ import { browserHistory } from 'react-router'
 import * as jobsActionCreators from 'actions/jobs';
 import * as schoolsActionCreators from 'actions/schools';
 import * as skillsActionCreators from 'actions/skills';
-import * as applicantActionCreators from 'actions/appers';
 import * as languagesActionCreators from 'actions/languages';
 import * as projectsActionCreators from 'actions/projects';
 import * as interestsActionCreators from 'actions/interests';
@@ -30,7 +29,6 @@ class ApplicantShow extends React.Component {
 
   componentWillMount() {
     const { params,
-            applicantActions,
             jobActions,
             schoolActions,
             skillActions,
@@ -39,7 +37,6 @@ class ApplicantShow extends React.Component {
             projectActions,
     } = this.props;
 
-    applicantActions.fetchApplicant(params.profId)
     schoolActions.fetchSchools(params.profId);
     jobActions.fetchJobs(params.profId);
     skillActions.fetchSkills(params.profId);
@@ -205,8 +202,6 @@ function mapDispatchToProps (dispatch) {
     languageActions: bindActionCreators(languagesActionCreators, dispatch),
     projectActions: bindActionCreators(projectsActionCreators, dispatch),
     interestActions: bindActionCreators(interestsActionCreators, dispatch),
-    applicantActions: bindActionCreators(applicantActionCreators, dispatch),
-
   }
 }
 
