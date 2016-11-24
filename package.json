@@ -57,7 +57,6 @@
   },
   "dependencies": {
     "async": "^2.0.1",
-    "attr-accept": "^1.0.3",
     "autoprefixer": "^6.3.3",
     "aws-sdk": "^2.6.12",
     "axios": "^0.13.1",
@@ -128,7 +127,7 @@
     "react-cookie": "^0.4.8",
     "react-copy-to-clipboard": "^4.2.3",
     "react-datepicker": "^0.29.0",
-    "react-dom": "^15.3.0",
+    "react-dom": "15.3.0",
     "react-dropzone": "^3.7.0",
     "react-dropzone-s3-uploader": "^0.7.3",
     "react-helmet": "^3.1.0",
