@@ -106,7 +106,7 @@
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
     "lodash": "^4.6.1",
-    "material-ui": "^0.15.4",
+    "material-ui": "0.15.4",
     "method-override": "^2.3.5",
     "moment": "^2.14.1",
     "mongoose": "^4.4.7",
