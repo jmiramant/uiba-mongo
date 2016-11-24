@@ -7,6 +7,7 @@ import ApplicantListItem from 'components/applicants/ApplicantListItem';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow} from 'material-ui/Table';
 
 import * as roleActionCreator from 'actions/roles'
+import * as applicantActionCreator from 'actions/applicants'
 
 import classNames from 'classnames/bind';
 import styles from 'css/components/applicantList';
@@ -19,10 +20,11 @@ class ApplicantList extends React.Component {
       params,
       company,
       roleActions,
-      
+      applicantActions
     } = this.props;
 
     roleActions.fetchRole(params.roleId);
+    applicantActions.fetchApplicants(params.roleId);
   }
 
   render() {
@@ -83,6 +85,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps (dispatch) {
   return {
     roleActions: bindActionCreators(roleActionCreator, dispatch),
+    applicantActions: bindActionCreators(applicantActionCreator, dispatch),
   }
 }
 
