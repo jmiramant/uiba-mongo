@@ -39,20 +39,20 @@ class CompanyContainer extends React.Component {
       companyActions.fetchCompany(profile.company_id);
     }
 
-    if (this.state.child !== this.props.children.type.displayName) {
-      this.setState({child: this.props.children.type.displayName})
-      this.stepHandler(this.props.children.type.displayName);
+    if (this.state.child !== this.props.children.props.location.pathname) {
+      this.setState({child: this.props.children.props.location.pathname})
+      this.stepHandler(this.props.children.props.location.pathname);
     }
   }
   
   stepHandler(child) {
-    console.log(this.props.children)
-    switch (child) {
-      case "Connect(CompanyDashboard)":
+    const _child = child.split('/')[2]
+    switch (_child) {
+      case "dashboard":
         return [1];
-      case "Connect(ApplicantList)":
+      case "applicants":
         return [1,2];
-      case "Connect(ApplicantShow)":
+      case "applicant":
         return [1,2,3];
     }
 
@@ -60,11 +60,11 @@ class CompanyContainer extends React.Component {
 
   stepNavHandler(i) {
     if (i === 0) this.props.navigate('/company-admin/dashboard')
-    if (i === 1 && this.props.children.type.displayName !== 'Connect(ApplicantList)') this.props.history.goBack();
+    if (i === 1 && this.props.children.props.location.pathname !== 'applicants') this.props.history.goBack();
   }
 
   state = {
-    child: this.props.children.type.displayName
+    child: this.props.children.props.location.pathname
   }
 
   render() {
@@ -76,7 +76,7 @@ class CompanyContainer extends React.Component {
       company
     } = this.props;
     
-    const steps = this.stepHandler(children.type.displayName);
+    const steps = this.stepHandler(children.props.location.pathname);
     const stepNames = ['Dashboard', 'Applicants List', 'Applicants Profile'];
 
     return (
