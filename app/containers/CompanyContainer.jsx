@@ -46,6 +46,7 @@ class CompanyContainer extends React.Component {
   }
   
   stepHandler(child) {
+    console.log(child)
     switch (child) {
       case "CompanyDashboard":
         return [1];
