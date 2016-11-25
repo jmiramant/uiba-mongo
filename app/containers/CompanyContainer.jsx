@@ -46,6 +46,7 @@ class CompanyContainer extends React.Component {
   }
   
   stepHandler(child) {
+    console.log(this.props.children)
     switch (child) {
       case "Connect(CompanyDashboard)":
         return [1];
