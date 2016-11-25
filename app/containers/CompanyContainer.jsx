@@ -39,7 +39,7 @@ class CompanyContainer extends React.Component {
       companyActions.fetchCompany(profile.company_id);
     }
 
-    if (this.props.children && (this.state.child !== this.props.children.type.WrappedComponent.displayName)) {
+    if (this.state.child !== this.props.children.type.WrappedComponent.displayName) {
       this.setState({child: this.props.children.type.WrappedComponent.displayName})
       this.stepHandler();
     }

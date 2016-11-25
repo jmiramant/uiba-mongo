@@ -95,7 +95,7 @@ class ApplicantShow extends React.Component {
                 text='Employment'
               />
                 {jobs.length === 0 ? (
-                  <div>{applicant.firstName} hasn't added any items in the education section.</div>
+                  <div>{applicant.firstName} hasn't added any items in the employment section.</div>
                 ) : (
                 <span>
                   {jobs.map((job, i) => {
@@ -112,7 +112,7 @@ class ApplicantShow extends React.Component {
                 text='Knowledge, Skills, Abilities'
               />
                 {skills.length === 0 ? (
-                  <div>{applicant.firstName} hasn't added any items in the education section.</div>
+                  <div>{applicant.firstName} hasn't added any items in the knowledge, skills, and abilities section.</div>
                 ) : (
                 <span>
                   {skills.map((skill, i) => {
@@ -129,7 +129,7 @@ class ApplicantShow extends React.Component {
                 text='Languages'
               />
                 {languages.length === 0 ? (
-                  <div>{applicant.firstName} hasn't added any items in the education section.</div>
+                  <div>{applicant.firstName} hasn't added any items in the language section.</div>
                 ) : (
                 <span>
                   {languages.map((language, i) => {
@@ -146,7 +146,7 @@ class ApplicantShow extends React.Component {
                 text='Projects'
               />
                 {projects.length === 0 ? (
-                  <div>{applicant.firstName} hasn't added any items in the education section.</div>
+                  <div>{applicant.firstName} hasn't added any items in the project section.</div>
                 ) : (
                 <span>
                   {projects.map((project, i) => {
@@ -163,7 +163,7 @@ class ApplicantShow extends React.Component {
                 text='Interests'
               />
                 {interests.length === 0 ? (
-                  <div>{applicant.firstName} hasn't added any items in the education section.</div>
+                  <div>{applicant.firstName} hasn't added any items in the interest section.</div>
                 ) : (
                 <span>
                   {interests.map((interest, i) => {
