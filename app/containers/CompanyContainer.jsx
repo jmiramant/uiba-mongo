@@ -39,7 +39,7 @@ class CompanyContainer extends React.Component {
       companyActions.fetchCompany(profile.company_id);
     }
 
-    if (this.state.child !== this.props.children.type.WrappedComponent.displayName) {
+    if (this.props.children && (this.state.child !== this.props.children.type.WrappedComponent.displayName)) {
       this.setState({child: this.props.children.type.WrappedComponent.displayName})
       this.stepHandler();
     }
@@ -88,7 +88,7 @@ class CompanyContainer extends React.Component {
         <div className={cx('container-card') + ' col-md-12'}>
           { profile.company_id && company._id ? (
             <div>
-              { steps.length > 1 ? (
+              { steps && steps.length > 1 ? (
                 <span>
                 <Stepper
                   linear={false}
