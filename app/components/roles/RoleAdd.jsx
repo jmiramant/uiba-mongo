@@ -63,11 +63,33 @@ class RoleAdd extends React.Component {
     });  
   }
 
+  setRangeObj(address) {
+    if (this.props.address.rangeZips.length > 0) {
+      return {
+        included: this.props.address.rangeZips,
+        range: this.props.address.range,
+        zipCode: this.props.address.zip
+      }
+    } else {
+      return {
+        included: undefined,
+        range: undefined,
+        zipCode: undefined
+      }
+    }
+  }
+
   handleSubmit = e => {
     e.preventDefault();
+
     if (!this.validate()) {
-      this.props.onRoleSave({...this.props.role, skills: this.props.roles.skills});
+      
+      const range = this.setRangeObj(this.props.address);
+
+      this.props.onRoleSave({...this.props.role, skills: this.props.roles.skills, range: range});
+
     }
+    
   }
   
   validate() {
@@ -352,6 +374,7 @@ class RoleAdd extends React.Component {
 function mapStateToProps(state) {
   return {
     roles: state.role,
+    address: state.address,
     messages: state.message,
     eduRequirements: state.role.eduRequirements,
   };

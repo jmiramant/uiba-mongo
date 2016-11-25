@@ -83,6 +83,11 @@ export function create(req, res) {
     degreeRequirements: req.body.degreeRequirements,
     experienceMin: req.body.experienceMin,
     experienceMax: req.body.experienceMax,
+    range: {
+      included: req.body.range.included,
+      range: req.body.range.range,
+      zipCode: req.body.range.zipCode
+    }
   }, function(err, role) {
     if (err) return handleError(res, err);
 

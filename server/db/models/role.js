@@ -15,7 +15,12 @@ const RoleSchema = new mongoose.Schema({
   appliedCount: { type: Number, default: 0},
   applicants: [{type: Schema.Types.ObjectId, ref: 'Profile'}],
   skills: [{type: Schema.Types.ObjectId, ref: 'Skill'}],
-  isArchived: {type: Boolean, default: false}
+  isArchived: {type: Boolean, default: false},
+  range: {
+    included: {type: Array},
+    range: {type: Number},
+    zipCode: {type: Number}
+  }
 }, {timestamps: true});
 
 function setApplicantCode(next) {
