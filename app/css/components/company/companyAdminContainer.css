@@ -14,6 +14,7 @@
 
 .companyAdmin-container { 
   margin: 0px auto;
+  min-height: 650px;
 }
 
 .container-card {

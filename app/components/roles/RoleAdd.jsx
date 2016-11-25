@@ -18,6 +18,8 @@ import FlatButton from 'material-ui/FlatButton';
 import SelectField from 'material-ui/SelectField';
 import Popover from 'material-ui/Popover';
 import MenuItem from 'material-ui/MenuItem';
+import Divider from 'material-ui/Divider';
+import ExpandTransition from 'material-ui/internal/ExpandTransition';
 
 import moment from 'moment';
 import _ from 'lodash';
@@ -89,7 +91,7 @@ class RoleAdd extends React.Component {
       this.props.onRoleSave({...this.props.role, skills: this.props.roles.skills, range: range});
 
     }
-    
+
   }
   
   validate() {
@@ -236,12 +238,9 @@ class RoleAdd extends React.Component {
 
     const isVisible = (role.description || addVisible) ? '' : ' ' + cx('closed');
     
-    return (
-
-      <div className={cx('roleAdd-container') + isVisible + ' col-md-offset-2 col-md-8'}>
-        
+    const roleCreate = (
+      <div>
         <h5 className={cx('role-title')}>Create a Role</h5>
-
         <form
           onSubmit={this.handleSubmit}
         >
@@ -269,91 +268,98 @@ class RoleAdd extends React.Component {
             />
           </div>
 
-          <div className={cx('req-btns') +" col-md-3"}>
-            <MulitselectPopover
-              data={['High School','Associate','Bachelor','Master','MBA','JD','MD','PhD','Engineer Degree','Certificate','Coursework','Other']}
-              selected={eduRequirements}
-              buttonText='Edu Requirements'
-              onToggleSelect={onToggleEduReqSelect}
-              handleSet={this.onSetEduReq.bind(this)}
-            />
-          </div>
 
-          <div className={cx('req-btns') +" col-md-3"}>
-            <RaisedButton
-              labelStyle={{fontSize: '10px', paddingLeft: '9px', paddingRight: '9px'}}
-              onClick={(e) => {this.openExperience(e)}}
-              label='Exp Requirements'
-            />
-            {experience.open ? (
-              <div className={cx('experience-selector')} style={{...experience.style}}>
-                  <h5 className={cx('experience-title')}>Experience Range Selector</h5>
-                  <p className={cx('experience-sub-title')}>Length of Use (Yrs)</p>
-                  <DuelSlider
-                    dataSource={[role.experienceMin, role.experienceMax]}
-                    title="Length of Use (Yrs)"
-                    field={'lengthOfUse'}
-                    style={{width: '90%', zIndex: 100}}
-                    handleChange={this.sliderChange.bind(this)}
-                    storeValue={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
-                    stages={['>1', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10+']}
-                  >
-                    <div className="handle handle-0"/>
-                    <div className="handle handle-1"/>
-                  </DuelSlider>
-                  
-                  <FlatButton className='pull-right' label="set" onClick={() => {this.closePopover('experience')}} primary={true} />
-                  <FlatButton className='pull-right' label="close" onClick={() => {this.closePopover('experience')}} primary={true} />
-                </div>
-              ) : (null)}
+          <div className={cx('req-container')}>
+            <p className={cx('req-title')}>
+              Role Requirements:
+            </p>
 
-          </div>
-
-          <div className={cx('req-btns') +' col-md-3'}>
-            <RaisedButton
-              labelStyle={{fontSize: '10px', paddingLeft: '9px', paddingRight: '9px'}}
-              onClick={(e) => {this.openMultiSelect('skill', e)}}
-              label='Skill Requirements'
-            />
-            <Popover
-              open={this.state.skill.open}
-              anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-              targetOrigin={{horizontal: 'left', vertical: 'bottom'}}
-              anchorEl={this.state.skill.anchorEl}
-              style={{width: '700px', minHeight: '210px'}}
-            >
-              <RoleSkills 
-                skills={roles.skills}
-                addVisible={roles.showSkillAdd}
-                errorMessage={messages.errorMessage}
-                toggleSkillAdd={actions.toggleRoleSkillsAdd}
-                onEditSave={actions.updateSkill} 
-                onSkillSave={actions.createSkill} 
-                onSkillDelete={actions.deleteSkill} 
+            <div className={cx('req-btns') +" col-md-3"}>
+              <MulitselectPopover
+                data={['High School','Associate','Bachelor','Master','MBA','JD','MD','PhD','Engineer Degree','Certificate','Coursework','Other']}
+                selected={eduRequirements}
+                buttonText='Edu Requirements'
+                onToggleSelect={onToggleEduReqSelect}
+                handleSet={this.onSetEduReq.bind(this)}
               />
-              <FlatButton className='pull-right' label="set" onClick={() => {this.closePopover('skill')}} primary={true} />
-              <FlatButton className='pull-right' label="close" onClick={() => {this.closePopover('skill')}} primary={true} />
-            </Popover>
-          </div>
+            </div>
+
+            <div className={cx('req-btns') +" col-md-3"}>
+              <RaisedButton
+                labelStyle={{fontSize: '10px', paddingLeft: '9px', paddingRight: '9px'}}
+                onClick={(e) => {this.openExperience(e)}}
+                label='Exp Requirements'
+              />
+              {experience.open ? (
+                <div className={cx('experience-selector')} style={{...experience.style}}>
+                    <h5 className={cx('experience-title')}>Experience Range Selector</h5>
+                    <p className={cx('experience-sub-title')}>Length of Use (Yrs)</p>
+                    <DuelSlider
+                      dataSource={[role.experienceMin, role.experienceMax]}
+                      title="Length of Use (Yrs)"
+                      field={'lengthOfUse'}
+                      style={{width: '90%', zIndex: 100}}
+                      handleChange={this.sliderChange.bind(this)}
+                      storeValue={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+                      stages={['>1', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10+']}
+                    >
+                      <div className="handle handle-0"/>
+                      <div className="handle handle-1"/>
+                    </DuelSlider>
+                    
+                    <FlatButton className='pull-right' label="set" onClick={() => {this.closePopover('experience')}} primary={true} />
+                    <FlatButton className='pull-right' label="close" onClick={() => {this.closePopover('experience')}} primary={true} />
+                  </div>
+                ) : (null)}
+
+            </div>
+
+            <div className={cx('req-btns') +' col-md-3'}>
+              <RaisedButton
+                labelStyle={{fontSize: '10px', paddingLeft: '9px', paddingRight: '9px'}}
+                onClick={(e) => {this.openMultiSelect('skill', e)}}
+                label='Skill Requirements'
+              />
+              <Popover
+                open={this.state.skill.open}
+                anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+                targetOrigin={{horizontal: 'left', vertical: 'bottom'}}
+                anchorEl={this.state.skill.anchorEl}
+                style={{width: '600px', minHeight: '210px'}}
+              >
+                <RoleSkills 
+                  skills={roles.skills}
+                  addVisible={roles.showSkillAdd}
+                  errorMessage={messages.errorMessage}
+                  toggleSkillAdd={actions.toggleRoleSkillsAdd}
+                  onEditSave={actions.updateSkill} 
+                  onSkillSave={actions.createSkill} 
+                  onSkillDelete={actions.deleteSkill} 
+                />
+                <FlatButton className='pull-right' label="set" onClick={() => {this.closePopover('skill')}} primary={true} />
+                <FlatButton className='pull-right' label="close" onClick={() => {this.closePopover('skill')}} primary={true} />
+              </Popover>
+            </div>
 
 
-          <div className={cx('req-btns') +" col-md-3"}>
-            <RaisedButton
-              labelStyle={{fontSize: '10px', paddingLeft: '9px', paddingRight: '9px'}}
-              onClick={(e) => {this.openMultiSelect('location', e)}}
-              label='Location Range'
-            />
-            <Popover
-              open={this.state.location.open}
-              anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-              targetOrigin={{horizontal: 'left', vertical: 'bottom'}}
-              anchorEl={this.state.location.anchorEl}
-              style={{height: '200px', width: '375px'}}
-            >
-              <RoleLocation/>
-              <FlatButton className='pull-right' label="set" onClick={() => {this.closePopover('location')}} primary={true} />
-              <FlatButton className='pull-right' label="close" onClick={() => {this.closePopover('location')}} primary={true} />
-            </Popover>
+            <div className={cx('req-btns') +" col-md-3"}>
+              <RaisedButton
+                labelStyle={{fontSize: '10px', paddingLeft: '9px', paddingRight: '9px'}}
+                onClick={(e) => {this.openMultiSelect('location', e)}}
+                label='Location Range'
+              />
+              <Popover
+                open={this.state.location.open}
+                anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+                targetOrigin={{horizontal: 'left', vertical: 'bottom'}}
+                anchorEl={this.state.location.anchorEl}
+                style={{height: '200px', width: '375px'}}
+              >
+                <RoleLocation/>
+                <FlatButton className='pull-right' label="set" onClick={() => {this.closePopover('location')}} primary={true} />
+                <FlatButton className='pull-right' label="close" onClick={() => {this.closePopover('location')}} primary={true} />
+              </Popover>
+            </div>
           </div>
 
 
@@ -366,6 +372,26 @@ class RoleAdd extends React.Component {
           </div>
 
         </form>
+      </div>
+    )
+
+    return (
+
+      <div className={cx('roleAdd-container') + isVisible + ' col-md-offset-2 col-md-8'}>
+        {addVisible ? (
+          <ExpandTransition open={true}>
+            {roleCreate}
+          </ExpandTransition>
+        ):(
+          <div className='pull-center'>
+            <RaisedButton 
+              label="Create New Role"
+              fullWidth={true} 
+              style={{margin: '20px 0'}}
+              onClick={this.props.toggleEdit}
+            />
+          </div>
+        )}
       </div>
     )
   }
