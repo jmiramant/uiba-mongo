@@ -3,18 +3,22 @@ import React, { Component, PropTypes } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
 import classNames from 'classnames/bind';
-import styles from 'css/components/profile/userCard';
+import styles from 'css/components/locationRange';
 
 const cx = classNames.bind(styles);
 
-class Address extends Component {
+class LocationRange extends Component {
 
   static propTypes = {
     address: PropTypes.object,
     autofill: PropTypes.object,
-    handleChange: PropTypes.func.isRequired, 
+    setZip: PropTypes.func.isRequired, 
+    setRange: PropTypes.func.isRequired, 
+    setRangeByZip: PropTypes.func.isRequired, 
     onAddressSave: PropTypes.func.isRequired,
     toggleAddressEdit: PropTypes.func.isRequired,
     error: PropTypes.string,
@@ -39,9 +43,16 @@ class Address extends Component {
     this.props.toggleAddressEdit(this.props.editMode)
   }
 
-  handleChange = field => (e, zip) => {
-    if (zip.length === 5) {
-      this.props.handleChange(zip);
+  setRange(field, val) {
+    this.props.setRange(val)
+    if (this.props.zip.length > 0) this.props.setRangeByZip(this.props.zip, val)
+  }
+
+  handleChange = field => (e, val, pick) => {
+    if (field === 'zipCode' && val.length === 5) {
+      this.props.setZip(val)
+    } else if (field === 'range'){
+      this.setRange(field, pick);
     }
   }
 
@@ -118,16 +129,29 @@ class Address extends Component {
 
     const showZipEntry = () => {
       if (!this.props.address.zip_code || editMode) {
-        return (<TextField
-          floatingLabelText="Zip Code"
-          errorText={this.props.error}
-          onChange={this.handleChange('zipCode')}
-        />)
+        return (
+          <div>
+            <TextField
+              floatingLabelText="Zip Code"
+              errorText={this.props.error}
+              onChange={this.handleChange('zipCode')}
+            />
+            <SelectField
+              floatingLabelText="Range"
+              onChange={this.handleChange('range')}
+            >
+              <MenuItem value={5} primaryText="5 Miles" />
+              <MenuItem value={10} primaryText="10 Miles" />
+              <MenuItem value={25} primaryText="25 Miles" />
+              <MenuItem value={50} primaryText="50 Miles" />
+            </SelectField>
+          </div>
+        )
       }
     }
 
     return (
-      <div>
+      <div className={cx('range-container')}>
         {showZipEntry()}
         {showAddress(autofill, address)}
       </div>
@@ -135,4 +159,4 @@ class Address extends Component {
   }
 }
 
-export default Address;
+export default LocationRange;

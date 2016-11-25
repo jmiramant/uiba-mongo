@@ -24,10 +24,17 @@ export function hideAddressEditIcon (data) {
 }
 
 export function updateAddressAutofill(results) {
-  return {
-    type: types.UPDATE_ADDRESS_AUTOFILL_SUCCESS,
-    results
-  };
+  if (results.data && results.data.zip_codes) {
+    return {
+      type: types.UPDATE_RANGE_AUTOFILL_SUCCESS,
+      results
+    };
+  } else {
+    return {
+      type: types.UPDATE_ADDRESS_AUTOFILL_SUCCESS,
+      results
+    };
+  }
 }
 
 export function makeAddressRequest(method, data, api = '/address') {
@@ -37,6 +44,30 @@ export function makeAddressRequest(method, data, api = '/address') {
 
 export function fetchAddressByZip(zipcode) {
   const apiUrl = "/address/autofill?search=" + zipcode
+  return dispatch => {
+    makeAddressRequest('get', null,  apiUrl)
+      .then(response => {
+        dispatch(updateAddressAutofill(response))
+      });
+  }
+}
+
+export function setZip(zip) {
+  return {
+    type: types.SET_ZIP,
+    data: zip
+  };
+}
+
+export function setRange(range) {
+  return {
+    type: types.SET_RANGE,
+    data: range
+  };
+}
+
+export function setRangeByZip(zip, range) {
+  const apiUrl = "/address/radius?zip=" + zip + "&range=" + range
   return dispatch => {
     makeAddressRequest('get', null,  apiUrl)
       .then(response => {

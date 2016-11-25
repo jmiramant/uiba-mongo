@@ -95,13 +95,52 @@ const address = (
   }
 };
 
+const zip = (
+  state = {},
+  action
+) => {
+  switch (action.type) {
+    case types.SET_ZIP:
+      return action.data;
+    default:
+      return state;
+  }
+};
+
+const range = (
+  state = '',
+  action
+) => {
+  switch (action.type) {
+    case types.SET_RANGE:
+      return action.data;
+    default:
+      return state;
+  }
+};
+
+const rangeZips = (
+  state = [],
+  action
+) => {
+  switch (action.type) {
+    case types.UPDATE_RANGE_AUTOFILL_SUCCESS:
+      return action.results.data.zip_codes;
+    default:
+      return state;
+  }
+}
+
 const addressReducer = combineReducers({
   isFetching,
   address,
   autofill,
   edit,
   editIcon,
-  error
+  error,
+  range,
+  rangeZips,
+  zip
 });
 
 export default addressReducer;

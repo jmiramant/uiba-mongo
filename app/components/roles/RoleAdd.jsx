@@ -10,7 +10,7 @@ import MulitselectPopover from '../../components/MulitselectPopover';
 import DuelSlider from '../../components/DuelSlider';
 import RoleSkills from 'components/roles/RoleSkillList';
 
-import AddressInput from 'containers/Address'
+import RoleLocation from 'containers/RoleLocation'
 import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -298,7 +298,7 @@ class RoleAdd extends React.Component {
               anchorOrigin={{horizontal: 'left', vertical: 'top'}}
               targetOrigin={{horizontal: 'left', vertical: 'bottom'}}
               anchorEl={this.state.skill.anchorEl}
-              style={{width: '700px'}}
+              style={{width: '700px', minHeight: '210px'}}
             >
               <RoleSkills 
                 skills={roles.skills}
@@ -326,9 +326,9 @@ class RoleAdd extends React.Component {
               anchorOrigin={{horizontal: 'left', vertical: 'top'}}
               targetOrigin={{horizontal: 'left', vertical: 'bottom'}}
               anchorEl={this.state.location.anchorEl}
-              style={{height: '150px', width: '400px'}}
+              style={{height: '200px', width: '375px'}}
             >
-              <AddressInput/>
+              <RoleLocation/>
               <FlatButton className='pull-right' label="set" onClick={() => {this.closePopover('location')}} primary={true} />
               <FlatButton className='pull-right' label="close" onClick={() => {this.closePopover('location')}} primary={true} />
             </Popover>
