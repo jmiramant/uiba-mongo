@@ -39,20 +39,19 @@ class CompanyContainer extends React.Component {
       companyActions.fetchCompany(profile.company_id);
     }
 
-    if (this.state.child !== this.props.children.type.WrappedComponent.displayName) {
-      this.setState({child: this.props.children.type.WrappedComponent.displayName})
-      this.stepHandler();
+    if (this.state.child !== this.props.children.type.displayName) {
+      this.setState({child: this.props.children.type.displayName})
+      this.stepHandler(this.props.children.type.displayName);
     }
   }
   
   stepHandler(child) {
-    console.log(child)
     switch (child) {
-      case "CompanyDashboard":
+      case "Connect(CompanyDashboard)":
         return [1];
-      case "ApplicantList":
+      case "Connect(ApplicantList)":
         return [1,2];
-      case "ApplicantShow":
+      case "Connect(ApplicantShow)":
         return [1,2,3];
     }
 
@@ -60,11 +59,11 @@ class CompanyContainer extends React.Component {
 
   stepNavHandler(i) {
     if (i === 0) this.props.navigate('/company-admin/dashboard')
-    if (i === 1 && this.props.children.type.WrappedComponent.displayName !== 'ApplicantList') this.props.history.goBack();
+    if (i === 1 && this.props.children.type.displayName !== 'Connect(ApplicantList)') this.props.history.goBack();
   }
 
   state = {
-    child: this.props.children.type.WrappedComponent.displayName
+    child: this.props.children.type.displayName
   }
 
   render() {
@@ -76,7 +75,7 @@ class CompanyContainer extends React.Component {
       company
     } = this.props;
     
-    const steps = this.stepHandler(children.type.WrappedComponent.displayName);
+    const steps = this.stepHandler(children.type.displayName);
     const stepNames = ['Dashboard', 'Applicants List', 'Applicants Profile'];
 
     return (
