@@ -14,17 +14,19 @@ const cx = classNames.bind(styles);
 class LocationRange extends Component {
 
   static propTypes = {
+    zip: PropTypes.number,
+    error: PropTypes.string,
+    setZip: PropTypes.func.isRequired, 
     address: PropTypes.object,
     autofill: PropTypes.object,
-    setZip: PropTypes.func.isRequired, 
+    rangeZips: PropTypes.array,
     setRange: PropTypes.func.isRequired, 
+    editIconMode: PropTypes.bool,
     setRangeByZip: PropTypes.func.isRequired, 
     onAddressSave: PropTypes.func.isRequired,
-    toggleAddressEdit: PropTypes.func.isRequired,
-    error: PropTypes.string,
-    editIconMode: PropTypes.bool,
     hideEditIconMode: PropTypes.func.isRequired,
     showEditIconMode: PropTypes.func.isRequired,
+    toggleAddressEdit: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -69,91 +71,64 @@ class LocationRange extends Component {
   render() {
     
     const { 
-      autofill,
+      zip,
+      range,
       address,
+      autofill,
       editMode,
+      rangeZips,
       editIconMode
     } = this.props;
 
-    const showAddress = (autofill, address) => {
-
-      let saveBtn, editBtn;
-      if (!this.props.address.zip_code) {
-        saveBtn = (<RaisedButton onClick={this.handleSubmit} label="Save Address" primary={true} />)
-      }
-      if (editMode) {
-        editBtn = (<RaisedButton onClick={this.editSubmit} label="Update Address" primary={true} />)
-      }
-
-      if (autofill.city && autofill.state) {
-        return (
-          <div
-            onDoubleClick={this.toggleEdit.bind(this)} 
-            onMouseEnter={this.editIconShow.bind(this)}
-            onMouseLeave={this.editIconHide.bind(this)}>
-            {editIconMode && !editMode ? (
-              <EditIcon
-                onClick={this.toggleEdit.bind(this)}
-                hoverColor="#f20253"
-                className={cx("userCard--edit")}
-              />
-            ) : (null)}
-            <div>{autofill.city}, {autofill.state}</div>
-            {saveBtn}
-            {editBtn}
-          </div>
-        )
-      } else if (autofill.error_msg){
-        return (
-          <h4>{autofill.error_msg}</h4>
-        )
-      } else if (address.city && address.state) {
-        return (
-          <div 
-            onDoubleClick={this.toggleEdit.bind(this)} 
-            onMouseEnter={this.editIconShow.bind(this)}
-            onMouseLeave={this.editIconHide.bind(this)}
-          >
-            {editIconMode ? (
-              <EditIcon
-                onClick={this.toggleEdit.bind(this)}
-                hoverColor="#f20253"
-                className={cx("userCard--edit")}
-              />
-            ) : (null)}
-            <div>{address.city}, {address.state}</div>
-          </div>
-        )
-      }
+    const showAddress = (autofill, zip) => {
+      return (
+        <div 
+          onMouseEnter={this.editIconShow.bind(this)}
+          onMouseLeave={this.editIconHide.bind(this)}
+        >
+          {editIconMode ? (
+            <EditIcon
+              onClick={this.toggleEdit.bind(this)}
+              hoverColor="#f20253"
+              style={{margin: '25px 25px 0 0', float: 'right'}}
+              className={cx("userCard--edit")}
+            />
+          ) : (null)}
+          <div className={cx('set-range')}>{zip} including {range} miles.</div>
+        </div>
+      )
     }
 
     const showZipEntry = () => {
-      if (!this.props.address.zip_code || editMode) {
-        return (
-          <div>
-            <TextField
-              floatingLabelText="Zip Code"
-              errorText={this.props.error}
-              onChange={this.handleChange('zipCode')}
-            />
-            <SelectField
-              floatingLabelText="Range"
-              onChange={this.handleChange('range')}
-            >
-              <MenuItem value={5} primaryText="5 Miles" />
-              <MenuItem value={10} primaryText="10 Miles" />
-              <MenuItem value={25} primaryText="25 Miles" />
-              <MenuItem value={50} primaryText="50 Miles" />
-            </SelectField>
-          </div>
-        )
-      }
+      return (
+        <div>
+          <TextField
+            floatingLabelText="Zip Code"
+            errorText={this.props.error}
+            onChange={this.handleChange('zipCode')}
+          />
+          <SelectField
+            floatingLabelText="Range"
+            value={this.props.range}
+            onChange={this.handleChange('range')}
+          >
+            <MenuItem value={5} primaryText="5 Miles" />
+            <MenuItem value={10} primaryText="10 Miles" />
+            <MenuItem value={25} primaryText="25 Miles" />
+            <MenuItem value={50} primaryText="50 Miles" />
+          </SelectField>
+        </div>
+      )
     }
 
     return (
       <div className={cx('range-container')}>
-        {showZipEntry()}
-        {showAddress(autofill, address)}
+      {(rangeZips.length === 0 || editMode) ? (
+        showZipEntry()
+      ) : (
+        showAddress(autofill, zip)
+      )}
+
       </div>
     );
   }

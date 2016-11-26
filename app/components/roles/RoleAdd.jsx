@@ -5,24 +5,12 @@ import { connect } from 'react-redux';
 import * as roleActionCreators from 'actions/roles';
 
 import { validateJobHelper } from '../helpers/roleValidations';
-import UibaDatePicker from '../../components/DatePicker';
-import MulitselectPopover from '../../components/MulitselectPopover';
-import DuelSlider from '../../components/DuelSlider';
-import RoleSkills from 'components/roles/RoleSkillList';
 
-import RoleLocation from 'containers/RoleLocation'
 import TextField from 'material-ui/TextField';
-import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
-import SelectField from 'material-ui/SelectField';
-import Popover from 'material-ui/Popover';
-import MenuItem from 'material-ui/MenuItem';
-import Divider from 'material-ui/Divider';
 import ExpandTransition from 'material-ui/internal/ExpandTransition';
-
-import moment from 'moment';
-import _ from 'lodash';
+import RequirementSelector from 'components/RequirementSelector';
 
 import classNames from 'classnames/bind';
 import styles from 'css/components/role';
@@ -47,15 +35,10 @@ class RoleAdd extends React.Component {
 
   state = {
     validationErrors: {},
-    experience: { open: false, anchorEl: null },
-    skill: { open: false, anchorEl: null },
-    location: { open: false, anchorEl: null },
   }
 
   componentDidMount() {
     this.setCompanyId();
-    window.addEventListener('scroll', this.handleScroll);
-    window.addEventListener('resize', this.handleResize);
   }
   
   setCompanyId() {
@@ -83,13 +66,9 @@ class RoleAdd extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-
     if (!this.validate()) {
-      
       const range = this.setRangeObj(this.props.address);
-
       this.props.onRoleSave({...this.props.role, skills: this.props.roles.skills, range: range});
-
     }
 
   }
@@ -110,131 +89,25 @@ class RoleAdd extends React.Component {
     if (!this.props.role.company_id) this.setCompanyId()
   }
 
-  sliderChange(val) {
-    this.changeProjectProps('experienceMin', val[0])
-    this.changeProjectProps('experienceMax', val[1])
-  }
-
-  handlePicklistChange = field => (e, index, value) => {
-    this.changeProjectProps(field, value)
-  }
-
   handleChange = field => (e, value) => {
     this.changeProjectProps(field, value)
   }
 
-  onSetEduReq() {
-    this.changeProjectProps('degreeRequirements', this.props.eduRequirements)
-  }
-
-  closePopover = (popover) => {
-    this.setState({
-      [popover]: {
-        open: false, 
-        anchorEl: null 
-      }
-    })
-  }
-
-  openMultiSelect = (popover, e) => {
-    this.setState({ [popover]: {
-        open: true,
-        anchorEl: e.currentTarget,
-      }
-    });
-  };
-  
-  openExperience(e) {
-    const sty = this.getAnchorPosition(e.currentTarget)
-    this.setState({ experience: {
-        open: true,
-        anchorEl: e.currentTarget,
-        style: {
-          top: sty.top - 152,
-          left: sty.left
-        }
-      }
-    });
-  }
-  
-  experienceReposition() {
-    if (this.state.experience.anchorEl) {
-      const sty = this.getAnchorPosition(this.state.experience.anchorEl)
-      this.setState({ experience: {
-          open: true,
-          anchorEl: this.state.experience.anchorEl,
-          style: {
-            top: sty.top - 152,
-            left: sty.left
-          }
-        }
-      });
-    } else {
-      return false;
-    }
-  }
-
-  componentWillUnmount(){
-    window.removeEventListener('resize', this.handleResize);
-    window.removeEventListener('scroll', this.handleScroll);
-  }
-
-  getAnchorPosition(el) {
-    if (!el) {
-      el = ReactDOM.findDOMNode(this);
-    }
-
-    const rect = el.getBoundingClientRect();
-    const a = {
-      top: rect.top,
-      left: rect.left,
-      width: el.offsetWidth,
-      height: el.offsetHeight,
-    };
-
-    a.right = rect.right || a.left + a.width;
-    a.bottom = rect.bottom || a.top + a.height;
-    a.middle = a.left + ((a.right - a.left) / 2);
-    a.center = a.top + ((a.bottom - a.top) / 2);
-
-    return a;
-  }
-
-  getTargetPosition(targetEl) {
-    return {
-      top: 0,
-      center: targetEl.offsetHeight / 2,
-      bottom: targetEl.offsetHeight,
-      left: 0,
-      middle: targetEl.offsetWidth / 2,
-      right: targetEl.offsetWidth,
-    };
-  }
-
-  handleResize = () => {
-    this.experienceReposition();
-  };
-
-  handleScroll = () => {
-    this.experienceReposition()
-  };
-
   render () {
     const {
-            experience,
-            validationErrors
-          } = this.state;
+      validationErrors
+    } = this.state;
 
     const {
-            role,
-            roles,
-            actions,
-            messages,
-            addVisible,
-            skillActions,
-            eduRequirements,
-            onToggleEduReqSelect,
-          } = this.props;
+      role,
+      roles,
+      actions,
+      messages,
+      addVisible,
+      skillActions,
+      eduRequirements,
+      onToggleEduReqSelect,
+    } = this.props;
 
     const isVisible = (role.description || addVisible) ? '' : ' ' + cx('closed');
     
@@ -268,99 +141,18 @@ class RoleAdd extends React.Component {
             />
           </div>
 
-
-          <div className={cx('req-container')}>
-            <p className={cx('req-title')}>
-              Role Requirements:
-            </p>
-
-            <div className={cx('req-btns') +" col-md-3"}>
-              <MulitselectPopover
-                data={['High School','Associate','Bachelor','Master','MBA','JD','MD','PhD','Engineer Degree','Certificate','Coursework','Other']}
-                selected={eduRequirements}
-                buttonText='Edu Requirements'
-                onToggleSelect={onToggleEduReqSelect}
-                handleSet={this.onSetEduReq.bind(this)}
-              />
-            </div>
-
-            <div className={cx('req-btns') +" col-md-3"}>
-              <RaisedButton
-                labelStyle={{fontSize: '10px', paddingLeft: '9px', paddingRight: '9px'}}
-                onClick={(e) => {this.openExperience(e)}}
-                label='Exp Requirements'
-              />
-              {experience.open ? (
-                <div className={cx('experience-selector')} style={{...experience.style}}>
-                    <h5 className={cx('experience-title')}>Experience Range Selector</h5>
-                    <p className={cx('experience-sub-title')}>Length of Use (Yrs)</p>
-                    <DuelSlider
-                      dataSource={[role.experienceMin, role.experienceMax]}
-                      title="Length of Use (Yrs)"
-                      field={'lengthOfUse'}
-                      style={{width: '90%', zIndex: 100}}
-                      handleChange={this.sliderChange.bind(this)}
-                      storeValue={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
-                      stages={['>1', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10+']}
-                    >
-                      <div className="handle handle-0"/>
-                      <div className="handle handle-1"/>
-                    </DuelSlider>
-                    
-                    <FlatButton className='pull-right' label="set" onClick={() => {this.closePopover('experience')}} primary={true} />
-                    <FlatButton className='pull-right' label="close" onClick={() => {this.closePopover('experience')}} primary={true} />
-                  </div>
-                ) : (null)}
-
-            </div>
-
-            <div className={cx('req-btns') +' col-md-3'}>
-              <RaisedButton
-                labelStyle={{fontSize: '10px', paddingLeft: '9px', paddingRight: '9px'}}
-                onClick={(e) => {this.openMultiSelect('skill', e)}}
-                label='Skill Requirements'
-              />
-              <Popover
-                open={this.state.skill.open}
-                anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-                targetOrigin={{horizontal: 'left', vertical: 'bottom'}}
-                anchorEl={this.state.skill.anchorEl}
-                style={{width: '600px', minHeight: '210px'}}
-              >
-                <RoleSkills 
-                  skills={roles.skills}
-                  addVisible={roles.showSkillAdd}
-                  errorMessage={messages.errorMessage}
-                  toggleSkillAdd={actions.toggleRoleSkillsAdd}
-                  onEditSave={actions.updateSkill} 
-                  onSkillSave={actions.createSkill} 
-                  onSkillDelete={actions.deleteSkill} 
-                />
-                <FlatButton className='pull-right' label="set" onClick={() => {this.closePopover('skill')}} primary={true} />
-                <FlatButton className='pull-right' label="close" onClick={() => {this.closePopover('skill')}} primary={true} />
-              </Popover>
-            </div>
-
-
-            <div className={cx('req-btns') +" col-md-3"}>
-              <RaisedButton
-                labelStyle={{fontSize: '10px', paddingLeft: '9px', paddingRight: '9px'}}
-                onClick={(e) => {this.openMultiSelect('location', e)}}
-                label='Location Range'
-              />
-              <Popover
-                open={this.state.location.open}
-                anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-                targetOrigin={{horizontal: 'left', vertical: 'bottom'}}
-                anchorEl={this.state.location.anchorEl}
-                style={{height: '200px', width: '375px'}}
-              >
-                <RoleLocation/>
-                <FlatButton className='pull-right' label="set" onClick={() => {this.closePopover('location')}} primary={true} />
-                <FlatButton className='pull-right' label="close" onClick={() => {this.closePopover('location')}} primary={true} />
-              </Popover>
-            </div>
-          </div>
+          <RequirementSelector
+            role={role}
+            roles={roles}
+            messages={messages}
+            roleChange={this.props.roleChange}
+            eduRequirements={eduRequirements}
+            onToggleEduReqSelect={onToggleEduReqSelect}
+            toggleSkillAdd={actions.toggleRoleSkillsAdd}
+            onEditSave={actions.updateSkill} 
+            onSkillSave={actions.createSkill} 
+            onSkillDelete={actions.deleteSkill} 
+          />
 
 
           <div className={cx('profile-btn-group')}>

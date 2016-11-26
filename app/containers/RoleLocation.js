@@ -6,11 +6,13 @@ import * as actionCreators from 'actions/address';
 
 @connect((state) => {
   return {
-    autofill: state.address.autofill,
-    address: state.address.address,
     zip: state.address.zip,
-    editMode: state.address.edit,
+    range: state.address.range,
+    rangeZips: state.address.rangeZips,
     error: state.address.error,
+    address: state.address.address,
+    autofill: state.address.autofill,
+    editMode: state.address.edit,
     editIconMode: state.address.editIcon
   }
 })
@@ -42,20 +44,22 @@ class AddressAutofillApp extends Component {
   render() {
     return (
       <LocationRange
+        zip={this.props.zip}
+        range={this.props.range}
+        rangeZips={this.props.rangeZips}
         error={this.props.error}
+        setZip={this.actions.setZip}
+        address={this.props.address} 
+        autofill={this.props.autofill}
+        setRange={this.actions.setRange}
         editMode={this.props.editMode}
         editIconMode={this.props.editIconMode}
+        onAddressEdit={this.actions.updateAddress}
+        setRangeByZip={this.actions.setRangeByZip}
+        onAddressSave={this.handleSave.bind(this)}
         showEditIconMode={this.actions.showAddressEditIcon}
         hideEditIconMode={this.actions.hideAddressEditIcon}
-        onAddressEdit={this.actions.updateAddress}
         toggleAddressEdit={this.actions.toggleAddressEdit}
-        setZip={this.actions.setZip}
-        setRange={this.actions.setRange}
-        setRangeByZip={this.actions.setRangeByZip}
-        address={this.props.address} 
-        zip={this.props.zip}
-        autofill={this.props.autofill}
-        onAddressSave={this.handleSave.bind(this)}
       />
     );
   }

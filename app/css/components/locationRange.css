@@ -1,3 +1,12 @@
 .range-container {
   margin: 0px 0 0 65px;
 }
+
+.set-range {
+  width: 100%;
+  height: 150px;
+  text-align: center;
+  padding-right: 65px;
+  font-size: 22px;
+  padding-top: 66px;
+}
