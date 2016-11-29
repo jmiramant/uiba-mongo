@@ -194,6 +194,12 @@ export function deleteAddressFailure (data) {
   }
 }
 
+export function clearRangeAddress() {
+  return {
+    type: types.CLEAR_RANGE_ADDRESS
+  }
+}
+
 export function deleteAddress(address) {
   return (dispatch) => {
 

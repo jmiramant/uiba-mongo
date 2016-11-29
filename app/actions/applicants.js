@@ -27,3 +27,66 @@ export function fetchApplicant(profId) {
     promise: makeApplicantRequest('get', {}, path)
   }
 }
+
+export function filterChange(data) {
+  return {
+    type: types.APPLICANT_FILTER_CHANGE,
+    data
+  }
+}
+
+export function toggleEduReqSelect(data) {
+  return {
+    type: types.TOGGLE_APPLICANT_EDU_FILTER,  
+    data: data
+  }
+}
+
+export function toggleRoleSkillsAdd (data, persist = false) {
+  return {
+    type: types.TOGGLE_APPLICANT_FILTER_SKILL_ADD,
+    data: data,
+    persist: persist
+  };
+}
+
+export function skillChange(state) {
+  return {
+    type: types.CHANGE_APPLICANT_FILTER_SKILL,
+    state
+  };
+}
+
+export function skillsChange(state) {
+  return {
+    type: types.CHANGE_APPLICANT_FILTER_SKILLS,
+    state
+  };
+}
+
+export function createSkill(skillData) {
+  return {
+    type: types.CREATE_APPLICANT_FILTER_SKILL,
+    skillData
+  };
+}
+
+export function updateSkill(skillData) {
+  return {
+    type: types.UPDATE_APPLICANT_FILTER_SKILL,
+    skillData
+  };
+}
+
+export function deleteSkill(skillData) {
+  return {
+    type: types.DELETE_APPLICANT_FILTER_SKILL,
+    skillData
+  };
+}
+
+export function clearFilters() {
+  return {
+    type: types.APPLICANT_FILTER_CLEAR,
+  };
+}

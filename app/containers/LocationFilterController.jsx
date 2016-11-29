@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import LocationRange from 'components/LocationRange';
+import LocationFilter from 'components/applicants/LocationFilter';
 import * as actionCreators from 'actions/address';
 
 @connect((state) => {
@@ -17,7 +17,7 @@ import * as actionCreators from 'actions/address';
   }
 })
 
-class AddressAutofillApp extends Component {
+class LocationFilterController extends Component {
   static propTypes = {
     type: PropTypes.string,
     name: PropTypes.string
@@ -27,14 +27,6 @@ class AddressAutofillApp extends Component {
     super(props);
   }
 
-  componentWillMount() {
-    if (this.props.type === 'company') {
-      this.actions.fetchCompanyAddress({name: this.props.name.toLowerCase()})
-    } else {
-      this.actions.fetchAddress()
-    }
-  }  
-
   handleSave() {
     this.actions.createAddress(this.props.autofill)
   }
@@ -43,16 +35,14 @@ class AddressAutofillApp extends Component {
 
   render() {
     return (
-      <LocationRange
+      <LocationFilter
         zip={this.props.zip}
         range={this.props.range}
         rangeZips={this.props.rangeZips}
         error={this.props.error}
         setZip={this.actions.setZip}
-        address={this.props.address} 
-        autofill={this.props.autofill}
-        setRange={this.actions.setRange}
         editMode={this.props.editMode}
+        setRange={this.actions.setRange}
         editIconMode={this.props.editIconMode}
         onAddressEdit={this.actions.updateAddress}
         setRangeByZip={this.actions.setRangeByZip}
@@ -65,4 +55,4 @@ class AddressAutofillApp extends Component {
   }
 }
 
-export default AddressAutofillApp;
+export default LocationFilterController;

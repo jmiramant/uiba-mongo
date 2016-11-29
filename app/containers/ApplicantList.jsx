@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
+import { bindActionCreators } from 'redux';
 import ApplicantShow from 'containers/ApplicantShow';
+import ApplicantFilterController from 'containers/ApplicantFiltersController';
 import ApplicantListItem from 'components/applicants/ApplicantListItem';
+import FilteredApplicantSelector from 'selectors/FilteredApplicantSelector';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow} from 'material-ui/Table';
 
 import * as roleActionCreator from 'actions/roles'
@@ -38,6 +39,11 @@ class ApplicantList extends React.Component {
     return (
       <div>
         <h4>Applicants for {role.title}:</h4>
+
+        <ApplicantFilterController 
+          applicantLength={applicants.length}
+        />
+
         <Table
           selectable={true}
         >
@@ -71,14 +77,11 @@ class ApplicantList extends React.Component {
   }
 };
 
-ApplicantList.propTypes = {
-};
-
 function mapStateToProps(state) {
   return {
     role: state.role.role,
-    applicants: state.applicant.applicants,
     company: state.company.company,
+    applicants: FilteredApplicantSelector(state),
   };
 }
 

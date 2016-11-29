@@ -102,6 +102,8 @@ const zip = (
   switch (action.type) {
     case types.SET_ZIP:
       return action.data;
+    case types.CLEAR_RANGE_ADDRESS:
+      return {};
     default:
       return state;
   }
@@ -114,6 +116,8 @@ const range = (
   switch (action.type) {
     case types.SET_RANGE:
       return action.data;
+    case types.CLEAR_RANGE_ADDRESS:
+      return '';
     default:
       return state;
   }
@@ -126,6 +130,8 @@ const rangeZips = (
   switch (action.type) {
     case types.UPDATE_RANGE_AUTOFILL_SUCCESS:
       return action.results.data.zip_codes;
+    case types.CLEAR_RANGE_ADDRESS:
+      return [];
     default:
       return state;
   }
