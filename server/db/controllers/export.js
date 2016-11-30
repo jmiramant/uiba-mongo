@@ -80,7 +80,11 @@ const exportQueryByDate = (req, res, queryDate, query) => {
       _.forEach(resp, (v, k) => {
         if (k !== 'profile' && k !== 'profileCount') {
           return user[k] = _.filter(v, (item) => {
-            return item.profile_id.toString() === user._id.toString()
+            if (item.profile_id) {
+              return item.profile_id.toString() === user._id.toString()
+            } else {
+              return false;
+            }
           })
         }
       });
@@ -135,7 +139,11 @@ const exportQueryByProfiles = (req, res, profiles) => {
     _.forEach(formatted.data, (user, i) => {
       _.forEach(resp, (v, k) => {
         return user[k] = _.filter(v, (item) => {
-          return item.profile_id.toString() === user._id.toString()
+          if (item.profile_id) {
+            return item.profile_id.toString() === user._id.toString()
+          } else {
+            return false;
+          }
         })
       });
     })
