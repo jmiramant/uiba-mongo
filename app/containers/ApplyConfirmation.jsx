@@ -12,7 +12,7 @@ import styles from 'css/components/applyConfirmation';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
-export default class ApplyConfirmation extends React.Component {
+class ApplyConfirmation extends React.Component {
   
   static need = [  // eslint-disable-line
     profileActionCreators.fetchProfile
