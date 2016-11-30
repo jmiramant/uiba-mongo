@@ -17,7 +17,7 @@ import moment from 'moment';
 
 const cx = classNames.bind(styles);
 
-export default class UserCard extends React.Component {
+class UserCard extends React.Component {
   
   static propTypes = {
     editMode: PropTypes.bool.isRequired,
