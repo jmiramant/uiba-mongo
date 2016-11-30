@@ -7,7 +7,7 @@ export const linkedin = {
 };
 
 export const sendInBlue = {
-  clientToken: process.env.SENDBLUE_TOKEN
+  clientToken: process.env.SENDBLUE_TOKEN;
 }
 
 export const externalAPISecret = {
@@ -16,7 +16,7 @@ export const externalAPISecret = {
 }
 
 export const zipCodeAPI = {
-  key: process.env.zipCodeAPI_key
+  key: process.env.zipCodeAPI_key,
 }
 
 export const aws = {
