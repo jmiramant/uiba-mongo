@@ -72,14 +72,20 @@ const applicants = (
 };
 
 const filters = (
-  state = {},
+  state = {
+    school: [],
+    skill: [],
+    address: '',
+  },
   action
 ) => {
   switch (action.type) {
     case types.APPLICANT_FILTER_CHANGE:
-      return action.data;
+      return {...state, ...action.data}
     case types.APPLICANT_FILTER_CLEAR:
       return {};
+    case types.FETCH_APPLICANTS_FILTER_SKILLS_SUCCESS:
+      return {...state, skill: action.res.data}
     default:
       return state;
   }

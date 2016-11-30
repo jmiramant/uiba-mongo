@@ -9,6 +9,7 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow} from 'materi
 
 import * as roleActionCreator from 'actions/roles'
 import * as applicantActionCreator from 'actions/applicants'
+import * as addressActionCreator from 'actions/address'
 
 import classNames from 'classnames/bind';
 import styles from 'css/components/applicantList';
@@ -26,6 +27,11 @@ class ApplicantList extends React.Component {
 
     roleActions.fetchRole(params.roleId);
     applicantActions.fetchApplicants(params.roleId);
+  }
+
+  clearFilters() {
+    this.props.addressActions.clearRangeAddress()
+    this.props.applicantActions.clearFilters()
   }
 
   render() {
@@ -72,6 +78,7 @@ class ApplicantList extends React.Component {
             })}
           </TableBody>
         </Table>
+        { applicants.length ? (null) : (<div onClick={this.clearFilters.bind(this)} className={cx('no-results')}>No applicants fit these filters. Click to clear filters.</div>)}        
       </div>
     );
   }
@@ -88,6 +95,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps (dispatch) {
   return {
     roleActions: bindActionCreators(roleActionCreator, dispatch),
+    addressActions: bindActionCreators(addressActionCreator, dispatch),
     applicantActions: bindActionCreators(applicantActionCreator, dispatch),
   }
 }

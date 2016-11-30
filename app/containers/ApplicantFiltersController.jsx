@@ -18,15 +18,25 @@ class ApplicantFiltersController extends Component {
   state = {
     role: undefined
   }
-  
+
   componentDidUpdate(props) {
-    if (props.role.role._id && !this.state.role) {
-      // this.props.role.role.skills
-      this.props.applicantActions.filterChange({
-        school: this.props.role.role.degreeRequirements,
-        skill: this.props.role.role.skills,
+    const { role, applicantActions} = props;
+    if (role.role._id && !this.state.role) {
+
+      let range = {}
+      if (role.role.range.range) {
+        range.range = role.role.range.range;
+        range.zip = role.role.range.zip;
+      }
+      applicantActions.fetchFilterSkills(role.role.skills);
+
+      applicantActions.filterChange({
+        school: role.role.degreeRequirements,
+        skill: role.role.skills,
+        address: range
       });
-      this.setState({role: props.role.role._id});
+
+      this.setState({role: role.role._id});
     }
 
   }
@@ -51,7 +61,9 @@ class ApplicantFiltersController extends Component {
       <div>
         <ApplicantFilters
           role={role}
+          address={address}
           messages={messages}
+          clearFilters={this.clearFilters.bind(this)}
           filters={applicant.filters}
           skill={applicant.skillFilter}
           skills={applicant.skillsFilter}
@@ -64,7 +76,7 @@ class ApplicantFiltersController extends Component {
           onSkillSave={applicantActions.createSkill} 
           onSkillDelete={applicantActions.deleteSkill} 
         />
-        <div>Showing {applicantLength} of {applicant.applicants.length} <span className={cx("clear")}onClick={this.clearFilters.bind(this)}>Clear</span></div>
+        <div>Showing {applicantLength} of {applicant.applicants.length}</div>
       </div>
     );
   }

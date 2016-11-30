@@ -1,0 +1,33 @@
+.filter-container {
+  width: 100%;
+}
+
+.enabled-filters {
+  font-size: 11px;
+}
+
+.enabled-filter-item {
+  margin: 10px 0;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.header-container {
+  height: 40px;
+}
+
+.filter-state {
+  display: inline-block;
+  width: 50%;
+  text-align: right;
+}
+
+.filter-title {
+  display: inline-block;
+  width: 50%;
+}
+

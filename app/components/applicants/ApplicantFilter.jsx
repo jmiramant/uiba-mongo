@@ -7,15 +7,19 @@ import RoleSkills from 'components/roles/RoleSkillList';
 import LocationFilterController from 'containers/LocationFilterController'
 import RaisedButton from 'material-ui/RaisedButton';
 import MulitselectPopover from 'components/MulitselectPopover';
-
+import Divider from 'material-ui/Divider';
 import classNames from 'classnames/bind';
-import styles from 'css/components/role';
-const cx = classNames.bind(styles);
+import roleStyles from 'css/components/role';
+import styles from 'css/components/applicantFilter';
+const cx = classNames.bind(roleStyles);
+const cy = classNames.bind(styles);
 
 export default class RequirementSelectors extends React.Component {
   
   static PropTypes =  {
     role: PropTypes.object.isRequired,
+    address: PropTypes.object.isRequired,
+    filters: PropTypes.object.isRequired,
     messages: PropTypes.object.isRequired,
     onEditSave: PropTypes.func.isRequired,
     onSkillSave: PropTypes.func.isRequired,
@@ -47,14 +51,11 @@ export default class RequirementSelectors extends React.Component {
   
   skillSet() {
     this.setState({skill: { open: false, anchorEl: null }})
-    this.changeFilter();
+    this.props.filterChange({skill: this.props.skills});
   }
 
-  changeFilter() {
-    this.props.filterChange({
-      school: this.props.eduRequirements,
-      skill: this.props.skills,
-    });
+  changeEduFilter() {
+    this.props.filterChange({school: this.props.eduRequirements});
   }
 
   openMultiSelect = (popover, e) => {
@@ -65,14 +66,25 @@ export default class RequirementSelectors extends React.Component {
     });
   };
 
+  isFilters(f) {
+    if ( (Object.keys(f).length >= 1) && ( (f.school && f.school.length > 0) || (f.skill && f.skill.length > 0) || ( f.address && Object.keys(f.address).length > 0 || f.address.length > 0))) {
+      return true;
+    } else {
+      return false;
+    };
+  }
+
   render () {
 
     const {
       role,
       skills,
+      address,
+      filters,
       messages,
       onEditSave,
       onSkillSave,
+      clearFilters,
       showSkillAdd,
       onSkillDelete,
       toggleSkillAdd,
@@ -81,9 +93,14 @@ export default class RequirementSelectors extends React.Component {
     } = this.props;
 
     return (
-      <div className={cx('req-container')}>
-        
-        <p className={cx('req-title')}>Filters:</p>
+      <div className={cx('req-container') + " " + cy('filter-container')}>
+
+        <div className={cy('header-container')}>
+          <p className={cx('req-title') + " " + cy('filter-title')}>Filter Candidates</p>
+          <div className={cy('filter-state') + ' pull-right'}>
+            { this.isFilters(filters) ? (<FlatButton label="clear filters" onClick={clearFilters} primary={true} />) : (null)}
+          </div>
+        </div>
 
         <div className={cx('req-btns') +" col-md-3"}>
           <MulitselectPopover
@@ -91,8 +108,18 @@ export default class RequirementSelectors extends React.Component {
             selected={eduRequirements}
             buttonText='Edu Requirements'
             onToggleSelect={onToggleEduReqSelect}
-            handleSet={this.changeFilter.bind(this)}
+            handleSet={this.changeEduFilter.bind(this)}
           />
+          {filters.school && filters.school.length ? (
+            <ul className={cy('enabled-filters', 'list')}>
+              {filters.school.map((f,i) => (
+                <span>
+                  <li className={cy('enabled-filter-item')} key={f + i}>{f}</li>
+                  <Divider/>
+                </span>
+              ))}
+            </ul>
+          ) : (null)}
         </div>
 
         <div className={cx('req-btns') +' col-md-3'}>
@@ -120,6 +147,16 @@ export default class RequirementSelectors extends React.Component {
             <FlatButton className='pull-right' label="set" onClick={this.skillSet.bind(this)} primary={true} />
             <FlatButton className='pull-right' label="close" onClick={() => {this.closePopover('skill')}} primary={true} />
           </Popover>
+          {filters.skill && filters.skill.length > 0 ? (
+            <ul className={cy('enabled-filters', 'list')}>
+              {filters.skill.map((f,i) => (
+                <span>
+                  <li className={cy('enabled-filter-item')} key={f.type + i}>Min. {f.lengthOfUse} yrs in {f.type} with at least '{['Learning', 'Intermediate', 'Competent', 'Expert'][f.proficiency]}' proficiency</li>
+                  <Divider/>
+                </span>
+              ))}
+            </ul>
+          ) : (null)}
         </div>
 
 
@@ -140,6 +177,17 @@ export default class RequirementSelectors extends React.Component {
             <FlatButton className='pull-right' label="set" onClick={() => {this.closePopover('location')}} primary={true} />
             <FlatButton className='pull-right' label="close" onClick={() => {this.closePopover('location')}} primary={true} />
           </Popover>
+          {filters.zip ? (
+            <div className={cx('enabled-filters')}>{address.range} mile radius of {address.zip} </div>
+          ) : (null)}
+        </div>
+
+        <div className={cx('req-btns') +" col-md-3"}>
+          <RaisedButton
+            labelStyle={{fontSize: '10px', paddingLeft: '9px', paddingRight: '9px'}}
+            onClick={(e) => {this.openMultiSelect('score', e)}}
+            label='Role Score'
+          />
         </div>
       </div>
     )

@@ -29,12 +29,20 @@ export function me(req, res) {
  * Get
  */
 export function get(req, res) {
-  var uid = req.params.id
-
-  Skill.find({"profile_id": mongoose.Types.ObjectId(uid)}).exec((err, skills) => {
+  var uid = JSON.parse(req.params.id)
+  let request;
+  if (uid.indexOf(']')) {
+    request = {"_id": {
+      '$in': uid
+    }}
+  } else {
+    request = {"profile_id": mongoose.Types.ObjectId(uid)}
+  }
+  Skill.find(request).exec((err, skills) => {
     if (err) {
       return res.status(404).send('Something went wrong getting the skills data');
     }
+    console.log(skills)
     return res.status(200).json(skills);
   });
 }

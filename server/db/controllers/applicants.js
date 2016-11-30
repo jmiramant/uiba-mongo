@@ -79,10 +79,13 @@ export function list(req, res) {
                 return school.degree;
               });
               break;
-            case 'address': 
-              _prof.filterData[k] = _.filter(v, (obj) => { 
+            case 'address':
+              let addr = ''
+              const res = _.filter(v, (obj) => { 
                 return _prof._id.toString() === obj.profile_id.toString()
-              })[0].zip_code;
+              })[0];
+              if (res) addr = res.zip_code
+              _prof.filterData[k] = addr
               break;
           }
         });
