@@ -23,11 +23,11 @@ const getApplicants = (applicants, filters, address) => {
     filtered = _.uniq(_.flatten(resp));
   }
 
-  if (address.rangeZips.length > 0) {
+  if (filters.address && filters.address.rangeZips) {
     
     filtered = _.filter(filtered, (a) => { 
       if (a.filterData && a.filterData.address) {
-        address.rangeZips.indexOf(a.filterData.address) >= 0
+        filters.address.rangeZips.indexOf(a.filterData.address) >= 0
       } else {return false}
     });
     

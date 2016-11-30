@@ -136,11 +136,13 @@ class Profile extends React.Component {
             <Skills 
               skills={skills.skills}
               addVisible={skills.addShow}
-              errorMessage={messages.errorMessage}
-              toggleSkillAdd={skillActions.toggleSkillAdd}
               onEditSave={skillActions.updateSkill} 
               onSkillSave={skillActions.createSkill} 
+              skillChange={skillActions.skillChange}
+              skillsChange={skillActions.skillsChange}
+              errorMessage={messages.errorMessage}
               onSkillDelete={skillActions.deleteSkill} 
+              toggleSkillAdd={skillActions.toggleSkillAdd}
             />
           </div>
           

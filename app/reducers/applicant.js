@@ -162,18 +162,20 @@ const skillsFilter = (
     case types.CREATE_APPLICANT_FILTER_SKILL:
       return skillOrder([...state, action.skillData])
     case types.UPDATE_APPLICANT_FILTER_SKILL:
-      updatedSkill = state.slice()
-      updatedSkill[_.findIndex(state, function(j) { return j._id === action.data._id; })] = action.data
+      updatedSkill = [...state];
+      updatedSkill[_.findIndex(state, (j) => { return j.type === action.skillData.type; })] = action.skillData
       return skillOrder(updatedSkill)
     case types.CHANGE_APPLICANT_FILTER_SKILLS:
-      updatedSkill = [...state]
-      updatedSkill[_.findIndex(updatedSkill, {type: action.state.type})][action.state.field] = updatedSkill[_.findIndex(updatedSkill, {type: action.state.type})][action.state.field] = action.state.value
+      updatedSkill = [...state];
+      updatedSkill[_.findIndex(updatedSkill, {type: action.state.type})][action.state.field] = action.state.value
       return skillOrder(updatedSkill)
     case types.DELETE_APPLICANT_FILTER_SKILL:
-      const newState = state.slice();
-      return newState.filter( j => {
-        return j._id !== action.skillData.id;
-      })
+      const newState = [...state];
+      return skillOrder(newState.filter( j => {
+        return j.type !== action.skillData.type;
+      }));
+    case types.FETCH_APPLICANTS_FILTER_SKILLS_SUCCESS:
+      return action.res.data;
     case types.CREATE_APPLICANT_FILTER_SUCCESS:
       return [];
     case types.APPLICANT_FILTER_CLEAR:

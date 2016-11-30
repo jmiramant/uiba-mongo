@@ -67,6 +67,8 @@ class ApplicantFiltersController extends Component {
           filters={applicant.filters}
           skill={applicant.skillFilter}
           skills={applicant.skillsFilter}
+          skillChange={applicantActions.skillChange}
+          skillsChange={applicantActions.skillsChange}
           showSkillAdd={applicant.showSkillAdd}
           eduRequirements={applicant.educationFilter}
           onToggleEduReqSelect={applicantActions.toggleEduReqSelect}

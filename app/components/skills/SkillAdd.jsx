@@ -57,11 +57,13 @@ export default class SkillAdd extends React.Component {
     this.props.skillChange({
       field: field,
       value: value,
-      id: this.props.skill._id
+      id: this.props.skill._id,
+      type: this.props.skill.type
     });
   }
 
   handleExpand(next) {
+    
     if (this.props.skill.type !== next) {
       if(timeout) { clearTimeout(timeout); }
       timeout = setTimeout(() => {

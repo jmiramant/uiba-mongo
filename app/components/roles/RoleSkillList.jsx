@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as rolesActionCreators from 'actions/roles';
+import * as applicantActionCreators from 'actions/applicants';
 
 import SkillItem from 'components/skills/SkillItem';
 import SkillAdd from 'components/skills/SkillAdd';
@@ -66,6 +66,8 @@ class SkillList extends React.Component {
     let { skill,
             skills,
             addVisible,
+            skillChange,
+            skillsChange,
             actions,
             errorMessage,
           } = this.props;
@@ -90,7 +92,7 @@ class SkillList extends React.Component {
           return (<SkillItem 
                     key={skill.type + i} 
                     skill={skill} 
-                    skillChange={actions.skillsChange}
+                    skillChange={skillsChange}
                     handleDelete={this.handleDelete}
                     saveSkillEdit={this.handleEditSave} 
                   />);
@@ -119,7 +121,7 @@ class SkillList extends React.Component {
             <SkillAdd
               isEdit={false}
               skill={skill}
-              skillChange={actions.skillChange}
+              skillChange={skillChange}
               toggleEdit={this.toggleAddSkill.bind(this)} 
               addVisible={addVisible} 
               onSkillSave={this.handleSave} 
@@ -132,19 +134,4 @@ class SkillList extends React.Component {
   }
 };
 
-function mapStateToProps(state) {
-  return {
-    skill: state.role.skill
-  }
-}
-
-function mapDispatchToProps (dispatch) {
-  return {
-    actions: bindActionCreators(rolesActionCreators, dispatch)
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SkillList);
+export default SkillList

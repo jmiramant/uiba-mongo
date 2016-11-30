@@ -8,6 +8,12 @@
 
 .enabled-filter-item {
   margin: 10px 0;
+  padding: 0 10px;
+}
+
+.degree-item {
+  display: inline-block;
+  width: 50%;
 }
 
 .list {
@@ -30,4 +36,9 @@
   display: inline-block;
   width: 50%;
 }
+
+.filter-btn {
+  font-size: 10px;
+}
+
 
