@@ -19,7 +19,7 @@ const RoleSchema = new mongoose.Schema({
   range: {
     included: {type: Array},
     range: {type: Number},
-    zipCode: {type: Number}
+    zipCode: {type: String}
   }
 }, {timestamps: true});
 

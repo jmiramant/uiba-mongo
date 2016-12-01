@@ -84,7 +84,7 @@ export function list(req, res) {
               const res = _.filter(v, (obj) => { 
                 return _prof._id.toString() === obj.profile_id.toString()
               })[0];
-              if (res) addr = res.zip_code
+              if (res) addr = res.zip_code;
               _prof.filterData[k] = addr
               break;
           }

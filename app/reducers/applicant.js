@@ -75,7 +75,7 @@ const filters = (
   state = {
     school: [],
     skill: [],
-    address: '',
+    address: {}
   },
   action
 ) => {
@@ -85,7 +85,7 @@ const filters = (
     case types.APPLICANT_FILTER_CLEAR:
       return {};
     case types.FETCH_APPLICANTS_FILTER_SKILLS_SUCCESS:
-      return {...state, skill: action.res.data}
+      return {...state, ...{skill: action.res.data}}
     default:
       return state;
   }

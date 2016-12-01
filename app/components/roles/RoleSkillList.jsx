@@ -88,10 +88,10 @@ class SkillList extends React.Component {
 
     const renderItems = (
       <div>
-        {skills.map((skill, i) => {
+        {skills.map((_skill, i) => {
           return (<SkillItem 
-                    key={skill.type + i} 
-                    skill={skill} 
+                    key={_skill.type + i} 
+                    skill={_skill} 
                     skillChange={skillsChange}
                     handleDelete={this.handleDelete}
                     saveSkillEdit={this.handleEditSave} 

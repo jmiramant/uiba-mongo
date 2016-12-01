@@ -20,6 +20,8 @@ export default class RequirementSelectors extends React.Component {
     messages: PropTypes.object.isRequired,
     onEditSave: PropTypes.func.isRequired,
     onSkillSave: PropTypes.func.isRequired,
+    skillChange: PropTypes.func.isRequired,
+    skillsChange: PropTypes.func.isRequired,
     onSkillDelete: PropTypes.func.isRequired,
     toggleSkillAdd: PropTypes.func.isRequired,
     eduRequirements: PropTypes.func.isRequired,
@@ -75,6 +77,8 @@ export default class RequirementSelectors extends React.Component {
       onEditSave,
       onSkillSave,
       onSkillDelete,
+      skillChange,
+      skillsChange,
       toggleSkillAdd,
       eduRequirements,
       onToggleEduReqSelect,
@@ -113,10 +117,13 @@ export default class RequirementSelectors extends React.Component {
             style={{width: '600px', minHeight: '210px'}}
           >
             <RoleSkills 
+              skill={roles.skill}
               skills={roles.skills}
               addVisible={roles.showSkillAdd}
               errorMessage={messages.errorMessage}
               toggleSkillAdd={toggleSkillAdd}
+              skillChange={skillChange}
+              skillsChange={skillsChange}
               onEditSave={onEditSave} 
               onSkillSave={onSkillSave} 
               onSkillDelete={onSkillDelete} 

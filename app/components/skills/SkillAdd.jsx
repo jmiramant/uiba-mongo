@@ -54,12 +54,13 @@ export default class SkillAdd extends React.Component {
 
   changeSkillProps(field, value) {
     this.setState({validationErrors: {}})
-    this.props.skillChange({
+    const skillData = {
       field: field,
       value: value,
       id: this.props.skill._id,
-      type: this.props.skill.type
-    });
+    }
+    if (this.props.skill.type) skillData.type = this.props.skill.type
+    this.props.skillChange(skillData);
   }
 
   handleExpand(next) {

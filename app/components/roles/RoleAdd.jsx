@@ -152,6 +152,8 @@ class RoleAdd extends React.Component {
             onEditSave={actions.updateSkill} 
             onSkillSave={actions.createSkill} 
             onSkillDelete={actions.deleteSkill} 
+            skillChange={actions.skillChange} 
+            skillsChange={actions.skillsChange} 
           />
 
 

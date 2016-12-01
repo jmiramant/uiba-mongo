@@ -9,6 +9,7 @@
 .enabled-filter-item {
   margin: 10px 0;
   padding: 0 10px;
+  font-family: Roboto, sans-serif;
 }
 
 .degree-item {
@@ -41,4 +42,16 @@
   font-size: 10px;
 }
 
+.skill-filter {
+  background-color: #fff;
+  padding: 4px 10px;
+  border-radius: 2px;
+}
 
+.strong {
+  font-weight: 700;
+}
+
+.school-filter {
+  margin: 7px 0;
+}

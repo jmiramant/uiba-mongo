@@ -6,6 +6,7 @@ const ApplicantAddressFilter = state => state.address
 
 const getApplicants = (applicants, filters, address) => {
   let filtered = [...applicants];
+
   if (filters.school && filters.school.length > 0) {
     filtered = _.filter(filtered, (appl) => {
       return appl.filterData.school.some(r=> filters.school.indexOf(r) >= 0)
@@ -24,15 +25,15 @@ const getApplicants = (applicants, filters, address) => {
   }
 
   if (filters.address && filters.address.rangeZips) {
-    
-    filtered = _.filter(filtered, (a) => { 
+    const fitlerZips = filters.address.rangeZips.map((a)=> {return a.zip_code});
+    filtered = _.filter(filtered, (a) => {
       if (a.filterData && a.filterData.address) {
-        filters.address.rangeZips.indexOf(a.filterData.address) >= 0
+        fitlerZips.indexOf(a.filterData.address) >= 0
       } else {return false}
     });
     
   } 
-  
+
   return filtered
 }
 

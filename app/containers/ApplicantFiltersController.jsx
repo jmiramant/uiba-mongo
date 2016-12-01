@@ -23,11 +23,14 @@ class ApplicantFiltersController extends Component {
     const { role, applicantActions} = props;
     if (role.role._id && !this.state.role) {
 
-      let range = {}
-      if (role.role.range.range) {
+      let range = {};
+
+      if (role.role.range.included.length > 0) {
         range.range = role.role.range.range;
-        range.zip = role.role.range.zip;
+        range.zip = role.role.range.zipCode;
+        range.rangeZips = role.role.range.included
       }
+
       applicantActions.fetchFilterSkills(role.role.skills);
 
       applicantActions.filterChange({

@@ -1,13 +1,13 @@
 import React, { PropTypes } from 'react';
-
+import Chip from 'material-ui/Chip';
+import Divider from 'material-ui/Divider';
 import Popover from 'material-ui/Popover';
 import DuelSlider from 'components/DuelSlider';
 import FlatButton from 'material-ui/FlatButton';
 import RoleSkills from 'components/roles/RoleSkillList';
-import LocationFilterController from 'containers/LocationFilterController'
 import RaisedButton from 'material-ui/RaisedButton';
 import MulitselectPopover from 'components/MulitselectPopover';
-import Divider from 'material-ui/Divider';
+import LocationFilterController from 'containers/LocationFilterController'
 import classNames from 'classnames/bind';
 import roleStyles from 'css/components/role';
 import styles from 'css/components/applicantFilter';
@@ -127,14 +127,15 @@ export default class ApplicantFiler extends React.Component {
             handleSet={this.changeEduFilter.bind(this)}
           />
           {filters.school && filters.school.length ? (
-            <ul className={cy('enabled-filters', 'list')}>
+            <div className={cy('enabled-filters', 'list', 'school-filter')}>
               {filters.school.map((f,i) => (
-                <span className={cy('degree-item')} key={f+i}>
-                  <li className={cy('enabled-filter-item')}>{f}</li>
-                  <Divider/>
-                </span>
+                <Chip
+                  onRequestDelete={() => this.handleRequestDelete(f)}
+                  style={{backgroundColor: '#fff', margin: '3px', display: 'inline-flex'}}
+                  labelStyle={{fontSize: '11px'}}
+                >{f}</Chip>
               ))}
-            </ul>
+            </div>
           ) : (null)}
         </div>
 
@@ -171,7 +172,7 @@ export default class ApplicantFiler extends React.Component {
             <ul className={cy('enabled-filters', 'list')}>
               {filters.skill.map((f,i) => (
                 <span key={f.type + i}>
-                  <li className={cy('enabled-filter-item')} >Min. {f.lengthOfUse} yrs in {f.type} with at least '{['Learning', 'Intermediate', 'Competent', 'Expert'][f.proficiency - 1]}' proficiency</li>
+                  <li className={cy('enabled-filter-item', 'skill-filter')} >Min. <span className={cy('strong')}>{f.lengthOfUse} yrs</span> in <span className={cy('strong')}>{f.type}</span> with at least <span className={cy('strong')}>'{['Learning', 'Intermediate', 'Competent', 'Expert'][f.proficiency - 1]}'</span> proficiency</li>
                   <Divider/>
                 </span>
               ))}
@@ -199,7 +200,7 @@ export default class ApplicantFiler extends React.Component {
             <FlatButton className='pull-right' label="close" onClick={() => {this.closePopover('location')}} primary={true} />
           </Popover>
           {filters.address && filters.address.zip ? (
-            <div className={cy('enabled-filters', 'enabled-filter-item')}>Applicants {address.range} mile radius of {address.zip} </div>
+            <div className={cy('enabled-filters', 'enabled-filter-item', 'skill-filter')}>Applicants <span className={cy('strong')}>{filters.address.range}</span> mile radius of <span className={cy('strong')}>{filters.address.zip}</span></div>
           ) : (null)}
         </div>
 
