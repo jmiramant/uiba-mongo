@@ -4,6 +4,10 @@ import classNames from 'classnames/bind';
 import styles from 'css/components/scoreChip';
 const cx = classNames.bind(styles);
 
+ScoreChip.propTypes = {
+  score: PropTypes.string
+};
+
 export default class ScoreChip extends React.Component {
 
   constructor(props) {
@@ -31,6 +35,3 @@ export default class ScoreChip extends React.Component {
 
 };
 
-ScoreChip.propTypes = {
-  score: PropTypes.string
-};
