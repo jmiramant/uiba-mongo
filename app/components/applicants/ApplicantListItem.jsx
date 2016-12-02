@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import ReactDOM from 'react-dom';
-import ScoreChip from 'components/ScoreChip';
+import ScoreChip from '../ScoreChip';
 import FlatButton from 'material-ui/FlatButton';
 import {TableRow, TableRowColumn} from 'material-ui/Table';
 import moment from 'moment';
