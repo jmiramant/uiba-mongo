@@ -15,10 +15,9 @@ import confirmation from 'reducers/confirmation';
 import address from 'reducers/address';
 import role from 'reducers/role';
 import applicant from 'reducers/applicant';
+import score from 'reducers/score';
 import { routerReducer as routing } from 'react-router-redux';
 
-// Combine reducers with routeReducer which keeps track of
-// router state
 const rootReducer = combineReducers({
   user,
   topic,
@@ -36,7 +35,8 @@ const rootReducer = combineReducers({
   company,
   address,
   role,
-  applicant
+  applicant,
+  score,
 });
 
 export default rootReducer;

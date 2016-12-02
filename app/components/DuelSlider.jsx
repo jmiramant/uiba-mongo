@@ -28,6 +28,8 @@ class DuelSlider extends React.Component {
 
   render() {
     const {
+      min,
+      max,
       stages,
       dataSource,
       storeValue,
@@ -76,12 +78,10 @@ class DuelSlider extends React.Component {
         <div style={{height: '40px'}}>
           <ReactSlider 
             style={sliderStyle} 
-            min={0} 
-            max={10}
             step={1}
             minDistance={1}
+            defaultValue={[min, max]}
             onAfterChange={this.handleChange.bind(this)} 
-            defaultValue={[0, 10]} 
             withBars
           />
           {labelItems}

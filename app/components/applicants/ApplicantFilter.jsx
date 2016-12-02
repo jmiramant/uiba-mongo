@@ -2,7 +2,8 @@ import React, { PropTypes } from 'react';
 import Chip from 'material-ui/Chip';
 import Divider from 'material-ui/Divider';
 import Popover from 'material-ui/Popover';
-import DuelSlider from 'components/DuelSlider';
+import ScoreSlider from 'components/ScoreSlider';
+// import DuelSlider from 'components/DuelSlider';
 import FlatButton from 'material-ui/FlatButton';
 import RoleSkills from 'components/roles/RoleSkillList';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -52,6 +53,7 @@ export default class ApplicantFiler extends React.Component {
   
   skillSet() {
     this.setState({skill: { open: false, anchorEl: null }})
+    this.props.fetchScores({skill: this.props.skills});
     this.props.filterChange({skill: this.props.skills});
   }
 
@@ -78,7 +80,7 @@ export default class ApplicantFiler extends React.Component {
   };
 
   isFilters(f) {
-    if ( (Object.keys(f).length >= 1) && ( (f.school && f.school.length > 0) || (f.skill && f.skill.length > 0) || ( f.address && (Object.keys(f.address).length > 0 || f.address.length > 0)))) {
+    if ( (Object.keys(f).length >= 1) && ( (f.school && f.school.length > 0) || ((f.score && f.score.min >=0) || (f.score && f.score.max)) || (f.skill && f.skill.length > 0) || ( f.address && (Object.keys(f.address).length > 0 || f.address.length > 0)))) {
       return true;
     } else {
       return false;
@@ -97,6 +99,7 @@ export default class ApplicantFiler extends React.Component {
       onEditSave,
       skillChange,
       onSkillSave,
+      filterChange,
       skillsChange,
       clearFilters,
       showSkillAdd,
@@ -204,24 +207,12 @@ export default class ApplicantFiler extends React.Component {
           ) : (null)}
         </div>
 
-        <div className={cx('req-btns') +" col-md-3"}>
-          <RaisedButton
-            style={{width: '100%'}}
-            labelStyle={{fontSize: '10px', paddingLeft: '9px', paddingRight: '9px'}}
-            onClick={(e) => {this.openMultiSelect('score', e)}}
-            label='Role Score'
-          />
-          <Popover
-            open={this.state.score.open}
-            anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-            targetOrigin={{horizontal: 'left', vertical: 'bottom'}}
-            anchorEl={this.state.score.anchorEl}
-            style={{height: '200px', width: '375px'}}
-          >
-            <FlatButton className='pull-right' label="set" onClick={() => {this.closePopover('score')}} primary={true} />
-            <FlatButton className='pull-right' label="close" onClick={() => {this.closePopover('score')}} primary={true} />
-          </Popover>
-        </div>
+        <ScoreSlider 
+          role={role}
+          onSet={filterChange}
+          scoreFilter={filters.score}
+        />
+
       </div>
     )
   }

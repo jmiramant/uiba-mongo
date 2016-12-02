@@ -1,10 +1,9 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
-
 import ReactDOM from 'react-dom';
-import {TableRow, TableRowColumn} from 'material-ui/Table';
+import ScoreChip from 'components/ScoreChip';
 import FlatButton from 'material-ui/FlatButton';
-
+import {TableRow, TableRowColumn} from 'material-ui/Table';
 import moment from 'moment';
 import classNames from 'classnames/bind';
 import styles from 'css/components/applicantList';
@@ -15,6 +14,7 @@ export default class ApplicantListItem extends React.Component {
   static propTypes = {
     applicant: PropTypes.object.isRequired, 
     company: PropTypes.object.isRequired,
+    score: PropTypes.string
   }
 
   constructor(props) {
@@ -27,6 +27,7 @@ export default class ApplicantListItem extends React.Component {
 
   render () {
     const { 
+      score,
       company,
       applicant,
       handleArchive
@@ -37,7 +38,7 @@ export default class ApplicantListItem extends React.Component {
         <TableRowColumn>{applicant.firstName}</TableRowColumn>
         <TableRowColumn>{applicant.lastName}</TableRowColumn>
         <TableRowColumn>{moment(new Date(applicant.updatedAt)).format('MMM DD, YYYY')}</TableRowColumn>
-        <TableRowColumn>{Math.round(Math.random() * 100)}</TableRowColumn>
+        <TableRowColumn><ScoreChip score={score} /></TableRowColumn>
         <TableRowColumn>
           <Link to={'/company-admin/applicant/' + applicant._id }>
             <FlatButton label="View Applicant" primary={true} />

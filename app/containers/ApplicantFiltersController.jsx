@@ -14,35 +14,6 @@ class ApplicantFiltersController extends Component {
   constructor(props) {
     super(props);
   }
-  
-  state = {
-    role: undefined
-  }
-
-  componentDidUpdate(props) {
-    const { role, applicantActions} = props;
-    if (role.role._id && !this.state.role) {
-
-      let range = {};
-
-      if (role.role.range.included.length > 0) {
-        range.range = role.role.range.range;
-        range.zip = role.role.range.zipCode;
-        range.rangeZips = role.role.range.included
-      }
-
-      applicantActions.fetchFilterSkills(role.role.skills);
-
-      applicantActions.filterChange({
-        school: role.role.degreeRequirements,
-        skill: role.role.skills,
-        address: range
-      });
-
-      this.setState({role: role.role._id});
-    }
-
-  }
 
   clearFilters() {
     this.props.addressActions.clearRangeAddress()
@@ -55,21 +26,23 @@ class ApplicantFiltersController extends Component {
       address,
       messages,
       applicant,
+      fetchScores,
       roleActions,
       applicantLength,
       applicantActions,
     } = this.props;
-    
+
     return (
       <div>
         <ApplicantFilters
           role={role}
           address={address}
           messages={messages}
-          clearFilters={this.clearFilters.bind(this)}
+          fetchScores={fetchScores}
           filters={applicant.filters}
           skill={applicant.skillFilter}
           skills={applicant.skillsFilter}
+          clearFilters={this.clearFilters.bind(this)}
           skillChange={applicantActions.skillChange}
           skillsChange={applicantActions.skillsChange}
           showSkillAdd={applicant.showSkillAdd}

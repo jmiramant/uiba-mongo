@@ -2,6 +2,7 @@ import mongoose, {
   Schema
 } from 'mongoose';
 import _ from 'lodash';
+import request from 'request';
 import Role from '../models/role';
 import Profile from '../models/profile';
 import Address from '../models/address';
@@ -15,6 +16,10 @@ export function list(req, res) {
 
     const roleOids = role.applicants.map( (applicantId) => {
       return mongoose.Types.ObjectId(applicantId)
+    })
+
+    const roleIds = role.applicants.map( (applicantId) => {
+      return applicantId
     })
 
     const containsId = {
@@ -64,31 +69,25 @@ export function list(req, res) {
 
       _.forEach(resp, (prof) => {
         const _prof = Object.assign({ filterData: {} }, prof._doc);
-        _.forEach(results, (v, k) => {
-          switch (k) {
-            case 'skill':
-              _prof.filterData[k] = _.filter(v, (obj) => { 
-                return _prof._id.toString() === obj.profile_id.toString()
-              });
-              break;
-            case 'school': 
-              const f = _.filter(v, (obj) => { 
-                return _prof._id.toString() === obj.profile_id.toString()
-              })
-              _prof.filterData[k] = _.map(f, (school) => {
-                return school.degree;
-              });
-              break;
-            case 'address':
-              let addr = ''
-              const res = _.filter(v, (obj) => { 
-                return _prof._id.toString() === obj.profile_id.toString()
-              })[0];
-              if (res) addr = res.zip_code;
-              _prof.filterData[k] = addr
-              break;
-          }
+        
+        _prof.filterData['skill'] = _.filter(results.skill, (obj) => { 
+          return _prof._id.toString() === obj.profile_id.toString()
         });
+
+        const f = _.filter(results.school, (obj) => { 
+          return _prof._id.toString() === obj.profile_id.toString()
+        })
+        _prof.filterData['school'] = _.map(f, (school) => {
+          return school.degree;
+        });
+
+        let addr = ''
+        const res = _.filter(results.address, (obj) => { 
+          return _prof._id.toString() === obj.profile_id.toString()
+        })[0];
+        if (res) addr = res.zip_code;
+        _prof.filterData['address'] = addr
+
         struct.push(_prof) 
       })
       return res.json(struct)

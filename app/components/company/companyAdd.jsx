@@ -56,7 +56,6 @@ export default class CompanyAdd extends React.Component {
   
   handleSubmit = e => {
     e.preventDefault();
-    console.log(!this.validate())
     if (!this.validate()) {
       this.props.onCompanySave(this.props.company);
     }

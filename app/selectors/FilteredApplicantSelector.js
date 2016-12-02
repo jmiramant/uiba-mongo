@@ -2,9 +2,9 @@ import { createSelector } from 'reselect';
 
 const ApplicantSelector = state => state.applicant.applicants
 const ApplicantFilterSelector = state => state.applicant.filters
-const ApplicantAddressFilter = state => state.address
+const ApplicantScoreFilter = state => state.score.scores
 
-const getApplicants = (applicants, filters, address) => {
+const getApplicants = (applicants, filters, scores) => {
   let filtered = [...applicants];
 
   if (filters.school && filters.school.length > 0) {
@@ -34,12 +34,20 @@ const getApplicants = (applicants, filters, address) => {
     
   } 
 
+  if (filters.score && filters.score.min && filters.score.max) {
+    const sIds = _.map(scores, s => {return s._id});
+    filtered = _.filter(filtered, (appl) => {
+      return sIds.indexOf(appl._id) >= 0
+    });
+  }
+
+
   return filtered
 }
 
 export default createSelector(
   ApplicantSelector,
   ApplicantFilterSelector,
-  ApplicantAddressFilter,
+  ApplicantScoreFilter,
   getApplicants
 );

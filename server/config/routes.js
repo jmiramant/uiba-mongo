@@ -26,6 +26,7 @@ const rolesController = controllers && controllers.roles;
 const applicantsController = controllers && controllers.applicants;
 const exportsController = controllers && controllers._exports;
 const tokensController = controllers && controllers.tokens;
+const scoresController = controllers && controllers.scores;
 
 
 export default (app) => {
@@ -150,6 +151,12 @@ export default (app) => {
     app.delete('/project/:id', projectsController.remove);
   } else {
     console.warn(unsupportedMessage('projects routes'));
+  }
+
+  if (scoresController) {
+    app.post('/scores', scoresController.post);
+  } else {
+    console.warn(unsupportedMessage('scores routes'));
   }
 
   if (recruitersController) {

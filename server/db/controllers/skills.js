@@ -42,7 +42,6 @@ export function get(req, res) {
     if (err) {
       return res.status(404).send('Something went wrong getting the skills data');
     }
-    console.log(skills)
     return res.status(200).json(skills);
   });
 }
