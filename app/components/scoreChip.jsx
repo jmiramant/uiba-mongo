@@ -11,7 +11,6 @@ export default class ScoreChip extends React.Component {
   }
 
   render() {
-
     const {
       score
     } = this.props;
