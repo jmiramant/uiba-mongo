@@ -98,3 +98,10 @@ export function clearFilters() {
     type: types.APPLICANT_FILTER_CLEAR,
   };
 }
+
+export function removeFilter(data) {
+  return {
+    type: types.APPLICANT_FILTER_REMOVE,
+    data: data
+  }
+}

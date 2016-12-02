@@ -84,6 +84,12 @@ const filters = (
       return {...state, ...action.data}
     case types.APPLICANT_FILTER_CLEAR:
       return {};
+    case types.APPLICANT_FILTER_REMOVE:
+      const resp = {...state};
+      if (action.data.type === 'school') {
+        resp[action.data.type] = _.filter(resp[action.data.type], (fi) => {return fi !== action.data.value })
+      }
+      return resp;
     case types.FETCH_APPLICANTS_FILTER_SKILLS_SUCCESS:
       return {...state, ...{skill: action.res.data}}
     default:

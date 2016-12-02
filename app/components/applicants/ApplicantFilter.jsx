@@ -86,6 +86,10 @@ export default class ApplicantFiler extends React.Component {
       return false;
     };
   }
+  
+  filterRemove = (filter) => (e) => {
+    this.props.removeFilter(filter)
+  }
 
   render () {
 
@@ -133,9 +137,10 @@ export default class ApplicantFiler extends React.Component {
             <div className={cy('enabled-filters', 'list', 'school-filter')}>
               {filters.school.map((f,i) => (
                 <Chip
-                  onRequestDelete={() => this.handleRequestDelete(f)}
+                  onRequestDelete={ this.filterRemove({type: 'school', value: f}) }
                   style={{backgroundColor: '#fff', margin: '3px', display: 'inline-flex'}}
                   labelStyle={{fontSize: '11px'}}
+                  key={f + i}
                 >{f}</Chip>
               ))}
             </div>

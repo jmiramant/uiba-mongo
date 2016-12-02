@@ -43,6 +43,7 @@ class ApplicantFiltersController extends Component {
           skill={applicant.skillFilter}
           skills={applicant.skillsFilter}
           clearFilters={this.clearFilters.bind(this)}
+          removeFilter={applicantActions.removeFilter}
           skillChange={applicantActions.skillChange}
           skillsChange={applicantActions.skillsChange}
           showSkillAdd={applicant.showSkillAdd}
