@@ -16,7 +16,7 @@ export const externalAPISecret = {
 }
 
 export const zipCodeAPI = {
-  key: process.env.zipCodeAPI_key
+  key: process.env.zipCodeAPI_key,
 }
 
 export const aws = {
