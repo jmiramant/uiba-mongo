@@ -7,7 +7,7 @@ export const linkedin = {
 };
 
 export const sendInBlue = {
-  clientToken: process.env.SENDBLUE_TOKEN;
+  clientToken: process.env.SENDBLUE_TOKEN
 }
 
 export const externalAPISecret = {
