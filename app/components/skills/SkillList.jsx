@@ -105,7 +105,7 @@ class SkillList extends React.Component {
 
           <div className={cx('cta')}>
             <InfoIcon className={cx('info-icon')}/>
-            <p className={cx('msg')}>This section is the core of your profile. Please include all knowledge, skills, & abilities developed during your work and non-work experience, whether you believe they are relevant or not. Your assessment takes everything into account.</p>
+            <p className={cx('msg')}>Important: Please include all knowledge, skills, and abilities developed during your work and non-work experience. The more information Uiba has to work with, the more accurate the assessment of your ability to excel in this role.</p>
           </div>
 
           { skills.length ? (

@@ -13,8 +13,9 @@ export default class CardHeader extends React.Component {
   
   static propTypes = {
     text: PropTypes.string.isRequired,
-    addVisible: PropTypes.bool.isRequired,
-    toggleAdd: PropTypes.func.isRequired,
+    addVisible: PropTypes.bool,
+    toggleAdd: PropTypes.func,
+    error: PropTypes.string
   }
 
   toggleAdd = () => {
@@ -23,25 +24,31 @@ export default class CardHeader extends React.Component {
   
   render () {
     const { 
-            text,
-            addVisible,
-          } = this.props;
+      text,
+      error,
+      toggleAdd,
+      addVisible,
+    } = this.props;
+
     return (
       <header className={cx('cardHeader--container')}>
         <h3 className={cx('text')}>{text}</h3>
-        
-        { addVisible ? (
-          <CloseIcon 
-            className={cx('icon') + ' pull-right'}
-            onClick={this.toggleAdd}
-          />
-        ): (
-          <AddIcon 
-            className={cx('icon') + ' pull-right'}
-            onClick={this.toggleAdd}
-          />
-        )}
-
+        {toggleAdd ? (
+          <span>
+            { addVisible ? (
+              <CloseIcon 
+                className={cx('icon') + ' pull-right'}
+                onClick={this.toggleAdd}
+              />
+            ): (
+              <AddIcon 
+                className={cx('icon') + ' pull-right'}
+                onClick={this.toggleAdd}
+              />
+            )}
+        </span>
+        ) : (null) }
+        { error ? (<div><div className={cx('error-container')}><div className={cx('error-text')}>{error}</div></div></div>) : (null) }
       </header>
     )
   }

@@ -48,10 +48,16 @@
 .cta {
   color: #7e7e7e;
   text-align: left;
-  margin: 0 10px 10px;
+  margin: 0 10px 30px;
+  padding: 5px 38px;
+  background-color: #E1F5FE;
+  border-radius: 2px;
+  border: 1px solid #E8E8E8;
+  margin-bottom: 30px;
 }
 
 .info-icon {
+  margin: 0 0 10px -17px;
   display: inline-block;
   width: 10% !important;
   height: 55px !important;
@@ -62,6 +68,7 @@
   display: inline-block;
   padding-left: 20px;
   width: 90%;
+  margin: 0;
 }
 
 .horizontal {

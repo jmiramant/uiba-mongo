@@ -13,3 +13,11 @@
 .jobList--container {
   @apply --profile--container;
 }
+
+.cta {
+  @apply --cta;
+}
+
+.cta-msg {
+  @apply --cta-msg;
+}
