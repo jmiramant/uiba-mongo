@@ -37,12 +37,12 @@ var commonLoaders = [
     }
   },
   { test: /\.less$/,
-    loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")
+    loader: ExtractTextPlugin.extract("isomorphic-style-loader", "css-loader!less-loader")
   },
   { test: /\.woff(2)?(\?v=[0-9].[0-9].[0-9])?$/, loader: "url-loader?mimetype=application/font-woff" },
   { test: /\.(ttf|eot)(\?v=[0-9].[0-9].[0-9])?$/, loader: "file-loader?name=[name].[ext]" },
   { test: /\.css$/,
-    loader: ExtractTextPlugin.extract('style-loader', 'css-loader?module!postcss-loader')
+    loader: ExtractTextPlugin.extract('isomorphic-style-loader', 'css-loader?module!postcss-loader')
   }
 ];
 
