@@ -84,8 +84,7 @@ class Profile extends React.Component {
 
   handleApply () {
     if (!this.isValidated()) {
-      // this.props.applyActions.sumbitApplication(this.props.profile.profile)
-    } else {
+      this.props.applyActions.sumbitApplication(this.props.profile.profile)
     }
   }
 
