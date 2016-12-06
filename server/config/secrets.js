@@ -1,4 +1,4 @@
-export const sessionSecret = process.env.SESSION_SECRET;
+export const sessionSecret = process.env.SESSION_SECRET
 
 export const linkedin = {
   clientID: process.env.LINKEDIN_CLIENTID,
@@ -33,5 +33,6 @@ export default {
   externalAPISecret,
   linkedin,
   zipCodeAPI,
+  aws,
   arkhamApi
 };

@@ -92,6 +92,10 @@ class Profile extends React.Component {
   handleValidationErrors(errors) {
     this.setState({validationErrors: errors})
 
+    if (errors.position === 'name') {
+      this.props.messageActions.createMessage(errors.name);
+    }
+
     scroller.scrollTo(errors.position, {
       duration: 1000,
       smooth: true,
@@ -122,12 +126,14 @@ class Profile extends React.Component {
     
     const profPage = (
       <div>
-        <UserCard 
-          editMode={profile.edit}
-          profile={profile.profile} 
-          toggleEdit={profileActions.toggleProfileEdit}
-          onEditSave={profileActions.updateProfile} 
-        />
+        <Element name='name'>
+          <UserCard 
+            editMode={profile.edit}
+            profile={profile.profile} 
+            toggleEdit={profileActions.toggleProfileEdit}
+            onEditSave={profileActions.updateProfile}
+          />
+        </Element>
         <div className={cx('alert-container')}>
           <div className={cx('alert')}>Applicants with detailed profiles are 94% more likely to be interviewed.</div>
         </div>
