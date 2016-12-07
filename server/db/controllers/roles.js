@@ -75,19 +75,28 @@ export function list(req, res) {
 
 export function create(req, res) {
 
+  const zr = _.map(req.body.address.rangeZips, (z) => {return z['zip_code']})
+
+  let address = {}
+  if (req.body.address) {    
+    address = {
+      rangeZips: zr,
+      range: req.body.address.range,
+      zip: req.body.address.zip.toString()
+    }
+  }
+
+
   Roles.create({
     profile_id: mongoose.Types.ObjectId(req.user.profile_id),
     company_id: mongoose.Types.ObjectId(req.body.company_id),
     title: req.body.title,
     description: req.body.description,
-    degreeRequirements: req.body.degreeRequirements,
-    experienceMin: req.body.experienceMin,
-    experienceMax: req.body.experienceMax,
-    range: {
-      included: req.body.range.included,
-      range: req.body.range.range,
-      zipCode: req.body.range.zipCode
-    }
+    filter: {
+      school: req.body.degreeRequirements,
+      skill: [],
+      address: address
+    },
   }, function(err, role) {
     if (err) return handleError(res, err);
 
@@ -107,9 +116,7 @@ export function create(req, res) {
       async.parallel(skillCreates, (err, resp) => {
         if (err) return res.status(404).send('Something went wrong saving skills.')
 
-        role.skills = resp.map((s) => {
-          return s[0]._id
-        });
+        role.filter.skill = req.body.skills;
 
         role.save((err, _role) => {
           if (err) return handleError(res, err);

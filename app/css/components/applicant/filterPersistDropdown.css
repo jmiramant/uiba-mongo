@@ -1,0 +1,15 @@
+.filter-persist-container {
+  display: inline-block;
+  width: 50%;
+}
+
+.filter-btn {
+  font-size: 10px;
+}
+
+.name-entry {
+  background-color: #f5f5f5;
+  border-radius: 2px;
+  padding: 0 10px 10px;
+  margin-top: 10px;
+}

@@ -3,9 +3,9 @@ import Chip from 'material-ui/Chip';
 import Divider from 'material-ui/Divider';
 import Popover from 'material-ui/Popover';
 import ScoreSlider from 'components/ScoreSlider';
-// import DuelSlider from 'components/DuelSlider';
 import FlatButton from 'material-ui/FlatButton';
 import RoleSkills from 'components/roles/RoleSkillList';
+import FilterPersist from 'components/applicants/FilterPersistDropdown';
 import RaisedButton from 'material-ui/RaisedButton';
 import MulitselectPopover from 'components/MulitselectPopover';
 import LocationFilterController from 'containers/LocationFilterController'
@@ -20,12 +20,16 @@ export default class ApplicantFiler extends React.Component {
   static PropTypes =  {
     role: PropTypes.object.isRequired,
     address: PropTypes.object.isRequired,
-    filters: PropTypes.object.isRequired,
+    filters: PropTypes.array.isRequired,
     messages: PropTypes.object.isRequired,
+    setFilters: PropTypes.object.isRequired,
+    onSelectFilter: PropTypes.func.isRequired,
     onEditSave: PropTypes.func.isRequired,
     onSkillSave: PropTypes.func.isRequired,
+    onFilterSave: PropTypes.func.isRequired,
     filterChange: PropTypes.func.isRequired,
     onSkillDelete: PropTypes.func.isRequired,
+    onDeleteFilter: PropTypes.func.isRequired,
     toggleSkillAdd: PropTypes.func.isRequired,
     eduRequirements: PropTypes.func.isRequired,
     onToggleEduReqSelect: PropTypes.func.isRequired,
@@ -99,19 +103,27 @@ export default class ApplicantFiler extends React.Component {
       skills,
       address,
       filters,
+      setFilters,
       messages,
       onEditSave,
       skillChange,
       onSkillSave,
+      fetchFilters,
+      isApplicants,
       filterChange,
+      onFilterSave,
       skillsChange,
       clearFilters,
       showSkillAdd,
       onSkillDelete,
+      onDeleteFilter,
+      onSelectFilter,
       toggleSkillAdd,
       eduRequirements,
       onToggleEduReqSelect,
     } = this.props;
+
+    const isFilterSet = this.isFilters(setFilters);
 
     return (
       <div className={cx('req-container') + " " + cy('filter-container')}>
@@ -119,8 +131,24 @@ export default class ApplicantFiler extends React.Component {
         <div className={cy('header-container')}>
           <p className={cx('req-title') + " " + cy('filter-title')}>Filter Candidates</p>
           <div className={cy('filter-state') + ' pull-right'}>
-            <RaisedButton labelStyle={{fontSize: '11px'}} className={cy('filter-btn')} label="Save as Role Requirements" onClick={clearFilters} primary={true} />
-            { this.isFilters(filters) ? (<RaisedButton style={{margin: '0 10px'}} labelStyle={{fontSize: '11px'}} className={cy('filter-btn')} label="clear filters" onClick={clearFilters} primary={true} />) : (null)}
+            {role.role._id && isApplicants ? (
+              <FilterPersist
+                role={role.role}
+                defaultFilter={role.role.filter}
+                filters={filters}
+                isFilterSet={isFilterSet}
+                setFilters={setFilters}
+                fetchFilters={fetchFilters}
+                onDeleteFilter={onDeleteFilter}
+                onSelectFilter={onSelectFilter}
+                handleFilterSave={onFilterSave}
+              />
+            ) : (null)}
+            { isFilterSet ? (
+              <span>
+                <RaisedButton style={{margin: '0 10px'}} labelStyle={{fontSize: '11px'}} className={cy('filter-btn')} label="clear filters" onClick={clearFilters} primary={true} />
+              </span>
+            ) : (null)}
           </div>
         </div>
 
@@ -133,9 +161,9 @@ export default class ApplicantFiler extends React.Component {
             onToggleSelect={onToggleEduReqSelect}
             handleSet={this.changeEduFilter.bind(this)}
           />
-          {filters.school && filters.school.length ? (
+          {setFilters.school && setFilters.school.length ? (
             <div className={cy('enabled-filters', 'list', 'school-filter')}>
-              {filters.school.map((f,i) => (
+              {setFilters.school.map((f,i) => (
                 <Chip
                   onRequestDelete={ this.filterRemove({type: 'school', value: f}) }
                   style={{backgroundColor: '#fff', margin: '3px', display: 'inline-flex'}}
@@ -155,6 +183,8 @@ export default class ApplicantFiler extends React.Component {
             label='Skill Requirements'
           />
           <Popover
+            useLayerForClickAway={false}
+            onRequestClose={() => {this.closePopover('skill')}}
             open={this.state.skill.open}
             anchorOrigin={{horizontal: 'left', vertical: 'top'}}
             targetOrigin={{horizontal: 'left', vertical: 'bottom'}}
@@ -176,9 +206,9 @@ export default class ApplicantFiler extends React.Component {
             <FlatButton className='pull-right' label="set" onClick={this.skillSet.bind(this)} primary={true} />
             <FlatButton className='pull-right' label="close" onClick={() => {this.closePopover('skill')}} primary={true} />
           </Popover>
-          {filters.skill && filters.skill.length > 0 ? (
+          {setFilters.skill && setFilters.skill.length > 0 ? (
             <ul className={cy('enabled-filters', 'list')}>
-              {filters.skill.map((f,i) => (
+              {setFilters.skill.map((f,i) => (
                 <span key={f.type + i}>
                   <li className={cy('enabled-filter-item', 'skill-filter')} >Min. <span className={cy('strong')}>{f.lengthOfUse} yrs</span> in <span className={cy('strong')}>{f.type}</span> with at least <span className={cy('strong')}>'{['Learning', 'Intermediate', 'Competent', 'Expert'][f.proficiency - 1]}'</span> proficiency</li>
                   <Divider/>
@@ -197,6 +227,8 @@ export default class ApplicantFiler extends React.Component {
             label='Location Range'
           />
           <Popover
+            useLayerForClickAway={false}
+            onRequestClose={() => {this.closePopover('location')}}
             open={this.state.location.open}
             anchorOrigin={{horizontal: 'left', vertical: 'top'}}
             targetOrigin={{horizontal: 'left', vertical: 'bottom'}}
@@ -207,15 +239,15 @@ export default class ApplicantFiler extends React.Component {
             <FlatButton className='pull-right' label="set" onClick={this.addressSet.bind(this)} primary={true} />
             <FlatButton className='pull-right' label="close" onClick={() => {this.closePopover('location')}} primary={true} />
           </Popover>
-          {filters.address && filters.address.zip ? (
-            <div className={cy('enabled-filters', 'enabled-filter-item', 'skill-filter')}>Applicants <span className={cy('strong')}>{filters.address.range}</span> mile radius of <span className={cy('strong')}>{filters.address.zip}</span></div>
+          {setFilters.address && setFilters.address.zip ? (
+            <div className={cy('enabled-filters', 'enabled-filter-item', 'skill-filter')}>Applicants <span className={cy('strong')}>{setFilters.address.range}</span> mile radius of <span className={cy('strong')}>{setFilters.address.zip}</span></div>
           ) : (null)}
         </div>
 
         <ScoreSlider 
           role={role}
           onSet={filterChange}
-          scoreFilter={filters.score}
+          scoreFilter={setFilters.score}
         />
 
       </div>

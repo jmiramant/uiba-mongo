@@ -105,3 +105,10 @@ export function removeFilter(data) {
     data: data
   }
 }
+
+export function updateFilters(filters) {
+  return {
+    type: types.UPDATE_APPLICANT_FILTERS,
+    filters
+  };
+}

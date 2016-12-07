@@ -16,6 +16,7 @@ import address from 'reducers/address';
 import role from 'reducers/role';
 import applicant from 'reducers/applicant';
 import score from 'reducers/score';
+import filter from 'reducers/filter';
 import { routerReducer as routing } from 'react-router-redux';
 
 const rootReducer = combineReducers({
@@ -37,6 +38,7 @@ const rootReducer = combineReducers({
   role,
   applicant,
   score,
+  filter,
 });
 
 export default rootReducer;

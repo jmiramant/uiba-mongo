@@ -5,6 +5,7 @@ import ApplicantFilters from 'components/applicants/ApplicantFilter';
 import * as roleActionCreator from 'actions/roles';
 import * as addressActionCreator from 'actions/address'
 import * as applicantActionCreator from 'actions/applicants'
+import * as filterActionCreator from 'actions/filters'
 import classNames from 'classnames/bind';
 import styles from 'css/common/filtering';
 const cx = classNames.bind(styles);
@@ -23,11 +24,13 @@ class ApplicantFiltersController extends Component {
   render() {
     const {
       role,
+      filter,
       address,
       messages,
       applicant,
       fetchScores,
       roleActions,
+      filterActions,
       applicantLength,
       applicantActions,
     } = this.props;
@@ -39,7 +42,9 @@ class ApplicantFiltersController extends Component {
           address={address}
           messages={messages}
           fetchScores={fetchScores}
-          filters={applicant.filters}
+          filters={filter.filters}
+          isApplicants={applicant.applicants.length > 0}
+          setFilters={applicant.filters}
           skill={applicant.skillFilter}
           skills={applicant.skillsFilter}
           clearFilters={this.clearFilters.bind(this)}
@@ -48,6 +53,10 @@ class ApplicantFiltersController extends Component {
           skillsChange={applicantActions.skillsChange}
           showSkillAdd={applicant.showSkillAdd}
           eduRequirements={applicant.educationFilter}
+          onFilterSave={filterActions.createFilter}
+          fetchFilters={filterActions.fetchFilters}
+          onDeleteFilter={filterActions.deleteFilter}
+          onSelectFilter={applicantActions.updateFilters}
           onToggleEduReqSelect={applicantActions.toggleEduReqSelect}
           filterChange={applicantActions.filterChange}
           toggleSkillAdd={applicantActions.toggleRoleSkillsAdd}
@@ -67,6 +76,7 @@ function mapStateToProps(state) {
     address: state.address,
     messages: state.message,
     applicant: state.applicant,
+    filter: state.filter
   };
 }
 
@@ -75,6 +85,7 @@ function mapDispatchToProps (dispatch) {
     roleActions: bindActionCreators(roleActionCreator, dispatch),
     applicantActions: bindActionCreators(applicantActionCreator, dispatch),
     addressActions: bindActionCreators(addressActionCreator, dispatch),
+    filterActions: bindActionCreators(filterActionCreator, dispatch),
   }
 }
 

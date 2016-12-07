@@ -73,9 +73,11 @@ const applicants = (
 
 const filters = (
   state = {
+    name: undefined,
     school: [],
     skill: [],
-    address: {}
+    address: {},
+    score: {min: undefined, max: undefined}
   },
   action
 ) => {
@@ -90,8 +92,11 @@ const filters = (
         resp[action.data.type] = _.filter(resp[action.data.type], (fi) => {return fi !== action.data.value })
       }
       return resp;
-    case types.FETCH_APPLICANTS_FILTER_SKILLS_SUCCESS:
-      return {...state, ...{skill: action.res.data}}
+    case types.UPDATE_APPLICANT_FILTERS:
+      return {
+        ...state,
+        ...action.filters
+      };
     default:
       return state;
   }
@@ -197,7 +202,7 @@ const educationFilter = (
 ) => {
   switch (action.type) {
     case types.GET_ROLE_SUCCESS:
-      return action.res.data.degreeRequirements
+      return action.res.data.filter.school
     case types.TOGGLE_APPLICANT_EDU_FILTER:
       const requirments = [...state];
       const dupIndex = requirments.indexOf(action.data);

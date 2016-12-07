@@ -5,22 +5,22 @@ const degreeEnum = ['High School', 'Associate', 'Bachelor','Master','MBA','JD','
 
 const RoleSchema = new mongoose.Schema({
   company_id: {type: Schema.Types.ObjectId, ref: 'Company', required: true },
-  address_id: {type: Schema.Types.ObjectId, ref: 'Address' },
+  profile_id: {type: Schema.Types.ObjectId, ref: 'Profile' },
   title: { type: String, default: '', required: true},
   description: { type: String, default: '', required: true },
   applicantCode: { type: String },
-  degreeRequirements: [{ type: String, enum: degreeEnum }],
-  experienceMin: { type: Number },
-  experienceMax: {type: Number },
+  filter: {
+    school: [{ type: String, enum: degreeEnum }],
+    skill: [{id: {type: Schema.Types.ObjectId, ref: 'Skill'},
+            type: { type: String},
+            proficiency: { type: Number},
+            lengthOfUse: { type: Number }
+    }],
+    address: {}
+  },
   appliedCount: { type: Number, default: 0},
   applicants: [{type: Schema.Types.ObjectId, ref: 'Profile'}],
-  skills: [{type: Schema.Types.ObjectId, ref: 'Skill'}],
   isArchived: {type: Boolean, default: false},
-  range: {
-    included: {type: Array},
-    range: {type: Number},
-    zipCode: {type: String}
-  }
 }, {timestamps: true});
 
 function setApplicantCode(next) {

@@ -27,6 +27,7 @@ const applicantsController = controllers && controllers.applicants;
 const exportsController = controllers && controllers._exports;
 const tokensController = controllers && controllers.tokens;
 const scoresController = controllers && controllers.scores;
+const filtersController = controllers && controllers.filters;
 
 
 export default (app) => {
@@ -86,7 +87,7 @@ export default (app) => {
     console.warn(unsupportedMessage('companies routes'));
   }
 
-  if (schoolNamesController) {
+  if (schoolsController) {
     app.get('/schools/me', schoolsController.me);
     app.get('/schools/:id', schoolsController.get);
     app.post('/schools', schoolsController.create);
@@ -131,6 +132,14 @@ export default (app) => {
     app.get('/applicants/:id', applicantsController.list);
   } else {
     console.warn(unsupportedMessage('applicants routes'));
+  }
+
+  if (filtersController) {
+    app.get('/filters/:id', filtersController.get);
+    app.post('/filters', filtersController.create);
+    app.delete('/filter/:id', filtersController.remove);
+  } else {
+    console.warn(unsupportedMessage('filters routes'));
   }
 
   if (interestsController) {

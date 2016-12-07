@@ -121,7 +121,7 @@ const eduRequirements = (
 ) => {
   switch (action.type) {
     case types.GET_ROLE_SUCCESS:
-      return action.res.data.degreeRequirements
+      return action.res.data.filter.school
     case types.TOGGLE_ROLE_EDU_REQUIREMENT:
       const requirments = [...state];
       const dupIndex = requirments.indexOf(action.data);

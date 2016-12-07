@@ -15,6 +15,7 @@ import addresses from './address';
 import roles from './roles';
 import admin from './admin';
 import applicants from './applicants';
+import filters from './filters';
 import scores from './scores';
 
 export {
@@ -34,6 +35,7 @@ export {
   admin,
   roles,
   applicants,
+  filters,
   scores
 };
 
@@ -55,5 +57,6 @@ export default {
   admin,
   roles,
   applicants,
+  filters,
   scores
 };
