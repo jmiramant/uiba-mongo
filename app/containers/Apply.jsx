@@ -157,6 +157,7 @@ class Apply extends Component {
                   >
                     Sign Up
                   </p>
+
                 </div>
 
               <div className={cx('email-container')}>
