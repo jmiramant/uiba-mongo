@@ -54,6 +54,9 @@ export function create(req, res) {
 
     if (err) return handleError(res, err);
 
+    let end = undefined;
+    if (req.body.endDate) end = new Date(req.body.endDate);
+
     Job.create({
       profile_id: req.user.profile_id,
       company_id: company._id,
@@ -62,7 +65,7 @@ export function create(req, res) {
       title: req.body.title,
       current: req.body.current,
       startDate: new Date(req.body.startDate),
-      endDate: new Date(req.body.endDate),
+      endDate: end,
     }, function (err, job) {
 
       if (err) return handleError(res, err);

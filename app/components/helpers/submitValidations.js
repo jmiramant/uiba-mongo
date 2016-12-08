@@ -21,10 +21,10 @@ export function validateSubmitHelper (props, errorStore) {
     errors.position = 'skill';
   }
   
-  // if (props.jobs.jobs.length < 1) {
-  //   errors.jobs = 'Please complete your employment history.';
-  //   errors.position = 'job';
-  // }
+  if (props.jobs.jobs.length < 1) {
+    errors.jobs = 'Please complete your employment history.';
+    errors.position = 'job';
+  }
 
   if (!props.profile.profile.firstName.length === 0 || !props.profile.profile.lastName.length === 0) {
     errors.name = 'Please update your name.';
