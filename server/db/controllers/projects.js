@@ -46,8 +46,8 @@ export function get(req, res) {
 
 export function create(req, res) {
   
-  let end = '';
-  if (req.body.endDate) end = new Date(req.body.endDate)
+  let end = undefined;
+  if (req.body.endDate) end = new Date(req.body.endDate);
 
   Project.create({
     profile_id: req.user.profile_id,
@@ -56,7 +56,7 @@ export function create(req, res) {
     description: req.body.description,
     current: req.body.current,
     startDate: new Date(req.body.startDate),
-    endDate: new Date(req.body.endDate),
+    endDate: end,
   }, function (err, project) {
 
     if (err) return handleError(res, err);
