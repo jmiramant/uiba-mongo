@@ -52,7 +52,7 @@ export function create(req, res) {
     name: req.body.company
   }, function (err, company) {
 
-    if (err) return handleError(err);
+    if (err) return handleError(res, err);
 
     Job.create({
       profile_id: req.user.profile_id,
@@ -65,7 +65,7 @@ export function create(req, res) {
       endDate: new Date(req.body.endDate),
     }, function (err, job) {
 
-      if (err) return handleError(err);
+      if (err) return handleError(res, err);
     
       return res.json(job);
 
@@ -101,7 +101,7 @@ export function update(req, res) {
           job.companyName = company.name;
           job.company_id = company.company_id;
           job.save( err => {
-            if (err) return handleError(err);
+            if (err) return handleError(res, err);
             return res.json(job);
           });
       
@@ -113,7 +113,7 @@ export function update(req, res) {
             job.companyName = req.body.companyName;
             job.company_id = req.body.company_id;
             job.save( err => {
-              if (err) return handleError(err);
+              if (err) return handleError(res, err);
               return res.json(job);
             });
           })
@@ -123,7 +123,7 @@ export function update(req, res) {
     } else {
      
      job.save( err => {
-        if (err) return handleError(err);
+        if (err) return handleError(res, err);
         return res.json(job);
       });
 
