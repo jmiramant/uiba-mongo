@@ -101,8 +101,6 @@ class SkillList extends React.Component {
       </div>
     )
 
-console.log(inputFocus)
-
     return (
       <div className={cx('skillList--bootstrap-container')}>
         <div className={cx('skillList--container')}>

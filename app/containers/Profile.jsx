@@ -83,6 +83,7 @@ class Profile extends React.Component {
   }
 
   handleApply () {
+    this.props.messageActions.dismissMessage();
     if (!this.isValidated()) {
       this.props.applyActions.sumbitApplication(this.props.profile.profile)
     }
@@ -91,8 +92,13 @@ class Profile extends React.Component {
   handleValidationErrors(errors) {
     this.setState({validationErrors: errors})
 
-    if (errors.position === 'name') {
-      this.props.messageActions.createMessage(errors.name);
+    if (errors.position === 'userCard') {
+      let msg;
+      if (errors.name && errors.address) msg = errors.name + " & " + errors.address
+      if (errors.name) msg = errors.name
+      if (errors.address) msg = errors.address
+
+      this.props.messageActions.createMessage(msg);
     }
 
     scroller.scrollTo(errors.position, {
@@ -125,7 +131,7 @@ class Profile extends React.Component {
     
     const profPage = (
       <div>
-        <Element name='name'>
+        <Element name='userCard'>
           <UserCard 
             editMode={profile.edit}
             profile={profile.profile} 
@@ -276,7 +282,8 @@ function mapStateToProps(state) {
     languages: state.language,
     projects: state.project,
     messages: state.message,
-    interests: state.interest
+    interests: state.interest,
+    address: state.address
   };
 }
 

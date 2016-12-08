@@ -28,7 +28,12 @@ export function validateSubmitHelper (props, errorStore) {
 
   if (!props.profile.profile.firstName.length === 0 || !props.profile.profile.lastName.length === 0) {
     errors.name = 'Please update your name.';
-    errors.position = 'name';
+    errors.position = 'userCard';
+  }
+
+  if (!props.address.address || !props.address.address.zip_code) {
+    errors.address = 'Please enter a zip code.';
+    errors.position = 'userCard';
   }
   
   return {
