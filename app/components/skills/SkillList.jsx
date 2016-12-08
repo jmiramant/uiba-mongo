@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as skillsActionCreators from 'actions/skills';
 
+import SkillCloud from 'components/skills/skillCloud';
 import SkillItem from 'components/skills/SkillItem';
 import SkillAdd from 'components/skills/SkillAdd';
 import NullProfItem from 'components/ProfileNull';
@@ -67,6 +68,7 @@ class SkillList extends React.Component {
     let { skill,
             skills,
             addVisible,
+            inputFocus,
             actions,
             errorMessage,
           } = this.props;
@@ -99,6 +101,8 @@ class SkillList extends React.Component {
       </div>
     )
 
+console.log(inputFocus)
+
     return (
       <div className={cx('skillList--bootstrap-container')}>
         <div className={cx('skillList--container')}>
@@ -122,9 +126,13 @@ class SkillList extends React.Component {
             <ErrorMessage 
               errorText={errorMessage}
             />
+            <SkillCloud 
+              inputFocus={inputFocus}
+            />
             <SkillAdd
               isEdit={false}
               skill={skill}
+              onInputFocus={actions.handleInputFocus}
               skillChange={actions.skillChange}
               toggleEdit={this.toggleAddSkill.bind(this)} 
               addVisible={addVisible} 
@@ -140,7 +148,8 @@ class SkillList extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    skill: state.skill.skill
+    skill: state.skill.skill,
+    inputFocus: state.skill.inputFocus
   }
 }
 

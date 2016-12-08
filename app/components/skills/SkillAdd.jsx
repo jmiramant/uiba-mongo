@@ -28,11 +28,13 @@ export default class SkillAdd extends React.Component {
     skillChange: PropTypes.func.isRequired,
     toggleEdit: PropTypes.func.isRequired,
     addVisible: PropTypes.bool,
-    onSkillSave: PropTypes.func.isRequired
+    onSkillSave: PropTypes.func.isRequired,
+    onInputFocus: PropTypes.func
   }
 
   constructor(props) {
     super(props)
+    this.skillEl = undefined;
   }
 
   state = {
@@ -92,6 +94,15 @@ export default class SkillAdd extends React.Component {
     }
   }
 
+  onInputFocus() {
+    if (this.props.onInputFocus) this.props.onInputFocus(true);
+
+  }
+
+  onInputBlur() {
+    if (this.props.onInputFocus) this.props.onInputFocus(false);
+  }
+
   render () {
 
     const {
@@ -113,6 +124,8 @@ export default class SkillAdd extends React.Component {
           className={cx('skillAdd--form')}
         >
           <AutoComplete
+            onFocus={this.onInputFocus.bind(this)}
+            onBlur={this.onInputBlur.bind(this)}
             onKeyDown={this.disableEnter}
             hintText='Add one skill at a time.'
             searchText={skill.type}

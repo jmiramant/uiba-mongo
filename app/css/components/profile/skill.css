@@ -46,11 +46,11 @@
 }
 
 .cta {
-  color: #7e7e7e;
+  color: #4F4F4F;
   text-align: left;
   margin: 0 10px 30px;
   padding: 5px 38px;
-  background-color: #E1F5FE;
+  background-color: #B3E5FC;
   border-radius: 2px;
   border: 1px solid #E8E8E8;
   margin-bottom: 30px;
@@ -61,7 +61,7 @@
   display: inline-block;
   width: 10% !important;
   height: 55px !important;
-  color: #FFC107 !important;
+  color: #FDD835 !important;
 }
 
 .msg {

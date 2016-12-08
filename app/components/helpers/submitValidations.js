@@ -6,17 +6,17 @@ import _ from 'lodash';
 export function validateSubmitHelper (props, errorStore) {
   var errors = setValidationErrorObject(errorStore);
 
-  if (props.interests.interests.length <= 3) {
+  if (props.interests.interests.length < 3) {
     errors.interests = 'Please include at least 3 interests.';
     errors.position = 'interest';
   }
 
-  if (props.schools.schools.length <= 1) {
+  if (props.schools.schools.length < 1) {
     errors.schools = 'Please complete your education history.';
     errors.position = 'school';
   }
 
-  if (props.skills.skills.length <= 8) {
+  if (props.skills.skills.length < 8) {
     errors.skills = 'Please include at least 8 KSAs.';
     errors.position = 'skill';
   }

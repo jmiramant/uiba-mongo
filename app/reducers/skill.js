@@ -103,10 +103,23 @@ const addShow = (
   }
 };
 
+const inputFocus = (
+  state = false, 
+  action
+) => {
+  switch (action.type) {
+    case types.TOGGLE_SKILL_INPUT_FOCUS:
+      return action.data
+    default:
+      return state
+  }
+};
+
 const skillReducer = combineReducers({
   skill,
   skills,
   addShow,
+  inputFocus,
   isFetching
 });
 
