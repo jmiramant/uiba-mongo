@@ -18,4 +18,5 @@ pids
 !.elasticbeanstalk/*.global.yml
 
 newrelic_agent.log
+newrelic.js
 
