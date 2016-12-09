@@ -225,8 +225,6 @@ export default class ApplicantFiler extends React.Component {
             label='Location Range'
           />
           <Popover
-            useLayerForClickAway={false}
-            onRequestClose={() => {this.closePopover('location')}}
             open={this.state.location.open}
             anchorOrigin={{horizontal: 'left', vertical: 'top'}}
             targetOrigin={{horizontal: 'left', vertical: 'bottom'}}

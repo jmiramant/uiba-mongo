@@ -26,10 +26,9 @@
 .xray.cardHeader--container {
   background-color: #fff;
   color: #363636;
-  border-left: 2px solid var(--colorDarkBlue);
   border-bottom: 2px solid var(--colorDarkBlue);
-} 
+}
 
 .xray .text {
   background-color: #fff;
-} 
+}

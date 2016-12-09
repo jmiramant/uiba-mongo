@@ -12,7 +12,8 @@ class ScoreChip extends React.Component {
 
   render() {
     const {
-      score
+      score,
+      isFetching
     } = this.props;
 
     return (
@@ -20,9 +21,14 @@ class ScoreChip extends React.Component {
         { score ? (
           <span className={cx('score-text')}>{score}</span>
         ) : (
-          <LinearProgress 
-            style={{marginTop: '6px', paddingTop: '6px'}}
-          />
+          <span>
+            {isFetching ? (
+              <LinearProgress 
+                style={{marginTop: '6px', paddingTop: '6px'}}
+              />
+            ) : (<div style={{marginLeft: '-7px', color: '#666'}}>N/A</div>) }
+          </span>
+
         )}
       </div>
     );

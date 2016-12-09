@@ -14,7 +14,8 @@ export default class ApplicantListItem extends React.Component {
   static propTypes = {
     applicant: PropTypes.object.isRequired, 
     company: PropTypes.object.isRequired,
-    score: PropTypes.string
+    score: PropTypes.string,
+    isScoreFetching: PropTypes.bool,
   }
 
   constructor(props) {
@@ -30,7 +31,8 @@ export default class ApplicantListItem extends React.Component {
       score,
       company,
       applicant,
-      handleArchive
+      handleArchive,
+      isScoreFetching,
     } = this.props;
 
     return (
@@ -38,7 +40,7 @@ export default class ApplicantListItem extends React.Component {
         <TableRowColumn>{applicant.firstName}</TableRowColumn>
         <TableRowColumn>{applicant.lastName}</TableRowColumn>
         <TableRowColumn>{moment(new Date(applicant.updatedAt)).format('MMM DD, YYYY')}</TableRowColumn>
-        <TableRowColumn><ScoreChip score={score} /></TableRowColumn>
+        <TableRowColumn><ScoreChip score={score} isFetching={isScoreFetching} /></TableRowColumn>
         <TableRowColumn>
           <Link to={'/company-admin/applicant/' + applicant._id }>
             <FlatButton label="View Applicant" primary={true} />

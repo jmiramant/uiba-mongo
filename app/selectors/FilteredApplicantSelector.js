@@ -25,13 +25,12 @@ const getApplicants = (applicants, filters, scores) => {
   }
 
   if (filters.address && filters.address.rangeZips) {
-    const fitlerZips = filters.address.rangeZips.map((a)=> {return a.zip_code});
+    const filterZips = _.map(filters.address.rangeZips, (a) => {return a.zip_code})
     filtered = _.filter(filtered, (a) => {
       if (a.filterData && a.filterData.address) {
-        fitlerZips.indexOf(a.filterData.address) >= 0
+        return filterZips.indexOf(a.filterData.address.toString()) >= 0
       } else {return false}
     });
-    
   } 
 
   if (filters.score && filters.score.min && filters.score.max) {

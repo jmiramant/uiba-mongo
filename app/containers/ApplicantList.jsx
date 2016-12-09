@@ -85,15 +85,16 @@ class ApplicantList extends React.Component {
   }
 
   fetchScores(newSkills) {
-    const { scoreActions, applicants, filters } = this.props
+    const { scoreActions, applicantsBase, filters } = this.props
     const f = { ...filters, skill: newSkills.skill};
-    const profIds = applicants.map( (p) => { return p._id});
+    const profIds = applicantsBase.map( (p) => { return p._id});
     scoreActions.fetchScores(profIds, f);
   }
 
   clearFilters() {
-    this.props.addressActions.clearRangeAddress()
-    this.props.applicantActions.clearFilters()
+    this.props.scoreActions.clearScores();
+    this.props.addressActions.clearRangeAddress();
+    this.props.applicantActions.clearFilters();
   }
 
   setScore(_id) {
@@ -113,13 +114,14 @@ class ApplicantList extends React.Component {
   }
 
   componentWillUnmount() {
-    this.props.scoreActions.clearScores()
+    this.clearFilters();
   }
 
   render() {
 
     const {
       role,
+      score,
       company,
       applicants,
     } = this.props;
@@ -158,6 +160,7 @@ class ApplicantList extends React.Component {
                 applicant={_applicant}
                 company={company}
                 score={this.setScore(_applicant._id)}
+                isScoreFetching={score.isFetching}
               />);
             })}
           </TableBody>
@@ -176,6 +179,7 @@ function mapStateToProps(state) {
     applicants: FilteredApplicantSelector(state),
     applicantsBase: state.applicant.applicants,
     score: state.score,
+    scores: state.score.scores,
   };
 }
 
