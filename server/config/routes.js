@@ -45,8 +45,8 @@ export default (app) => {
     app.post('/login', usersController.login);
     app.post('/signup', usersController.signUp);
     app.post('/logout', usersController.logout);
-    app.post('/api/v1/user/role', usersController.role);
-    app.post('/api/v1/user/company', usersController.company);
+    app.post('/api/v1/user/role', jwtauth, usersController.role);
+    app.post('/api/v1/user/company', jwtauth, usersController.company);
     app.get('/validateEmail/:token', usersController.emailConfirmation);
     app.post('/resendValidationEmail', usersController.resendEmailConfirmation)
   } else {

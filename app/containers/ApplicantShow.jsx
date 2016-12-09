@@ -64,8 +64,11 @@ class ApplicantShow extends React.Component {
       <div>
         <div className={cx('applicant-container')}>
 
-          <Card className='col-md-8 col-md-offset-2'>
+          <Card className='col-md-8 col-md-offset-2' style={{boxShadow: 'none'}}>
             <CardHeader
+              className={cx('card-header')}
+              titleColor={'#fff'}
+              style={{margin: '0'}}
               title={applicant.firstName  + ' ' + applicant.lastName}
               avatar={applicant.picture || <DefaultUserIcon/>}
               titleStyle={{fontSize: '20px'}}
@@ -75,10 +78,11 @@ class ApplicantShow extends React.Component {
 
             <div className='col-md-8 col-md-offset-2'>
               <UibaCardHeader
+                style='xray'
                 text='Education'
               />
               {schools.length === 0 ? (
-                <div>{applicant.firstName} hasn't added any items in the education section.</div>
+                <div className={cx('null-info')}>{applicant.firstName} hasn't added any items in the education section.</div>
               ) : (
                 <span>
                 {schools.map((school, i) => {
@@ -92,10 +96,11 @@ class ApplicantShow extends React.Component {
 
             <div className='col-md-8 col-md-offset-2'>
               <UibaCardHeader
+                style='xray'
                 text='Employment'
               />
                 {jobs.length === 0 ? (
-                  <div>{applicant.firstName} hasn't added any items in the employment section.</div>
+                  <div className={cx('null-info')}>{applicant.firstName} hasn't added any items in the employment section.</div>
                 ) : (
                 <span>
                   {jobs.map((job, i) => {
@@ -109,10 +114,11 @@ class ApplicantShow extends React.Component {
           
             <div className='col-md-8 col-md-offset-2'>
               <UibaCardHeader
+                style='xray'
                 text='Knowledge, Skills, Abilities'
               />
                 {skills.length === 0 ? (
-                  <div>{applicant.firstName} hasn't added any items in the knowledge, skills, and abilities section.</div>
+                  <div className={cx('null-info')}>{applicant.firstName} hasn't added any items in the knowledge, skills, and abilities section.</div>
                 ) : (
                 <span>
                   {skills.map((skill, i) => {
@@ -126,10 +132,11 @@ class ApplicantShow extends React.Component {
           
             <div className='col-md-8 col-md-offset-2'>
               <UibaCardHeader
+                style='xray'
                 text='Languages'
               />
                 {languages.length === 0 ? (
-                  <div>{applicant.firstName} hasn't added any items in the language section.</div>
+                  <div className={cx('null-info')}>{applicant.firstName} hasn't added any items in the language section.</div>
                 ) : (
                 <span>
                   {languages.map((language, i) => {
@@ -143,10 +150,11 @@ class ApplicantShow extends React.Component {
 
             <div className='col-md-8 col-md-offset-2'>
               <UibaCardHeader
+                style='xray'
                 text='Projects'
               />
                 {projects.length === 0 ? (
-                  <div>{applicant.firstName} hasn't added any items in the project section.</div>
+                  <div className={cx('null-info')}>{applicant.firstName} hasn't added any items in the project section.</div>
                 ) : (
                 <span>
                   {projects.map((project, i) => {
@@ -160,10 +168,11 @@ class ApplicantShow extends React.Component {
 
             <div className='col-md-8 col-md-offset-2'>
               <UibaCardHeader
+                style='xray'
                 text='Interests'
               />
                 {interests.length === 0 ? (
-                  <div>{applicant.firstName} hasn't added any items in the interest section.</div>
+                  <div className={cx('null-info')}>{applicant.firstName} hasn't added any items in the interest section.</div>
                 ) : (
                 <span>
                   {interests.map((interest, i) => {

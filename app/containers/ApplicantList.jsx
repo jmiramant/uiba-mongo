@@ -35,8 +35,9 @@ class ApplicantList extends React.Component {
     score: true
   }
 
+
   componentWillReceiveProps(props) {
-    const { applicants, role, applicantActions, score, filters} = props;
+    const { applicants, role, applicantsBase, applicantActions, score, filters} = props;
 
     const isRoleSet = role._id;
     const isRoleFetching = !props.roleFetching;
@@ -44,10 +45,10 @@ class ApplicantList extends React.Component {
 
     if (isRoleSet && isRoleFetching && isRoleFuncCalled) {
       this.setState({role: false});
-      this.setRangeFilter();
+      this.setFilters();
     }
 
-    const isApplicantListLoaded = applicants.length > 0;
+    const isApplicantListLoaded = applicantsBase.length > 0;
     const isScoreAlreadySet = score.scores.length === 0;
     const isScoreFetching = !score.isFetching;
     const isScoreCalled = this.state.score;
@@ -58,7 +59,7 @@ class ApplicantList extends React.Component {
     }
   }
 
-  setRangeFilter() {
+  setFilters() {
     const { role, applicantActions } = this.props;
     let range = {};
 
@@ -173,6 +174,7 @@ function mapStateToProps(state) {
     roleFetching: state.role.isFetching,
     company: state.company.company,
     applicants: FilteredApplicantSelector(state),
+    applicantsBase: state.applicant.applicants,
     score: state.score,
   };
 }

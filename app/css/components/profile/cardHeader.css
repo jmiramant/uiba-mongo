@@ -5,7 +5,6 @@
   color: var(--colorLightText);
   margin-top: 20px;
   border-radius: 3px 3px 0 0;
-
 }
 
 .text {
@@ -23,3 +22,14 @@
   color: var(--colorLightText) !important;
   padding: 3px !important;
 }
+
+.xray.cardHeader--container {
+  background-color: #fff;
+  color: #363636;
+  border-left: 2px solid var(--colorDarkBlue);
+  border-bottom: 2px solid var(--colorDarkBlue);
+} 
+
+.xray .text {
+  background-color: #fff;
+} 

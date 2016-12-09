@@ -33,8 +33,8 @@ Development on this project is set up in a typical production/release/developmen
 
 Testing with:
 - `karma` as test runner
-	- `karma.conf.js` for the main karma configuration (it has webpack configurations)
-	- `tests.webpack.js` which is the single entry file. It uses `webpack`'s require API to find all the files we need that have a `-test.js` suffix.
+  - `karma.conf.js` for the main karma configuration (it has webpack configurations)
+  - `tests.webpack.js` which is the single entry file. It uses `webpack`'s require API to find all the files we need that have a `-test.js` suffix.
 - `mocha` as the test framework
 - `jsdom` as my test environment
 
@@ -170,7 +170,8 @@ Master branch deploys to production. Staging deploys to staging.
 * **Success Response:**
 
   * **Code:** 200 <br />
-    **Content:** ```
+    **Content:** 
+```
     {
       "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiI1N2RlZmU4YTJlOWVmNWIwNTJjNjVmZWMiLCJleHAiOjE0NzQ4Mzc2MDgzMzN9.iGTUcCE9wTlG6jpxAw-hZI43fRg_rT-PDZTWDC_r7fU"
       "expires": 1474837608333
@@ -183,8 +184,7 @@ Master branch deploys to production. Staging deploys to staging.
         "tokens": [0]
       }
     }
-
-    ```
+```
  
 * **Error Response:**
 
@@ -201,6 +201,83 @@ Master branch deploys to production. Staging deploys to staging.
         password: <password>,
       }
       type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+**POST: Create Admin User**
+----
+  Create an Admin user at a company. A company must be created first. A user is not required to be on the platform. A user can 'claim' a profile. To claim an admin instance, a user must match the email in a created instance.
+
+* **URL**
+
+  /api/v1/user/company
+
+* **Method:**
+
+  `POST`
+  
+*  **Headers**
+
+    Requires an ```x-access-token``` from 'api/v1/token'
+
+*  **Required:**
+    Headers:  `x-access-token=[string]`
+    Body: 
+    `email: '<someEmail>'`
+    `companyName: '<name_lower_from_company>'`
+
+* **Success Response:**
+
+  * **Code:** 200
+    **Content:** 
+```
+[{
+  "__v": 0,
+  "updatedAt": "2016-12-09T18:09:36.091Z",
+  "createdAt": "2016-12-09T18:09:36.091Z",
+  "company_id": "581d388a85b07bff55bb22bf",
+  "_id": "584af360e0992539356ee37e",
+  "picture": "",
+  "website": "",
+  "location": "",
+  "claim": true,
+  "gender": "",
+  "apply": {
+    "applyComplete": false,
+    "applied": false
+  },
+  "headline": "",
+  "email": "someemail@gmail.com",
+  "lastName": "",
+  "firstName": "",
+  "name": ""
+}]
+```
+ 
+* **Error Response:**
+
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ error : "Please provide an api key." }`
+
+  * **Code:** 404 NOT FOUND <br />
+    **Content:** `Please provide a company name. || Please provide an email. || Could not find that company.`
+
+* **Sample Call:**
+
+  ```javascript
+    $.ajax({
+      url: "/api/v1/user/company",
+      headers: {
+        x-access-token: <token>
+      },
+      data: {
+        email: 'someemail@gmail.com',
+        companyName: <name_lower_from_database>
+      }
+      type : "POST",
       success : function(r) {
         console.log(r);
       }
@@ -228,7 +305,8 @@ Master branch deploys to production. Staging deploys to staging.
 * **Success Response:**
 
   * **Code:** 200 <br />
-    **Content:** ```{
+    **Content:** 
+```{
   "details": {
     "timestamp": "2016-09-10T00:00:00.000Z",
     "returnedUsers": 3,
@@ -281,7 +359,8 @@ Master branch deploys to production. Staging deploys to staging.
   },
   ...
   ]
-}```
+}
+```
  
 * **Error Response:**
 
@@ -323,7 +402,8 @@ Master branch deploys to production. Staging deploys to staging.
 * **Success Response:**
 
   * **Code:** 200 <br />
-    **Content:** ```{
+    **Content:** 
+```{
   "details": {
     "timestamp": "2016-09-10T00:00:00.000Z",
     "returnedUsers": 3,
@@ -376,7 +456,8 @@ Master branch deploys to production. Staging deploys to staging.
   },
   ...
   ]
-}```
+}
+```
  
 * **Error Response:**
 

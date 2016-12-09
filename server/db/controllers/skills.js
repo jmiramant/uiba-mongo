@@ -32,6 +32,7 @@ export function get(req, res) {
   var uid = JSON.parse(req.params.id)
   let request;
   if (uid.indexOf(']')) {
+    if (uid.length === 0) return status(200).json([]);
     request = {"_id": {
       '$in': uid
     }}

@@ -330,6 +330,9 @@ export function role(req, res) {
 
 export function company(req, res) {
 
+  if (!req.body.companyName) return res.status(404).send('Please provide a company name from the "name_lower" field of a company this key should be added as "companyName" in the post data.');
+  if (!req.body.email) return res.status(404).send('Please provide an email.');
+
   Company.findOne({
     name_lower: req.body.companyName
   }).exec((cErr, company) => {

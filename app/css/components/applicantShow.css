@@ -1,7 +1,18 @@
+@import '../common/colors';
+
+.card-header {
+  background-color: var(--colorDarkBlue);
+  color: #fff;
+}
+
 .applicant-container {
   margin-top: 20px;
 }
 
 .name {
   font-size: 20px;
+}
+
+.null-info {
+  padding: 10px 30px;
 }

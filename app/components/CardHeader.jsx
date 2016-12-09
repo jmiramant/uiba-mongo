@@ -15,6 +15,7 @@ export default class CardHeader extends React.Component {
     text: PropTypes.string.isRequired,
     addVisible: PropTypes.bool,
     toggleAdd: PropTypes.func,
+    style: PropTypes.string
   }
 
   toggleAdd = () => {
@@ -24,12 +25,15 @@ export default class CardHeader extends React.Component {
   render () {
     const { 
       text,
+      style,
       toggleAdd,
       addVisible,
     } = this.props;
 
+    const styleClass = style ? style : ''
+
     return (
-      <header className={cx('cardHeader--container')}>
+      <header className={cx('cardHeader--container', styleClass)}>
         <h3 className={cx('text')}>{text}</h3>
         {toggleAdd ? (
           <span>

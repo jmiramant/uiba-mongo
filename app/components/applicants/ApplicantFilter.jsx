@@ -183,8 +183,6 @@ export default class ApplicantFiler extends React.Component {
             label='Skill Requirements'
           />
           <Popover
-            useLayerForClickAway={false}
-            onRequestClose={() => {this.closePopover('skill')}}
             open={this.state.skill.open}
             anchorOrigin={{horizontal: 'left', vertical: 'top'}}
             targetOrigin={{horizontal: 'left', vertical: 'bottom'}}
