@@ -29,17 +29,9 @@ export function me(req, res) {
  * Get
  */
 export function get(req, res) {
-  var uid = JSON.parse(req.params.id)
-  let request;
-  if (uid.indexOf(']')) {
-    if (uid.length === 0) return res.status(200).json([]);
-    request = {"_id": {
-      '$in': uid
-    }}
-  } else {
-    request = {"profile_id": mongoose.Types.ObjectId(uid)}
-  }
-  Skill.find(request).exec((err, skills) => {
+  var uid = req.params.id;
+
+  Skill.find({"profile_id": mongoose.Types.ObjectId(uid)}).exec((err, skills) => {
     if (err) {
       return res.status(404).send('Something went wrong getting the skills data');
     }
@@ -47,9 +39,15 @@ export function get(req, res) {
   });
 }
 
-/**
- * Create
- */
+export function list(req, res) {
+  var uid = JSON.parse(req.params.idArray)
+  Skill.find({"_id": { '$in': uid }}).exec((err, skills) => {
+    if (err) {
+      return res.status(404).send('Something went wrong getting the skills data');
+    }
+    return res.status(200).json(skills);
+  });
+}
 
 export function create(req, res) {
 
@@ -117,6 +115,7 @@ export function remove (req, res) {
 export default {
   me,
   get,
+  list,
   create,
   update,
   remove

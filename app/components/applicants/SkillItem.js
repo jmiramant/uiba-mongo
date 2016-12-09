@@ -17,18 +17,27 @@ export default class SkillItem extends React.Component {
     super(props);
   }
 
+  properName (str) {
+    return str.split('-').map((s) => {
+      return s.charAt(0).toUpperCase() + s.slice(1)
+    }).join(' ');
+  }
+
   render () {
     const { 
       skill, 
     } = this.props;
 
+    const chip = (<Chip className={cx('skillItem--chip')}>
+      {skill.type} 
+    </Chip>)
+
     return (
-      <div className={cx('chip-container')}>
-      
-        <Chip className={cx('skillItem--chip')}>
-          {skill.type} 
-        </Chip>
-      </div>
+      <li className={cx('app-chip-container')}>
+        <span className={cx('app-chip-title')}>{this.properName(skill.type)}</span> <br/> 
+        Years: {skill.lengthOfUse} - 
+        Level: {['Learning', 'Intermediate', 'Competent', 'Expert'][skill.proficiency - 1]}
+      </li>
     )
 
   }

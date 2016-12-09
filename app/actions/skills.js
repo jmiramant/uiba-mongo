@@ -46,6 +46,13 @@ export function fetchSkills(profId) {
   };
 }
 
+export function fetchSkillsList(idArray) {
+  return {
+    type: types.GET_SKILLS,
+    promise: makeSkillsRequest('get', {}, '/skill-list/' + idArray)
+  };
+}
+
 export function createSkillRequest(data) {
   return {
     type: types.CREATE_SKILL,

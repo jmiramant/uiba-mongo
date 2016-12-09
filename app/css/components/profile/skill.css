@@ -41,6 +41,15 @@
   @apply --chip--spacing; 
 }
 
+.app-chip-container {
+  width: 100%;
+  list-style: none;
+}
+
+.app-chip-title {
+  font-size: 17px;  
+}
+
 .left-border {
   border-left: 1px solid rgba(0, 0, 0, 0.298039);
 }

@@ -100,6 +100,7 @@ export default (app) => {
   if (skillsController) {
     app.get('/skills/me', skillsController.me);
     app.get('/skills/:id', skillsController.get);
+    app.get('/skill-list/:idArray', skillsController.list);
     app.post('/skills', skillsController.create);
     app.put('/skills', skillsController.update);
     app.delete('/skill/:id', skillsController.remove);

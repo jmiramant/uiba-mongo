@@ -120,13 +120,13 @@ class ApplicantShow extends React.Component {
                 {skills.length === 0 ? (
                   <div className={cx('null-info')}>{applicant.firstName} hasn't added any items in the knowledge, skills, and abilities section.</div>
                 ) : (
-                <span>
+                <ol>
                   {skills.map((skill, i) => {
                     return (
                       <SkillItem key={skill.type + i} skill={skill} />
                     )
                   })}
-                </span>
+                </ol>
               )}
             </div>
           
