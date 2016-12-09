@@ -57,7 +57,7 @@ export default class ApplicantFiler extends React.Component {
   
   skillSet() {
     this.setState({skill: { open: false, anchorEl: null }})
-    this.props.fetchScores({skill: this.props.skills});
+    // this.props.fetchScores({skill: this.props.skills});
     this.props.filterChange({skill: this.props.skills});
   }
 

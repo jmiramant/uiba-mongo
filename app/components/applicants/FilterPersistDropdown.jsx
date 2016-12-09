@@ -31,7 +31,6 @@ export default class FilterPersistDropdown extends React.Component {
     popover: { open: false, anchorEl: null },
     name: '',
     error: undefined,
-    defaultInit: false
   }
 
   openPopover = (e) => {
@@ -53,13 +52,6 @@ export default class FilterPersistDropdown extends React.Component {
 
   componentWillMount() {
     this.props.fetchFilters(this.props.role._id);
-  }
-
-  componentDidMount(props) {
-    if (!this.state.defaultInit) {
-      this.setState({defaultInit: true});
-      this.props.onSelectFilter(this.props.defaultFilter);
-    }
   }
 
   handleChange = () => (e, val) => {
@@ -175,7 +167,7 @@ export default class FilterPersistDropdown extends React.Component {
                 { filters.length > 0 ? (<Divider />) : (null) }
                 <ListItem 
                   key='Requirement'
-                  primaryText="Default Filter"
+                  primaryText="Filter by Role Requirements"
                   leftIcon={<ChevronRight style={iconStyle} />} 
                   style={{fontSize: '14px'}}
                   innerDivStyle={{padding: '5px 16px 5px 25px'}}

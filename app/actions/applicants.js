@@ -86,7 +86,7 @@ export function deleteSkill(skillData) {
 }
 
 export function fetchFilterSkills(skillsArray) {
-  const path = '/skills/' + JSON.stringify(skillsArray);
+  const path = '/skill-list/' + JSON.stringify(skillsArray);
   return {
     type: types.FETCH_APPLICANTS_FILTER_SKILLS,
     promise: makeApplicantRequest('get', {}, path)
