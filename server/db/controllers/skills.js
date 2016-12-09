@@ -40,7 +40,7 @@ export function get(req, res) {
 }
 
 export function list(req, res) {
-  var uid = JSON.parse(req.params.idArray)
+  var uid = JSON.parse(req.params.idArray);
   Skill.find({"_id": { '$in': uid }}).exec((err, skills) => {
     if (err) {
       return res.status(404).send('Something went wrong getting the skills data');
