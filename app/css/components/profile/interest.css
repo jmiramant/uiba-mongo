@@ -82,3 +82,11 @@
     padding: 0;
   }
 }
+
+.cta {
+  @apply --cta;
+}
+
+.cta-msg {
+  @apply --cta-msg;
+}

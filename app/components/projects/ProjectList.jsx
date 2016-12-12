@@ -69,6 +69,10 @@ class ProjectList extends React.Component {
     
     return ( <div className={cx('projectList--container')}>
       
+      <div className={cx('cta')}>
+        <p className={cx('cta-msg')}>Please include any projects (example: GitHub, Habitat For Humanity) you have been involved with to provide a better understanding of your wider experience.</p>
+      </div>
+      
       { projects.length ? (
         <div>
           {renderItems}

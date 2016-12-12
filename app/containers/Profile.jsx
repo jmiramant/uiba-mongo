@@ -33,6 +33,8 @@ import styles from 'css/common/profile';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 const scroll = Scroll.animateScroll;
+var Element = Scroll.Element;
+var scroller = Scroll.scroller;
 
 class Profile extends React.Component {
 
@@ -81,25 +83,34 @@ class Profile extends React.Component {
   }
 
   handleApply () {
+    this.props.messageActions.dismissMessage();
     if (!this.isValidated()) {
       this.props.applyActions.sumbitApplication(this.props.profile.profile)
-    } else {
     }
   }
 
   handleValidationErrors(errors) {
-    _.each(errors, (err) => {
-      this.props.messageActions.createMessage(err);
-    })
-    
-    if (errors.skills) {
-      scroll.scrollTo(100);
+
+    this.setState({validationErrors: errors})
+
+    if (errors.position === 'userCard') {
+      let msg;
+      if (errors.name && errors.address) msg = errors.name + " & " + errors.address
+      if (errors.name) msg = errors.name
+      if (errors.address) msg = errors.address
+
+      this.props.messageActions.createMessage(msg);
+
     }
+
+    scroller.scrollTo(errors.position, {
+      duration: 1000,
+      smooth: true,
+    })
   }
 
   isProfileLoaded(profile) {
     if (!profile.isFetching && Object.keys(profile.profile).length > 0) {
-      profile.profile
       return true;
     } else {
       return false;
@@ -115,24 +126,53 @@ class Profile extends React.Component {
             languages, languageActions,
             projects, projectActions,
             messages, messageActions,
-            applyActions,
+            applyActions, 
           } = this.props;
 
+    const { validationErrors } = this.state;
+    
     const profPage = (
       <div>
-        <UserCard 
-          editMode={profile.edit}
-          profile={profile.profile} 
-          toggleEdit={profileActions.toggleProfileEdit}
-          onEditSave={profileActions.updateProfile} 
-        />
+        <Element name='userCard'>
+          <UserCard 
+            editMode={profile.edit}
+            profile={profile.profile} 
+            toggleEdit={profileActions.toggleProfileEdit}
+            onEditSave={profileActions.updateProfile}
+          />
+        </Element>
+        <div className={cx('alert-container')}>
+          <div className={cx('alert')}>Applicants with detailed profiles are 94% more likely to be interviewed.</div>
+        </div>
         <div className={cx('about') + ' container'}>
           <div className='col-md-8 col-md-offset-2'>
-            <CardHeader
-              text='Knowledge, Skills, Abilities'
-              addVisible={skills.addShow}
-              toggleAdd={skillActions.toggleSkillAdd}
+            <Element name="job">
+              <CardHeader
+                text='Employment'
+                addVisible={jobs.addShow}
+                toggleAdd={jobActions.toggleJobAdd}
+                error={validationErrors.jobs}
+              />
+            </Element>
+            <Jobs 
+              jobs={jobs.jobs} 
+              addVisible={jobs.addShow}
+              toggleJobAdd={jobActions.toggleJobAdd}
+              onEditSave={jobActions.updateJob} 
+              onJobSave={jobActions.createJob} 
+              onJobDelete={jobActions.deleteJob}
             />
+          </div>
+
+          <div className='col-md-8 col-md-offset-2'>
+            <Element name="skill">
+              <CardHeader
+                text='Knowledge, Skills, Abilities'
+                addVisible={skills.addShow}
+                toggleAdd={skillActions.toggleSkillAdd}
+                error={validationErrors.skills}
+              />
+            </Element>
             <Skills 
               skills={skills.skills}
               addVisible={skills.addShow}
@@ -145,29 +185,16 @@ class Profile extends React.Component {
               toggleSkillAdd={skillActions.toggleSkillAdd}
             />
           </div>
-          
-          <div className='col-md-8 col-md-offset-2'>
-            <CardHeader
-              text='Employment'
-              addVisible={jobs.addShow}
-              toggleAdd={jobActions.toggleJobAdd}
-            />
-            <Jobs 
-              jobs={jobs.jobs} 
-              addVisible={jobs.addShow}
-              toggleJobAdd={jobActions.toggleJobAdd}
-              onEditSave={jobActions.updateJob} 
-              onJobSave={jobActions.createJob} 
-              onJobDelete={jobActions.deleteJob} 
-            />
-          </div>
 
           <div className='col-md-8 col-md-offset-2'>
-            <CardHeader
-              text='Education'
-              addVisible={schools.addShow}
-              toggleAdd={schoolActions.toggleSchoolAdd}
-            />
+            <Element name="school">
+              <CardHeader
+                text='Education'
+                addVisible={schools.addShow}
+                toggleAdd={schoolActions.toggleSchoolAdd}
+                error={validationErrors.schools}
+              />
+            </Element>
             <Schools 
               schools={schools.schools} 
               addVisible={schools.addShow}
@@ -212,11 +239,14 @@ class Profile extends React.Component {
           </div>
 
           <div className='col-md-8 col-md-offset-2'>
-            <CardHeader
-              text='Interests'
-              addVisible={interests.addShow}
-              toggleAdd={interestActions.toggleInterestAdd}
-            />
+            <Element name="interest">
+              <CardHeader
+                text='Interests'
+                addVisible={interests.addShow}
+                toggleAdd={interestActions.toggleInterestAdd}
+                error={validationErrors.interests}
+              />
+            </Element>
             <Interests
               interests={interests.interests}
               addVisible={interests.addShow}
@@ -256,7 +286,8 @@ function mapStateToProps(state) {
     languages: state.language,
     projects: state.project,
     messages: state.message,
-    interests: state.interest
+    interests: state.interest,
+    address: state.address
   };
 }
 

@@ -45,6 +45,9 @@ export function get(req, res) {
 
 export function create(req, res) {
   
+  let end = undefined;
+  if (req.body.endDate) end = new Date(req.body.endDate);
+  
   School.create({
     profile_id: req.user.profile_id,
     name: req.body.name,
@@ -52,7 +55,7 @@ export function create(req, res) {
     minor: [req.body.minor],
     degree: req.body.degree,
     startDate: new Date(req.body.startDate),
-    endDate: new Date(req.body.endDate),
+    endDate: end,
     current: req.body.current
   }, function (err, school) {
 

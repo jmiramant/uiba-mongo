@@ -50,5 +50,28 @@
     width: 285px;
     margin: 0 auto;
   }
+
+  --cta {
+    color: #4F4F4F;
+    text-align: left;
+    margin: 0 10px 10px;
+  }
+
+  --cta-msg {
+    padding: 10px 38px;
+    background-color: #B3E5FC;
+    border-radius: 2px;
+    border: 1px solid #E8E8E8;
+    margin-bottom: 30px;
+  }
   
+}
+ 
+.alert {
+  text-align: center;
+  padding: 11px;
+  color: #363636;
+  background-color: #FC9252;
+  border-bottom: 1px solid #E8E8E8;
+  border-top: 1px solid #E8E8E8; 
 }

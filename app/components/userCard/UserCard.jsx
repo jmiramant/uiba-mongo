@@ -84,7 +84,7 @@ class UserCard extends React.Component {
               {profile.picture ? (
                 <img className={cx('userCard--picture-img')} src={profile.picture}/>
               ) : (
-                <DefaultUserIcon className={cx('userCard--default-icon')}/>            
+                <DefaultUserIcon className={cx('userCard--default-icon')}/>
               )}
             </div>
             {profile.service === 'linkedin' ? (null) : (

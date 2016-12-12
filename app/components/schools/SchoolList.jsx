@@ -70,6 +70,10 @@ class SchoolList extends React.Component {
     return (
       <div className={cx('schoolList--container')}>
 
+        <div className={cx('cta')}>
+          <p className={cx('cta-msg')}>Please include your education history with the dates of attendance and degrees earned.</p>
+        </div>
+
         { schools.length ? (
           <div>
             {renderItems}

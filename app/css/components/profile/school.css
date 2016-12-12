@@ -41,3 +41,11 @@
 .closed {
   @apply --closed;
 }
+
+.cta {
+  @apply --cta;
+}
+
+.cta-msg {
+  @apply --cta-msg;
+}

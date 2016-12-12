@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as skillsActionCreators from 'actions/skills';
 
+import SkillCloud from 'components/skills/skillCloud';
 import SkillItem from 'components/skills/SkillItem';
 import SkillAdd from 'components/skills/SkillAdd';
 import NullProfItem from 'components/ProfileNull';
@@ -67,6 +68,7 @@ class SkillList extends React.Component {
     let { skill,
             skills,
             addVisible,
+            inputFocus,
             actions,
             errorMessage,
           } = this.props;
@@ -105,7 +107,7 @@ class SkillList extends React.Component {
 
           <div className={cx('cta')}>
             <InfoIcon className={cx('info-icon')}/>
-            <p className={cx('msg')}>This section is the core of your profile. Please include all knowledge, skills, & abilities developed during your work and non-work experience, whether you believe they are relevant or not. Your assessment takes everything into account.</p>
+            <p className={cx('msg')}>Important: Please include all knowledge, skills, and abilities developed during your work and non-work experience. The more information Uiba has to work with, the more accurate the assessment of your ability to excel in this role.</p>
           </div>
 
           { skills.length ? (
@@ -122,9 +124,13 @@ class SkillList extends React.Component {
             <ErrorMessage 
               errorText={errorMessage}
             />
+            <SkillCloud 
+              inputFocus={inputFocus}
+            />
             <SkillAdd
               isEdit={false}
               skill={skill}
+              onInputFocus={actions.handleInputFocus}
               skillChange={actions.skillChange}
               toggleEdit={this.toggleAddSkill.bind(this)} 
               addVisible={addVisible} 
@@ -140,7 +146,8 @@ class SkillList extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    skill: state.skill.skill
+    skill: state.skill.skill,
+    inputFocus: state.skill.inputFocus
   }
 }
 

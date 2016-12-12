@@ -168,3 +168,10 @@ export function deleteSkill(skill) {
   }
 
 }
+
+export function handleInputFocus(show) {
+  return {
+    type: types.TOGGLE_SKILL_INPUT_FOCUS,
+    data: show
+  }
+}

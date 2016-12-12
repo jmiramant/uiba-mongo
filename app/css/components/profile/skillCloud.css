@@ -1,0 +1,37 @@
+.skill-cloud-container {
+  position: absolute;
+  margin: -75px 0 0 -350px;
+  width: 300px;
+  z-index: 1234567;
+}
+
+.cloud-container { 
+  color: rgba(0, 0, 0, 0.870588);
+  background-color: #FAFAFA;
+  box-sizing: border-box;
+  font-family: Roboto, sans-serif;
+  box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+  border-radius: 2px;
+  opacity: 1;
+  transform: scale(1, 1);
+  transform-origin: left top 0px;
+  z-index: 2100;
+  max-height: 100%;
+  text-align: center;
+  padding: 10px 10px;
+  width: 100%;
+}
+
+.chip-container {
+  max-height: 100%; 
+  overflow-y: auto; 
+  transform: scaleX(1); 
+  opacity: 1; 
+  transform-origin: left top 0px; 
+  transition: transform 250ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, opacity 250ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+}
+
+.title {
+  color: #666666 !important;  
+  margin-top: 0;
+}

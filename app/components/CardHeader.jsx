@@ -16,6 +16,7 @@ export default class CardHeader extends React.Component {
     addVisible: PropTypes.bool,
     toggleAdd: PropTypes.func,
     style: PropTypes.string
+    error: PropTypes.string
   }
 
   toggleAdd = () => {
@@ -26,6 +27,7 @@ export default class CardHeader extends React.Component {
     const { 
       text,
       style,
+      error,
       toggleAdd,
       addVisible,
     } = this.props;
@@ -50,6 +52,7 @@ export default class CardHeader extends React.Component {
             )}
         </span>
         ) : (null) }
+        { error ? (<div><div className={cx('error-container')}><div className={cx('error-text')}>{error}</div></div></div>) : (null) }
       </header>
     )
   }

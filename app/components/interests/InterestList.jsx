@@ -101,6 +101,10 @@ class InterestList extends React.Component {
       <div className={cx('interestList--bootstrap-container')}>
         <div className={cx('interestList--container')}>
 
+          <div className={cx('cta')}>
+            <p className={cx('cta-msg')}>Please include any personal interests such as hobbies, activities, passions, etc, to help the team better understand you.</p>
+          </div>
+
           { interests.length ? (
             <div className={listClass}>
               {renderItems}

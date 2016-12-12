@@ -79,6 +79,10 @@ class JobList extends React.Component {
     return (
       <div className={cx('jobList--container')}>
 
+        <div className={cx('cta')}>
+          <p className={cx('cta-msg')}>Please include your employment history, role descriptions, and accomplishments in the role.</p>
+        </div>
+
         { jobs.length ? (
           <div>
             {renderItems}

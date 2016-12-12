@@ -101,6 +101,10 @@ class LanguageList extends React.Component {
       <div className={cx('languageList--bootstrap-container')}>
         <div className={cx('languageList--container')}>
 
+          <div className={cx('cta')}>
+            <p className={cx('cta-msg')}>Please include any languages you speak, read, or write.</p>
+          </div>
+
           { languages.length ? (
             <div className={listClass}>
               {renderItems}
