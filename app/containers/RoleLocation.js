@@ -6,9 +6,9 @@ import * as actionCreators from 'actions/address';
 
 @connect((state) => {
   return {
-    zip: state.address.zip,
-    range: state.address.range,
-    rangeZips: state.address.rangeZips,
+    zip: state.role.address.zip,
+    range: state.role.address.range,
+    rangeZips: state.role.address.rangeZips,
     error: state.address.error,
     address: state.address.address,
     autofill: state.address.autofill,
@@ -28,11 +28,6 @@ class AddressAutofillApp extends Component {
   }
 
   componentWillMount() {
-    if (this.props.type === 'company') {
-      this.actions.fetchCompanyAddress({name: this.props.name.toLowerCase()})
-    } else {
-      this.actions.fetchAddress()
-    }
   }  
 
   handleSave() {

@@ -122,6 +122,8 @@ const eduRequirements = (
   switch (action.type) {
     case types.GET_ROLE_SUCCESS:
       return action.res.data.filter.school
+    case types.TOGGLE_ROLE_ADD:
+      return [];
     case types.TOGGLE_ROLE_EDU_REQUIREMENT:
       const requirments = [...state];
       const dupIndex = requirments.indexOf(action.data);
@@ -199,21 +201,18 @@ const skills = (
     case types.CREATE_ROLE_SKILL:
       return skillOrder([...state, action.skillData])
     case types.UPDATE_ROLE_SKILL:
-      debugger
-      updatedSkill = state.slice()
-      updatedSkill[_.findIndex(state, function(j) { return j._id === action.data._id; })] = action.data
+      updatedSkill = [...state];
+      updatedSkill[_.findIndex(state, (j) => { return j.type === action.skillData.type; })] = action.skillData
       return skillOrder(updatedSkill)
     case types.CHANGE_ROLE_SKILLS:
-      updatedSkill = [...state]
-      debugger
-      updatedSkill[_.findIndex(updatedSkill, {type: action.state.type})][action.state.field] = updatedSkill[_.findIndex(updatedSkill, {type: action.state.type})][action.state.field] = action.state.value
+      updatedSkill = [...state];
+      updatedSkill[_.findIndex(updatedSkill, {type: action.state.type})][action.state.field] = action.state.value
       return skillOrder(updatedSkill)
     case types.DELETE_ROLE_SKILL:
-      debugger
-      const newState = state.slice();
-      return newState.filter( j => {
-        return j._id !== action.data.id;
-      })
+      updatedSkill = [...state];
+      return skillOrder(updatedSkill.filter( j => {
+        return j.type !== action.skillData.type;
+      }));
     case types.CREATE_ROLE_SUCCESS:
       return [];
     default:
@@ -221,16 +220,35 @@ const skills = (
   }
 };
 
+const address = (
+  state = {zip: {}, range: '', rangeZips: []},
+  action
+) => {
+  switch (action.type) {
+    case types.SET_ZIP:
+      return {...state, zip: action.data};
+    case types.SET_RANGE:
+      return {...state, range: action.data};
+    case types.UPDATE_RANGE_AUTOFILL_SUCCESS:
+      return {...state, rangeZips: action.results.data.zip_codes};
+    case types.CLEAR_RANGE_ADDRESS:
+    case types.TOGGLE_ROLE_ADD:
+      return {zip: {}, range: '', rangeZips: []};
+    default:
+      return state;
+  }
+};
 
 const roleReducer = combineReducers({
-  isFetching,
   role,
   roles,
-  addShow,
-  eduRequirements,
   skill,
   skills,
-  showSkillAdd
+  address,
+  addShow,
+  isFetching,
+  showSkillAdd,
+  eduRequirements,
 });
 
 export default roleReducer;

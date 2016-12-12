@@ -57,7 +57,6 @@ export default class ApplicantFiler extends React.Component {
   
   skillSet() {
     this.setState({skill: { open: false, anchorEl: null }})
-    // this.props.fetchScores({skill: this.props.skills});
     this.props.filterChange({skill: this.props.skills});
   }
 
@@ -185,11 +184,11 @@ export default class ApplicantFiler extends React.Component {
           <Popover
             open={this.state.skill.open}
             anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-            targetOrigin={{horizontal: 'left', vertical: 'bottom'}}
+            targetOrigin={{horizontal: 'center', vertical: 'bottom'}}
             anchorEl={this.state.skill.anchorEl}
-            style={{width: '600px', minHeight: '210px'}}
+            style={{width: '800px', minHeight: '510px'}}
           >
-            <RoleSkills 
+            <RoleSkills
               skill={skill}
               skills={skills}
               addVisible={showSkillAdd}

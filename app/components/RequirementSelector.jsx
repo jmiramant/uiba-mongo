@@ -112,9 +112,9 @@ export default class RequirementSelectors extends React.Component {
           <Popover
             open={this.state.skill.open}
             anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-            targetOrigin={{horizontal: 'left', vertical: 'bottom'}}
+            targetOrigin={{horizontal: 'middle', vertical: 'bottom'}}
             anchorEl={this.state.skill.anchorEl}
-            style={{width: '600px', minHeight: '210px'}}
+            style={{width: '800px', minHeight: '510px'}}
           >
             <RoleSkills 
               skill={roles.skill}
