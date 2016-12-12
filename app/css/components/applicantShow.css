@@ -16,3 +16,8 @@
 .null-info {
   padding: 10px 30px;
 }
+
+.language-container,
+.interest-container {
+  margin: 10px;
+}

@@ -76,25 +76,7 @@ class ApplicantShow extends React.Component {
           </Card>
           <p className={cx('name')}></p>
 
-            <div className='col-md-8 col-md-offset-2'>
-              <UibaCardHeader
-                style='xray'
-                text='Education'
-              />
-              {schools.length === 0 ? (
-                <div className={cx('null-info')}>{applicant.firstName} hasn't added any items in the education section.</div>
-              ) : (
-                <span>
-                {schools.map((school, i) => {
-                  return (
-                    <SchoolItem key={school.name + i} school={school} />
-                  )
-                })}
-                </span>
-              )}
-            </div>
-
-            <div className='col-md-8 col-md-offset-2'>
+            <div className='col-md-4 col-md-offset-2'>
               <UibaCardHeader
                 style='xray'
                 text='Employment'
@@ -111,6 +93,24 @@ class ApplicantShow extends React.Component {
                 </span>
               )}
             </div>
+
+            <div className='col-md-4'>
+              <UibaCardHeader
+                style='xray'
+                text='Education'
+              />
+              {schools.length === 0 ? (
+                <div className={cx('null-info')}>{applicant.firstName} hasn't added any items in the education section.</div>
+              ) : (
+                <span>
+                {schools.map((school, i) => {
+                  return (
+                    <SchoolItem key={school.name + i} school={school} />
+                  )
+                })}
+                </span>
+              )}
+            </div>
           
             <div className='col-md-8 col-md-offset-2'>
               <UibaCardHeader
@@ -120,17 +120,17 @@ class ApplicantShow extends React.Component {
                 {skills.length === 0 ? (
                   <div className={cx('null-info')}>{applicant.firstName} hasn't added any items in the knowledge, skills, and abilities section.</div>
                 ) : (
-                <ol>
+                <div>
                   {skills.map((skill, i) => {
                     return (
                       <SkillItem key={skill.type + i} skill={skill} />
                     )
                   })}
-                </ol>
+                </div>
               )}
             </div>
           
-            <div className='col-md-8 col-md-offset-2'>
+            <div className='col-md-4 col-md-offset-2'>
               <UibaCardHeader
                 style='xray'
                 text='Languages'
@@ -138,13 +138,31 @@ class ApplicantShow extends React.Component {
                 {languages.length === 0 ? (
                   <div className={cx('null-info')}>{applicant.firstName} hasn't added any items in the language section.</div>
                 ) : (
-                <span>
+                <div className={cx('language-container')}>
                   {languages.map((language, i) => {
                     return (
                       <LanguageItem key={language + i} language={language} />
                     )
                   })}
-                </span>
+                </div>
+              )}
+            </div>
+
+            <div className='col-md-4'>
+              <UibaCardHeader
+                style='xray'
+                text='Interests'
+              />
+                {interests.length === 0 ? (
+                  <div className={cx('null-info')}>{applicant.firstName} hasn't added any items in the interest section.</div>
+                ) : (
+                <div className={cx('interest-container')}>
+                  {interests.map((interest, i) => {
+                    return (
+                      <InterestItem key={interest.interest + i} interest={interest} />
+                    )
+                  })}
+                </div>
               )}
             </div>
 
@@ -160,24 +178,6 @@ class ApplicantShow extends React.Component {
                   {projects.map((project, i) => {
                     return (
                       <ProjectItem key={project.name + i} project={project} />
-                    )
-                  })}
-                </span>
-              )}
-            </div>
-
-            <div className='col-md-8 col-md-offset-2'>
-              <UibaCardHeader
-                style='xray'
-                text='Interests'
-              />
-                {interests.length === 0 ? (
-                  <div className={cx('null-info')}>{applicant.firstName} hasn't added any items in the interest section.</div>
-                ) : (
-                <span>
-                  {interests.map((interest, i) => {
-                    return (
-                      <InterestItem key={interest.interest + i} interest={interest} />
                     )
                   })}
                 </span>

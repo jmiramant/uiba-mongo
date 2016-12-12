@@ -70,6 +70,7 @@ class SkillList extends React.Component {
             skillsChange,
             actions,
             errorMessage,
+            errorText
           } = this.props;
 
     const listClass = classNames({
@@ -116,7 +117,7 @@ class SkillList extends React.Component {
           
           <div className={addClass}>
             <ErrorMessage 
-              errorText={errorMessage}
+              errorText={errorText}
             />
             <SkillAdd
               isEdit={false}

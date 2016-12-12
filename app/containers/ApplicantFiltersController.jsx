@@ -28,7 +28,6 @@ class ApplicantFiltersController extends Component {
       address,
       messages,
       applicant,
-      fetchScores,
       roleActions,
       filterActions,
       applicantLength,
@@ -41,7 +40,6 @@ class ApplicantFiltersController extends Component {
           role={role}
           address={address}
           messages={messages}
-          fetchScores={fetchScores}
           filters={filter.filters}
           isApplicants={applicant.applicants.length > 0}
           setFilters={applicant.filters}

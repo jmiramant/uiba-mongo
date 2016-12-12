@@ -233,6 +233,7 @@ const address = (
       return {...state, rangeZips: action.results.data.zip_codes};
     case types.CLEAR_RANGE_ADDRESS:
     case types.TOGGLE_ROLE_ADD:
+    case types.TOGGLE_ADDRESS_EDIT:
       return {zip: {}, range: '', rangeZips: []};
     default:
       return state;

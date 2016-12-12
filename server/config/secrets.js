@@ -29,10 +29,10 @@ export const arkhamApi = {
 }
 
 export default {
+  aws,
+  linkedin,
+  arkhamApi,
+  zipCodeAPI,
   sessionSecret,
   externalAPISecret,
-  linkedin,
-  zipCodeAPI,
-  aws,
-  arkhamApi
 };

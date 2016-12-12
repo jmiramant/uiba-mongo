@@ -40,6 +40,7 @@ export default class ApplicantFiler extends React.Component {
     skill: { open: false, anchorEl: null },
     location: { open: false, anchorEl: null },
     score: { open: false, anchorEl: null },
+    skillError: undefined
   }
 
   constructor(props) {
@@ -94,6 +95,19 @@ export default class ApplicantFiler extends React.Component {
     this.props.removeFilter(filter)
   }
 
+  onSkillSave(skill) {
+    const { skills, onSkillSave } = this.props;
+    if (_.filter(skills, (s) => {return s.type === skill.type}).length) {
+      this.setState({skillError: 'This skill has already been added.'});
+      setTimeout(() => {
+        this.setState({skillError: undefined});
+      }, 4000)
+    } else {  
+      onSkillSave(skill);
+    }
+
+  }
+
   render () {
 
     const {
@@ -121,6 +135,8 @@ export default class ApplicantFiler extends React.Component {
       eduRequirements,
       onToggleEduReqSelect,
     } = this.props;
+
+    const { skillError } = this.props;
 
     const isFilterSet = this.isFilters(setFilters);
 
@@ -184,7 +200,7 @@ export default class ApplicantFiler extends React.Component {
           <Popover
             open={this.state.skill.open}
             anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-            targetOrigin={{horizontal: 'center', vertical: 'bottom'}}
+            targetOrigin={{horizontal: 'right', vertical: 'bottom'}}
             anchorEl={this.state.skill.anchorEl}
             style={{width: '800px', minHeight: '510px'}}
           >
@@ -193,10 +209,11 @@ export default class ApplicantFiler extends React.Component {
               skills={skills}
               addVisible={showSkillAdd}
               onEditSave={onEditSave} 
-              onSkillSave={onSkillSave} 
+              onSkillSave={this.onSkillSave.bind(this)} 
+              errorText={skillError}
               skillChange={skillChange}
               skillsChange={skillsChange}
-              errorMessage={messages.errorMessage}
+              errorMessage={skillError}
               onSkillDelete={onSkillDelete} 
               toggleSkillAdd={toggleSkillAdd}
             />

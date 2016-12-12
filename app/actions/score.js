@@ -36,18 +36,14 @@ export function fetchScoreFailure (data) {
   }
 }
 
-export function fetchScores(profIds, filters) {
+export function fetchScores(profIds, skills) {
   return (dispatch) => {
 
-    let f = '';
-    if (filters && filters.skill.length) {
-      const formatted = filters.skill.map((s) => {
-        return {"skill": s.type, "lengthOfUse": s.lengthOfUse, "proficiency": s.proficiency}
-      })
-      f += '?skills=' + JSON.stringify(formatted);
-    };
+    const formatted = skills.map((s) => {
+      return {"skill": s.type, "lengthOfUse": s.lengthOfUse, "proficiency": s.proficiency}
+    });
 
-    return makeScoreRequest('post', {profileIds: profIds}, '/scores' + f)
+    return makeScoreRequest('post', {"profile_ids": profIds, "job_filters": formatted}, '/scores')
       .then(res => {
         if (res.status === 200) {
           return dispatch(fetchScoreSuccess(res.data));

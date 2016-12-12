@@ -35,9 +35,8 @@ class ApplicantList extends React.Component {
     score: true
   }
 
-
   componentWillReceiveProps(props) {
-    const { applicants, role, applicantsBase, applicantActions, score, filters} = props;
+    const { applicants, role, applicantsBase, applicantActions, score} = props;
 
     const isRoleSet = role._id;
     const isRoleFetching = !props.roleFetching;
@@ -55,7 +54,7 @@ class ApplicantList extends React.Component {
 
     if (isApplicantListLoaded && isScoreAlreadySet && isScoreFetching && isScoreCalled) {
       this.setState({score: false});
-      this.initilizeScores(applicants, filters);
+      this.fetchScores(role.filter.skill);
     }
   }
 
@@ -79,16 +78,10 @@ class ApplicantList extends React.Component {
     });
   }
 
-  initilizeScores(applicants, filters) {
-    const profIds = applicants.map( (p) => { return p._id});
-    this.props.scoreActions.fetchScores(profIds, filters);
-  }
-
-  fetchScores(newSkills) {
-    const { scoreActions, applicantsBase, filters } = this.props
-    const f = { ...filters, skill: newSkills.skill};
+  fetchScores(skills) {
+    const { scoreActions, applicantsBase } = this.props
     const profIds = applicantsBase.map( (p) => { return p._id});
-    scoreActions.fetchScores(profIds, f);
+    scoreActions.fetchScores(['584822accdcfcf1700f507d5'], skills);
   }
 
   clearFilters() {
@@ -131,7 +124,6 @@ class ApplicantList extends React.Component {
         <h4>Applicants for {role.title}:</h4>
 
         <ApplicantFilterController
-          fetchScores={this.fetchScores.bind(this)}
           applicantLength={applicants.length}
         />
 

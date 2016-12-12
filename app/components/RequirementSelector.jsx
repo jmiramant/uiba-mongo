@@ -32,6 +32,7 @@ export default class RequirementSelectors extends React.Component {
     validationErrors: {},
     skill: { open: false, anchorEl: null },
     location: { open: false, anchorEl: null },
+    skillError: ''
   }
 
   constructor(props) {
@@ -68,6 +69,19 @@ export default class RequirementSelectors extends React.Component {
     });
   };
 
+  onSkillSave(skill) {
+    const { roles: { skills }, onSkillSave } = this.props;
+    if (_.filter(skills, (s) => {return s.type === skill.type}).length) {
+      this.setState({skillError: 'This skill has already been added.'});
+      setTimeout(() => {
+        this.setState({skillError: undefined});
+      }, 4000)
+    } else {  
+      onSkillSave(skill);
+    }
+
+  }
+
   render () {
 
     const {
@@ -75,7 +89,6 @@ export default class RequirementSelectors extends React.Component {
       roles,
       messages,
       onEditSave,
-      onSkillSave,
       onSkillDelete,
       skillChange,
       skillsChange,
@@ -85,7 +98,8 @@ export default class RequirementSelectors extends React.Component {
     } = this.props;
 
     const {
-      experience
+      experience,
+      skillError
     } = this.state;
 
     return (
@@ -112,7 +126,7 @@ export default class RequirementSelectors extends React.Component {
           <Popover
             open={this.state.skill.open}
             anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-            targetOrigin={{horizontal: 'middle', vertical: 'bottom'}}
+            targetOrigin={{horizontal: 'right', vertical: 'bottom'}}
             anchorEl={this.state.skill.anchorEl}
             style={{width: '800px', minHeight: '510px'}}
           >
@@ -124,8 +138,9 @@ export default class RequirementSelectors extends React.Component {
               toggleSkillAdd={toggleSkillAdd}
               skillChange={skillChange}
               skillsChange={skillsChange}
-              onEditSave={onEditSave} 
-              onSkillSave={onSkillSave} 
+              onEditSave={onEditSave}
+              errorText={skillError}
+              onSkillSave={this.onSkillSave.bind(this)}
               onSkillDelete={onSkillDelete} 
             />
             <FlatButton className='pull-right' label="set" onClick={() => {this.closePopover('skill')}} primary={true} />

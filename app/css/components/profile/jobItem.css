@@ -31,7 +31,6 @@
 
 .jobItem--date {
   display: inline-block;
-  width: 25%;
   padding: 0;
   @apply --item--subheader;
 }

@@ -33,11 +33,13 @@ export default class SkillItem extends React.Component {
     </Chip>)
 
     return (
-      <li className={cx('app-chip-container')}>
-        <span className={cx('app-chip-title')}>{this.properName(skill.type)}</span> <br/> 
-        Years: {skill.lengthOfUse} - 
-        Level: {['Learning', 'Intermediate', 'Competent', 'Expert'][skill.proficiency - 1]}
-      </li>
+      <div className={cx('app-chip-container')}>
+        <p className={cx('app-chip-title')}>{this.properName(skill.type)}</p>
+        <span className={cx('app-chip-sub-title')}>
+          Level: {['Learning', 'Intermediate', 'Competent', 'Expert'][skill.proficiency - 1]}<br/>
+          {skill.lengthOfUse} Years of Experience
+        </span>
+      </div>
     )
 
   }

@@ -31,7 +31,7 @@ class ErrorMessage extends React.Component {
 
     return (
       <span>
-        { (this.shouldShow()) ? 
+        { (errorText && errorText.length > 0) ? 
           (
             <h4 className={cx('msg')}>{errorText}</h4>  
           ) : (
