@@ -185,8 +185,6 @@ const skillsFilter = (
       return skillOrder(newState.filter( j => {
         return j.type !== action.skillData.type;
       }));
-    case types.FETCH_APPLICANTS_FILTER_SKILLS_SUCCESS:
-      return action.res.data;
     case types.CREATE_APPLICANT_FILTER_SUCCESS:
       return [];
     case types.APPLICANT_FILTER_CLEAR:
@@ -201,8 +199,6 @@ const educationFilter = (
   action
 ) => {
   switch (action.type) {
-    case types.GET_ROLE_SUCCESS:
-      return action.res.data.filter.school
     case types.TOGGLE_APPLICANT_EDU_FILTER:
       const requirments = [...state];
       const dupIndex = requirments.indexOf(action.data);

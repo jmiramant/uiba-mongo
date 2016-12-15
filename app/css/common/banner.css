@@ -1,0 +1,14 @@
+@import 'typography';
+@import 'colors';
+
+:root {
+
+  --blue-banner {
+    padding: 10px 38px;
+    background-color: #B3E5FC;
+    border-radius: 2px;
+    border: 1px solid #E8E8E8;
+    font-size: 12px;
+    margin-bottom: 30px;
+  }
+}

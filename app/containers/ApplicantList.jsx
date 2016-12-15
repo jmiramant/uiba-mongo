@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ApplicantShow from 'containers/ApplicantShow';
+import RoleRequirements from 'components/RoleRequirements';
 import ApplicantFilterController from 'containers/ApplicantFiltersController';
 import ApplicantListItem from 'components/applicants/ApplicantListItem';
 import FilteredApplicantSelector from 'selectors/FilteredApplicantSelector';
@@ -11,6 +12,7 @@ import * as roleActionCreator from 'actions/roles';
 import * as applicantActionCreator from 'actions/applicants';
 import * as addressActionCreator from 'actions/address';
 import * as scoreActionCreator from 'actions/score';
+import * as messageActionCreator from 'actions/messages';
 
 import classNames from 'classnames/bind';
 import styles from 'css/components/applicantList';
@@ -31,57 +33,26 @@ class ApplicantList extends React.Component {
   }
 
   state = {
-    role: true,
-    score: true
+    score: true,
+    prevSkills: []
   }
 
-  componentWillReceiveProps(props) {
-    const { applicants, role, applicantsBase, applicantActions, score} = props;
-
-    const isRoleSet = role._id;
-    const isRoleFetching = !props.roleFetching;
-    const isRoleFuncCalled = this.state.role;
-
-    if (isRoleSet && isRoleFetching && isRoleFuncCalled) {
-      this.setState({role: false});
-      this.setFilters();
-    }
-
-    const isApplicantListLoaded = applicantsBase.length > 0;
-    const isScoreAlreadySet = score.scores.length === 0;
+  componentDidUpdate(prevProps, prevState) {
+    const { roles: { skills }, score, applicantsBase } = this.props;
+    const { prevSkills } = this.state;
     const isScoreFetching = !score.isFetching;
-    const isScoreCalled = this.state.score;
-
-    if (isApplicantListLoaded && isScoreAlreadySet && isScoreFetching && isScoreCalled) {
-      this.setState({score: false});
-      this.fetchScores(role.filter.skill);
+    const isApplicantListLoaded = applicantsBase.length > 0;
+    
+    if (isApplicantListLoaded && !_.isEqual(prevSkills, skills) || ( !isScoreFetching && prevSkills.length === 0)) {
+      this.fetchScores(applicantsBase, skills);
+      this.setState({prevSkills: skills});
     }
   }
 
-  setFilters() {
-    const { role, applicantActions } = this.props;
-    let range = {};
-
-    if (role.range && role.range.included.length > 0) {
-      range.range = role.range.range;
-      range.zip = role.range.zipCode;
-      range.rangeZips = role.range.included
-    }
-    let skills = [];
-    if (role.skills && role.skills.length > 0) skills = role.skills
-    applicantActions.fetchFilterSkills(skills);
-
-    applicantActions.filterChange({
-      school: role.degreeRequirements,
-      skill: skills,
-      address: range
-    });
-  }
-
-  fetchScores(skills) {
-    const { scoreActions, applicantsBase } = this.props
+  fetchScores(applicantsBase, skills) {
+    const { scoreActions } = this.props
     const profIds = applicantsBase.map( (p) => { return p._id});
-    scoreActions.fetchScores(['584822accdcfcf1700f507d5'], skills);
+    scoreActions.fetchScores(profIds, skills);
   }
 
   clearFilters() {
@@ -110,13 +81,33 @@ class ApplicantList extends React.Component {
     this.clearFilters();
   }
 
+  updateRoleSkills(_skill) {
+    const { role: { _id } , roles, roleActions } = this.props;
+    const i = _.findIndex(roles.skills, (s) => {return s.type === _skill.type});
+    const skills = [...roles.skills];
+    i !== -1 ? skills[i] = _skill : skills.push(_skill)
+    roleActions.updateSkills({_id, skills });
+  }
+
+  handleSkillDelete(skill) {
+    const { messageActions, roles, roleActions } = this.props;
+    if (roles.skills.length > 3) {
+      roleActions.deleteSkill(skill);  
+    } else {
+      messageActions.createMessage('You must keep at least 3 Role Skill Requirements');
+    }
+  }
+
   render() {
 
     const {
       role,
+      roles,
       score,
       company,
+      messages,
       applicants,
+      roleActions
     } = this.props;
 
     return (
@@ -158,6 +149,23 @@ class ApplicantList extends React.Component {
           </TableBody>
         </Table>
         { applicants.length ? (null) : (<div onClick={this.clearFilters.bind(this)} className={cx('no-results')}>No applicants fit these filters. Click to clear filters.</div>)}        
+      
+        <div className={cx('req-container')}>
+          <div className={cx('req-title')}>Role Skill Requirements</div>
+          <div className={cx('req-sub')}>Uiba uses role skill requirements to generate a score for each candidates. Edit this role's skill requirements to see how it impacts candidate ranking.</div>
+          <RoleRequirements
+            roles={roles}
+            messages={messages}
+            fetchSkills={roleActions.fetchSkills}
+            onEditSave={this.updateRoleSkills.bind(this)}
+            onSkillSave={this.updateRoleSkills.bind(this)}
+            skillChange={roleActions.skillChange}
+            skillsChange={roleActions.skillsChange}
+            onSkillDelete={this.handleSkillDelete.bind(this)}
+            toggleSkillAdd={roleActions.toggleRoleSkillsAdd}
+          />
+        </div>
+
       </div>
     );
   }
@@ -166,12 +174,14 @@ class ApplicantList extends React.Component {
 function mapStateToProps(state) {
   return {
     role: state.role.role,
-    roleFetching: state.role.isFetching,
+    roles: state.role,
+    score: state.score,
+    scores: state.score.scores,
     company: state.company.company,
     applicants: FilteredApplicantSelector(state),
     applicantsBase: state.applicant.applicants,
-    score: state.score,
-    scores: state.score.scores,
+    roleFetching: state.role.isFetching,
+    messages: state.message,
   };
 }
 
@@ -181,6 +191,7 @@ function mapDispatchToProps (dispatch) {
     addressActions: bindActionCreators(addressActionCreator, dispatch),
     applicantActions: bindActionCreators(applicantActionCreator, dispatch),
     scoreActions: bindActionCreators(scoreActionCreator, dispatch),
+    messageActions: bindActionCreators(messageActionCreator, dispatch),
   }
 }
 

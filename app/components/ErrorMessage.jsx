@@ -25,9 +25,9 @@ class ErrorMessage extends React.Component {
       messageActions
     } = this.props;
 
-    if (this.shouldShow()) {
-      setTimeout(messageActions.dismissError, 6000);
-    }
+    // if (this.shouldShow()) {
+    //   setTimeout(messageActions.dismissError, 6000);
+    // }
 
     return (
       <span>

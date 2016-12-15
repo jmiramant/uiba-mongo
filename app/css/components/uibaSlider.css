@@ -16,7 +16,7 @@
 .stage-label {
   text-align: center;
   display: inline-block;
-  font-size: 12px;
+  font-size: 10px;
   cursor: pointer;
   -webkit-transition: all 0.2s ease-in-out;
   -o-transition: all 0.2s ease-in-out;

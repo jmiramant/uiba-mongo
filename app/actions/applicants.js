@@ -85,14 +85,6 @@ export function deleteSkill(skillData) {
   };
 }
 
-export function fetchFilterSkills(skillsArray) {
-  const path = '/skill-list/' + JSON.stringify(skillsArray);
-  return {
-    type: types.FETCH_APPLICANTS_FILTER_SKILLS,
-    promise: makeApplicantRequest('get', {}, path)
-  }
-}
-
 export function clearFilters() {
   return {
     type: types.APPLICANT_FILTER_CLEAR,

@@ -120,15 +120,10 @@ const eduRequirements = (
   action
 ) => {
   switch (action.type) {
-    case types.GET_ROLE_SUCCESS:
-      return action.res.data.filter.school
     case types.TOGGLE_ROLE_ADD:
       return [];
     case types.TOGGLE_ROLE_EDU_REQUIREMENT:
-      const requirments = [...state];
-      const dupIndex = requirments.indexOf(action.data);
-      dupIndex !== -1 ? requirments.splice(dupIndex, 1) : requirments.push(action.data)
-      return requirments
+      return state
     default:
       return state;
   }
@@ -198,6 +193,14 @@ const skills = (
 ) => {
   let updatedSkill
   switch (action.type) {
+    case types.GET_ROLE_SUCCESS:
+      return skillOrder(action.res.data.skills);
+    case types.UPDATE_ROLE_SUCCESS:
+      return skillOrder(action.data.skills);
+    case types.GET_ROLES_SUCCESS:
+      return [];
+    case types.FETCH_APPLICANTS_FILTER_SKILLS_SUCCESS:
+      return skillOrder(action.res.data);
     case types.CREATE_ROLE_SKILL:
       return skillOrder([...state, action.skillData])
     case types.UPDATE_ROLE_SKILL:
@@ -210,7 +213,7 @@ const skills = (
       return skillOrder(updatedSkill)
     case types.DELETE_ROLE_SKILL:
       updatedSkill = [...state];
-      return skillOrder(updatedSkill.filter( j => {
+      return skillOrder(_.filter(updatedSkill, j => {
         return j.type !== action.skillData.type;
       }));
     case types.CREATE_ROLE_SUCCESS:

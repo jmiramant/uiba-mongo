@@ -28,7 +28,6 @@ class ApplicantFiltersController extends Component {
       address,
       messages,
       applicant,
-      roleActions,
       filterActions,
       applicantLength,
       applicantActions,
@@ -80,7 +79,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    roleActions: bindActionCreators(roleActionCreator, dispatch),
     applicantActions: bindActionCreators(applicantActionCreator, dispatch),
     addressActions: bindActionCreators(addressActionCreator, dispatch),
     filterActions: bindActionCreators(filterActionCreator, dispatch),

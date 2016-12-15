@@ -1,3 +1,6 @@
+@import 'common/banner';
+
+
 .experience-selector {
   padding: 10px 30px;
   color: rgba(0, 0, 0, 0.870588);
@@ -38,9 +41,9 @@
 }
 
 .req-container {
-  margin: 25px 0;
+  margin: 25px 0 5px;
   display: inline-block;
-  padding: 10px 16px;
+  padding: 10px 16px 0px 16px;
   background-color: rgb(232, 232, 232);
   border-radius: 2px;
 }
@@ -54,4 +57,13 @@
   padding: 0;
   display: inline-block;
   width: 100%;
+}
+
+.req-msg {
+  @apply --blue-banner;
+}
+
+.banner {
+  @apply --blue-banner;
+  text-align: center;
 }

@@ -9,15 +9,13 @@ const RoleSchema = new mongoose.Schema({
   title: { type: String, default: '', required: true},
   description: { type: String, default: '', required: true },
   applicantCode: { type: String },
-  filter: {
-    school: [{ type: String, enum: degreeEnum }],
-    skill: [{id: {type: Schema.Types.ObjectId, ref: 'Skill'},
-            type: { type: String},
-            proficiency: { type: Number},
-            lengthOfUse: { type: Number }
-    }],
-    address: {}
-  },
+  skills: [
+    {
+     type: { type: String},
+     proficiency: { type: Number},
+     lengthOfUse: { type: Number }
+    }
+  ],
   appliedCount: { type: Number, default: 0},
   applicants: [{type: Schema.Types.ObjectId, ref: 'Profile'}],
   isArchived: {type: Boolean, default: false},

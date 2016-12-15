@@ -180,6 +180,14 @@ export function toggleRoleSkillsAdd (data, persist = false) {
   };
 }
 
+export function fetchSkills(skillsArray) {
+  const path = '/skill-list/' + JSON.stringify(skillsArray);
+  return {
+    type: types.FETCH_ROLE_SKILLS,
+    promise: makeRolesRequest('get', {}, path)
+  }
+}
+
 export function skillChange(state) {
   return {
     type: types.CHANGE_ROLE_SKILL,
@@ -206,6 +214,34 @@ export function updateSkill(skillData) {
     type: types.UPDATE_ROLE_SKILL,
     skillData
   };
+}
+
+export function saveSkills(skillData) {
+  return (dispatch) => {
+    return makeRolesRequest('post', skillData, '/roles')
+      .then(res => {
+        if (res.status === 200) {
+          return dispatch(updateRoleSuccess(res.data));
+        }
+      })
+      .catch(() => {
+        return dispatch(updateRoleFailure({ error: 'Oops! Something went wrong and we couldn\'t create your role.'}));
+      });
+  }
+}
+
+export function updateSkills(skillData) {
+  return (dispatch) => {
+    return makeRolesRequest('put', skillData, '/roles')
+      .then(res => {
+        if (res.status === 200) {
+          return dispatch(updateRoleSuccess(res.data));
+        }
+      })
+      .catch(() => {
+        return dispatch(updateRoleFailure({ error: 'Oops! Something went wrong and we couldn\'t create your role.'}));
+      });
+  }
 }
 
 export function deleteSkill(skillData) {

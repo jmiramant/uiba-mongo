@@ -149,7 +149,6 @@ export default class ApplicantFiler extends React.Component {
             {role.role._id && isApplicants ? (
               <FilterPersist
                 role={role.role}
-                defaultFilter={role.role.filter}
                 filters={filters}
                 isFilterSet={isFilterSet}
                 setFilters={setFilters}

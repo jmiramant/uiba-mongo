@@ -73,64 +73,43 @@ export function list(req, res) {
   });
 }
 
-export function create(req, res) {
+const skillParsers = {
 
-  const zr = _.map(req.body.address.rangeZips, (z) => {return z['zip_code']})
+  toObject: (skills) => {
+    const skillCreates = [];
+    
+    _.each(skills, (skill) => {
+      const s = new Skill();
+      s.type = skill.type;
+      s.role_id = role._id
+      s.proficiency = skill.proficiency;
+      s.lengthOfUse = skill.lengthOfUse;
+      skillCreates.push(s.save);
+    });
 
-  let address = {}
-  if (req.body.address) {    
-    address = {
-      rangeZips: zr,
-      range: req.body.address.range,
-      zip: req.body.address.zip.toString()
-    }
+    return skillCreates;
+  },
+
+  formatSkillCreateResp: (resp) => {
+    return _.reduce(resp, (resp, s) => { 
+      if (s[0]._id) resp.push({_id: s[0]._id, type: s[0].type, proficiency: s[0].proficiency, lengthOfUse: s[0].lengthOfUse});
+      return resp;
+    },[])
   }
 
+}
+
+export function create(req, res) {
 
   Roles.create({
     profile_id: mongoose.Types.ObjectId(req.user.profile_id),
     company_id: mongoose.Types.ObjectId(req.body.company_id),
     title: req.body.title,
     description: req.body.description,
-    filter: {
-      school: req.body.degreeRequirements,
-      skill: [],
-      address: address
-    },
+    skills: req.body.skills,
   }, function(err, role) {
     if (err) return handleError(res, err);
-
-    if (req.body.skills && req.body.skills.length > 0) {
-
-      const skillCreates = [];
-      
-      _.each(req.body.skills, (skill) => {
-        const s = new Skill();
-        s.type = skill.type;
-        s.role_id = role._id
-        s.proficiency = skill.proficiency;
-        s.lengthOfUse = skill.lengthOfUse;
-        skillCreates.push(s.save);
-      })
-
-      async.parallel(skillCreates, (err, resp) => {
-        if (err) return res.status(404).send('Something went wrong saving skills.')
-
-        role.filter.skill = req.body.skills;
-
-        role.save((err, _role) => {
-          if (err) return handleError(res, err);
-          return res.json(_role);
-        })
-
-      });
-
-    } else {
-
-      return res.json(role);
-
-    }
-
+    return res.json(role);
   })
 
 }
@@ -139,17 +118,18 @@ export function update(req, res) {
 
   return Roles.findOne({
     "_id": req.body._id
-  }).exec((err, role) => {
+  }).exec((err, _role) => {
 
-    role.company_id = mongoose.Types.ObjectId(req.body.company_id);
-    role.title = req.body.title;
-    role.description = req.body.description;
-    role.appliedCount = req.body.appliedCount;
-    role.isArchived = req.body.isArchived;
+    if (req.body.company_id) _role.company_id = mongoose.Types.ObjectId(req.body.company_id);
+    if (req.body.title) _role.title = req.body.title;
+    if (req.body.description) _role.description = req.body.description;
+    if (req.body.appliedCount) _role.appliedCount = req.body.appliedCount;
+    if (req.body.isArchived) _role.isArchived = req.body.isArchived;
+    if (req.body.skills) _role.skills = req.body.skills;
 
-    role.save(err => {
+    _role.save((err, role) => {
       if (err) return handleError(err);
-      return res.json(role);
+      return res.json(role);      
     });
 
   })

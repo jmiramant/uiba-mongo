@@ -16,7 +16,8 @@ export default class SkillItem extends React.Component {
     skill: PropTypes.object.isRequired,
     skillChange: PropTypes.func.isRequired,
     saveSkillEdit: PropTypes.func.isRequired,
-    handleDelete: PropTypes.func.isRequired
+    handleDelete: PropTypes.func.isRequired,
+    style: PropTypes.object
   }
 
   constructor(props) {
@@ -44,10 +45,11 @@ export default class SkillItem extends React.Component {
     const { 
             isntLast, 
             skill, 
+            style,
             skillChange,
             errorMessage,
           } = this.props;
-
+    
     if (this.state.edit) {
 
       return (
@@ -66,7 +68,9 @@ export default class SkillItem extends React.Component {
       return (
         <div className={cx('chip-container')}>
         
-          <Chip className={cx('skillItem--chip')}>
+          <Chip className={cx('skillItem--chip')}
+            labelStyle={style}
+          >
             {skill.type} 
             <span 
               onClick={this.toggleEdit.bind(this)}

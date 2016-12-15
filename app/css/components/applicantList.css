@@ -1,5 +1,24 @@
+@import 'common/banner';
+@import '../common/colors';
+
 .no-results {
   text-align: center;
   margin: 20px;
   cursor: pointer;
+}
+
+.req-container {
+  border: 1px solid var(--colorBackground-tan);
+  padding: 10px 20px;
+  margin: 20px auto;
+  width: 85%;
+}
+
+.req-title {
+  font-size: 18px;
+  margin: 5px 0;
+}
+
+.req-sub {
+  @apply --blue-banner;
 }

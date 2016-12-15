@@ -96,6 +96,7 @@ class SkillList extends React.Component {
                     skillChange={skillsChange}
                     handleDelete={this.handleDelete}
                     saveSkillEdit={this.handleEditSave} 
+                    style={{fontSize: '12px', fontWeight: '400', lineHeight: '28px', paddingLeft: '10px', paddingRight: '10px'}}
                   />);
         })}
       </div>

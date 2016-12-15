@@ -95,11 +95,6 @@ export default class FilterPersistDropdown extends React.Component {
     }
   }
 
-  onDefaultFilter() {
-    this.closePopover();
-    this.props.onSelectFilter(this.props.defaultFilter);
-  }
-
   onCloseClick (name, scope, e) {
     e.preventDefault();
     const selectedFilter = _.find(scope.props.filters, (_f) => {return _f.name === name});
@@ -165,14 +160,6 @@ export default class FilterPersistDropdown extends React.Component {
                           />)
                 })}
                 { filters.length > 0 ? (<Divider />) : (null) }
-                <ListItem 
-                  key='Requirement'
-                  primaryText="Filter by Role Requirements"
-                  leftIcon={<ChevronRight style={iconStyle} />} 
-                  style={{fontSize: '14px'}}
-                  innerDivStyle={{padding: '5px 16px 5px 25px'}}
-                  onClick={this.onDefaultFilter.bind(this)}
-                />
               </List>
             </div>
 

@@ -114,7 +114,7 @@ class RoleList extends React.Component {
         </div>
       ) : (
         <span>
-          <NullProfItem target="role" />
+          <div className={cx('banner')}>Welcome to {company.name} Admin Portal. To get started click create new role. Place cursor over any element for more information</div>
         </span>
       )}
 

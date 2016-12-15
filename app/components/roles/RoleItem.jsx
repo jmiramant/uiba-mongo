@@ -72,7 +72,7 @@ export default class RoleItem extends React.Component {
               <FlatButton label={copiedLabel} primary={true} disabled={copiedLabel === 'Copied'} />
           </CopyToClipboard>
         </TableRowColumn>
-        <TableRowColumn><FlatButton onClick={this.handleArchive.bind(this)} label="Archive" primary={true} /></TableRowColumn>
+        <TableRowColumn><FlatButton onClick={this.handleArchive.bind(this)} label="Delete" primary={true} /></TableRowColumn>
         <TableRowColumn>
           {this.applicantViewActive(role) ? (
               <FlatButton label="View Applicants" primary={true} disabled={this.applicantViewActive(role)} />

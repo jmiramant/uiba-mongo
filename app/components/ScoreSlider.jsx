@@ -10,7 +10,7 @@ import styles from 'css/components/applicantFilter';
 const cx = classNames.bind(roleStyles);
 const cy = classNames.bind(styles);
 
-export default class RequirementSelectors extends React.Component {
+export default class ScoreSlider extends React.Component {
   
   static PropTypes =  {
     role: PropTypes.object.isRequired,
