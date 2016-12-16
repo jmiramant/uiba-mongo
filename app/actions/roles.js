@@ -22,6 +22,13 @@ export function roleChange(state) {
   };
 }
 
+export function roleEditChange(state) {
+  return {
+    type: types.CHANGE_ROLE_EDIT,
+    state
+  };
+}
+
 export function rolesChange(state) {
   return {
     type: types.CHANGE_ROLES,
@@ -32,6 +39,13 @@ export function rolesChange(state) {
 export function toggleRoleAdd (data) {
   return {
     type: types.TOGGLE_ROLE_ADD,
+    data: data
+  };
+}
+
+export function toggleRoleEdit (data) {
+  return {
+    type: types.TOGGLE_ROLE_EDIT,
     data: data
   };
 }
@@ -180,6 +194,14 @@ export function toggleRoleSkillsAdd (data, persist = false) {
   };
 }
 
+export function toggleRoleSkillsEdit (data, persist = false) {
+  return {
+    type: types.TOGGLE_ROLE_SKILL_EDIT_ADD,
+    data: data,
+    persist: persist
+  };
+}
+
 export function fetchSkills(skillsArray) {
   const path = '/skill-list/' + JSON.stringify(skillsArray);
   return {
@@ -262,5 +284,43 @@ export function deleteSkill(skillData) {
   return {
     type: types.DELETE_ROLE_SKILL,
     skillData
+  };
+}
+
+
+// edit actions
+
+export function editRoleSkillChange(state) {
+  return {
+    type: types.EDIT_ROLE_SKILL,
+    state
+  };
+}
+
+export function editRoleSkillCreate(skillData) {
+  return {
+    type: types.CREATE_EDIT_ROLE_SKILL,
+    skillData
+  };
+}
+
+export function deleteEditSkill(skillData) {
+  return {
+    type: types.DELETE_EDIT_ROLE_SKILL,
+    skillData
+  };
+}
+
+export function updateEditSkill(skillData) {
+  return {
+    type: types.UPDATE_EDIT_ROLE_SKILL,
+    skillData
+  };
+}
+
+export function skillsEditChange(state) {
+  return {
+    type: types.CHANGE_EDIT_ROLE_SKILLS,
+    state
   };
 }

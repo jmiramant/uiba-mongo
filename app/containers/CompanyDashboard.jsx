@@ -28,7 +28,9 @@ class CompanyDashboard extends Component {
       roles,
       addShow,
       company,
-      actions
+      actions,
+      editShow,
+      roleEdit,
     } = this.props;
 
     return (
@@ -36,11 +38,15 @@ class CompanyDashboard extends Component {
         <RoleList
           role={role}
           roles={roles}
+          roleEdit={roleEdit}
           company={company}
           addVisible={addShow}
+          editShow={editShow}
           onEditSave={actions.updateRole}
           toggleRoleAdd={actions.toggleRoleAdd}
+          toggleRoleEdit={actions.toggleRoleEdit}
           roleChange={actions.roleChange}
+          roleEditChange={actions.roleEditChange}
           rolesChange={actions.rolesChange}
           onRoleSave={actions.createRole}
           onToggleEduReqSelect={actions.toggleEduReqSelect}
@@ -53,7 +59,9 @@ class CompanyDashboard extends Component {
 CompanyDashboard.propTypes = {
   role: PropTypes.object,
   roles: PropTypes.array,
+  roleEdit: PropTypes.object,
   addShow: PropTypes.bool,
+  editShow: PropTypes.bool,
 };
 
 function mapStateToProps(state) {
@@ -62,6 +70,8 @@ function mapStateToProps(state) {
     roles: state.role.roles,
     addShow: state.role.addShow,
     company: state.company.company,
+    roleEdit: state.role.roleEdit,
+    editShow: state.role.editShow,
   };
 }
 

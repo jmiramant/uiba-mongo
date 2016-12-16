@@ -196,7 +196,7 @@ const skills = (
     case types.CHANGE_ROLE_SKILLS:
       updatedSkill = [...state];
       updatedSkill[_.findIndex(updatedSkill, {type: action.state.type})][action.state.field] = action.state.value
-      return skillOrder(updatedSkill)
+      return skillOrder(updatedSkill);
     case types.DELETE_ROLE_SKILL:
       updatedSkill = [...state];
       return skillOrder(_.filter(updatedSkill, j => {
@@ -209,14 +209,104 @@ const skills = (
   }
 };
 
+const editShow = (
+  state = false,
+  action
+) => {
+  switch (action.type) {
+    case types.TOGGLE_ROLE_EDIT:
+      let resp = false;
+      if (action.data && action.data._id) resp = true;
+      return resp
+    default:
+      return state;
+  }
+};
+
+const editSkill = (
+  state = {},
+  action
+) => {
+  let resp;
+  switch (action.type) {
+    case types.EDIT_ROLE_SKILL:
+      const newStateOjb = {...state}
+      newStateOjb[action.state.field] = action.state.value
+      return newStateOjb;
+    case types.TOGGLE_ROLE_SKILL_EDIT_ADD:
+      resp = action.persist;
+      if (action.data === true) resp = {};
+      return resp;
+    default:
+      return state;
+  }
+};
+
+
+const roleEdit = (
+  state = {},
+  action
+) => {
+  let resp;
+  let s;
+  switch (action.type) {
+    case types.CHANGE_ROLE_EDIT:
+      const newStateOjb = {...state}
+      newStateOjb[action.state.field] = action.state.value
+      return newStateOjb;
+    case types.CREATE_EDIT_ROLE_SKILL:
+      s = {...state};
+      s.skills.push(action.skillData);
+      skillOrder(s.skills)
+      return s;
+    case types.DELETE_EDIT_ROLE_SKILL: 
+      s = {...state};
+      s.skills  = skillOrder(_.filter(s.skills, j => {
+        return j.type !== action.skillData.type;
+      }));
+      return s;
+    case types.UPDATE_EDIT_ROLE_SKILL:
+      s = {...state};
+      s.skills[_.findIndex(s.skills, (j) => { return j.type === action.skillData.type; })] = action.skillData;
+      return s;
+    case types.CHANGE_EDIT_ROLE_SKILLS:
+      s = {...state};
+      s.skills[_.findIndex(s.skills, {type: action.state.type})][action.state.field] = action.state.value
+      skillOrder(s.skills);
+      return s;
+    case types.TOGGLE_ROLE_EDIT:
+      const a = action.data;
+      a ? resp = {_id: a._id, title: a.title, skills: a.skills, description: a.description} : resp = {};
+      return resp;
+    default:
+      return state;
+  }
+};
+
+const showEditSkillAdd = (
+  state = false,
+  action
+) => {
+  switch (action.type) {
+    case types.TOGGLE_ROLE_SKILL_EDIT_ADD:
+      return !state;
+    default:
+      return state;
+  }
+};
+
 const roleReducer = combineReducers({
   role,
   roles,
   skill,
   skills,
   addShow,
+  editSkill,
+  roleEdit,
+  editShow,
   isFetching,
   showSkillAdd,
+  showEditSkillAdd
 });
 
 export default roleReducer;

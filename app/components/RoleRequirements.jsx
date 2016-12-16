@@ -7,7 +7,9 @@ const cx = classNames.bind(styles);
 export default class RoleRequirements extends React.Component {
   
   static PropTypes =  {
-    roles: PropTypes.object.isRequired,
+    skill: PropTypes.object.isRequired,
+    skills: PropTypes.array.isRequired,
+    showSkillAdd: PropTypes.bool.isRequired,
     messages: PropTypes.object.isRequired,
     onEditSave: PropTypes.func.isRequired,
     fetchSkills: PropTypes.func.isRequired,
@@ -27,7 +29,7 @@ export default class RoleRequirements extends React.Component {
   }
 
   onSkillSave(skill) {
-    const { roles: { skills }, onSkillSave } = this.props;
+    const { skills , onSkillSave } = this.props;
     if (_.filter(skills, (s) => {return s.type === skill.type}).length) {
       this.setState({skillError: 'This skill has already been added.'});
       setTimeout(() => {
@@ -42,11 +44,13 @@ export default class RoleRequirements extends React.Component {
   render () {
 
     const {
-      roles,
+      skill, 
+      skills,
       messages,
       onEditSave,
-      onSkillDelete,
       skillChange,
+      showSkillAdd,
+      onSkillDelete,
       skillsChange,
       toggleSkillAdd,
     } = this.props;
@@ -58,9 +62,9 @@ export default class RoleRequirements extends React.Component {
     return (
       <div className={cx('req-container')}>
         <RoleSkills 
-          skill={roles.skill}
-          skills={roles.skills}
-          addVisible={roles.showSkillAdd}
+          skill={skill}
+          skills={skills}
+          addVisible={showSkillAdd}
           errorMessage={messages.errorMessage}
           toggleSkillAdd={toggleSkillAdd}
           skillChange={skillChange}

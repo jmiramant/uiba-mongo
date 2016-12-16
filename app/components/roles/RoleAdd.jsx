@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import * as roleActionCreators from 'actions/roles';
 
-import { validateJobHelper } from '../helpers/roleValidations';
+import { validateRoleHelper } from '../helpers/roleValidations';
 import ErrorMessage from 'components/ErrorMessage';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -26,7 +26,6 @@ class RoleAdd extends React.Component {
     toggleEdit: PropTypes.func.isRequired,
     addVisible: PropTypes.bool,
     onRoleSave: PropTypes.func.isRequired,
-    onToggleEduReqSelect: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -60,7 +59,7 @@ class RoleAdd extends React.Component {
   }
 
   validate() {
-    const validationResp = validateJobHelper(this.props.roles, this.state.validationErrors);
+    const validationResp = validateRoleHelper(this.props.role, this.props.roles.skills, this.state.validationErrors);
     this.setState({validationErrors: validationResp.errors});
     return validationResp.containsErrors;
   }
@@ -91,7 +90,6 @@ class RoleAdd extends React.Component {
       messages,
       addVisible,
       skillActions,
-      onToggleEduReqSelect,
     } = this.props;
 
     const isVisible = (role.description || addVisible) ? '' : ' ' + cx('closed');
@@ -131,7 +129,9 @@ class RoleAdd extends React.Component {
         />
         <div className={cx('req-msg')}>To be effective, the role must include at least 3 knowledge, skill, and ability requirements. The Uiba algorithm uses these to determine applicant fit.</div>
         <RoleRequirements
-          roles={roles}
+          skill={roles.skill}
+          skills={roles.skills}
+          showSkillAdd={roles.showSkillAdd}
           messages={messages}
           fetchSkills={actions.fetchSkills}
           onEditSave={actions.updateSkill}

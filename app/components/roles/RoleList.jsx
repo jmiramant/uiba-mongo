@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import RoleItem from 'components/roles/RoleItem';
 import RoleAdd from 'components/roles/RoleAdd';
+import RoleEdit from 'components/roles/RoleEdit';
 import NullProfItem from 'components/ProfileNull';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow} from 'material-ui/Table';
 import Divider from 'material-ui/Divider';
@@ -18,11 +19,14 @@ class RoleList extends React.Component {
   static propTypes = {
     role: PropTypes.object,
     roles: PropTypes.array,
+    roleEdit: PropTypes.object,
     addVisible: PropTypes.bool.isRequired,
+    editShow: PropTypes.bool.isRequired,
     onEditSave: PropTypes.func.isRequired,
     toggleRoleAdd: PropTypes.func.isRequired,
     onRoleSave: PropTypes.func.isRequired,
     roleChange: PropTypes.func.isRequired,
+    roleEditChange: PropTypes.func.isRequired,
     rolesChange: PropTypes.func.isRequired,
     onToggleEduReqSelect: PropTypes.func.isRequired,
 
@@ -45,6 +49,11 @@ class RoleList extends React.Component {
     this.props.toggleRoleAdd(this.props.addVisible)
   }
 
+  handleEdit = (data) => {
+    this.props.onEditSave(data);
+    this.props.toggleRoleEdit();
+  }
+
   handleEditSave = (data) => {
     this.props.onEditSave(data);
   }
@@ -57,10 +66,13 @@ class RoleList extends React.Component {
     const { role,
             roles,
             company,
+            roleEdit,
+            editShow,
             addVisible,
             roleChange,
             rolesChange,
-            onToggleEduReqSelect
+            roleEditChange,
+            toggleRoleEdit,
           } = this.props;
 
     const { copiedPath } = this.state
@@ -83,6 +95,7 @@ class RoleList extends React.Component {
               <TableHeaderColumn>Apply Url</TableHeaderColumn>
               <TableHeaderColumn></TableHeaderColumn>
               <TableHeaderColumn></TableHeaderColumn>
+              <TableHeaderColumn></TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody
@@ -97,6 +110,7 @@ class RoleList extends React.Component {
                 copiedPath={this.handleCopied.bind(this)}
                 copiedLabel={copiedPath === _role.applicantCode ? 'Copied' : 'Copy Share Link'}
                 company={company}
+                toggleRoleEdit={toggleRoleEdit}
                 rolesChange={rolesChange}
                 onRoleSave={this.handleEditSave} 
               />);
@@ -118,6 +132,14 @@ class RoleList extends React.Component {
         </span>
       )}
 
+      <RoleEdit
+        role={roleEdit}
+        onRoleSave={this.handleEdit}
+        roleChange={roleEditChange}
+        toggleEdit={toggleRoleEdit} 
+        editShow={editShow}
+      />
+
       <RoleAdd
         role={role}
         company={company}
@@ -125,10 +147,7 @@ class RoleList extends React.Component {
         roleChange={roleChange}
         toggleEdit={this.toggleAddRole.bind(this)} 
         addVisible={addVisible}
-        onToggleEduReqSelect={onToggleEduReqSelect}
       />
-
-      
 
     </div>)
   }
