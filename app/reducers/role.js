@@ -115,20 +115,6 @@ const addShow = (
   }
 };
 
-const eduRequirements = (
-  state = [],
-  action
-) => {
-  switch (action.type) {
-    case types.TOGGLE_ROLE_ADD:
-      return [];
-    case types.TOGGLE_ROLE_EDU_REQUIREMENT:
-      return state
-    default:
-      return state;
-  }
-};
-
 const showSkillAdd = (
   state = false,
   action
@@ -223,36 +209,14 @@ const skills = (
   }
 };
 
-const address = (
-  state = {zip: {}, range: '', rangeZips: []},
-  action
-) => {
-  switch (action.type) {
-    case types.SET_ZIP:
-      return {...state, zip: action.data};
-    case types.SET_RANGE:
-      return {...state, range: action.data};
-    case types.UPDATE_RANGE_AUTOFILL_SUCCESS:
-      return {...state, rangeZips: action.results.data.zip_codes};
-    case types.CLEAR_RANGE_ADDRESS:
-    case types.TOGGLE_ROLE_ADD:
-    case types.TOGGLE_ADDRESS_EDIT:
-      return {zip: {}, range: '', rangeZips: []};
-    default:
-      return state;
-  }
-};
-
 const roleReducer = combineReducers({
   role,
   roles,
   skill,
   skills,
-  address,
   addShow,
   isFetching,
   showSkillAdd,
-  eduRequirements,
 });
 
 export default roleReducer;

@@ -244,6 +244,20 @@ export function updateSkills(skillData) {
   }
 }
 
+export function deleteSkills(skillData) {
+  return (dispatch) => {
+    return makeRolesRequest('put', skillData, '/roles')
+      .then(res => {
+        if (res.status === 200) {
+          return dispatch(updateRoleSuccess(res.data));
+        }
+      })
+      .catch(() => {
+        return dispatch(updateRoleFailure({ error: 'Oops! Something went wrong and we couldn\'t create your role.'}));
+      });
+  }
+}
+
 export function deleteSkill(skillData) {
   return {
     type: types.DELETE_ROLE_SKILL,

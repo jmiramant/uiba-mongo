@@ -89,10 +89,13 @@ class ApplicantList extends React.Component {
     roleActions.updateSkills({_id, skills });
   }
 
-  handleSkillDelete(skill) {
-    const { messageActions, roles, roleActions } = this.props;
-    if (roles.skills.length > 3) {
-      roleActions.deleteSkill(skill);  
+  handleSkillDelete(_skill) {
+    const { role: { _id }, messageActions, roles: { skills }, roleActions } = this.props;
+    if (skills.length > 3) {
+      const i = _.findIndex(skills, (s) => {return s.type === _skill.type});
+      const _skills = [...skills];
+      _skills.splice(i, 1);
+      roleActions.updateSkills({_id, skills: _skills});
     } else {
       messageActions.createMessage('You must keep at least 3 Role Skill Requirements');
     }

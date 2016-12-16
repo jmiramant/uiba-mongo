@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
-import { dismissMessage } from 'actions/messages';
+import * as messageActionCreator from 'actions/messages';
 import CloseIcon from 'material-ui/svg-icons/navigation/close';
 import classNames from 'classnames/bind';
 import styles from 'css/components/message';
@@ -17,21 +18,30 @@ class Message extends React.Component {
   }
   
   autoHide() {
-    setTimeout(dismissMessage, 6000)
+    const t = setTimeout( (a) => {
+      this.props.actions.dismissMessage();
+    }, 5000);
+    this.setState({autoHide: t})
   }
 
-  componentDidUpdate() {
-    this.autoHide();
+  componentWillReceiveProps(nextProps) {
+    if (this.state.autoHide) {
+      clearTimeout(this.state.autoHide);
+      this.setState({autoHide: undefined});
+    }
+    
+    if (nextProps.message.length > 0) this.autoHide();
+
   }
 
   render() {
-    const {message, dismissMessage, type} = this.props;
+    const {message, actions, type} = this.props;
     
     return (<div className={cx('message', {
       show: message && message.length > 0,
       success: type === 'SUCCESS',
       error: type === 'ERROR',
-    })} onClick={dismissMessage}>{message}
+    })} onClick={actions.dismissMessage}>{message}
       <CloseIcon 
         className={cx('icon') + ' pull-right'}
       />
@@ -42,11 +52,16 @@ class Message extends React.Component {
 Message.propTypes = {
   message: PropTypes.string,
   type: PropTypes.string,
-  dismissMessage: PropTypes.func
 };
 
 function mapStateToProps(state) {
   return {...state.message.message};
 }
 
-export default connect(mapStateToProps, { dismissMessage })(Message);
+function mapDispatchToProps (dispatch) {
+  return {
+    actions: bindActionCreators(messageActionCreator, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Message);

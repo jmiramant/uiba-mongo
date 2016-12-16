@@ -91,7 +91,6 @@ class RoleAdd extends React.Component {
       messages,
       addVisible,
       skillActions,
-      eduRequirements,
       onToggleEduReqSelect,
     } = this.props;
 
@@ -180,7 +179,6 @@ function mapStateToProps(state) {
     roles: state.role,
     address: state.address,
     messages: state.message,
-    eduRequirements: state.role.eduRequirements,
   };
 }
 

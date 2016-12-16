@@ -75,9 +75,11 @@ class CompanyContainer extends React.Component {
       children,
       company
     } = this.props;
-    
+
     const steps = this.stepHandler(children.props.location.pathname);
     const stepNames = ['Dashboard', 'Applicants List', 'Applicants Profile'];
+    let width = '13%'
+    if (steps && steps.length > 1) width = '50%'; 
 
     return (
       <div className={cx('companyAdmin-container') + ' container'}>
@@ -89,11 +91,9 @@ class CompanyContainer extends React.Component {
         <div className={cx('container-card') + ' col-md-12'}>
           { profile.company_id && company._id ? (
             <div>
-              { steps && steps.length > 1 ? (
-                <span>
                 <Stepper
                   linear={false}
-                  style={{width: '50%', margin: '-12px auto 0', height: '40px'}}
+                  style={{width: width, margin: '-12px auto 0', height: '40px'}}
                 >
 
                   {steps.map( (step, i) => {
@@ -107,8 +107,6 @@ class CompanyContainer extends React.Component {
 
                 </Stepper>
                 <Divider />
-                </span>
-              ) : (null)}
               {children}
             </div>
           ) : (
