@@ -69,18 +69,29 @@ export default class RoleItem extends React.Component {
     return (
         
       <TableRow>
-        <TableRowColumn>{role.title}</TableRowColumn>
-        <TableRowColumn>{moment(new Date(role.createdAt)).format('MMM DD, YYYY')}</TableRowColumn>
-        <TableRowColumn>{role.appliedCount}</TableRowColumn>
+        <TableRowColumn>
+          {role.title}
+        </TableRowColumn>
+        <TableRowColumn
+          style={{paddingLeft: '17px'}}
+        >
+          {moment(new Date(role.createdAt)).format('MMM DD, YYYY')}
+        </TableRowColumn>
+        <TableRowColumn>
+          {role.appliedCount}
+        </TableRowColumn>
         <TableRowColumn style={{paddingLeft: '0px', paddingRight: '10px'}} >
           <CopyToClipboard text={window.location.origin + '/apply/' + company.name_lower + '/' + role.applicantCode}
             onCopy={() => { this.setState({copied: true}); copiedPath(role.applicantCode)}}>
               <FlatButton labelStyle={{fontSize: '12px'}} style={{paddingLeft: '0px', paddingRight: '10px'}} label={copiedLabel} primary={true} disabled={copiedLabel === 'Copied'} />
           </CopyToClipboard>
         </TableRowColumn>
-        <TableRowColumn style={{width: '100px'}}><FlatButton style={{paddingLeft: '0px', paddingRight: '10px'}} labelStyle={{fontSize: '12px'}} onClick={this.editRole.bind(this)} label="Edit" primary={true} /></TableRowColumn>
-        <TableRowColumn><FlatButton labelStyle={{fontSize: '12px'}} onClick={this.handleArchive.bind(this)} label="Delete" primary={true} /></TableRowColumn>
-        <TableRowColumn>
+        <TableRowColumn style={{width: '100px', paddingLeft: '0'}}><FlatButton style={{paddingLeft: '0px', paddingRight: '10px'}} labelStyle={{fontSize: '12px'}} onClick={this.editRole.bind(this)} label="Edit" primary={true} /></TableRowColumn>
+        <TableRowColumn
+        ><FlatButton labelStyle={{fontSize: '12px'}} onClick={this.handleArchive.bind(this)} label="Delete" primary={true} /></TableRowColumn>
+        <TableRowColumn
+          style={{paddingLeft: '0'}}
+        >
           {this.applicantViewActive(role) ? (
               <FlatButton labelStyle={{fontSize: '12px'}} label="View Applicants" primary={true} disabled={this.applicantViewActive(role)} />
           ) : (
