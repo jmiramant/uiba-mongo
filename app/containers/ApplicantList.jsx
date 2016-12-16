@@ -156,8 +156,11 @@ class ApplicantList extends React.Component {
         <div className={cx('req-container')}>
           <div className={cx('req-title')}>Role Skill Requirements</div>
           <div className={cx('req-sub')}>Uiba uses role skill requirements to generate a score for each candidates. Edit this role's skill requirements to see how it impacts candidate ranking.</div>
+
           <RoleRequirements
-            roles={roles}
+            skill={roles.skill} 
+            skills={roles.skills}
+            showSkillAdd={roles.showSkillAdd}
             messages={messages}
             fetchSkills={roleActions.fetchSkills}
             onEditSave={this.updateRoleSkills.bind(this)}
