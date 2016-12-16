@@ -24,7 +24,12 @@
 }
 
 .header-container {
-  height: 40px;
+  height: 10px;
+}
+
+.footer-container {
+  float: left;
+  width: 100%;
 }
 
 .filter-state {

@@ -8,9 +8,10 @@
 }
 
 .req-container {
-  border: 1px solid var(--colorBackground-tan);
+  border: 1px solid rgb(223,223,223);
   padding: 10px 20px;
   margin: 20px auto;
+  border-radius: 2px;
   width: 85%;
 }
 

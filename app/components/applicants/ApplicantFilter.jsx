@@ -139,31 +139,14 @@ export default class ApplicantFiler extends React.Component {
     const { skillError } = this.props;
 
     const isFilterSet = this.isFilters(setFilters);
+    let height = {};
+    if (isFilterSet) height = {height: '45px'} 
 
     return (
       <div className={cx('req-container') + " " + cy('filter-container')}>
 
         <div className={cy('header-container')}>
           <p className={cx('req-title') + " " + cy('filter-title')}>Filter Candidates</p>
-          <div className={cy('filter-state') + ' pull-right'}>
-            {role.role._id && isApplicants ? (
-              <FilterPersist
-                role={role.role}
-                filters={filters}
-                isFilterSet={isFilterSet}
-                setFilters={setFilters}
-                fetchFilters={fetchFilters}
-                onDeleteFilter={onDeleteFilter}
-                onSelectFilter={onSelectFilter}
-                handleFilterSave={onFilterSave}
-              />
-            ) : (null)}
-            { isFilterSet ? (
-              <span>
-                <RaisedButton style={{margin: '0 10px'}} labelStyle={{fontSize: '11px'}} className={cy('filter-btn')} label="clear filters" onClick={clearFilters} primary={true} />
-              </span>
-            ) : (null)}
-          </div>
         </div>
 
         <div className={cx('req-btns') +" col-md-3"}>
@@ -260,6 +243,28 @@ export default class ApplicantFiler extends React.Component {
           onSet={filterChange}
           scoreFilter={setFilters.score}
         />
+        <div style={height} className={cy('footer-container')}>
+
+          <div className={cy('filter-state') + ' pull-right'}>
+            {role.role._id && isApplicants && isFilterSet ? (
+              <FilterPersist
+                role={role.role}
+                filters={filters}
+                isFilterSet={isFilterSet}
+                setFilters={setFilters}
+                fetchFilters={fetchFilters}
+                onDeleteFilter={onDeleteFilter}
+                onSelectFilter={onSelectFilter}
+                handleFilterSave={onFilterSave}
+              />
+            ) : (null)}
+            { isFilterSet ? (
+              <span>
+                <RaisedButton style={{margin: '0 10px'}} labelStyle={{fontSize: '11px'}} className={cy('filter-btn')} label="clear filters" onClick={clearFilters} primary={true} />
+              </span>
+            ) : (null)}
+          </div>
+        </div>
 
       </div>
     )
