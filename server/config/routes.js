@@ -79,7 +79,7 @@ export default (app) => {
     app.get('/company/:id', companysController.get);
     app.get('/company', companysController.get);
     app.post('/company', companysController.create);
-    app.post('/api/v1/company', companysController.create);
+    app.post('/api/v1/company', jwtauth, companysController.create);
     app.put('/company', companysController.update);
     app.delete('/company/:id', companysController.remove);
     app.get('/companies/typeahead', companysController.typeahead);
@@ -242,7 +242,7 @@ export default (app) => {
 
   if (adminController) {
     app.post('/admin/recovery', adminController.recovery)
-    app.get('/admin/delete-user/:profile_id', jwtauth, adminController.deleteUser);
+    app.delete('/api/v1/admin/delete-user', adminController.deleteUser);
   } else {
     console.warn(unsupportedMessage('admin routes'));
   }
