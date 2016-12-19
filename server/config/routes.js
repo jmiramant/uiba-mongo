@@ -56,6 +56,7 @@ export default (app) => {
   if (addressessController) {
     app.get('/address/me', addressessController.me);
     app.get('/address/autofill', addressessController.autofill);
+    app.get('/address/saveByZip', addressessController.saveByZip);
     app.get('/address/radius', addressessController.zipInRadius);
     app.get('/address/:id', addressessController.get);
     app.post('/address', addressessController.create);

@@ -25,11 +25,7 @@ class AddressAutofillApp extends Component {
   }
 
   componentWillMount() {
-    if (this.props.type === 'company') {
-      this.actions.fetchCompanyAddress({name: this.props.name.toLowerCase()})
-    } else {
-      this.actions.fetchAddress()
-    }
+    this.actions.fetchAddress();
   }  
 
   handleSave() {
@@ -37,21 +33,18 @@ class AddressAutofillApp extends Component {
   }
 
   actions = bindActionCreators(actionCreators, this.props.dispatch);
-
   render() {
+
     return (
       <AddressAutofill
         error={this.props.error}
-        editMode={this.props.editMode}
-        editIconMode={this.props.editIconMode}
-        showEditIconMode={this.actions.showAddressEditIcon}
-        hideEditIconMode={this.actions.hideAddressEditIcon}
         onAddressEdit={this.actions.updateAddress}
-        toggleAddressEdit={this.actions.toggleAddressEdit}
         handleChange={this.actions.fetchAddressByZip}
         address={this.props.address} 
         autofill={this.props.autofill}
-        onAddressSave={this.handleSave.bind(this)}
+        deleteAddress={this.actions.deleteAddress}
+        handleErrorMsg={this.actions.handleErrorMsg}
+        onAddressSave={this.actions.saveByZip}
       />
     );
   }

@@ -52,9 +52,39 @@ export function zipInRadius(req, res) {
   })
 }
 
+export function saveByZip(req, res) {
+  const url = 'http://www.zipcodeapi.com/rest/' + zipCodeAPI.key + '/info.json/' + req.query.search + '/radians'
+  request(url, (error, response, body) => {
+    const b = JSON.parse(body);
+    if (b.error_code) {
+      return res.status(401).json({
+        message: b.error_msg
+      });
+    } else if (error) {
+      return res.status(401).json({
+        message: error
+      });
+    } else {
+      Address.create({
+        profile_id: req.user.profile_id,
+        zip_code: b.zip_code,
+        lat: b.lat,
+        lng: b.lng,
+        city: b.city,
+        state: b.state,
+        timezone: b.timezone["timezone_abbr"],
+        acceptable_city_names: b.acceptable_city_names
+      }, function(err, address) {
+        if (err) return handleError(res, err);
+        return res.json(address);
+      });
+    }
+  });
+}
+
 export function me(req, res) {
 
-  Address.findOne(typeRequest('profile', req.user.profile_id)).exec((err, address) => {
+  Address.find(typeRequest('profile', req.user.profile_id)).exec((err, address) => {
     if (err) return handleError(res, err);
     if (!address) return handleError(res, 'No address');
     return res.status(200).json(address);
@@ -141,5 +171,6 @@ export default {
   update,
   remove,
   autofill,
+  saveByZip,
   zipInRadius,
 };

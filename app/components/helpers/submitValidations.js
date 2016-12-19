@@ -31,7 +31,7 @@ export function validateSubmitHelper (props, errorStore) {
     errors.position = 'userCard';
   }
 
-  if (!props.address.address || !props.address.address.zip_code) {
+  if (!props.address.address || !props.address.address.length > 0) {
     errors.address = 'Please enter a zip code.';
     errors.position = 'userCard';
   }

@@ -4,34 +4,10 @@ import * as types from 'types';
 
 polyfill();
 
-export function toggleAddressEdit () {
-  return {
-    type: types.TOGGLE_ADDRESS_EDIT
-  };
-}
-
-export function showAddressEditIcon () {
-  return {
-    type: types.SHOW_ADDRESS_EDIT_ICON
-  };
-}
-
-export function hideAddressEditIcon (data) {
-  return {
-    type: types.HIDE_ADDRESS_EDIT_ICON,
-    data: data
-  };
-}
-
 export function updateAddressAutofill(results) {
   if (results.data && results.data.zip_codes) {
     return {
       type: types.UPDATE_RANGE_AUTOFILL_SUCCESS,
-      results
-    };
-  } else {
-    return {
-      type: types.UPDATE_ADDRESS_AUTOFILL_SUCCESS,
       results
     };
   }
@@ -48,6 +24,19 @@ export function fetchAddressByZip(zipcode) {
     makeAddressRequest('get', null,  apiUrl)
       .then(response => {
         dispatch(updateAddressAutofill(response))
+      });
+  }
+}
+
+export function saveByZip(zipcode) {
+  const apiUrl = "/address/saveByZip?search=" + zipcode
+  return dispatch => {
+    makeAddressRequest('get', null,  apiUrl)
+      .then(response => {
+        dispatch(createAddressSuccess(response))
+      })
+      .catch((err) => {
+        return dispatch(createAddressFailure({ error: 'Could not find this Zip Code'}));
       });
   }
 }
@@ -216,4 +205,11 @@ export function deleteAddress(address) {
       });
   }
 
+}
+
+export function handleErrorMsg(msg) {
+  return {
+    type: types.CREATE_ADDRESS_ERROR_MSG,
+    error: msg
+  }
 }
