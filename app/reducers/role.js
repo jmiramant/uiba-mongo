@@ -204,6 +204,7 @@ const skills = (
       return skillOrder(_.filter(updatedSkill, j => {
         return j.type !== action.skillData.type;
       }));
+    case types.TOGGLE_ROLE_ADD:
     case types.CREATE_ROLE_SUCCESS:
       return [];
     default:
