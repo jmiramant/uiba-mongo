@@ -27,8 +27,8 @@ const getApplicants = (applicants, filters, scores) => {
   if (filters.address && filters.address.rangeZips) {
     const filterZips = _.map(filters.address.rangeZips, (a) => {return a.zip_code})
     filtered = _.filter(filtered, (a) => {
-      if (a.filterData && a.filterData.address) {
-        return filterZips.indexOf(a.filterData.address.toString()) >= 0
+      if (a.filterData && a.filterData.address.length > 0) {
+        return _.intersection(a.filterData.address, filterZips).length > 0
       } else {return false}
     });
   } 

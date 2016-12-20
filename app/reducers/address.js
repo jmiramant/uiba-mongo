@@ -48,6 +48,37 @@ const error = (
   }
 };
 
+
+const editIcon = (
+  state = false,
+  action
+) => {
+  switch (action.type) {
+    case types.SHOW_ADDRESS_EDIT_ICON:
+      return true;
+    case types.HIDE_ADDRESS_EDIT_ICON:
+      return false;
+    default:
+      return state;
+  }
+}
+
+const edit = (
+  state = false,
+  action
+) => {
+  switch (action.type) {
+    case types.TOGGLE_ADDRESS_EDIT:
+      return !action.data
+    case types.CREATE_ADDRESS_SUCCESS:
+    case types.UPDATE_ADDRESS_SUCCESS:
+      return false;
+    default:
+      return state;
+  }
+};
+
+
 const address = (
   state = [],
   action
@@ -69,14 +100,14 @@ const address = (
 };
 
 const zip = (
-  state = {},
+  state = '',
   action
 ) => {
   switch (action.type) {
     case types.SET_ZIP:
       return action.data;
     case types.CLEAR_RANGE_ADDRESS:
-      return {};
+      return '';
     default:
       return state;
   }
@@ -115,6 +146,8 @@ const addressReducer = combineReducers({
   address,
   autofill,
   error,
+  editIcon, 
+  edit,
   range,
   rangeZips,
   zip

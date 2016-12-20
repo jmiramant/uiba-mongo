@@ -14,7 +14,7 @@ const cx = classNames.bind(styles);
 class LocationFilter extends Component {
 
   static propTypes = {
-    zip: PropTypes.number,
+    zip: PropTypes.string,
     error: PropTypes.string,
     setZip: PropTypes.func.isRequired, 
     rangeZips: PropTypes.array,

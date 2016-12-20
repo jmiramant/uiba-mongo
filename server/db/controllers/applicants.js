@@ -84,9 +84,8 @@ export function list(req, res) {
         let addr = ''
         const res = _.filter(results.address, (obj) => { 
           return _prof._id.toString() === obj.profile_id.toString()
-        })[0];
-        if (res) addr = res.zip_code;
-        _prof.filterData['address'] = addr
+        });
+        _prof.filterData['address'] = _.map(res, (addr) => {return addr.zip_code})
 
         struct.push(_prof) 
       })
