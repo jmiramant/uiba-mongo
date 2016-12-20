@@ -152,8 +152,9 @@ export default class ApplicantFiler extends React.Component {
         <div className={cx('req-btns') +" col-md-3"}>
           <MulitselectPopover
             style={{width: '100%'}}
-            data={['High School','Associate','Bachelor','Master','MBA','JD','MD','PhD','Engineer Degree','Certificate','Coursework','Other']}
+            data={['Bachelor','MBA','High School','PhD','Master','MD','JD','Associate',]}
             selected={eduRequirements}
+            headerCopy={'Check each degree to include.'}
             buttonText='Edu Requirements'
             onToggleSelect={onToggleEduReqSelect}
             handleSet={this.changeEduFilter.bind(this)}

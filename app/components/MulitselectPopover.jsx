@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 import Popover from 'material-ui/Popover';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import {Table, TableBody, TableFooter, TableRow, TableRowColumn}
+import {Table, TableBody, TableFooter, TableRow, TableRowColumn, TableHeader, TableHeaderColumn}
   from 'material-ui/Table';
 
 import classNames from 'classnames/bind';
@@ -58,7 +58,8 @@ class MulitselectPopover extends React.Component {
     const {
       target,
       percent,
-      buttonText
+      buttonText,
+      headerCopy
     } = this.props;
 
     const tableData = this.buildTableData();
@@ -76,7 +77,7 @@ class MulitselectPopover extends React.Component {
           anchorOrigin={{horizontal: 'left', vertical: 'top'}}
           targetOrigin={{horizontal: 'left', vertical: 'bottom'}}
           anchorEl={this.state.anchorEl}
-          style={{height: '300px', width: '300px'}}
+          style={{height: '355px', width: '300px'}}
         >
         <Table
             height='240px'
@@ -85,19 +86,35 @@ class MulitselectPopover extends React.Component {
             multiSelectable={true}
             onCellClick={this.onToggleSelect.bind(this)} 
           >
+            { headerCopy ? (
+              <TableHeader
+                style={{borderBottom: '3px solid rgb(224, 224, 224)'}}
+                displaySelectAll={this.state.showCheckboxes}
+                adjustForCheckbox={this.state.showCheckboxes}
+                enableSelectAll={this.state.enableSelectAll}
+              >
+                <TableRow>
+                  <TableHeaderColumn colSpan="3" style={{textAlign: 'center'}}>
+                    {headerCopy}
+                  </TableHeaderColumn>
+                </TableRow>
+              </TableHeader>
+            ) : (null)}
             <TableBody
               displayRowCheckbox={true}
               deselectOnClickaway={false}
               showRowHover={true}
             >
               {tableData.map( (row, index) => (
-                <TableRow key={index} selected={row.selected}>
-                  <TableRowColumn>{row.name}</TableRowColumn>
+                <TableRow key={index} style={{height: '30px'}} selected={row.selected}>
+                  <TableRowColumn style={{height: '30px'}}>{row.name}</TableRowColumn>
                 </TableRow>
                 ))}
             </TableBody>
 
-            <TableFooter>
+            <TableFooter
+              style={{borderTop: '3px solid rgb(224, 224, 224)'}}
+            >
               <TableRow>
                 <TableRowColumn colSpan="3" style={{textAlign: 'center'}}>
                   <FlatButton className='pull-left' label="Close" onClick={this.closePopover.bind(this)} primary={true} />

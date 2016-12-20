@@ -110,6 +110,8 @@ const addShow = (
   switch (action.type) {
     case types.TOGGLE_ROLE_ADD:
       return !action.data
+    case types.TOGGLE_ROLE_EDIT:
+      return false
     default:
       return state;
   }
@@ -218,6 +220,8 @@ const editShow = (
       let resp = false;
       if (action.data && action.data._id) resp = true;
       return resp
+    case types.TOGGLE_ROLE_ADD:
+      return false;
     default:
       return state;
   }
