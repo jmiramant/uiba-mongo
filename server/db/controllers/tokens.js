@@ -9,12 +9,10 @@ export function token(req, res) {
   if (req.headers.email && req.headers.password) {
 
     const isApprovedEmail = req.headers.email === externalAPISecret.accessEmail;
-
     if (req.headers.email.indexOf('@uiba.co') !== -1 || isApprovedEmail) {
       // Fetch the appropriate user, if they exist
       UserModel.findOne({ email: req.headers.email }, function(err, user) {
-
-        if (err || !user || !user.comparePassword || !user.isEmailVerified) {    
+        if (err || !user || !user.isEmailVerified) {    
           // user cannot be found; may wish to log that fact here. For simplicity, just return a 401
           return res.status(401).send('Authentication');
         } else {

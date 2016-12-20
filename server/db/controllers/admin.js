@@ -26,11 +26,18 @@ const handleError = (res, err) => {
 
 export function deleteUser(req, res) {
   User.findOne({email: req.body.email}, (err, user) => {
-    if (err) handleError(res, err)
-    if (!user || !user.profile_id) handleError(res, "No user was found with this id.")
+    if (err) return handleError(res, err)
+    if (!user || !user.profile_id) return handleError(res, "No user was found with this id.")
     Profile.findOne({"_id": user.profile_id}, (profErr, profile) => {
-      if (err) handleError(res, profErr)
-      if (!profile) handleError(res, "this user doesn't have a profile associated with it")
+      if (err) return handleError(res, profErr);
+      if (!profile) {
+        User.remove({
+          'email': req.body.email
+        }, (uErr) => {
+          if (uErr) return handleError(res, profErr);
+          return res.status(200).send('User: ' + req.body.email + " deleted.")
+        })
+      }
       const profId = profile._id;
       const parallels = {
         school: (cb) => {
@@ -75,13 +82,6 @@ export function deleteUser(req, res) {
             cb(err)
           });
         },
-        profile: (cb) => {
-          Profile.remove({
-            '_id': profId
-          }, (err) => {
-            cb(err)
-          });
-        },
         roles: (cb) => {
           Role.update({
             applicants: profId
@@ -100,7 +100,16 @@ export function deleteUser(req, res) {
             $pullAll: {
               'credit.$.candidate': [profId]
             }
+          }).exec((err) => {
+            cb(err)
           })
+        },
+        profile: (cb) => {
+          Profile.remove({
+            '_id': profId
+          }, (err) => {
+            cb(err)
+          });
         },
         user: (cb) => {
           User.remove({
@@ -110,10 +119,9 @@ export function deleteUser(req, res) {
           })
         }
       }
-      async.parallel(parallels, (err, resp) => {
-        console.log(err, resp)
-        if (err) handleError(res, err)
-        res.status(200).send('User: ' + req.body.email + " deleted.")
+      async.series(parallels, (err, resp) => {
+        if (err) return handleError(res, err)
+        return res.status(200).send('User: ' + req.body.email + " deleted.")
       })
 
     });

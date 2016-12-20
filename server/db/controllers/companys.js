@@ -54,32 +54,9 @@ export function typeahead(req, res) {
 }
 
 export function create(req, res) {
-
-  Company.create({
-    name: req.body.name,
-    description: req.body.description,
-    foundedDate: req.body.foundedDate,
-    size: req.body.size,
-    websiteUrl: req.body.websiteUrl,
-    logoUrl: req.body.logoUrl,
-    specialties: req.body.specialties,
-    industry: req.body.industry
-  }, function(err, company) {
-
+  Company.create({ ...req.body}, function(err, company) {
     if (err) return handleError(res, err);
- 
-    if (req.user.profile_id) {
-      Profile.findById(req.user.profile_id, (err, prof) => {
-        if (err) return handleError(res, err);
-        if (!prof) return res.status(404).json({message: 'Profile Not Found in Company Assoc.'});
-        prof.company_id = company._id
-        prof.save();
-        return res.json(company);
-      })
-    } else {
-      return res.json(company);
-    }
-
+    return res.json(company);
   })
 
 }

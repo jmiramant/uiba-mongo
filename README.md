@@ -284,6 +284,137 @@ Master branch deploys to production. Staging deploys to staging.
     });
   ```
 
+**POST: Create a Company**
+----
+  Create a new company. Required fields, description & name.
+
+* **URL**
+
+  /api/v1/company
+
+* **Method:**
+
+  `POST`
+  
+*  **Headers**
+
+    Requires an ```x-access-token``` from 'api/v1/token'
+
+*  **Required:**
+    Headers:  `x-access-token=[string]`
+    Body: 
+    `email: '<string>'`
+    `name: "<string>"`
+    `description: "<string>"`
+    `foundedDate: "<2016-12-09>"`
+    `size: <number>`
+    `websiteUrl: "<string>"`
+    `logoUrl: "<string>"`
+    `specialties: "<string>"`
+    `industry: "<string>"`
+
+* **Success Response:**
+
+  * **Code:** 200
+    **Content:** 
+```
+{
+"__v": 0,
+"name_lower": "some_companyw",
+"updatedAt": "2016-12-20T20:42:58.060Z",
+"createdAt": "2016-12-20T20:42:58.060Z",
+"name": "Some Companyw",
+"description": "asdasd asdas asd asd.",
+"_id": "585997d2e2cddc7534949ea4",
+"specialties": [],
+}
+```
+ 
+* **Error Response:**
+
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ error : "Please provide an api key." }`
+
+* **Sample Call:**
+
+  ```javascript
+    $.ajax({
+      url: "/api/v1/company",
+      headers: {
+        x-access-token: <token>
+      },
+      data: {
+        email: '<string>',
+        name: "<string>",
+        description: "<string>",
+        foundedDate: "<2016-12-09>",
+        size: "<number>",
+        websiteUrl: "<string>",
+        logoUrl: "<string>",
+        specialties: "<string>",
+        industry: "<string>"
+      }
+      type : "POST",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+  
+**DELETE: Delete a User**
+----
+  This will delete a user and all associated files, including any attributions on Roles or recruiters. There will be nothing left of this user after a delete.
+
+* **URL**
+
+  /api/v1/admin/delete-user
+
+* **Method:**
+
+  `DELETE`
+  
+*  **Headers**
+
+    Requires an ```x-access-token``` from 'api/v1/token'
+
+*  **Required:**
+    Headers:  `x-access-token=[string]`
+    Body: 
+    `email: '<string>'`
+  
+
+* **Success Response:**
+
+  * **Code:** 200
+    **Content:** 
+`'User: example@gmail.com deleted."`
+ 
+* **Error Response:**
+
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ error : "Please provide an api key." }`
+  
+* **Code:** 404 NOT FOUND <br />
+    **Content:** `User Not Found.`
+
+* **Sample Call:**
+
+  ```javascript
+    $.ajax({
+      url: "/api/v1/admin/delete-user",
+      headers: {
+        x-access-token: <token>
+      },
+      data: {
+        email: '<string>',
+      }
+      type : "DELETE",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
 **Get: Export Updated Users**
 ----
   Export user data for all users that have updated content after a provided timestamp. Limited to 250.
