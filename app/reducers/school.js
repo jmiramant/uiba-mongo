@@ -71,6 +71,13 @@ const school = (
       return newStateOjb;
     case types.CREATE_SCHOOL_SUCCESS:
       return {};
+    case types.TOGGLE_SCHOOL_ADD:
+      if (action.data) {
+        return {};  
+      } else {
+        return state;  
+      }
+      
     default:
       return state;
   }

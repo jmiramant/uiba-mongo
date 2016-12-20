@@ -130,7 +130,7 @@ export default class SchoolAdd extends React.Component {
             />
           </div>
 
-         { addVisible || school.major  ? (<span>
+         { addVisible || school.major ? (<span>
 
           <div className="col-md-6">
             <SelectField
@@ -207,7 +207,7 @@ export default class SchoolAdd extends React.Component {
             ) : (<span />)}
             <FlatButton className='pull-left' label="Close" onClick={this.props.toggleEdit} primary={true} />
           </div>
-          </span>) : (<span/>)}
+          </span>) : (null)}
 
         </form>
       </div>

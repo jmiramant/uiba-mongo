@@ -27,7 +27,7 @@ class SchoolList extends React.Component {
     super(props);
   }
   
-  toggleAddSchool = () => {
+  toggleAddSchool() {
     this.props.toggleSchoolAdd(this.props.addVisible)
   }
 
