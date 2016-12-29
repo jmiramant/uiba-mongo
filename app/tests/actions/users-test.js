@@ -99,7 +99,7 @@ describe('Users Async Actions', () => {
   });
 
   describe('User Signup', () => {
-    it('dispatches SIGNUP_USER and SIGNUP_SUCCESS_USER when Sign Up returns status of 200 and routes user to /profile', (done) => {
+    it('dispatches SIGNUP_USER and SIGNUP_SUCCESS_USER when Sign Up returns status of 200 and routes user to /email-confirmation', (done) => {
       const expectedActions = [
       {
         type: types.SIGNUP_USER
@@ -110,7 +110,7 @@ describe('Users Async Actions', () => {
       },
       {
         payload: {
-          args: ['/profile'],
+          args: ['/email-confirmation'],
           method: 'push'
         },
         type: '@@router/CALL_HISTORY_METHOD'

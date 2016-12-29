@@ -10,6 +10,7 @@ import * as skillsActionCreators from 'actions/skills';
 import * as profileActionCreators from 'actions/profiles';
 import * as languagesActionCreators from 'actions/languages';
 import * as projectsActionCreators from 'actions/projects';
+import * as rolesActionCreators from 'actions/roles';
 import * as messagesActionCreators from 'actions/messages';
 import * as interestsActionCreators from 'actions/interests';
 import * as applyActionCreators from 'actions/apply';
@@ -83,9 +84,11 @@ class Profile extends React.Component {
   }
 
   handleApply () {
+    const {messageActions, profile, applyActions, roleActions} = this.props;
     this.props.messageActions.dismissMessage();
     if (!this.isValidated()) {
-      this.props.applyActions.sumbitApplication(this.props.profile.profile)
+      if (profile.profile.apply.role_code && !profile.profile.apply.applyComplete) roleActions.increment(profile.profile.apply.role_code)
+      applyActions.sumbitApplication(profile.profile)
     }
   }
 
@@ -300,10 +303,10 @@ function mapDispatchToProps (dispatch) {
     skillActions: bindActionCreators(skillsActionCreators, dispatch),
     languageActions: bindActionCreators(languagesActionCreators, dispatch),
     projectActions: bindActionCreators(projectsActionCreators, dispatch),
+    roleActions: bindActionCreators(rolesActionCreators, dispatch),
     messageActions: bindActionCreators(messagesActionCreators, dispatch),
     interestActions: bindActionCreators(interestsActionCreators, dispatch),
     applyActions: bindActionCreators(applyActionCreators, dispatch),
-
   }
 }
 

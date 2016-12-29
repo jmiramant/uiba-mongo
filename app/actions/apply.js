@@ -34,7 +34,6 @@ export function navBackToProfile(data) {
   };
 }
 
-
 export function sumbitApplication(profile) {
   return (dispatch) => {
     profile.apply.applied = false;

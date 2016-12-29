@@ -324,3 +324,17 @@ export function skillsEditChange(state) {
     state
   };
 }
+
+export function increment(roleCode) {
+  return (dispatch) => {
+    return makeRolesRequest('put', {role_id: roleCode}, '/role/increment')
+      .then(res => {
+        if (res.status === 200) {
+          return dispatch(updateRoleSuccess(res.data));
+        }
+      })
+      .catch(() => {
+        return dispatch(updateRoleFailure({ error: 'Oops! Something went wrong and we couldn\'t create your role.'}));
+      });
+  } 
+}

@@ -52,7 +52,6 @@ const logRecruiter = (req, profId) => {
       }, (err, _role) => {
         if (!err && _role) {
           _role.applicants.push(profId);
-          _role.appliedCount += 1;
           _role.save();
         }
       })
@@ -92,7 +91,9 @@ const logRecruiter = (req, profId) => {
 
 const resolveApplyRedirect = (req, user, done) => {
   const companyName = req.headers.referer.split('/apply/')[1].split('/')[0].split('?')[0];
-  const nameLower = companyName.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-`~()]/g,"").split(' ').join('_')
+  const nameLower = companyName.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-`~()]/g,"").split(' ').join('_');
+  const roleUid = req.headers.referer.split('/apply/')[1].split('/')[1];
+
   Company.findOne({
     name_lower: nameLower
   }, (companyErr, _company) => {
@@ -102,12 +103,16 @@ const resolveApplyRedirect = (req, user, done) => {
       user_id: user._id
     }, (profErr, _profile) => {
       if (profErr) return res.status(401).json({ message: profErr });
+      
       _profile.apply = {
         applied: true,
         name: companyName,
         name_lower: _company.name_lower,
-        company_id: _company._id
+        company_id: _company._id,
       };
+
+      if (roleUid) _profile.apply.role_code = roleUid.split('?')[0];
+
       logRecruiter(req, _profile._id);
       return _profile.save((err, prof) => {
         done(null, user);

@@ -26,11 +26,11 @@ const currentUser = (
       return action.res.data;
     case types.LOGIN_SUCCESS_USER:
     case types.LOGOUT_ERROR_USER:
-      return true;
     case types.LOGIN_ERROR_USER:
     case types.SIGNUP_SUCCESS_USER:
     case types.SIGNUP_ERROR_USER:
     case types.LOGOUT_SUCCESS_USER:
+      return {};
     default:
       return state;
   }
@@ -66,7 +66,11 @@ const message = (
       return '';
     case types.LOGIN_ERROR_USER:
     case types.SIGNUP_ERROR_USER:
-      return action.message;
+      if (action.message) {
+        return action.message;
+      } else {
+        return state;
+      }
     default:
       return state;
   }

@@ -118,7 +118,8 @@ export function update(req, res) {
 
   return Roles.findOne({
     "_id": req.body._id
-  }).exec((err, _role) => {
+  }).exec((fetchErr, _role) => {
+    if (fetchErr) return handleError(res, err);
 
     if (req.body.company_id) _role.company_id = mongoose.Types.ObjectId(req.body.company_id);
     if (req.body.title) _role.title = req.body.title;
@@ -128,7 +129,26 @@ export function update(req, res) {
     if (req.body.skills) _role.skills = req.body.skills;
 
     _role.save((err, role) => {
-      if (err) return handleError(err);
+      if (err) return handleError(res, err);
+      return res.json(role);      
+    });
+
+  })
+}
+
+export function incrementApplicants(req, res) {
+  return Roles.findOne({
+    "applicantCode": req.body.role_id
+  }).exec((fetchErr, _role) => {
+    if (fetchErr || !_role) return handleError(res, fetchErr);
+
+    if (_role.appliedCount) {
+      _role.appliedCount = _role.appliedCount + 1;
+    } else {
+      _role.appliedCount = 1;
+    }
+    _role.save((err, role) => {
+      if (err) return handleError(res, err);
       return res.json(role);      
     });
 
@@ -154,4 +174,5 @@ export default {
   create,
   update,
   remove,
+  incrementApplicants,
 };

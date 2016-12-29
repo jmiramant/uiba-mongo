@@ -12,10 +12,11 @@ const ProfileSchema = new mongoose.Schema({
   email: { type: String, default: '' },
   headline: { type: String, default: '' },
   apply: { 
-    applied: {type: Boolean, default: false }, 
-    name: {type: String }, 
+    applied: {type: Boolean, default: false },
+    name: {type: String },
     applyComplete: {type: Boolean, default: false },
-    company_id: {type: Schema.Types.ObjectId, ref: 'Company'}
+    company_id: {type: Schema.Types.ObjectId, ref: 'Company'},
+    role_code: {type: String}
   },
   gender: { type: String, default: '' },
   claim: { type: Boolean, default: false },

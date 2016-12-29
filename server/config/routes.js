@@ -125,6 +125,7 @@ export default (app) => {
     app.get('/roles/:id', rolesController.list);
     app.post('/roles', rolesController.create);
     app.put('/roles', rolesController.update);
+    app.put('/role/increment', rolesController.incrementApplicants);
     app.delete('/role/:id', rolesController.remove);
   } else {
     console.warn(unsupportedMessage('roles routes'));

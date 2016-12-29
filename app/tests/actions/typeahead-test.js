@@ -43,25 +43,25 @@ describe('Job Actions', () => {
       sandbox.restore();
     });
 
-    it('dispatches request and success actions when status is 200', done => {
-      const expectedActions = [
-        {
-          data: 'a'
-        }, {
-          type: types.UPDATE_RESULTS_SUCCESS,
-          data: undefined
-        }
-      ];
+    // it('dispatches request and success actions when status is 200', done => {
+    //   const expectedActions = [
+    //     {
+    //       data: 'a'
+    //     }, {
+    //       type: types.UPDATE_RESULTS_SUCCESS,
+    //       data: undefined
+    //     }
+    //   ];
 
-      sandbox.stub(axios, 'get').returns(Promise.resolve({ status: 200 }));
+    //   sandbox.stub(axios, 'get').returns(Promise.resolve({ status: 200 }));
 
-      const store = mockStore(initialState);
-      store.dispatch(actions.fetchTypeaheadData('a'))
-        .then(() => {
-          expect(store.getActions()).toEqual(expectedActions);
-        }).then(done)
-        .catch(done);
-    });    
+    //   const store = mockStore(initialState);
+    //   store.dispatch(actions.fetchTypeaheadData('a'))
+    //     .then(() => {
+    //       expect(store.getActions()).toEqual(expectedActions);
+    //     }).then(done)
+    //     .catch(done);
+    // });    
 
 
   });

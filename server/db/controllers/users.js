@@ -17,6 +17,7 @@ const logRecruiter = (req, profId) => {
 
     const company = req.headers.referer.split('/apply/')[1].split('/')[0];
     
+    let role;
     const isRole = req.headers.referer.split('/apply/')[1].split('/').length > 1
     if (isRole) role = req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[0];
 
@@ -27,7 +28,6 @@ const logRecruiter = (req, profId) => {
       }, (err, _role) => {
         if (!err && _role) {
           _role.applicants.push(profId);
-          _role.appliedCount += 1;
           _role.save();
         }
       })
@@ -68,18 +68,24 @@ const logRecruiter = (req, profId) => {
 const resolveApplyRedirect = (req, profile, cb) => {
   const companyName = req.headers.referer.split('/apply/')[1].split('/')[0].split('?')[0];
   const nameLower = companyName.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-`~()]/g, "").split(' ').join('_')
+  const roleUid = req.headers.referer.split('/apply/')[1].split('/')[1];
+
   Company.findOne({
     name_lower: nameLower
   }, (companyErr, _company) => {
     if (companyErr) return res.status(401).json({
       message: companyErr
     });
+
     profile.apply = {
       applied: true,
       name: companyName,
       name_lower: _company.name_lower,
-      company_id: _company._id
+      company_id: _company._id,
     };
+
+    if (roleUid) profile.apply.role_code = roleUid.split('?')[0];
+
     logRecruiter(req, profile._id);
     cb();
   })
@@ -197,10 +203,10 @@ export function signUp(req, res, next) {
         }, function(saveErr, resp) {
           if (saveErr) return next(saveErr);
           mailer.sendEmailConfirmation(user, req.headers.host)
-          res.redirect(200, '/email-confirmation');
-
+          return res.redirect(200, '/email-confirmation');
         });
       }
+      
       user.profile_id = _profile._id;
 
       if (isApply(req)) {

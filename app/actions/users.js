@@ -119,7 +119,9 @@ export function signUp(data) {
         }
       })
       .catch(err => {
-        dispatch(signUpError(getMessage(err)));
+        let msg = err;
+        if (typeof(err) === 'object') msg = err.toString();
+        dispatch(signUpError(msg));
       });
   };
 }

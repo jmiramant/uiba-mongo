@@ -30,7 +30,7 @@ class Message extends React.Component {
       this.setState({autoHide: undefined});
     }
     
-    if (nextProps.message.length > 0) this.autoHide();
+    if (nextProps.message && nextProps.message.length > 0) this.autoHide();
 
   }
 

@@ -33,7 +33,8 @@ export function list(req, res) {
     const asyncTasks = {
       profile: (cb) => {
         Profile.find({
-          '_id': containsId
+          '_id': containsId,
+          'apply.applyComplete': true
         }, (err, profs) => {
           cb(err, profs)
         })
