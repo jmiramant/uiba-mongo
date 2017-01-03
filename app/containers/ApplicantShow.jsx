@@ -20,6 +20,8 @@ import LanguageItem from 'components/applicants/LanguageItem';
 import SkillItem from 'components/applicants/SkillItem';
 import ProjectItem from 'components/applicants/ProjectItem';
 import InterestItem from 'components/applicants/InterestItem';
+import RadarChart from 'components/d3/chart';
+import Measure from 'react-measure';
 
 import classNames from 'classnames/bind';
 import styles from 'css/components/applicantShow';
@@ -27,6 +29,10 @@ import styles from 'css/components/applicantShow';
 const cx = classNames.bind(styles);
 
 class ApplicantShow extends React.Component {
+
+  state = {
+    dimensions: {width: 0}
+  }
 
   componentWillMount() {
     const { params,
@@ -59,6 +65,8 @@ class ApplicantShow extends React.Component {
       schools,
       interests
     } = this.props;
+
+    const { dimensions } = this.state;
 
     return (
       <div>
@@ -113,10 +121,22 @@ class ApplicantShow extends React.Component {
             </div>
           
             <div className='col-md-8 col-md-offset-2'>
-              <UibaCardHeader
-                style='xray'
-                text='Knowledge, Skills, Abilities'
+              <Measure
+                onMeasure={(dimensions) => {
+                  this.setState({dimensions})
+                }}
+              >
+                <UibaCardHeader
+                  style='xray'
+                  text='Knowledge, Skills, Abilities'
+                />
+              </Measure>
+
+              <RadarChart
+                points={skills}
+                style={{width: dimensions.width * 0.65, height: dimensions.width * 0.5}}
               />
+
                 {skills.length === 0 ? (
                   <div className={cx('null-info')}>{applicant.firstName} hasn't added any items in the knowledge, skills, and abilities section.</div>
                 ) : (
