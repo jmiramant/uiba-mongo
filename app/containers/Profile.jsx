@@ -30,6 +30,7 @@ import Loading                      from 'components/Loading';
 import { validateSubmitHelper }     from 'components/helpers/submitValidations';
 
 import Scroll                   from 'react-scroll';
+import Measure                  from 'react-measure';
 import styles                   from 'css/common/profile';
 import classNames               from 'classnames/bind';
 const cx = classNames.bind(styles);
@@ -70,7 +71,8 @@ class Profile extends React.Component {
   }
   
   state = {
-    validationErrors: {}
+    validationErrors: {},
+    skillDimensions: {width: 0}
   }
 
   isValidated() {
@@ -166,7 +168,7 @@ class Profile extends React.Component {
               onJobDelete={jobActions.deleteJob}
             />
           </div>
-
+          
           <div className='col-md-8 col-md-offset-2'>
             <Element name="skill">
               <CardHeader
@@ -176,18 +178,25 @@ class Profile extends React.Component {
                 error={validationErrors.skills}
               />
             </Element>
+            <Measure
+              onMeasure={(dimensions) => {
+                this.setState({skillDimensions: dimensions})
+              }}
+            >
+              <Skills 
+                skills={skills.skills}
+                dimensions={this.state.skillDimensions}
+                addVisible={skills.addShow}
+                onEditSave={skillActions.updateSkill} 
+                onSkillSave={skillActions.createSkill} 
+                skillChange={skillActions.skillChange}
+                skillsChange={skillActions.skillsChange}
+                errorMessage={messages.errorMessage}
+                onSkillDelete={skillActions.deleteSkill} 
+                toggleSkillAdd={skillActions.toggleSkillAdd}
+              />
+            </Measure>
 
-            <Skills 
-              skills={skills.skills}
-              addVisible={skills.addShow}
-              onEditSave={skillActions.updateSkill} 
-              onSkillSave={skillActions.createSkill} 
-              skillChange={skillActions.skillChange}
-              skillsChange={skillActions.skillsChange}
-              errorMessage={messages.errorMessage}
-              onSkillDelete={skillActions.deleteSkill} 
-              toggleSkillAdd={skillActions.toggleSkillAdd}
-            />
           </div>
 
           <div className='col-md-8 col-md-offset-2'>

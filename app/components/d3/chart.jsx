@@ -1,38 +1,34 @@
 import React                from 'react';
-import { connect }            from 'react-redux';
 import ReactFauxDOM from 'react-faux-dom';
 import * as d3 from 'd3';
 
-export default class RoleEdit extends React.Component {
+export default class RadarChart extends React.Component {
   
   constructor() {
     super()
   }
 
-  componentWillReceiveProps(nextProps) {
-  }
-
-
   render() {
 
-    const cfg = {
+    const defaultOpts = {
       radius: 5,
-      w: 600,
-      h: 600,
+      width: 450,
+      height: 450,
       factor: 1,
       factorLegend: .85,
-      levels: 3,
+      levels: 4,
       maxValue: 0,
       radians: 2 * Math.PI,
       opacityArea: 0.5,
-      ToRight: 5,
-      TranslateX: 80,
-      TranslateY: 30,
-      ExtraWidthX: 100,
-      ExtraWidthY: 100,
+      toRight: 5,
+      translateX: 80,
+      translateY: 30,
+      extraWidthX: 100,
+      extraWidthY: 100,
       color: d3.scaleOrdinal(d3.schemeCategory10)
     };
 
+    const options = Object.assign({}, defaultOpts, this.props.style);
     const score = function(proficiency, lengthOfUse){
         const max = 95;
         const x = proficiency;
@@ -50,54 +46,52 @@ export default class RoleEdit extends React.Component {
     ];
 
 
-    cfg.maxValue = Math.max(cfg.maxValue, d3.max(data, function(i){return d3.max(i.map(function(o){return o.value;}))}));
+    options.maxValue = Math.max(options.maxValue, d3.max(data, function(i){return d3.max(i.map(function(o){return o.value;}))}));
     const allAxis = (data[0].map(function(i, j){return i.axis}));
     const total = allAxis.length;
-    const radius = cfg.factor*Math.min(cfg.w/2, cfg.h/2);
+    const radius = options.factor*Math.min(options.width/2, options.height/2);
     const Format = d3.format('%');
 
     const svgNode = ReactFauxDOM.createElement('div');
     
     const g = d3.select(svgNode)
         .append("svg")
-        .attr("width", cfg.w+cfg.ExtraWidthX)
-        .attr("height", cfg.h+cfg.ExtraWidthY)
+        .attr("width", options.width+options.extraWidthX)
+        .attr("height", options.height+options.extraWidthY)
         .append("g")
-        .attr("transform", "translate(" + cfg.TranslateX + "," + cfg.TranslateY + ")");
+        .attr("transform", "translate(" + options.translateX + "," + options.translateY + ")");
 
-    let tooltip;
-
-    for (let j=0; j<cfg.levels-1; j++) {
-      const levelFactor = cfg.factor*radius*((j+1)/cfg.levels);
+    for (let j=0; j<options.levels-1; j++) {
+      const levelFactor = options.factor*radius*((j+1)/options.levels);
       g.selectAll(".levels")
        .data(allAxis)
        .enter()
        .append("svg:line")
-       .attr("x1", function(d, i){return levelFactor*(1-cfg.factor*Math.sin(i*cfg.radians/total));})
-       .attr("y1", function(d, i){return levelFactor*(1-cfg.factor*Math.cos(i*cfg.radians/total));})
-       .attr("x2", function(d, i){return levelFactor*(1-cfg.factor*Math.sin((i+1)*cfg.radians/total));})
-       .attr("y2", function(d, i){return levelFactor*(1-cfg.factor*Math.cos((i+1)*cfg.radians/total));})
+       .attr("x1", function(d, i){return levelFactor*(1-options.factor*Math.sin(i*options.radians/total));})
+       .attr("y1", function(d, i){return levelFactor*(1-options.factor*Math.cos(i*options.radians/total));})
+       .attr("x2", function(d, i){return levelFactor*(1-options.factor*Math.sin((i+1)*options.radians/total));})
+       .attr("y2", function(d, i){return levelFactor*(1-options.factor*Math.cos((i+1)*options.radians/total));})
        .attr("class", "line")
        .style("stroke", "grey")
        .style("stroke-opacity", "0.75")
        .style("stroke-width", "0.3px")
-       .attr("transform", "translate(" + (cfg.w/2-levelFactor) + ", " + (cfg.h/2-levelFactor) + ")");
+       .attr("transform", "translate(" + (options.width/2-levelFactor) + ", " + (options.height/2-levelFactor) + ")");
     }
 
-    for (let j=0; j<cfg.levels; j++) {
-      const levelFactor = cfg.factor*radius*((j+1)/cfg.levels);
+    for (let j=0; j<options.levels; j++) {
+      const levelFactor = options.factor*radius*((j+1)/options.levels);
       g.selectAll(".levels")
-       .data([1]) //dummy data
+       .data(data[0]) //dummy data
        .enter()
        .append("svg:text")
-       .attr("x", function(d){return levelFactor*(1-cfg.factor*Math.sin(0));})
-       .attr("y", function(d){return levelFactor*(1-cfg.factor*Math.cos(0));})
+       .attr("x", function(d){return levelFactor*(1-options.factor*Math.sin(0));})
+       .attr("y", function(d){return levelFactor*(1-options.factor*Math.cos(0));})
        .attr("class", "legend")
        .style("font-family", "sans-serif")
        .style("font-size", "10px")
-       .attr("transform", "translate(" + (cfg.w/2-levelFactor + cfg.ToRight) + ", " + (cfg.h/2-levelFactor) + ")")
+       .attr("transform", "translate(" + (options.width/2-levelFactor + options.toRight) + ", " + (options.height/2-levelFactor) + ")")
        .attr("fill", "#737373")
-       .text(Format((j+1)*cfg.maxValue/cfg.levels));
+       .text(Math.floor((j+1)*options.maxValue/options.levels) + '%');
     }
     
     let series = 0;
@@ -109,10 +103,10 @@ export default class RoleEdit extends React.Component {
         .attr("class", "axis");
 
     axis.append("line")
-      .attr("x1", cfg.w/2)
-      .attr("y1", cfg.h/2)
-      .attr("x2", function(d, i){return cfg.w/2*(1-cfg.factor*Math.sin(i*cfg.radians/total));})
-      .attr("y2", function(d, i){return cfg.h/2*(1-cfg.factor*Math.cos(i*cfg.radians/total));})
+      .attr("x1", options.width/2)
+      .attr("y1", options.height/2)
+      .attr("x2", function(d, i){return options.width/2*(1-options.factor*Math.sin(i*options.radians/total));})
+      .attr("y2", function(d, i){return options.height/2*(1-options.factor*Math.cos(i*options.radians/total));})
       .attr("class", "line")
       .style("stroke", "grey")
       .style("stroke-width", "1px");
@@ -125,15 +119,15 @@ export default class RoleEdit extends React.Component {
       .attr("text-anchor", "middle")
       .attr("dy", "1.5em")
       .attr("transform", function(d, i){return "translate(0, -10)"})
-      .attr("x", function(d, i){return cfg.w/2*(1-cfg.factorLegend*Math.sin(i*cfg.radians/total))-60*Math.sin(i*cfg.radians/total);})
-      .attr("y", function(d, i){return cfg.h/2*(1-Math.cos(i*cfg.radians/total))-20*Math.cos(i*cfg.radians/total);});
+      .attr("x", function(d, i){return options.width/2*(1-options.factorLegend*Math.sin(i*options.radians/total))-60*Math.sin(i*options.radians/total);})
+      .attr("y", function(d, i){return options.height/2*(1-Math.cos(i*options.radians/total))-20*Math.cos(i*options.radians/total);});
 
     data.forEach(function(y, x){
       g.selectAll(".nodes")
       .data(y, function(j, i){
         dataValues.push([
-        cfg.w/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.sin(i*cfg.radians/total)), 
-        cfg.h/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.cos(i*cfg.radians/total))
+        options.width/2*(1-(parseFloat(Math.max(j.value, 0))/options.maxValue)*options.factor*Math.sin(i*options.radians/total)), 
+        options.height/2*(1-(parseFloat(Math.max(j.value, 0))/options.maxValue)*options.factor*Math.cos(i*options.radians/total))
         ]);
       });
       dataValues.push(dataValues[0]);
@@ -143,7 +137,7 @@ export default class RoleEdit extends React.Component {
              .append("polygon")
              .attr("class", "radar-chart-serie"+series)
              .style("stroke-width", "2px")
-             .style("stroke", cfg.color(series))
+             .style("stroke", options.color(series))
              .attr("points",function(d) {
                var str="";
                for(let pti=0; pti<d.length; pti++){
@@ -151,8 +145,8 @@ export default class RoleEdit extends React.Component {
                }
                return str;
               })
-             .style("fill", function(j, i){return cfg.color(series)})
-             .style("fill-opacity", cfg.opacityArea)
+             .style("fill", function(j, i){return options.color(series)})
+             .style("fill-opacity", options.opacityArea)
              .on('mouseover', function (d){
                 let z = "polygon."+d3.select(this).attr("class");
                 g.selectAll("polygon")
@@ -165,32 +159,33 @@ export default class RoleEdit extends React.Component {
              .on('mouseout', function(){
                       g.selectAll("polygon")
                        .transition(200)
-                       .style("fill-opacity", cfg.opacityArea);
+                       .style("fill-opacity", options.opacityArea);
              });
       series++;
     });
     series=0;
 
+    let tooltip;
 
     data.forEach(function(y, x){
       g.selectAll(".nodes")
       .data(y).enter()
       .append("svg:circle")
       .attr("class", "radar-chart-serie"+series)
-      .attr('r', cfg.radius)
+      .attr('r', options.radius)
       .attr("alt", function(j){return Math.max(j.value, 0)})
       .attr("cx", function(j, i){
         dataValues.push([
-        cfg.w/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.sin(i*cfg.radians/total)), 
-        cfg.h/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.cos(i*cfg.radians/total))
+        options.width/2*(1-(parseFloat(Math.max(j.value, 0))/options.maxValue)*options.factor*Math.sin(i*options.radians/total)), 
+        options.height/2*(1-(parseFloat(Math.max(j.value, 0))/options.maxValue)*options.factor*Math.cos(i*options.radians/total))
       ]);
-      return cfg.w/2*(1-(Math.max(j.value, 0)/cfg.maxValue)*cfg.factor*Math.sin(i*cfg.radians/total));
+      return options.width/2*(1-(Math.max(j.value, 0)/options.maxValue)*options.factor*Math.sin(i*options.radians/total));
       })
       .attr("cy", function(j, i){
-        return cfg.h/2*(1-(Math.max(j.value, 0)/cfg.maxValue)*cfg.factor*Math.cos(i*cfg.radians/total));
+        return options.height/2*(1-(Math.max(j.value, 0)/options.maxValue)*options.factor*Math.cos(i*options.radians/total));
       })
       .attr("data-id", function(j){return j.axis})
-      .style("fill", cfg.color(series)).style("fill-opacity", .9)
+      .style("fill", options.color(series)).style("fill-opacity", .9)
       .on('mouseover', function (d){
             const newX = parseFloat(d3.select(this).attr('cx')) - 10;
             const newY = parseFloat(d3.select(this).attr('cy')) - 5;
@@ -216,7 +211,7 @@ export default class RoleEdit extends React.Component {
               .style('opacity', 0);
             g.selectAll("polygon")
               .transition(200)
-              .style("fill-opacity", cfg.opacityArea);
+              .style("fill-opacity", options.opacityArea);
             })
       .append("svg:title")
       .text(function(j){return Math.max(j.value, 0)});

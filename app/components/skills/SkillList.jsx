@@ -23,6 +23,7 @@ class SkillList extends React.Component {
   
   static propTypes = {
     skills: PropTypes.array,
+    dimensions: PropTypes.obj,
     errorMessage: PropTypes.string,
     onSkillSave: PropTypes.func.isRequired,
     addVisible: PropTypes.bool.isRequired,
@@ -67,12 +68,13 @@ class SkillList extends React.Component {
 
   render () {
     let { skill,
-            skills,
-            addVisible,
-            inputFocus,
-            actions,
-            errorMessage,
-          } = this.props;
+          skills,
+          dimensions,
+          addVisible,
+          inputFocus,
+          actions,
+          errorMessage,
+        } = this.props;
 
     const listClass = classNames({
       [cx('horizontal')]: true,
@@ -111,8 +113,9 @@ class SkillList extends React.Component {
             <p className={cx('msg')}>Important: Please include all knowledge, skills, and abilities developed during your work and non-work experience. The more information Uiba has to work with, the more accurate the assessment of your ability to excel in this role.</p>
           </div>
 
-          <RadarChart 
+          <RadarChart
             points={skills}
+            style={{width: dimensions.width * 0.65, height: dimensions.width * 0.65}}
           />
 
           { skills.length ? (
