@@ -5,6 +5,8 @@ import ApplicantShow from 'containers/ApplicantShow';
 import RoleRequirements from 'components/RoleRequirements';
 import ApplicantFilterController from 'containers/ApplicantFiltersController';
 import ApplicantListItem from 'components/applicants/ApplicantListItem';
+import RadarChart from 'components/d3/chart';
+import Measure from 'react-measure';
 import FilteredApplicantSelector from 'selectors/FilteredApplicantSelector';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow} from 'material-ui/Table';
 
@@ -34,7 +36,8 @@ class ApplicantList extends React.Component {
 
   state = {
     score: true,
-    prevSkills: []
+    prevSkills: [],
+    dimensions: {width: 0}
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -113,6 +116,8 @@ class ApplicantList extends React.Component {
       roleActions
     } = this.props;
 
+    const { dimensions } = this.state;
+
     return (
       <div>
         <h4>Applicants for {role.title}:</h4>
@@ -156,20 +161,32 @@ class ApplicantList extends React.Component {
         <div className={cx('req-container')}>
           <div className={cx('req-title')}>Role Skill Requirements</div>
           <div className={cx('req-sub')}>Uiba uses role skill requirements to generate a score for each candidates. Edit this role's skill requirements to see how it impacts candidate ranking.</div>
-
-          <RoleRequirements
-            skill={roles.skill} 
-            skills={roles.skills}
-            showSkillAdd={roles.showSkillAdd}
-            messages={messages}
-            fetchSkills={roleActions.fetchSkills}
-            onEditSave={this.updateRoleSkills.bind(this)}
-            onSkillSave={this.updateRoleSkills.bind(this)}
-            skillChange={roleActions.skillChange}
-            skillsChange={roleActions.skillsChange}
-            onSkillDelete={this.handleSkillDelete.bind(this)}
-            toggleSkillAdd={roleActions.toggleRoleSkillsAdd}
+          
+          <RadarChart
+            points={roles.skills}
+            style={{width: dimensions.width * 0.55, height: dimensions.width * 0.4}}
           />
+
+          <Measure
+            onMeasure={(dimensions) => {
+              this.setState({dimensions})
+            }}
+          >
+            <RoleRequirements
+              skill={roles.skill} 
+              skills={roles.skills}
+              showSkillAdd={roles.showSkillAdd}
+              messages={messages}
+              fetchSkills={roleActions.fetchSkills}
+              onEditSave={this.updateRoleSkills.bind(this)}
+              onSkillSave={this.updateRoleSkills.bind(this)}
+              skillChange={roleActions.skillChange}
+              skillsChange={roleActions.skillsChange}
+              onSkillDelete={this.handleSkillDelete.bind(this)}
+              toggleSkillAdd={roleActions.toggleRoleSkillsAdd}
+            />
+          </Measure>
+
         </div>
 
       </div>

@@ -11,6 +11,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import ExpandTransition from 'material-ui/internal/ExpandTransition';
 import RoleRequirements from 'components/RoleRequirements';
+import RadarChart from 'components/d3/chart';
+import Measure from 'react-measure';
 
 import classNames from 'classnames/bind';
 import styles from 'css/components/role';
@@ -33,6 +35,7 @@ class RoleEdit extends React.Component {
 
   state = {
     validationErrors: {},
+    dimensions: {width: 0}
   }
 
   handleSubmit = e => {
@@ -64,6 +67,7 @@ class RoleEdit extends React.Component {
 
   render () {
     const {
+      dimensions,
       validationErrors
     } = this.state;
 
@@ -113,19 +117,31 @@ class RoleEdit extends React.Component {
               errorText={validationErrors.skills}
             />
             <div className={cx('req-msg')}>To be effective, the role must include at least 3 knowledge, skill, and ability requirements. The Uiba algorithm uses these to determine applicant fit.</div>
-            <RoleRequirements
-              skill={roles.editSkill}
-              skills={role.skills}
-              showSkillAdd={roles.showEditSkillAdd}
-              messages={messages}
-              fetchSkills={actions.fetchSkills}
-              onEditSave={actions.updateEditSkill}
-              onSkillSave={actions.editRoleSkillCreate}
-              skillChange={actions.editRoleSkillChange}
-              skillsChange={actions.skillsEditChange}
-              onSkillDelete={actions.deleteEditSkill}
-              toggleSkillAdd={actions.toggleRoleSkillsEdit}
+            
+            <RadarChart
+              points={role.skills}
+              style={{width: dimensions.width * 0.65, height: dimensions.width * 0.5}}
             />
+
+            <Measure
+              onMeasure={(dimensions) => {
+                this.setState({dimensions})
+              }}
+            >
+              <RoleRequirements
+                skill={roles.editSkill}
+                skills={role.skills}
+                showSkillAdd={roles.showEditSkillAdd}
+                messages={messages}
+                fetchSkills={actions.fetchSkills}
+                onEditSave={actions.updateEditSkill}
+                onSkillSave={actions.editRoleSkillCreate}
+                skillChange={actions.editRoleSkillChange}
+                skillsChange={actions.skillsEditChange}
+                onSkillDelete={actions.deleteEditSkill}
+                toggleSkillAdd={actions.toggleRoleSkillsEdit}
+              />
+            </Measure>
 
             <div className={cx('profile-btn-group')}>
               <RaisedButton className='pull-right' type="submit" label="Save" onClick={this.handleSubmit} primary={true} />

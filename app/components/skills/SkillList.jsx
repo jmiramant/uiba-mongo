@@ -115,7 +115,7 @@ class SkillList extends React.Component {
 
           <RadarChart
             points={skills}
-            style={{width: dimensions.width * 0.65, height: dimensions.width * 0.65}}
+            style={{width: dimensions.width * 0.65, height: dimensions.width * 0.5}}
           />
 
           { skills.length ? (
