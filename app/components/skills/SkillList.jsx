@@ -9,6 +9,7 @@ import SkillAdd from 'components/skills/SkillAdd';
 import NullProfItem from 'components/ProfileNull';
 import ErrorMessage from 'components/ErrorMessage';
 import InfoIcon from 'material-ui/svg-icons/action/info-outline';
+import RadarChart from 'components/d3/chart';
 
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import AddIcon from 'material-ui/svg-icons/content/add';
@@ -109,6 +110,10 @@ class SkillList extends React.Component {
             <InfoIcon className={cx('info-icon')}/>
             <p className={cx('msg')}>Important: Please include all knowledge, skills, and abilities developed during your work and non-work experience. The more information Uiba has to work with, the more accurate the assessment of your ability to excel in this role.</p>
           </div>
+
+          <RadarChart 
+            points={skills}
+          />
 
           { skills.length ? (
             <div className={listClass}>

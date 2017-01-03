@@ -1,37 +1,37 @@
-import React, { PropTypes } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import React, { PropTypes }         from 'react';
+import { bindActionCreators }       from 'redux';
+import { connect }                  from 'react-redux';
 
-import * as usersActionCreators from 'actions/users';
-import * as profilesActionCreators from 'actions/profiles';
-import * as jobsActionCreators from 'actions/jobs';
-import * as schoolsActionCreators from 'actions/schools';
-import * as skillsActionCreators from 'actions/skills';
-import * as profileActionCreators from 'actions/profiles';
+import * as usersActionCreators     from 'actions/users';
+import * as profilesActionCreators  from 'actions/profiles';
+import * as jobsActionCreators      from 'actions/jobs';
+import * as schoolsActionCreators   from 'actions/schools';
+import * as skillsActionCreators    from 'actions/skills';
+import * as profileActionCreators   from 'actions/profiles';
 import * as languagesActionCreators from 'actions/languages';
-import * as projectsActionCreators from 'actions/projects';
-import * as rolesActionCreators from 'actions/roles';
-import * as messagesActionCreators from 'actions/messages';
+import * as projectsActionCreators  from 'actions/projects';
+import * as rolesActionCreators     from 'actions/roles';
+import * as messagesActionCreators  from 'actions/messages';
 import * as interestsActionCreators from 'actions/interests';
-import * as applyActionCreators from 'actions/apply';
+import * as applyActionCreators     from 'actions/apply';
 
-import { mixpanelTrack } from 'middlewares/mixpanelTrackers';
-import { Card } from 'material-ui/Card';
-import CardHeader from 'components/CardHeader';
-import Jobs from 'components/jobs/JobList';
-import Schools from 'components/schools/SchoolList';
-import Skills from 'components/skills/SkillList';
-import Languages from 'components/language/LanguageList';
-import Interests from 'components/interests/InterestList';
-import Projects from 'components/projects/ProjectList';
-import ApplyBtn from 'components/ApplyBtn';
-import UserCard from 'components/userCard/UserCard';
-import Loading from 'components/Loading';
-import { validateSubmitHelper } from 'components/helpers/submitValidations';
+import { mixpanelTrack }            from 'middlewares/mixpanelTrackers';
+import { Card }                     from 'material-ui/Card';
+import CardHeader                   from 'components/CardHeader';
+import Jobs                         from 'components/jobs/JobList';
+import Schools                      from 'components/schools/SchoolList';
+import Skills                       from 'components/skills/SkillList';
+import Languages                    from 'components/language/LanguageList';
+import Interests                    from 'components/interests/InterestList';
+import Projects                     from 'components/projects/ProjectList';
+import ApplyBtn                     from 'components/ApplyBtn';
+import UserCard                     from 'components/userCard/UserCard';
+import Loading                      from 'components/Loading';
+import { validateSubmitHelper }     from 'components/helpers/submitValidations';
 
-import Scroll from 'react-scroll';
-import styles from 'css/common/profile';
-import classNames from 'classnames/bind';
+import Scroll                   from 'react-scroll';
+import styles                   from 'css/common/profile';
+import classNames               from 'classnames/bind';
 const cx = classNames.bind(styles);
 const scroll = Scroll.animateScroll;
 var Element = Scroll.Element;
@@ -176,6 +176,7 @@ class Profile extends React.Component {
                 error={validationErrors.skills}
               />
             </Element>
+
             <Skills 
               skills={skills.skills}
               addVisible={skills.addShow}

@@ -19,7 +19,10 @@ const message = (
     case types.GET_LANGUAGES_FAILURE:
     case types.GET_SCHOOLS_FAILURE:
     case types.CREATE_SCHOOL_FAILURE:
-      return {...state, message: action.error.response.data.error, type: "SUCCESS"}
+      let msg;
+      if (action.error) msg = action.error.toString();
+      if (action.error.response && action.error.response.data.error) msg = action.error.response.data.error;
+      return {...state, message: msg, type: "SUCCESS"}
     case types.CREATE_ERROR:
       return {...state, message: action.data, type: "ERROR"}
     default:
