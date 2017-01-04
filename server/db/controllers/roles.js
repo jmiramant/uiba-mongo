@@ -48,8 +48,8 @@ export function get(req, res) {
     return res.status(200).json(role);
   }
 
-  if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
-    
+  if (req.params.id.match(/^[0-9a-fA-F]{24}$/) && !(req.search.type === 'profId')) {
+
     Roles.findById(req.params.id, respCb)
   
   } else {

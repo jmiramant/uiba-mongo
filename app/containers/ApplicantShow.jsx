@@ -222,7 +222,7 @@ function mapStateToProps(state) {
     skills: state.skill.skills,
     languages: state.language.languages,
     projects: state.project.projects,
-    interests: state.interest.interests
+    interests: state.interest.interests,
   };
 }
 
@@ -235,7 +235,6 @@ function mapDispatchToProps (dispatch) {
     projectActions: bindActionCreators(projectsActionCreators, dispatch),
     interestActions: bindActionCreators(interestsActionCreators, dispatch),
     applicantActions: bindActionCreators(applicantActionCreators, dispatch),
-
   }
 }
 
