@@ -203,7 +203,7 @@ export function signUp(req, res, next) {
         }, function(saveErr, resp) {
           if (saveErr) return next(saveErr);
           mailer.sendEmailConfirmation(user, req.headers.host)
-          return res.redirect(200, '/email-confirmation');
+          return res.status(200).send({profile: resp._profile, user: resp.user});
         });
       }
       

@@ -112,7 +112,7 @@ export function signUp(data) {
     return makeUserRequest('post', data, '/signup')
       .then(response => {
         if (response.status === 200) {
-          dispatch(signUpSuccess(response.data.message));
+          dispatch(signUpSuccess(response.data));
           dispatch(push('/email-confirmation'));
         } else {
           dispatch(signUpError('Oops! Something went wrong'));
