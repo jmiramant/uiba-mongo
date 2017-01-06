@@ -14,6 +14,7 @@ import * as rolesActionCreators     from 'actions/roles';
 import * as messagesActionCreators  from 'actions/messages';
 import * as interestsActionCreators from 'actions/interests';
 import * as applyActionCreators     from 'actions/apply';
+import * as scoreActionCreators     from 'actions/score';
 
 import { mixpanelTrack }            from 'middlewares/mixpanelTrackers';
 import { Card }                     from 'material-ui/Card';
@@ -86,11 +87,12 @@ class Profile extends React.Component {
   }
 
   handleApply () {
-    const {messageActions, profile, applyActions, roleActions} = this.props;
+    const {messageActions, profile, applyActions, roleActions, scoreActions} = this.props;
     this.props.messageActions.dismissMessage();
     if (!this.isValidated()) {
       if (profile.profile.apply.role_code && !profile.profile.apply.applyComplete) roleActions.increment(profile.profile.apply.role_code)
-      applyActions.sumbitApplication(profile.profile)
+      applyActions.sumbitApplication(profile.profile);
+      scoreActions.syncScores();
     }
   }
 
@@ -317,6 +319,7 @@ function mapDispatchToProps (dispatch) {
     messageActions: bindActionCreators(messagesActionCreators, dispatch),
     interestActions: bindActionCreators(interestsActionCreators, dispatch),
     applyActions: bindActionCreators(applyActionCreators, dispatch),
+    scoreActions: bindActionCreators(scoreActionCreators, dispatch),
   }
 }
 

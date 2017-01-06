@@ -36,9 +36,8 @@ export function navBackToProfile(data) {
 
 export function sumbitApplication(profile) {
   return (dispatch) => {
-    profile.apply.applied = false;
-    profile.apply.applyComplete = true;
-    return makeApplyRequest('put', profile, '/profile')
+    const prof = {...profile, apply: {...profile.apply, applied:false, applyComplete: true}};
+    return makeApplyRequest('put', prof, '/profile')
       .then(res => {
         if (res.status === 200) {
           dispatch(push('/applyConfirmation'))

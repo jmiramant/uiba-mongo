@@ -167,6 +167,7 @@ export default (app) => {
 
   if (scoresController) {
     app.post('/scores', scoresController.post);
+    app.put('/scores/sync', scoresController.sync)
   } else {
     console.warn(unsupportedMessage('scores routes'));
   }

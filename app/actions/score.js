@@ -36,6 +36,33 @@ export function fetchScoreFailure (data) {
   }
 }
 
+export function syncScoreSuccess (data) {
+  return {
+    type: types.SYNC_SCORES_SUCCESS,
+    data: data
+  }
+}
+
+export function syncScoreFailure (data) {
+  return {
+    type: types.SYNC_SCORES_FAILURE,
+    error: data.error
+  }
+}
+export function syncScores () {
+  return (dispatch) => {
+    return makeScoreRequest('put', null, '/scores/sync')
+      .then(res => {
+        if (res.status === 200) {
+          return dispatch(syncScoreSuccess(res.data));
+        }
+      })
+      .catch((err) => {
+        return dispatch(syncScoreFailure({ error: err}));
+      });
+  }
+}
+
 export function fetchScores(profIds, skills) {
   return (dispatch) => {
 
