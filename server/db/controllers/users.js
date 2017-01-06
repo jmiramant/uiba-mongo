@@ -116,7 +116,8 @@ export function login(req, res, next) {
           if (loginErr) return res.status(401).json({
             message: loginErr
           });
-          return res.status(200).json({
+          return res.status(200).send({
+            user,
             message: 'You have been successfully logged in.'
           });
         });
@@ -203,7 +204,11 @@ export function signUp(req, res, next) {
         }, function(saveErr, resp) {
           if (saveErr) return next(saveErr);
           mailer.sendEmailConfirmation(user, req.headers.host)
-          return res.status(200).send({profile: resp._profile, user: resp.user});
+          return res.status(200).send({
+            message: 'You have successfully signed up.', 
+            profile: resp._profile[0], 
+            user: resp.user[0]
+          });
         });
       }
       

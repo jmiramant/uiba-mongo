@@ -1,21 +1,7 @@
 import * as types from 'types';
 import { combineReducers } from 'redux';
 import { indentifyUser, setUser } from 'middlewares/mixpanelTrackers';
-
-const identifySendInBlueUser = (prof) => {
-  if (sendinblue) {
-    sendinblue.identify(prof.email, {
-      'firstName': prof.firstName,
-      'lastName': prof.lastName,
-      'profile_id' : prof._id,
-    });
-    sendinblue.track('userSignUp')
-  }
-};
-
-const signinSIB = (prof) => {
-  if (sendinblue) sendinblue.track('userSignIn')
-};
+import { SIBIdentifyAndSignIn, SIBsignIn } from 'middlewares/sendInBlueEvents';
 
 const isFetching = (
   state = false,
@@ -40,15 +26,15 @@ const currentUser = (
       setUser(action.res.data.email, action.res.data);
       return action.res.data;
     case types.LOGIN_SUCCESS_USER:
-      signinSIB();
-      return {};
+      SIBsignIn(action.user);
+      return action.user;
     case types.LOGOUT_ERROR_USER:
     case types.LOGIN_ERROR_USER:
     case types.SIGNUP_ERROR_USER:
     case types.LOGOUT_SUCCESS_USER:
       return {};
     case types.SIGNUP_SUCCESS_USER:
-      identifySendInBlueUser(action.message.profile[0])
+      SIBIdentifyAndSignIn(action.profile, action.user)
       return {};
     default:
       return state;

@@ -28,6 +28,7 @@ import ApplyBtn from 'components/ApplyBtn';
 import UserCard from 'components/userCard/UserCard';
 import Loading from 'components/Loading';
 import { validateSubmitHelper } from 'components/helpers/submitValidations';
+import { SIBApplySubmit } from 'middlewares/sendInBlueEvents';
 
 import Scroll from 'react-scroll';
 import styles from 'css/common/profile';
@@ -88,6 +89,7 @@ class Profile extends React.Component {
     this.props.messageActions.dismissMessage();
     if (!this.isValidated()) {
       if (profile.profile.apply.role_code && !profile.profile.apply.applyComplete) roleActions.increment(profile.profile.apply.role_code)
+      SIBApplySubmit(profile.profile)
       applyActions.sumbitApplication(profile.profile)
     }
   }

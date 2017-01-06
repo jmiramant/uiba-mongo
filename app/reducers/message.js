@@ -9,6 +9,7 @@ const message = (
 ) => {
   switch (action.type) {
     case types.LOGIN_SUCCESS_USER:
+    case types.SIGNUP_SUCCESS_USER:
       return {...state, message: action.message, type: 'SUCCESS'};
     case types.DISMISS_MESSAGE:
     case types.TOGGLE_SKILL_ADD:
