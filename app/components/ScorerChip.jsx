@@ -19,7 +19,7 @@ class ScoreChip extends React.Component {
     return (
       <div className={cx('container')}>
         { score ? (
-          <span className={cx('score-text')}>{score}</span>
+          <span className={cx('score-text')}>{Math.round(score * 100)}</span>
         ) : (
           <span>
             {isFetching ? (
