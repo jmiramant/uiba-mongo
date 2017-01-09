@@ -6,7 +6,7 @@ import { polyfill } from 'es6-promise';
 import axios from 'axios';
 import expect from 'expect';
 import * as actions from 'actions/projects';
-import * as types from 'types';
+import { ProjectTypes } from 'types';
 
 polyfill();
 
@@ -53,10 +53,10 @@ describe('Project Actions', () => {
     it('dispatches request and success actions when status is 200', done => {
       const expectedActions = [
         {
-          type: types.CREATE_PROJECT,
+          type: ProjectTypes.CREATE_PROJECT,
           data: data
         }, {
-          type: types.CREATE_PROJECT_SUCCESS,
+          type: ProjectTypes.CREATE_PROJECT_SUCCESS,
           data: undefined
         }
       ];
@@ -74,10 +74,10 @@ describe('Project Actions', () => {
     it('dispatches request and failed actions when status is NOT 200', done => {
       const expectedActions = [
         {
-          type: types.CREATE_PROJECT,
+          type: ProjectTypes.CREATE_PROJECT,
           data: data
         }, {
-          type: types.CREATE_PROJECT_FAILURE,
+          type: ProjectTypes.CREATE_PROJECT_FAILURE,
           error: 'Oops! Something went wrong and we couldn\'t create your project.'
         }
       ];
@@ -94,10 +94,10 @@ describe('Project Actions', () => {
     it('updateProject dispatches a change action on success', done => {
       const expectedActions = [{
         data: data,
-        type: types.UPDATE_PROJECT
+        type: ProjectTypes.UPDATE_PROJECT
       }, {
         data: undefined,
-        type: types.UPDATE_PROJECT_SUCCESS
+        type: ProjectTypes.UPDATE_PROJECT_SUCCESS
       }];
       sandbox.stub(axios, 'put').returns(Promise.resolve({ status: 200 }));
       const store = mockStore();
@@ -111,10 +111,10 @@ describe('Project Actions', () => {
     it('updateProject dispatches a failed action on failure', done => {
       const expectedActions = [{
         data: data,
-        type: types.UPDATE_PROJECT
+        type: ProjectTypes.UPDATE_PROJECT
       }, {
         error: 'Oops! Something went wrong and we couldn\'t create your project.',
-        type: types.UPDATE_PROJECT_FAILURE
+        type: ProjectTypes.UPDATE_PROJECT_FAILURE
       }];
       sandbox.stub(axios, 'put').returns(Promise.reject({status: 404, data: 'Oops! Something went wrong and we couldn\'t create your project.'}));
       const store = mockStore();
@@ -144,10 +144,10 @@ describe('Project Actions', () => {
 
     it('deleteProject dispatches a failure event on failure', done => {
       const expectedActions = [{
-        type: types.DELETE_PROJECT_REQUEST,
+        type: ProjectTypes.DELETE_PROJECT_REQUEST,
         data: data
       }, {
-        type: types.DELETE_PROJECT_FAILURE,
+        type: ProjectTypes.DELETE_PROJECT_FAILURE,
         error: 'Oops! Something went wrong and we couldn\'t delete your project.',
       }];
       sandbox.stub(axios, 'delete').returns(Promise.reject({status: 404, data: 'Oops! Something went wrong and we couldn\'t delete your project.'}));

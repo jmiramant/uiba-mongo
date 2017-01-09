@@ -1,4 +1,4 @@
-import * as types from 'types';
+import { ConfirmationTypes } from 'types';
 import { combineReducers } from 'redux';
 
 const show = (
@@ -6,9 +6,9 @@ const show = (
   action
 ) => {
   switch (action.type) {
-    case types.TOGGLE_RESEND:
+    case ConfirmationTypes.TOGGLE_RESEND:
       return !action.data;
-    case types.CHANGE_CONFIRM_EMAIL:
+    case ConfirmationTypes.CHANGE_CONFIRM_EMAIL:
       return true;
     default:
       return false;
@@ -20,10 +20,10 @@ const email = (
   action
 ) => {
   switch (action.type) {
-    case types.CHANGE_CONFIRM_EMAIL:
+    case ConfirmationTypes.CHANGE_CONFIRM_EMAIL:
       return action.state;
-    case types.RESEND_CONFIRM_FAILURE:
-    case types.RESEND_CONFIRM_SUCCESS:
+    case ConfirmationTypes.RESEND_CONFIRM_FAILURE:
+    case ConfirmationTypes.RESEND_CONFIRM_SUCCESS:
       return '';
     default:
       return state;
@@ -35,9 +35,9 @@ const resent = (
   action
 ) => {
   switch (action.type) {
-    case types.RESEND_CONFIRM_SUCCESS:
+    case ConfirmationTypes.RESEND_CONFIRM_SUCCESS:
       return true;
-    case types.RESEND_CONFIRM_FAILURE:
+    case ConfirmationTypes.RESEND_CONFIRM_FAILURE:
       return false;
     default:
       return false;
@@ -49,9 +49,9 @@ const message = (
   action
 ) => {
   switch (action.type) {
-    case types.RESEND_CONFIRM_FAILURE:
+    case ConfirmationTypes.RESEND_CONFIRM_FAILURE:
       return action.error.message;
-    case types.RESEND_CONFIRM_SUCCESS:
+    case ConfirmationTypes.RESEND_CONFIRM_SUCCESS:
       return action.state.message;
     default:
       return state;

@@ -246,6 +246,7 @@ export default (app) => {
   if (adminController) {
     app.post('/admin/recovery', adminController.recovery)
     app.delete('/api/v1/admin/delete-user', jwtauth, adminController.deleteUser);
+    app.post('/api/v1/admin/authorize-emails', jwtauth, adminController.authorizeEmails);
   } else {
     console.warn(unsupportedMessage('admin routes'));
   }

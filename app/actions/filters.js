@@ -1,33 +1,33 @@
 import { polyfill } from 'es6-promise';
 import request from 'axios';
 
-import * as types from 'types';
+import { FilterTypes } from 'types';
 
 polyfill();
 
 export function newFilter() {
   return {
-    type: types.NEW_FILTER,
+    type: FilterTypes.NEW_FILTER,
   };
 }
 
 export function filterChange(state) {
   return {
-    type: types.CHANGE_FILTER,
+    type: FilterTypes.CHANGE_FILTER,
     state
   };
 }
 
 export function filtersChange(state) {
   return {
-    type: types.CHANGE_FILTERS,
+    type: FilterTypes.CHANGE_FILTERS,
     state
   };
 }
 
 export function toggleFilterAdd (data) {
   return {
-    type: types.TOGGLE_FILTER_ADD,
+    type: FilterTypes.TOGGLE_FILTER_ADD,
     data: data
   };
 }
@@ -38,28 +38,28 @@ function makeFiltersRequest(method, data, api = '/filters') {
 
 export function fetchFilters(roleId) {
   return {
-    type: types.GET_FILTERS,
+    type: FilterTypes.GET_FILTERS,
     promise: makeFiltersRequest('get', {}, '/filters/' + roleId)
   };
 }
 
 export function createFilterRequest(data) {
   return {
-    type: types.CREATE_FILTER,
+    type: FilterTypes.CREATE_FILTER,
     data: data
   };
 }
 
 export function createFilterSuccess(data) {
   return {
-    type: types.CREATE_FILTER_SUCCESS,
+    type: FilterTypes.CREATE_FILTER_SUCCESS,
     data: data
   };
 }
 
 export function createFilterFailure(data) {
   return {
-    type: types.CREATE_FILTER_FAILURE,
+    type: FilterTypes.CREATE_FILTER_FAILURE,
     error: data.error
   };
 }
@@ -100,21 +100,21 @@ export function updateFilter(filterData) {
 
 export function deleteFilterRequest (data) {
   return {
-    type: types.DELETE_FILTER_REQUEST,
+    type: FilterTypes.DELETE_FILTER_REQUEST,
     data: data
   }
 }
 
 export function deleteFilterSuccess (data) {
   return {
-    type: types.DELETE_FILTER_SUCCESS,
+    type: FilterTypes.DELETE_FILTER_SUCCESS,
     data: data
   }
 }
 
 export function deleteFilterFailure (data) {
   return {
-    type: types.DELETE_FILTER_FAILURE,
+    type: FilterTypes.DELETE_FILTER_FAILURE,
     error: data.error
   }
 }

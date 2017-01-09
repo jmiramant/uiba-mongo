@@ -1,33 +1,32 @@
 import { polyfill } from 'es6-promise';
 import request from 'axios';
-
-import * as types from 'types';
+import { LanguageTypes } from 'types';
 
 polyfill();
 
 export function newLanguage() {
   return {
-    type: types.NEW_LANGUAGE,
+    type: LanguageTypes.NEW_LANGUAGE,
   };
 }
 
 export function languageChange(state) {
   return {
-    type: types.CHANGE_LANGUAGE,
+    type: LanguageTypes.CHANGE_LANGUAGE,
     state
   };
 }
 
 export function languagesChange(state) {
   return {
-    type: types.CHANGE_LANGUAGES,
+    type: LanguageTypes.CHANGE_LANGUAGES,
     state
   };
 }
 
 export function toggleLanguageAdd (data, persist = false) {
   return {
-    type: types.TOGGLE_LANGUAGE_ADD,
+    type: LanguageTypes.TOGGLE_LANGUAGE_ADD,
     data: data,
     persist: persist
   };
@@ -41,49 +40,49 @@ export function fetchLanguages(profId) {
   let path = '/languages/me';
   if (profId) path = '/languages/' + profId;
   return {
-    type: types.GET_LANGUAGES,
+    type: LanguageTypes.GET_LANGUAGES,
     promise: makeLanguagesRequest('get', {}, path)
   };
 }
 
 export function createLanguageRequest(data) {
   return {
-    type: types.CREATE_LANGUAGE,
+    type: LanguageTypes.CREATE_LANGUAGE,
     data: data
   };
 }
 
 export function createLanguageSuccess(data) {
   return {
-    type: types.CREATE_LANGUAGE_SUCCESS,
+    type: LanguageTypes.CREATE_LANGUAGE_SUCCESS,
     data: data
   };
 }
 
 export function createLanguageFailure(data) {
   return {
-    type: types.CREATE_LANGUAGE_FAILURE,
+    type: LanguageTypes.CREATE_LANGUAGE_FAILURE,
     error: data.error
   };
 }
 
 export function updateLanguageRequest(data) {
   return {
-    type: types.UPDATE_LANGUAGE,
+    type: LanguageTypes.UPDATE_LANGUAGE,
     data: data
   }
 }
 
 export function updateLanguageSuccess(data) {
   return {
-    type: types.UPDATE_LANGUAGE_SUCCESS,
+    type: LanguageTypes.UPDATE_LANGUAGE_SUCCESS,
     data: data
   }
 }
 
 export function updateLanguageFailure(data) {
   return {
-    type: types.UPDATE_LANGUAGE_FAILURE,
+    type: LanguageTypes.UPDATE_LANGUAGE_FAILURE,
     error: data.error
   };
 }
@@ -128,21 +127,21 @@ export function updateLanguage(languageData) {
 
 export function deleteLanguageRequest (data) {
   return {
-    type: types.DELETE_LANGUAGE_REQUEST,
+    type: LanguageTypes.DELETE_LANGUAGE_REQUEST,
     data: data
   }
 }
 
 export function deleteLanguageSuccess (data) {
   return {
-    type: types.DELETE_LANGUAGE_SUCCESS,
+    type: LanguageTypes.DELETE_LANGUAGE_SUCCESS,
     data: data
   }
 }
 
 export function deleteLanguageFailure (data) {
   return {
-    type: types.DELETE_LANGUAGE_FAILURE,
+    type: LanguageTypes.DELETE_LANGUAGE_FAILURE,
     error: data.error
   }
 }
@@ -167,6 +166,6 @@ export function deleteLanguage(language) {
 
 export function dismissError() {
   return { 
-      type: types.DISMISS_LANGUAGE_ERROR 
+      type: LanguageTypes.DISMISS_LANGUAGE_ERROR 
   };  
 }

@@ -1,33 +1,33 @@
 import { polyfill } from 'es6-promise';
 import request from 'axios';
 
-import * as types from 'types';
+import { ConfirmationTypes } from 'types';
 
 polyfill();
 
 export function toggleResend() {
   return {
-    type: types.TOGGLE_RESEND,
+    type: ConfirmationTypes.TOGGLE_RESEND,
   };
 }
 
 export function confirmEmailChange(state) {
   return {
-    type: types.CHANGE_CONFIRM_EMAIL,
+    type: ConfirmationTypes.CHANGE_CONFIRM_EMAIL,
     state
   };
 }
 
 export function resendSuccess(state) {
   return {
-    type: types.RESEND_CONFIRM_SUCCESS,
+    type: ConfirmationTypes.RESEND_CONFIRM_SUCCESS,
     state
   };
 }
 
 export function resendFailure(data) {
   return {
-    type: types.RESEND_CONFIRM_FAILURE,
+    type: ConfirmationTypes.RESEND_CONFIRM_FAILURE,
     error: data.error
   };
 }

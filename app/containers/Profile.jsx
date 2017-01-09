@@ -161,10 +161,11 @@ class Profile extends React.Component {
                 error={validationErrors.jobs}
               />
             </Element>
-            <Jobs 
+            <Jobs
               jobs={jobs.jobs} 
               addVisible={jobs.addShow}
               toggleJobAdd={jobActions.toggleJobAdd}
+              toggleJobEdit={jobActions.toggleJobEdit}
               onEditSave={jobActions.updateJob} 
               onJobSave={jobActions.createJob} 
               onJobDelete={jobActions.deleteJob}

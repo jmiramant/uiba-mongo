@@ -24,6 +24,28 @@ const handleError = (res, err) => {
   });
 }
 
+export function authorizeEmails(req, res) {
+  const emails = req.body.emails.split(',')
+
+  User.find({'email': {$in: emails } }).exec( (uErr, users) => {
+    if (uErr || users.length === 0) return res.status(404).send('There are no users found with these emails.');
+
+    const parallels = [];
+
+    _.forEach(users, (user, i) => {
+      user.isEmailVerified = true;
+      parallels.push(user.save)
+    });
+
+    async.parallel(parallels, (err, resp) => {
+      if (err) return res.status(404).send('Something went wrong autherizing emails.');
+      return res.status(200).send(resp);
+    });
+
+  });
+
+}
+
 export function deleteUser(req, res) {
   User.findOne({email: req.body.email}, (err, user) => {
     if (err) return handleError(res, err)
@@ -144,5 +166,6 @@ export function recovery(req, res) {
 
 export default {
   recovery,
-  deleteUser
+  deleteUser,
+  authorizeEmails
 };

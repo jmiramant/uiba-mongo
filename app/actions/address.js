@@ -1,13 +1,13 @@
 import { polyfill } from 'es6-promise';
 import request from 'axios';
-import * as types from 'types';
+import { AddressTypes } from 'types';
 
 polyfill();
 
 export function updateAddressAutofill(results) {
   if (results.data && results.data.zip_codes) {
     return {
-      type: types.UPDATE_RANGE_AUTOFILL_SUCCESS,
+      type: AddressTypes.UPDATE_RANGE_AUTOFILL_SUCCESS,
       results
     };
   }
@@ -43,14 +43,14 @@ export function saveByZip(zipcode) {
 
 export function setZip(zip) {
   return {
-    type: types.SET_ZIP,
+    type: AddressTypes.SET_ZIP,
     data: zip
   };
 }
 
 export function setRange(range) {
   return {
-    type: types.SET_RANGE,
+    type: AddressTypes.SET_RANGE,
     data: range
   };
 }
@@ -67,63 +67,63 @@ export function setRangeByZip(zip, range) {
 
 export function fetchAddress() {
   return {
-    type: types.GET_ADDRESS,
+    type: AddressTypes.GET_ADDRESS,
     promise: makeAddressRequest('get', {}, '/address/me')
   };
 }
 
 export function fetchCompanyAddress(companyId) {
   return {
-    type: types.GET_ADDRESS,
+    type: AddressTypes.GET_ADDRESS,
     promise: makeAddressRequest('get', {}, '/address/' + companyId + '?type=company')
   };
 }
 
 export function fetchAddressByCompany(companyName) {
   return {
-    type: types.GET_ADDRESS,
+    type: AddressTypes.GET_ADDRESS,
     promise: makeAddressRequest('get', {}, '/address/companyName')
   };
 }
 
 export function createAddressRequest(data) {
   return {
-    type: types.CREATE_ADDRESS,
+    type: AddressTypes.CREATE_ADDRESS,
     data: data
   };
 }
 
 export function createAddressSuccess(data) {
   return {
-    type: types.CREATE_ADDRESS_SUCCESS,
+    type: AddressTypes.CREATE_ADDRESS_SUCCESS,
     data: data
   };
 }
 
 export function createAddressFailure(data) {
   return {
-    type: types.CREATE_ADDRESS_FAILURE,
+    type: AddressTypes.CREATE_ADDRESS_FAILURE,
     error: data.error
   };
 }
 
 export function updateAddressRequest(data) {
   return {
-    type: types.UPDATE_ADDRESS,
+    type: AddressTypes.UPDATE_ADDRESS,
     data: data
   }
 }
 
 export function updateAddressSuccess(data) {
   return {
-    type: types.UPDATE_ADDRESS_SUCCESS,
+    type: AddressTypes.UPDATE_ADDRESS_SUCCESS,
     data: data
   }
 }
 
 export function updateAddressFailure(data) {
   return {
-    type: types.UPDATE_ADDRESS_FAILURE,
+    type: AddressTypes.UPDATE_ADDRESS_FAILURE,
     error: data.error
   };
 }
@@ -164,28 +164,28 @@ export function updateAddress(addressData) {
 
 export function deleteAddressRequest (data) {
   return {
-    type: types.DELETE_ADDRESS_REQUEST,
+    type: AddressTypes.DELETE_ADDRESS_REQUEST,
     data: data
   }
 }
 
 export function deleteAddressSuccess (data) {
   return {
-    type: types.DELETE_ADDRESS_SUCCESS,
+    type: AddressTypes.DELETE_ADDRESS_SUCCESS,
     data: data
   }
 }
 
 export function deleteAddressFailure (data) {
   return {
-    type: types.DELETE_ADDRESS_FAILURE,
+    type: AddressTypes.DELETE_ADDRESS_FAILURE,
     error: data.error
   }
 }
 
 export function clearRangeAddress() {
   return {
-    type: types.CLEAR_RANGE_ADDRESS
+    type: AddressTypes.CLEAR_RANGE_ADDRESS
   }
 }
 
@@ -209,26 +209,26 @@ export function deleteAddress(address) {
 
 export function handleErrorMsg(msg) {
   return {
-    type: types.CREATE_ADDRESS_ERROR_MSG,
+    type: AddressTypes.CREATE_ADDRESS_ERROR_MSG,
     error: msg
   }
 }
 
 export function toggleAddressEdit () {
   return {
-    type: types.TOGGLE_ADDRESS_EDIT
+    type: AddressTypes.TOGGLE_ADDRESS_EDIT
   };
 }
 
 export function showAddressEditIcon () {
   return {
-    type: types.SHOW_ADDRESS_EDIT_ICON
+    type: AddressTypes.SHOW_ADDRESS_EDIT_ICON
   };
 }
 
 export function hideAddressEditIcon (data) {
   return {
-    type: types.HIDE_ADDRESS_EDIT_ICON,
+    type: AddressTypes.HIDE_ADDRESS_EDIT_ICON,
     data: data
   };
 }

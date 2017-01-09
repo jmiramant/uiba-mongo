@@ -1,7 +1,7 @@
 import { polyfill } from 'es6-promise';
 import request from 'axios';
 
-import * as types from 'types';
+import { RoleTypes } from 'types';
 
 polyfill();
 
@@ -11,97 +11,97 @@ function makeRolesRequest(method, data, api = '/roles') {
 
 export function newRole() {
   return {
-    type: types.NEW_ROLE,
+    type: RoleTypes.NEW_ROLE,
   };
 }
 
 export function roleChange(state) {
   return {
-    type: types.CHANGE_ROLE,
+    type: RoleTypes.CHANGE_ROLE,
     state
   };
 }
 
 export function roleEditChange(state) {
   return {
-    type: types.CHANGE_ROLE_EDIT,
+    type: RoleTypes.CHANGE_ROLE_EDIT,
     state
   };
 }
 
 export function rolesChange(state) {
   return {
-    type: types.CHANGE_ROLES,
+    type: RoleTypes.CHANGE_ROLES,
     state
   };
 }
 
 export function toggleRoleAdd (data) {
   return {
-    type: types.TOGGLE_ROLE_ADD,
+    type: RoleTypes.TOGGLE_ROLE_ADD,
     data: data
   };
 }
 
 export function toggleRoleEdit (data) {
   return {
-    type: types.TOGGLE_ROLE_EDIT,
+    type: RoleTypes.TOGGLE_ROLE_EDIT,
     data: data
   };
 }
 
 export function fetchRole(id) {
   return {
-    type: types.GET_ROLE,
+    type: RoleTypes.GET_ROLE,
     promise: makeRolesRequest('get', {}, '/role/' + id)
   };
 }
 
 export function fetchRoles(id) {
   return {
-    type: types.GET_ROLES,
+    type: RoleTypes.GET_ROLES,
     promise: makeRolesRequest('get', {}, '/roles/' + id)
   };
 }
 
 export function createRoleRequest(data) {
   return {
-    type: types.CREATE_ROLE,
+    type: RoleTypes.CREATE_ROLE,
     data: data
   };
 }
 
 export function createRoleSuccess(data) {
   return {
-    type: types.CREATE_ROLE_SUCCESS,
+    type: RoleTypes.CREATE_ROLE_SUCCESS,
     data: data
   };
 }
 
 export function createRoleFailure(data) {
   return {
-    type: types.CREATE_ROLE_FAILURE,
+    type: RoleTypes.CREATE_ROLE_FAILURE,
     error: data.err
   };
 }
 
 export function updateRoleRequest(data) {
   return {
-    type: types.UPDATE_ROLE,
+    type: RoleTypes.UPDATE_ROLE,
     data: data
   }
 }
 
 export function updateRoleSuccess(data) {
   return {
-    type: types.UPDATE_ROLE_SUCCESS,
+    type: RoleTypes.UPDATE_ROLE_SUCCESS,
     data: data
   }
 }
 
 export function updateRoleFailure(data) {
   return {
-    type: types.UPDATE_ROLE_FAILURE,
+    type: RoleTypes.UPDATE_ROLE_FAILURE,
     error: data.error
   };
 }
@@ -142,21 +142,21 @@ export function updateRole(roleData) {
 
 export function deleteRoleRequest (data) {
   return {
-    type: types.DELETE_ROLE_REQUEST,
+    type: RoleTypes.DELETE_ROLE_REQUEST,
     data: data
   }
 }
 
 export function deleteRoleSuccess (data) {
   return {
-    type: types.DELETE_ROLE_SUCCESS,
+    type: RoleTypes.DELETE_ROLE_SUCCESS,
     data: data
   }
 }
 
 export function deleteRoleFailure (data) {
   return {
-    type: types.DELETE_ROLE_FAILURE,
+    type: RoleTypes.DELETE_ROLE_FAILURE,
     error: data.error
   }
 }
@@ -181,14 +181,14 @@ export function deleteRole(role) {
 
 export function toggleEduReqSelect(data) {
   return {
-    type: types.TOGGLE_ROLE_EDU_REQUIREMENT,  
+    type: RoleTypes.TOGGLE_ROLE_EDU_REQUIREMENT,  
     data: data
   }
 }
 
 export function toggleRoleSkillsAdd (data, persist = false) {
   return {
-    type: types.TOGGLE_ROLE_SKILL_ADD,
+    type: RoleTypes.TOGGLE_ROLE_SKILL_ADD,
     data: data,
     persist: persist
   };
@@ -196,7 +196,7 @@ export function toggleRoleSkillsAdd (data, persist = false) {
 
 export function toggleRoleSkillsEdit (data, persist = false) {
   return {
-    type: types.TOGGLE_ROLE_SKILL_EDIT_ADD,
+    type: RoleTypes.TOGGLE_ROLE_SKILL_EDIT_ADD,
     data: data,
     persist: persist
   };
@@ -205,35 +205,35 @@ export function toggleRoleSkillsEdit (data, persist = false) {
 export function fetchSkills(skillsArray) {
   const path = '/skill-list/' + JSON.stringify(skillsArray);
   return {
-    type: types.FETCH_ROLE_SKILLS,
+    type: RoleTypes.FETCH_ROLE_SKILLS,
     promise: makeRolesRequest('get', {}, path)
   }
 }
 
 export function skillChange(state) {
   return {
-    type: types.CHANGE_ROLE_SKILL,
+    type: RoleTypes.CHANGE_ROLE_SKILL,
     state
   };
 }
 
 export function skillsChange(state) {
   return {
-    type: types.CHANGE_ROLE_SKILLS,
+    type: RoleTypes.CHANGE_ROLE_SKILLS,
     state
   };
 }
 
 export function createSkill(skillData) {
   return {
-    type: types.CREATE_ROLE_SKILL,
+    type: RoleTypes.CREATE_ROLE_SKILL,
     skillData
   };
 }
 
 export function updateSkill(skillData) {
   return {
-    type: types.UPDATE_ROLE_SKILL,
+    type: RoleTypes.UPDATE_ROLE_SKILL,
     skillData
   };
 }
@@ -282,7 +282,7 @@ export function deleteSkills(skillData) {
 
 export function deleteSkill(skillData) {
   return {
-    type: types.DELETE_ROLE_SKILL,
+    type: RoleTypes.DELETE_ROLE_SKILL,
     skillData
   };
 }
@@ -292,35 +292,35 @@ export function deleteSkill(skillData) {
 
 export function editRoleSkillChange(state) {
   return {
-    type: types.EDIT_ROLE_SKILL,
+    type: RoleTypes.EDIT_ROLE_SKILL,
     state
   };
 }
 
 export function editRoleSkillCreate(skillData) {
   return {
-    type: types.CREATE_EDIT_ROLE_SKILL,
+    type: RoleTypes.CREATE_EDIT_ROLE_SKILL,
     skillData
   };
 }
 
 export function deleteEditSkill(skillData) {
   return {
-    type: types.DELETE_EDIT_ROLE_SKILL,
+    type: RoleTypes.DELETE_EDIT_ROLE_SKILL,
     skillData
   };
 }
 
 export function updateEditSkill(skillData) {
   return {
-    type: types.UPDATE_EDIT_ROLE_SKILL,
+    type: RoleTypes.UPDATE_EDIT_ROLE_SKILL,
     skillData
   };
 }
 
 export function skillsEditChange(state) {
   return {
-    type: types.CHANGE_EDIT_ROLE_SKILLS,
+    type: RoleTypes.CHANGE_EDIT_ROLE_SKILLS,
     state
   };
 }

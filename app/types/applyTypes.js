@@ -1,0 +1,3 @@
+export const TOGGLE_APPLY = 'TOGGLE_APPLY';
+export const APPLY_SUCCESS = 'APPLY_SUCCESS';
+export const APPLY_FAILURE = 'APPLY_FAILURE';

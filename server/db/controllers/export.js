@@ -20,7 +20,15 @@ const handleError = (res, err) => {
   });
 }
 
-const exportQueryByDate = (req, res, queryDate, query) => {
+const renameKey = (o, old_key, new_key) => {
+  if (old_key !== new_key) {
+      Object.defineProperty(o, new_key,
+          Object.getOwnPropertyDescriptor(o, old_key));
+      delete o[old_key];
+  }
+}
+
+const exportQueryByDate = (req, res, queryDate, query, type) => {
 
   if (queryDate.toString() === 'Invalid Date') {
     return handleError(res, 'There is a problem with your Epoch datetime. Please provide a provide a properly formatted timestamp.')
@@ -40,7 +48,12 @@ const exportQueryByDate = (req, res, queryDate, query) => {
   _.forEach(models, (v, k) => {
     parallels[k] = (callback) => {
       if (k === 'profile') {
-        v.find(query)
+        let q = query;
+        if (type == 'updated') {
+          q = {...query};
+          renameKey(q, 'updatedAt', 'childUpdatedAt');
+        }
+        v.find(q)
           .limit(500)
           .exec((err, prof) => {
             callback(err, prof);
@@ -159,7 +172,7 @@ export function updated(req, res, next) {
       $gte: queryDate
     }
   };
-  return exportQueryByDate(req, res, queryDate, query);
+  return exportQueryByDate(req, res, queryDate, query, 'updated');
 }
 
 export function created(req, res) {
@@ -170,7 +183,7 @@ export function created(req, res) {
       $gte: queryDate
     }
   };
-  return exportQueryByDate(req, res, queryDate, query);
+  return exportQueryByDate(req, res, queryDate, query, 'created');
 }
 
 export function list(req, res) {

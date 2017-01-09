@@ -2,12 +2,14 @@ import mongoose, { Schema } from 'mongoose';
 import { Profile } from './profile';
 
 export function updateProfile(doc) {
-  mongoose.model("Profile").findById(doc.profile_id, (err, prof) => {
-    if (prof) {
-      prof.childUpdatedAt = new Date();
-      prof.save();
-    }
-  });
+  if (doc.profile_id) {
+    mongoose.model("Profile").findById(doc.profile_id, (err, prof) => {
+      if (prof) {
+        prof.childUpdatedAt = new Date();
+        prof.save();
+      }
+    });
+  }
 }
 
 export function UpdateCompanyOnRole(doc) {

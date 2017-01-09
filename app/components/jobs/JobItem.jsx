@@ -29,7 +29,7 @@ export default class JobItem extends React.Component {
   }
 
   toggleEdit () {
-    this.setState({edit: !this.state.edit})
+    this.props.toggleEdit(this.props.job);
   }
 
   saveEdit (job) {
@@ -45,18 +45,19 @@ export default class JobItem extends React.Component {
     const { 
             isntLast, 
             job, 
-            jobChange
+            jobChange,
+            editShow
           } = this.props;
 
     let descId = 0;
 
-    if (this.state.edit) {
+    if (job.edit) {
 
       return (
         <JobAdd
           job={job}
           jobChange={jobChange}
-          addVisible={false}
+          addVisible={editShow}
           onJobSave={this.saveEdit.bind(this)}
           handleDelete={this.handleDelete.bind(this)}
           toggleEdit={this.toggleEdit.bind(this)}

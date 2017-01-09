@@ -6,7 +6,7 @@ import { polyfill } from 'es6-promise';
 import axios from 'axios';
 import expect from 'expect';
 import * as actions from 'actions/schools';
-import * as types from 'types';
+import { SchoolTypes } from 'types';
 
 polyfill();
 
@@ -49,10 +49,10 @@ describe('School Actions', () => {
     it('dispatches request and success actions when status is 200', done => {
       const expectedActions = [
         {
-          type: types.CREATE_SCHOOL,
+          type: SchoolTypes.CREATE_SCHOOL,
           data: data
         }, {
-          type: types.CREATE_SCHOOL_SUCCESS,
+          type: SchoolTypes.CREATE_SCHOOL_SUCCESS,
           data: undefined
         }
       ];
@@ -70,10 +70,10 @@ describe('School Actions', () => {
     it('dispatches request and failed actions when status is NOT 200', done => {
       const expectedActions = [
         {
-          type: types.CREATE_SCHOOL,
+          type: SchoolTypes.CREATE_SCHOOL,
           data: data
         }, {
-          type: types.CREATE_SCHOOL_FAILURE,
+          type: SchoolTypes.CREATE_SCHOOL_FAILURE,
           error: 'Oops! Something went wrong and we couldn\'t create your school.',
         }
       ];
@@ -90,10 +90,10 @@ describe('School Actions', () => {
     it('updateSchool dispatches a change action on success', done => {
       const expectedActions = [{
         data: data,
-        type: types.UPDATE_SCHOOL
+        type: SchoolTypes.UPDATE_SCHOOL
       }, {
         data: undefined,
-        type: types.UPDATE_SCHOOL_SUCCESS
+        type: SchoolTypes.UPDATE_SCHOOL_SUCCESS
       }];
       sandbox.stub(axios, 'put').returns(Promise.resolve({ status: 200 }));
       const store = mockStore();
@@ -107,10 +107,10 @@ describe('School Actions', () => {
     it('updateSchool dispatches a failed action on failure', done => {
       const expectedActions = [{
         data: data,
-        type: types.UPDATE_SCHOOL
+        type: SchoolTypes.UPDATE_SCHOOL
       }, {
         error: 'Oops! Something went wrong and we couldn\'t create your school.',
-        type: types.UPDATE_SCHOOL_FAILURE
+        type: SchoolTypes.UPDATE_SCHOOL_FAILURE
       }];
       sandbox.stub(axios, 'put').returns(Promise.reject({status: 404, data: 'Oops! Something went wrong and we couldn\'t delete your school.'}));
       const store = mockStore();
@@ -140,10 +140,10 @@ describe('School Actions', () => {
 
     it('deleteSchool dispatches a failure event on failure', done => {
       const expectedActions = [{
-        type: types.DELETE_SCHOOL_REQUEST,
+        type: SchoolTypes.DELETE_SCHOOL_REQUEST,
         data: data
       }, {
-        type: types.DELETE_SCHOOL_FAILURE,
+        type: SchoolTypes.DELETE_SCHOOL_FAILURE,
         error: 'Oops! Something went wrong and we couldn\'t delete your school.',
       }];
       sandbox.stub(axios, 'delete').returns(Promise.reject({status: 404, data: 'Oops! Something went wrong and we couldn\'t delete your school.'}));

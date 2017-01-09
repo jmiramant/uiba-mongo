@@ -6,7 +6,7 @@ import { polyfill } from 'es6-promise';
 import axios from 'axios';
 import expect from 'expect';
 import * as actions from 'actions/languages';
-import * as types from 'types';
+import { LanguageTypes } from 'types';
 
 polyfill();
 
@@ -49,10 +49,10 @@ describe('Language Actions', () => {
     it('dispatches request and success actions when status is 200', done => {
       const expectedActions = [
         {
-          type: types.CREATE_LANGUAGE,
+          type: LanguageTypes.CREATE_LANGUAGE,
           data: data
         }, {
-          type: types.CREATE_LANGUAGE_SUCCESS,
+          type: LanguageTypes.CREATE_LANGUAGE_SUCCESS,
           data: undefined
         }
       ];
@@ -70,10 +70,10 @@ describe('Language Actions', () => {
     it('dispatches request and failed actions when status is NOT 200', done => {
       const expectedActions = [
         {
-          type: types.CREATE_LANGUAGE,
+          type: LanguageTypes.CREATE_LANGUAGE,
           data: data
         }, {
-          type: types.CREATE_LANGUAGE_FAILURE,
+          type: LanguageTypes.CREATE_LANGUAGE_FAILURE,
           error: { data: 'Oops! Something went wrong and we couldn\'t create your language.', status: 404 }
         }
       ];
@@ -90,10 +90,10 @@ describe('Language Actions', () => {
     it('updateLanguage dispatches a change action on success', done => {
       const expectedActions = [{
         data: data,
-        type: types.UPDATE_LANGUAGE
+        type: LanguageTypes.UPDATE_LANGUAGE
       }, {
         data: undefined,
-        type: types.UPDATE_LANGUAGE_SUCCESS
+        type: LanguageTypes.UPDATE_LANGUAGE_SUCCESS
       }];
       sandbox.stub(axios, 'put').returns(Promise.resolve({ status: 200 }));
       const store = mockStore();
@@ -107,10 +107,10 @@ describe('Language Actions', () => {
     it('updateLanguage dispatches a failed action on failure', done => {
       const expectedActions = [{
         data: data,
-        type: types.UPDATE_LANGUAGE
+        type: LanguageTypes.UPDATE_LANGUAGE
       }, {
         error: { data: 'Oops! Something went wrong and we couldn\'t delete your language.', status: 404 },
-        type: types.UPDATE_LANGUAGE_FAILURE
+        type: LanguageTypes.UPDATE_LANGUAGE_FAILURE
       }];
       sandbox.stub(axios, 'put').returns(Promise.reject({status: 404, data: 'Oops! Something went wrong and we couldn\'t delete your language.'}));
       const store = mockStore();
@@ -140,10 +140,10 @@ describe('Language Actions', () => {
 
     it('deleteLanguage dispatches a failure event on failure', done => {
       const expectedActions = [{
-        type: types.DELETE_LANGUAGE_REQUEST,
+        type: LanguageTypes.DELETE_LANGUAGE_REQUEST,
         data: data
       }, {
-        type: types.DELETE_LANGUAGE_FAILURE,
+        type: LanguageTypes.DELETE_LANGUAGE_FAILURE,
         error: 'Oops! Something went wrong and we couldn\'t delete your language.',
       }];
       sandbox.stub(axios, 'delete').returns(Promise.reject({status: 404, data: 'Oops! Something went wrong and we couldn\'t delete your language.'}));

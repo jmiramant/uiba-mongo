@@ -19,6 +19,7 @@ class JobList extends React.Component {
     addVisible: PropTypes.bool.isRequired,
     onEditSave: PropTypes.func.isRequired,
     toggleJobAdd: PropTypes.func.isRequired,
+    toggleJobEdit: PropTypes.func.isRequired,
     onJobSave: PropTypes.func.isRequired,
     onJobDelete: PropTypes.func.isRequired
   }
@@ -29,6 +30,10 @@ class JobList extends React.Component {
   
   toggleAddJob = () => {
     this.props.toggleJobAdd(this.props.addVisible)
+  }
+
+  toggleEditJob = (job) => {
+    this.props.toggleJobEdit(job);
   }
 
   handleSave = (data) => {
@@ -57,7 +62,7 @@ class JobList extends React.Component {
     const { job,
             jobs,
             addVisible,
-            actions
+            actions,
           } = this.props;
     const lengthIndex = jobs.length - 1;
 
@@ -71,6 +76,7 @@ class JobList extends React.Component {
                       saveJobEdit={this.handleEditSave} 
                       handleDelete={this.handleDelete}
                       isntLast={lengthIndex !== i} 
+                      toggleEdit={this.toggleEditJob.bind(this)}
                     />);
         })}
       </div>

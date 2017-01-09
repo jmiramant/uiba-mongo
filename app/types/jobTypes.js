@@ -2,6 +2,7 @@ export const NEW_JOB = 'NEW_JOB';
 export const CHANGE_JOB = 'CHANGE_JOB';
 export const CHANGE_JOBS = 'CHANGE_JOBS';
 export const TOGGLE_JOB_ADD = 'TOGGLE_JOB_ADD';
+export const TOGGLE_JOB_EDIT = 'TOGGLE_JOB_EDIT';
 
 export const GET_JOBS = 'GET_JOBS';
 export const GET_JOBS_REQUEST = 'GET_JOBS_REQUEST';

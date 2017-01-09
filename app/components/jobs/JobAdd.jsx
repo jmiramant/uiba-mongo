@@ -61,10 +61,11 @@ export default class JobAdd extends React.Component {
   }
 
   handleExpand(next) {
-    if (this.props.job.companyName !== next) {
+    const {job, addVisible, toggleEdit} = this.props;
+    if (job.companyName !== next) {
       if(timeout) { clearTimeout(timeout); }
       timeout = setTimeout(() => {
-        !this.props.addVisible && this.props.job.companyName ? this.props.toggleEdit() : null
+        !addVisible && job.companyName && !job.edit ? toggleEdit() : null
       }, 500)
     } 
   }

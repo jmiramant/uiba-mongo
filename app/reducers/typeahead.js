@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
-import * as types from 'types';
+import { TypeaheadTypes } from 'types';
 
 const typeahead = (
   state = [],
   action
 ) => {
   switch (action.type) {
-    case types.UPDATE_RESULTS_SUCCESS:
+    case TypeaheadTypes.UPDATE_RESULTS_SUCCESS:
       return action.results
     default:
       return [];
@@ -19,9 +19,9 @@ const selection = (
   action
 ) => {
   switch (action.type) {
-    case types.SET_INITIAL_SELECTION:
+    case TypeaheadTypes.SET_INITIAL_SELECTION:
       return (action.selection ? action.selection : '')
-    case types.UPDATE_SELECTION:
+    case TypeaheadTypes.UPDATE_SELECTION:
       return action.selection
     default:
       return state;
