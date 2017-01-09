@@ -3,7 +3,7 @@ import mongoose, {
 } from 'mongoose';
 import _ from 'lodash';
 import {
-  arkhamApi
+  arkhamApi,
 } from '../../config/secrets';
 import request from 'request';
 
@@ -12,10 +12,9 @@ export function post(req, res) {
     "profile_ids": req.body.profile_ids,
     "job_filter": req.body.job_filters
   }
-  console.log('process.env.NODE_ENV', process.env.NODE_ENV)
-  // url: 'https://nisn4kwnfb.execute-api.us-east-1.amazonaws.com/multiends/score/v1/test' + process.env.NODE_ENV,
+
   request({
-    url: 'https://nisn4kwnfb.execute-api.us-east-1.amazonaws.com/multiends/score/v1/test',
+    url: 'https://nisn4kwnfb.execute-api.us-east-1.amazonaws.com/multiends/score/v1/' + arkhamApi.arkham_environment,
     json: JSON.parse(JSON.stringify(data).replace(/'/g, '"')),
     method: 'POST'
   }, (err, response, body) => {
@@ -28,10 +27,9 @@ export function post(req, res) {
 
 
 export function sync(req, res) {
-  console.log('process.env.NODE_ENV', process.env.NODE_ENV)
-  // url: 'https://sjkzjyzd44.execute-api.us-east-1.amazonaws.com/test/synchronize/v1/test' + process.env.NODE_ENV,
+
   request({
-    url: 'https://sjkzjyzd44.execute-api.us-east-1.amazonaws.com/test/synchronize/v1/test',
+    url: 'https://sjkzjyzd44.execute-api.us-east-1.amazonaws.com/test/synchronize/v1/' + arkhamApi.arkham_environment,
     headers: {
       "x-api-key": arkhamApi.arkham_access_token
     },

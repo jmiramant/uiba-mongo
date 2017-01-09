@@ -25,7 +25,8 @@ export const aws = {
 }
 
 export const arkhamApi = {
-  arkham_access_token: process.env.ARKHAM_ACCESS_TOKEN
+  arkham_access_token: process.env.ARKHAM_ACCESS_TOKEN,
+  arkham_environment: process.env.ARKHAM_ENVIRONEMNT,
 }
 
 export default {
