@@ -28,6 +28,7 @@ export function post(req, res) {
 
 
 export function sync(req, res) {
+  console.log('process.env.NODE_ENV', process.env.NODE_ENV)
   // url: 'https://sjkzjyzd44.execute-api.us-east-1.amazonaws.com/test/synchronize/v1/test' + process.env.NODE_ENV,
   request({
     url: 'https://sjkzjyzd44.execute-api.us-east-1.amazonaws.com/test/synchronize/v1/test',
