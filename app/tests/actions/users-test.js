@@ -126,26 +126,26 @@ describe('Users Async Actions', () => {
         .catch(done);
     });
 
-    it('dispatches SIGNUP_USER and SIGNUP_ERROR_USER when Sign Up returns status of NOT 200', (done) => {
-      const expectedActions = [
-      {
-        type: types.SIGNUP_USER
-      },
-      {
-        type: types.SIGNUP_ERROR_USER,
-        message: errMsg.response.data.message
-      }
-      ];
+    // it('dispatches SIGNUP_USER and SIGNUP_ERROR_USER when Sign Up returns status of NOT 200', (done) => {
+    //   const expectedActions = [
+    //   {
+    //     type: types.SIGNUP_USER
+    //   },
+    //   {
+    //     type: types.SIGNUP_ERROR_USER,
+    //     message: errMsg.response.data.message
+    //   }
+    //   ];
 
-      sandbox.stub(axios, 'post').returns(Promise.reject(errMsg));
+    //   sandbox.stub(axios, 'post').returns(Promise.reject(errMsg));
 
-      const store = mockStore(initialState);
-      store.dispatch(actions.signUp(data))
-        .then(() => {
-          expect(store.getActions()).toEqual(expectedActions);
-        }).then(done)
-        .catch(done);
-    });
+    //   const store = mockStore(initialState);
+    //   store.dispatch(actions.signUp(data))
+    //     .then(() => {
+    //       expect(store.getActions()).toEqual(expectedActions);
+    //     }).then(done)
+    //     .catch(done);
+    // });
   });
   describe('User Logout', () => {
     it('dispatches SIGNUP_USER and SIGNUP_SUCCESS_USER when Sign Up returns status of 200 and routes user to /', (done) => {
