@@ -12,7 +12,7 @@ export function post(req, res) {
     "profile_ids": req.body.profile_ids,
     "job_filter": req.body.job_filters
   }
-
+  console.log('process.env.NODE_ENV', process.env.NODE_ENV)
   // url: 'https://nisn4kwnfb.execute-api.us-east-1.amazonaws.com/multiends/score/v1/test' + process.env.NODE_ENV,
   request({
     url: 'https://nisn4kwnfb.execute-api.us-east-1.amazonaws.com/multiends/score/v1/test',
