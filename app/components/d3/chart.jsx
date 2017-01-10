@@ -148,7 +148,6 @@ export default class RadarChart extends React.Component {
              .style("stroke", options.color(series))
              .attr("points",function(d) {
                var str="";
-               console.log(d)
                for(let pti=0; pti<d.length; pti++){
 
                   if (d[pti]) str=str+d[pti][0]+","+d[pti][1]+" ";
