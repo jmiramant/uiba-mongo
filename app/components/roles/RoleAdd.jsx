@@ -135,7 +135,7 @@ class RoleAdd extends React.Component {
         <div className={cx('req-msg')}>To be effective, the role must include at least 3 knowledge, skill, and ability requirements. The Uiba algorithm uses these to determine applicant fit.</div>
 
         <RadarChart
-          points={roles.skills}
+          points={[roles.skills]}
           style={{width: dimensions.width * 0.65, height: dimensions.width * 0.5}}
         />
 

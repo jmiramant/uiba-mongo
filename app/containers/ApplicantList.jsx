@@ -147,11 +147,12 @@ class ApplicantList extends React.Component {
           >
             {applicants.map((_applicant, i) => {
               return (<ApplicantListItem
-                key={_applicant._id} 
+                key={_applicant._id}
                 applicant={_applicant}
                 company={company}
                 score={this.setScore(_applicant._id)}
                 isScoreFetching={score.isFetching}
+                role={role}
               />);
             })}
           </TableBody>
@@ -163,7 +164,7 @@ class ApplicantList extends React.Component {
           <div className={cx('req-sub')}>Uiba uses role skill requirements to generate a score for each candidates. Edit this role's skill requirements to see how it impacts candidate ranking.</div>
           
           <RadarChart
-            points={roles.skills}
+            points={[roles.skills]}
             style={{width: dimensions.width * 0.55, height: dimensions.width * 0.4}}
           />
 

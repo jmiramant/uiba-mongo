@@ -26,7 +26,7 @@ export default class RadarChart extends React.Component {
   setOptions(data) {
     const { points } = this.props;
     const ax = this.setAllAxis(data);
-    
+
     const defaultOpts = {
       radius: 5,
       width: 450,
@@ -40,7 +40,7 @@ export default class RadarChart extends React.Component {
       translateX: 60,
       translateY: 30, 
       extraWidthX: 110,
-      pointsLength: this.props.points.length,
+      pointsLength: _.max(this.props.points, (p) => {return p.length}).length,
       extraWidthY: 75,
       color: d3.scaleOrdinal(d3.schemeCategory10),
       maxValue: Math.max(0, d3.max(data, function(i){return d3.max(i.map(function(o){return o.value;}))})),
@@ -48,7 +48,7 @@ export default class RadarChart extends React.Component {
       total: ax.length
     };
 
-    return this.setSizeBySkillCount(points, {...defaultOpts, ...this.props.style});
+    return this.setSizeBySkillCount(points[0], {...defaultOpts, ...this.props.style});
   }
 
   parseData() {
@@ -61,13 +61,19 @@ export default class RadarChart extends React.Component {
         return res;
     };
 
-    const parsed = this.props.points.map( (p) => {
-      return {axis: p.type, value: score(p.proficiency, p.lengthOfUse)};
+    const flat = _.flatten(this.props.points);
+    const p = _.map(this.props.points, (points) => {
+      let a = [];
+      _.forEach([...flat], (p) => {
+        if (points.indexOf(p) > -1 ) {
+          a.push({axis: p.type, value: score(p.proficiency, p.lengthOfUse)})
+        } else {
+          a.push({axis: p.type, value: 0})
+        }
+      });
+      return a
     });
-
-    return [
-      parsed
-    ];
+    return p;
   }
 
   setRadius(options) {
@@ -103,7 +109,7 @@ export default class RadarChart extends React.Component {
     for (let j=0; j<options.levels; j++) {
       const levelFactor = options.factor*radius*((j+1)/options.levels);
       g.selectAll(".levels")
-       .data(data[0]) 
+       .data(data) 
        .enter()
        .append("svg:text")
        .attr("x", function(d){return levelFactor*(1-options.factor*Math.sin(0));})
@@ -118,18 +124,21 @@ export default class RadarChart extends React.Component {
   }
 
   buildPointRanges(g, options, data) {
-    const dataValues = [];
     let series = 0;
+    let dataValues;
     const radius = this.setRadius(options);
     data.forEach(function(y, x){
+      dataValues = []
       g.selectAll(".nodes")
       .data(y, function(j, i){
+
         dataValues.push([
-        options.width/2*(1-(parseFloat(Math.max(j.value, 0))/options.maxValue)*options.factor*Math.sin(i*options.radians/options.total)), 
-        options.height/2*(1-(parseFloat(Math.max(j.value, 0))/options.maxValue)*options.factor*Math.cos(i*options.radians/options.total))
+          options.width/2*(1-(parseFloat(Math.max(j.value, 0))/options.maxValue)*options.factor*Math.sin(i*options.radians/options.total)), 
+          options.height/2*(1-(parseFloat(Math.max(j.value, 0))/options.maxValue)*options.factor*Math.cos(i*options.radians/options.total))
         ]);
       });
       dataValues.push(dataValues[0]);
+
       g.selectAll(".area")
              .data([dataValues])
              .enter()
@@ -139,12 +148,14 @@ export default class RadarChart extends React.Component {
              .style("stroke", options.color(series))
              .attr("points",function(d) {
                var str="";
+               console.log(d)
                for(let pti=0; pti<d.length; pti++){
+
                   if (d[pti]) str=str+d[pti][0]+","+d[pti][1]+" ";
                }
                return str;
               })
-             .style("fill", function(j, i){return options.color(series)})
+             .style("fill", options.color(series))
              .style("fill-opacity", options.opacityArea)
              .on('mouseover', function (d){
                 let z = "polygon."+d3.select(this).attr("class");

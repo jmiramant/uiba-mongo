@@ -106,6 +106,7 @@ export default (store) => {
         <Route path="dashboard" component={CompanyDashboard}></Route>
         <Route path="applicants/:roleId" component={ApplicantList}></Route>
         <Route path='applicant/:profId' component={ApplicantShow}></Route>
+        <Route path='role/:roleId/applicant/:profId' component={ApplicantShow}></Route>
       </Route>
     </Route>
   );

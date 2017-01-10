@@ -10,6 +10,7 @@ import * as applicantActionCreators from 'actions/applicants';
 import * as languagesActionCreators from 'actions/languages';
 import * as projectsActionCreators from 'actions/projects';
 import * as interestsActionCreators from 'actions/interests';
+import * as rolesActionCreators from 'actions/roles';
 
 import {Card, CardHeader} from 'material-ui/Card';
 import DefaultUserIcon from 'material-ui/svg-icons/action/account-circle';
@@ -36,15 +37,17 @@ class ApplicantShow extends React.Component {
 
   componentWillMount() {
     const { params,
-            applicantActions,
             jobActions,
-            schoolActions,
+            roleActions,
             skillActions,
+            schoolActions,
+            projectActions,
             interestActions,
             languageActions,
-            projectActions,
+            applicantActions,
     } = this.props;
 
+    if (params.roleId) roleActions.fetchRole(params.roleId);
     applicantActions.fetchApplicant(params.profId)
     schoolActions.fetchSchools(params.profId);
     jobActions.fetchJobs(params.profId);
@@ -57,16 +60,20 @@ class ApplicantShow extends React.Component {
   render() {
     
     const {
-      applicant,
+      role,
       jobs,
-      languages,
       skills,
-      projects,
       schools,
+      projects,
+      applicant,
+      languages,
       interests
     } = this.props;
 
     const { dimensions } = this.state;
+
+    const chartData = [skills];
+    if (role.skills) chartData.push(role.skills);
 
     return (
       <div>
@@ -132,11 +139,12 @@ class ApplicantShow extends React.Component {
                 />
               </Measure>
 
-              <RadarChart
-                points={skills}
-                style={{width: dimensions.width * 0.65, height: dimensions.width * 0.5}}
-              />
-
+              { chartData.length === 2 ? (
+                <RadarChart
+                  points={chartData}
+                  style={{width: dimensions.width * 0.65, height: dimensions.width * 0.5}}
+                />
+              ) : (null)}
                 {skills.length === 0 ? (
                   <div className={cx('null-info')}>{applicant.firstName} hasn't added any items in the knowledge, skills, and abilities section.</div>
                 ) : (
@@ -219,6 +227,7 @@ function mapStateToProps(state) {
     applicant: state.applicant.applicant,
     schools: state.school.schools,
     jobs: state.job.jobs,
+    role: state.role.role,
     skills: state.skill.skills,
     languages: state.language.languages,
     projects: state.project.projects,
@@ -228,6 +237,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps (dispatch) {
   return {
+    roleActions: bindActionCreators(rolesActionCreators, dispatch),
     schoolActions: bindActionCreators(schoolsActionCreators, dispatch),
     jobActions: bindActionCreators(jobsActionCreators, dispatch),
     skillActions: bindActionCreators(skillsActionCreators, dispatch),
