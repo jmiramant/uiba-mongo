@@ -194,7 +194,7 @@ class Profile extends React.Component {
                 onSkillSave={skillActions.createSkill} 
                 skillChange={skillActions.skillChange}
                 skillsChange={skillActions.skillsChange}
-                errorMessage={messages.errorMessage}
+                errorMessage={skills.message}
                 onSkillDelete={skillActions.deleteSkill} 
                 toggleSkillAdd={skillActions.toggleSkillAdd}
               />
@@ -230,7 +230,7 @@ class Profile extends React.Component {
             <Languages
               languages={languages.languages}
               addVisible={languages.addShow}
-              errorMessage={messages.errorMessage}
+              errorMessage={languages.message}
               toggleLanguageAdd={languageActions.toggleLanguageAdd}
               onEditSave={languageActions.updateLanguage} 
               onLanguageSave={languageActions.createLanguage} 
@@ -266,7 +266,7 @@ class Profile extends React.Component {
             <Interests
               interests={interests.interests}
               addVisible={interests.addShow}
-              errorMessage={messages.errorMessage}
+              errorMessage={interests.message}
               toggleInterestAdd={interestActions.toggleInterestAdd}
               onEditSave={interestActions.updateInterest} 
               onInterestSave={interestActions.createInterest} 

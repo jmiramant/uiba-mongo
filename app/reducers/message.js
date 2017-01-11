@@ -57,9 +57,6 @@ const errorMessage = (
   action
 ) => {
   switch (action.type) {
-    case SkillTypes.CREATE_SKILL_FAILURE:
-    case LanguageTypes.CREATE_LANGUAGE_FAILURE:
-      return action.error
     case MessageTypes.DISMISS_ERROR:
       return ''
     default:

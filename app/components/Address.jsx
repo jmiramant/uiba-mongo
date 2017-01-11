@@ -63,7 +63,7 @@ class Address extends Component {
       autofill,
       address,
     } = this.props;
-    console.log(address.length)
+
     const showAddress = (autofill, address) => {
 
       if (autofill.city && autofill.state) {

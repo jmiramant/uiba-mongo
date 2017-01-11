@@ -102,26 +102,26 @@ const addShow = (
   }
 };
 
-const errorMessage = (
+const message = (
   state = '',
   action
 ) => {
   switch (action.type) {
     case InterestTypes.CREATE_INTEREST_FAILURE:
-      return action.error
-    case InterestTypes.DISMISS_INTEREST_ERROR:
-      return ''
+      return action.error;
+    case InterestTypes.DISMISS_INTEREST_MESSAGE:
+      return '';
     default:
-      return state;
+      return state
   }
-};
+}
 
 const interestReducer = combineReducers({
   interest,
   interests,
-  errorMessage,
   addShow,
-  isFetching
+  isFetching,
+  message
 });
 
 export default interestReducer;

@@ -14,7 +14,10 @@ export function post(req, res) {
   }
 
   request({
-    url: 'https://nisn4kwnfb.execute-api.us-east-1.amazonaws.com/multiends/score/v1/' + arkhamApi.arkham_environment,
+    url: arkhamApi.score_url,
+    headers: {
+      "x-api-key": arkhamApi.access_token
+    },
     json: JSON.parse(JSON.stringify(data).replace(/'/g, '"')),
     method: 'POST'
   }, (err, response, body) => {
@@ -29,9 +32,9 @@ export function post(req, res) {
 export function sync(req, res) {
 
   request({
-    url: 'https://sjkzjyzd44.execute-api.us-east-1.amazonaws.com/test/synchronize/v1/' + arkhamApi.arkham_environment,
+    url: arkhamApi.sync_url,
     headers: {
-      "x-api-key": arkhamApi.arkham_access_token
+      "x-api-key": arkhamApi.access_token
     },
     method: 'GET'
   }, (err, response, body) => {

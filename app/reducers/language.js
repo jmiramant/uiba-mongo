@@ -104,26 +104,26 @@ const addShow = (
   }
 };
 
-const errorMessage = (
+const message = (
   state = '',
   action
 ) => {
   switch (action.type) {
     case LanguageTypes.CREATE_LANGUAGE_FAILURE:
-      return action.error
-    case LanguageTypes.DISMISS_LANGUAGE_ERROR:
-      return ''
+      return action.error;
+    case LanguageTypes.DISMISS_LANGUAGE_MESSAGE:
+      return '';
     default:
-      return state;
+      return state
   }
-};
+}
 
 const languageReducer = combineReducers({
+  addShow,
+  message,
   language,
   languages,
-  errorMessage,
-  addShow,
-  isFetching
+  isFetching,
 });
 
 export default languageReducer;

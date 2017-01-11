@@ -115,9 +115,24 @@ const inputFocus = (
   }
 };
 
+const message = (
+  state = '',
+  action
+) => {
+  switch (action.type) {
+    case SkillTypes.CREATE_SKILL_FAILURE:
+      return action.error;
+    case SkillTypes.DISMISS_LANGUAGE_MESSAGE:
+      return '';
+    default:
+      return state
+  }
+}
+
 const skillReducer = combineReducers({
   skill,
   skills,
+  message,
   addShow,
   inputFocus,
   isFetching
