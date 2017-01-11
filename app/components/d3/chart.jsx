@@ -61,20 +61,23 @@ export default class RadarChart extends React.Component {
         return res;
     };
 
-    const flat = _.flatten(this.props.points);
-    const p = _.map(this.props.points, (points) => {
+    const flatten = _.flatten(this.props.points);
+    const toLower = _.map(flatten, (a) => {return {...a, type: a.type.toLowerCase()} } );
+    const deDupped = _.uniqBy(toLower, 'type');
+
+    return _.map(this.props.points, (points) => {
       let a = [];
-      _.forEach([...flat], (p) => {
+      _.forEach(deDupped, (p) => {
         const pointsLower = _.map(points, (p) => {return p.type.toLowerCase();}) 
-        if (pointsLower.indexOf(p.type.toLowerCase()) > -1 ) {
-          a.push({axis: p.type, value: score(p.proficiency, p.lengthOfUse)})
+        if (pointsLower.indexOf(p.type) > -1 ) {
+          const tar = _.find(points, (_p) => {return _p.type.toLowerCase() === p.type});
+          a.push({axis: tar.type, value: score(tar.proficiency, tar.lengthOfUse)})
         } else {
           a.push({axis: p.type, value: 0})
         }
       });
       return a
     });
-    return p;
   }
 
   setRadius(options) {
@@ -294,8 +297,7 @@ export default class RadarChart extends React.Component {
   
   }
 
-  chartBase() {
-    const { points } = this.props;
+  renderChart() {
     const data = this.parseData();
     const options = this.setOptions(data);
     const radius = this.setRadius(options);
@@ -313,17 +315,22 @@ export default class RadarChart extends React.Component {
         .append("g")
         .attr("transform", "translate(" + options.translateX + "," + options.translateY + ")");
 
-    this.buildBackgroundRadius(g, options);
     this.buildLevelMarkers(g, options, data);
     this.buildBackgroundLines(g, options);
     this.buildPointRanges(g, options, data);
 
     return svgNode.toReact();
+
   }
 
   render() {
-    if (this.props.points.length > 0) {
-      return (this.chartBase());
+    const { points }      = this.props;
+    const lengths         = _.map(points, (p) => {return p.length});
+    const arePoints       = points.length > 0;
+    const arePointsLoaded = lengths.indexOf(0) === -1
+
+    if (arePoints && arePointsLoaded) {
+      return (this.renderChart());
     } else {
       return (null);
     }
