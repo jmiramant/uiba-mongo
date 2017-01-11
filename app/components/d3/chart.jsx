@@ -65,7 +65,8 @@ export default class RadarChart extends React.Component {
     const p = _.map(this.props.points, (points) => {
       let a = [];
       _.forEach([...flat], (p) => {
-        if (points.indexOf(p) > -1 ) {
+        const pointsLower = _.map(points, (p) => {return p.type.toLowerCase();}) 
+        if (pointsLower.indexOf(p.type.toLowerCase()) > -1 ) {
           a.push({axis: p.type, value: score(p.proficiency, p.lengthOfUse)})
         } else {
           a.push({axis: p.type, value: 0})
