@@ -17,6 +17,8 @@ export default class RoleRequirements extends React.Component {
     skillChange: PropTypes.func.isRequired,
     skillsChange: PropTypes.func.isRequired,
     onSkillDelete: PropTypes.func.isRequired,
+    toggleSkillAdd: PropTypes.func.isRequired,
+    toggleSkillEdit: PropTypes.func.isRequired,
   }
 
   state = {
@@ -41,6 +43,10 @@ export default class RoleRequirements extends React.Component {
 
   }
 
+  toggleSkillEdit(skill) {
+    this.props.toggleSkillEdit(skill)
+  }
+
   render () {
 
     const {
@@ -53,6 +59,7 @@ export default class RoleRequirements extends React.Component {
       onSkillDelete,
       skillsChange,
       toggleSkillAdd,
+      toggleSkillEdit,
     } = this.props;
 
     const {
@@ -67,6 +74,7 @@ export default class RoleRequirements extends React.Component {
           addVisible={showSkillAdd}
           errorMessage={messages.errorMessage}
           toggleSkillAdd={toggleSkillAdd}
+          toggleSkillEdit={this.toggleSkillEdit.bind(this)}
           skillChange={skillChange}
           skillsChange={skillsChange}
           onEditSave={onEditSave}

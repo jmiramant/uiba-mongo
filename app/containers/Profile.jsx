@@ -197,6 +197,7 @@ class Profile extends React.Component {
                 errorMessage={skills.message}
                 onSkillDelete={skillActions.deleteSkill} 
                 toggleSkillAdd={skillActions.toggleSkillAdd}
+                toggleSkillEdit={skillActions.toggleSkillEdit}
               />
             </Measure>
 
@@ -215,6 +216,7 @@ class Profile extends React.Component {
               schools={schools.schools} 
               addVisible={schools.addShow}
               toggleSchoolAdd={schoolActions.toggleSchoolAdd}
+              toggleSchoolEdit={schoolActions.toggleSchoolEdit}
               onEditSave={schoolActions.updateSchool} 
               onSchoolSave={schoolActions.createSchool} 
               onSchoolDelete={schoolActions.deleteSchool} 
@@ -232,6 +234,7 @@ class Profile extends React.Component {
               addVisible={languages.addShow}
               errorMessage={languages.message}
               toggleLanguageAdd={languageActions.toggleLanguageAdd}
+              toggleLanguageEdit={languageActions.toggleLanguageEdit}
               onEditSave={languageActions.updateLanguage} 
               onLanguageSave={languageActions.createLanguage} 
               onLanguageDelete={languageActions.deleteLanguage} 
@@ -248,6 +251,7 @@ class Profile extends React.Component {
               projects={projects.projects}
               addVisible={projects.addShow}
               toggleProjectAdd={projectActions.toggleProjectAdd}
+              toggleProjectEdit={projectActions.toggleProjectEdit}
               onEditSave={projectActions.updateProject} 
               onProjectSave={projectActions.createProject} 
               onProjectDelete={projectActions.deleteProject} 
@@ -267,6 +271,7 @@ class Profile extends React.Component {
               interests={interests.interests}
               addVisible={interests.addShow}
               errorMessage={interests.message}
+              toggleInterestEdit={interestActions.toggleInterestEdit}
               toggleInterestAdd={interestActions.toggleInterestAdd}
               onEditSave={interestActions.updateInterest} 
               onInterestSave={interestActions.createInterest} 

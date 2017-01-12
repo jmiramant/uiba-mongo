@@ -14,6 +14,7 @@ export default class LanguageItem extends React.Component {
   
   static propTypes = {
     language: PropTypes.object.isRequired,
+    toggleEdit: PropTypes.func.isRequired,
     languageChange: PropTypes.func.isRequired,
     saveLanguageEdit: PropTypes.func.isRequired,
     handleDelete: PropTypes.func.isRequired
@@ -23,12 +24,8 @@ export default class LanguageItem extends React.Component {
     super(props);
   }
 
-  state = {
-    edit: false,
-  }
-
   toggleEdit () {
-    this.setState({edit: !this.state.edit})
+    this.props.toggleEdit(this.props.language)
   }
 
   saveEdit (language) {
@@ -47,7 +44,7 @@ export default class LanguageItem extends React.Component {
             languageChange
           } = this.props;
 
-    if (this.state.edit) {
+    if (language.edit) {
 
       return (
         <LanguageAdd

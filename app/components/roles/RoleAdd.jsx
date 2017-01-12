@@ -156,6 +156,7 @@ class RoleAdd extends React.Component {
             skillsChange={actions.skillsChange}
             onSkillDelete={actions.deleteSkill}
             toggleSkillAdd={actions.toggleRoleSkillsAdd}
+            toggleSkillEdit={actions.toggleRoleSkillsEditAdd}
           />
         </Measure>
 

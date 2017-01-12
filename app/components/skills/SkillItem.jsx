@@ -29,7 +29,7 @@ export default class SkillItem extends React.Component {
   }
 
   toggleEdit () {
-    this.setState({edit: !this.state.edit})
+    this.props.toggleEdit(this.props.skill);
   }
   
   saveEdit (skill) {
@@ -49,12 +49,11 @@ export default class SkillItem extends React.Component {
             skillChange,
             errorMessage,
           } = this.props;
-    
-    if (this.state.edit) {
+
+    if (skill.edit) {
 
       return (
         <SkillAdd
-          isEdit={true}
           skill={skill}
           skillChange={skillChange}
           onSkillSave={this.saveEdit.bind(this)}

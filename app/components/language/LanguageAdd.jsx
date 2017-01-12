@@ -23,7 +23,6 @@ let timeout;
 export default class LanguageAdd extends React.Component {
 
   static propTypes = {
-    isEdit: PropTypes.bool.isRequired, 
     language: PropTypes.object.isRequired,
     languageChange: PropTypes.func.isRequired,
     toggleEdit: PropTypes.func.isRequired,
@@ -62,10 +61,11 @@ export default class LanguageAdd extends React.Component {
   }
 
   handleExpand(next) {
-    if (this.props.language.language !== next) {
+    const { language, addVisible, toggleEdit } = this.props;
+    if (language.language !== next) {
       if(timeout) { clearTimeout(timeout); }
       timeout = setTimeout(() => {
-        !this.props.addVisible && this.props.language.language ? this.props.toggleEdit() : null
+        !addVisible && language.language && !language.language.edit ? toggleEdit() : null
       }, 500)
     } 
   }

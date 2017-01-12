@@ -2,6 +2,7 @@ export const NEW_SKILL = 'NEW_SKILL';
 export const CHANGE_SKILL = 'CHANGE_SKILL';
 export const CHANGE_SKILLS = 'CHANGE_SKILLS';
 export const TOGGLE_SKILL_ADD = 'TOGGLE_SKILL_ADD';
+export const TOGGLE_SKILL_EDIT = 'TOGGLE_SKILL_EDIT';
 
 export const GET_SKILLS = 'GET_SKILLS';
 export const GET_SKILLS_REQUEST = 'GET_SKILLS_REQUEST';

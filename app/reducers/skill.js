@@ -86,6 +86,11 @@ const skills = (
       return {
         data: action.res.data,
       };
+    case SkillTypes.TOGGLE_SKILL_EDIT:
+      updatedSkill = _.map(state, (s) => {return {...s, edit: false } });
+      const t = updatedSkill[_.findIndex(updatedSkill, j => { return j._id === action.data._id})]
+      t.edit = !action.data.edit
+      return skillOrder(updatedSkill);
     default:
       return state;
   }

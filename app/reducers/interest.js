@@ -81,6 +81,11 @@ const interests = (
       return newState.filter( j => {
         return j._id !== action.data.id;
       })
+    case InterestTypes.TOGGLE_INTEREST_EDIT:
+      updatedInterest = _.map(state, (s) => {return {...s, edit: false } });
+      const t = updatedInterest[_.findIndex(updatedInterest, j => { return j._id === action.data._id})]
+      t.edit = !action.data.edit
+      return interestOrder(updatedInterest);
     case InterestTypes.CREATE_INTEREST_REQUEST:
       return {
         data: action.res.data,

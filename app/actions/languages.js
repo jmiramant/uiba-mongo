@@ -32,6 +32,13 @@ export function toggleLanguageAdd (data, persist = false) {
   };
 }
 
+export function toggleLanguageEdit (data) {
+  return {
+    type: LanguageTypes.TOGGLE_LANGUAGE_EDIT,
+    data: data
+  };
+}
+
 function makeLanguagesRequest(method, data, api = '/languages') {
   return request[method](api, data);
 }

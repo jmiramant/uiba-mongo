@@ -60,10 +60,11 @@ export default class ProjectAdd extends React.Component {
   }
 
   handleExpand(next) {
-    if (this.props.project.name !== next) {
+    const { project, addVisible, toggleEdit } = this.props;
+    if (project.name !== next) {
       if(timeout) { clearTimeout(timeout); }
       timeout = setTimeout(() => {
-        !this.props.addVisible && this.props.project.name ? this.props.toggleEdit() : null
+        !addVisible && project.name && !project.edit ? toggleEdit() : null
       }, 500)
     } 
   }

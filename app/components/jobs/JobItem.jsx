@@ -24,10 +24,6 @@ export default class JobItem extends React.Component {
     super(props);
   }
 
-  state = {
-    edit: false,
-  }
-
   toggleEdit () {
     this.props.toggleEdit(this.props.job);
   }

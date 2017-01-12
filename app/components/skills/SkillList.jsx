@@ -28,6 +28,7 @@ class SkillList extends React.Component {
     onSkillSave: PropTypes.func.isRequired,
     addVisible: PropTypes.bool.isRequired,
     toggleSkillAdd: PropTypes.func.isRequired,
+    toggleSkillEdit: PropTypes.func.isRequired,
     onEditSave: PropTypes.func.isRequired,
     onSkillDelete: PropTypes.func.isRequired
   }
@@ -44,6 +45,10 @@ class SkillList extends React.Component {
     } = this.props
 
     this.props.toggleSkillAdd(this.props.addVisible, skill)
+  }
+
+  toggleEditSkill = (skill) => {
+    this.props.toggleSkillEdit(skill);
   }
 
   handleSave = (data) => {
@@ -99,6 +104,7 @@ class SkillList extends React.Component {
                     skillChange={actions.skillsChange}
                     handleDelete={this.handleDelete}
                     saveSkillEdit={this.handleEditSave} 
+                    toggleEdit={this.toggleEditSkill.bind(this)}
                   />);
         })}
       </div>

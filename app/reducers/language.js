@@ -87,6 +87,11 @@ const languages = (
       return {
         data: action.res.data,
       };
+    case LanguageTypes.TOGGLE_LANGUAGE_EDIT:
+      updatedLangauge = _.map(state, (s) => {return {...s, edit: false } });
+      const t = updatedLangauge[_.findIndex(updatedLangauge, j => { return j._id === action.data._id})]
+      t.edit = !action.data.edit
+      return languageOrder(updatedLangauge);
     default:
       return state;
   }

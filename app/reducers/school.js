@@ -111,6 +111,11 @@ const schools = (
       return {
         data: action.res.data,
       };
+    case SchoolTypes.TOGGLE_SCHOOL_EDIT:
+      updatedSchool = _.map(state, (s) => {return {...s, edit: false } });
+      const t = updatedSchool[_.findIndex(updatedSchool, j => { return j._id === action.data._id})]
+      t.edit = !action.data.edit
+      return schoolOrder(updatedSchool);
     default:
       return state;
   }

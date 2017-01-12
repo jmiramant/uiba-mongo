@@ -91,6 +91,11 @@ const projects = (
       return {
         data: action.res.data,
       };
+    case ProjectTypes.TOGGLE_PROJECT_EDIT:
+      updatedProject = _.map(state, (s) => {return {...s, edit: false } });
+      const t = updatedProject[_.findIndex(updatedProject, j => { return j._id === action.data._id})]
+      t.edit = !action.data.edit
+      return projectOrder(updatedProject);
     default:
       return state;
   }

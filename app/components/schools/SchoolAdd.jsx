@@ -59,10 +59,11 @@ export default class SchoolAdd extends React.Component {
   }
 
   handleExpand(next) {
-    if (this.props.school.name !== next) {
+    const { school, addVisible, toggleEdit } = this.props;
+    if (school.name !== next) {
       if(timeout) { clearTimeout(timeout); }
       timeout = setTimeout(() => {
-        !this.props.addVisible && this.props.school.name ? this.props.toggleEdit() : null
+        !addVisible && school.name && !school.edit ? toggleEdit() : null
       }, 500)
     } 
   }

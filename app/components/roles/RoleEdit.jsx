@@ -65,6 +65,10 @@ class RoleEdit extends React.Component {
     this.changeProjectProps(field, value)
   }
 
+  toggleSkillEdit(skill) {
+    this.props.actions.toggleRoleSkillsEdit(skill, this.props.role)
+  }
+
   render () {
     const {
       dimensions,
@@ -139,7 +143,8 @@ class RoleEdit extends React.Component {
                 skillChange={actions.editRoleSkillChange}
                 skillsChange={actions.skillsEditChange}
                 onSkillDelete={actions.deleteEditSkill}
-                toggleSkillAdd={actions.toggleRoleSkillsEdit}
+                toggleSkillEdit={this.toggleSkillEdit.bind(this)}
+                toggleSkillAdd={actions.toggleRoleSkillsAdd}
               />
             </Measure>
 

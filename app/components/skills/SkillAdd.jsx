@@ -23,7 +23,6 @@ let timeout;
 export default class SkillAdd extends React.Component {
   
   static propTypes = {
-    isEdit: PropTypes.bool.isRequired, 
     skill: PropTypes.object.isRequired,
     skillChange: PropTypes.func.isRequired,
     toggleEdit: PropTypes.func.isRequired,
@@ -70,7 +69,7 @@ export default class SkillAdd extends React.Component {
     if (this.props.skill.type !== next) {
       if(timeout) { clearTimeout(timeout); }
       timeout = setTimeout(() => {
-        !this.props.addVisible && this.props.skill.type ? this.props.toggleEdit() : null
+        !this.props.addVisible && this.props.skill.type && !this.props.skill.edit ? this.props.toggleEdit() : null
       }, 500)
     } 
   }
@@ -119,7 +118,7 @@ export default class SkillAdd extends React.Component {
           } = this.props;
 
     let skillText = 'Add a Skill';
-    if (isEdit) skillText = 'Skill';
+    if (skill.edit) skillText = 'Skill';
 
     return (
       <div>
@@ -141,7 +140,7 @@ export default class SkillAdd extends React.Component {
             maxSearchResults={5}
           />
           
-          { addVisible || isEdit ? (
+          { addVisible || skill.edit ? (
             <span>
               <UibaSlider
                 dataSource={skill}

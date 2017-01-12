@@ -32,6 +32,13 @@ export function toggleProjectAdd (data) {
   };
 }
 
+export function toggleProjectEdit (data) {
+  return {
+    type: ProjectTypes.TOGGLE_PROJECT_EDIT,
+    data: data
+  };
+}
+
 function makeProjectsRequest(method, data, api = '/projects') {
   return request[method](api, data);
 }

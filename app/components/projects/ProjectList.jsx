@@ -19,6 +19,7 @@ class ProjectList extends React.Component {
     addVisible: PropTypes.bool.isRequired,
     onEditSave: PropTypes.func.isRequired,
     toggleProjectAdd: PropTypes.func.isRequired,
+    toggleProjectEdit: PropTypes.func.isRequired,
     onProjectSave: PropTypes.func.isRequired,
     onProjectDelete: PropTypes.func.isRequired
   }
@@ -30,7 +31,7 @@ class ProjectList extends React.Component {
   toggleAddProject = () => {
     this.props.toggleProjectAdd(this.props.addVisible)
   }
-
+  
   handleSave = (data) => {
     this.props.onProjectSave(data);
     this.props.toggleProjectAdd(this.props.addVisible)
@@ -48,7 +49,8 @@ class ProjectList extends React.Component {
     const { project,
             projects,
             addVisible,
-            actions
+            actions,
+            toggleProjectEdit
           } = this.props;
     const lengthIndex = projects.length - 1;
 
@@ -60,6 +62,7 @@ class ProjectList extends React.Component {
                       project={_project} 
                       projectChange={actions.projectsChange}
                       handleDelete={this.handleDelete}
+                      toggleEdit={toggleProjectEdit}
                       saveProjectEdit={this.handleEditSave} 
                       isntLast={lengthIndex !== i} 
                     />);

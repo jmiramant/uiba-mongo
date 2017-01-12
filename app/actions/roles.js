@@ -194,11 +194,19 @@ export function toggleRoleSkillsAdd (data, persist = false) {
   };
 }
 
-export function toggleRoleSkillsEdit (data, persist = false) {
+export function toggleRoleSkillsEdit(data, role) {
   return {
     type: RoleTypes.TOGGLE_ROLE_SKILL_EDIT_ADD,
     data: data,
-    persist: persist
+    role: role
+  };
+}
+
+export function toggleRoleSkillsEditAdd(data, role) {
+  return {
+    type: RoleTypes.TOGGLE_ROLE_SKILL_EDIT_ADD_ROLE,
+    data: data,
+    role: role
   };
 }
 

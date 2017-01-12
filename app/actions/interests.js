@@ -33,6 +33,14 @@ export function toggleInterestAdd (data, persist = false) {
   };
 }
 
+export function toggleInterestEdit (data) {
+  return {
+    type: InterestTypes.TOGGLE_INTEREST_EDIT,
+    data: data
+  };
+}
+
+
 function makeInterestsRequest(method, data, api = '/interests') {
   return request[method](api, data);
 }

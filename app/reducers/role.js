@@ -98,6 +98,18 @@ const roles = (
       return {
         data: action.res.data,
       };
+    case RoleTypes.TOGGLE_ROLE_SKILL_EDIT_ADD:
+      if (action.role) {
+        updatedRole = [...state];
+        const roleI = _.findIndex(updatedRole, (r) => {return r._id === action.role._id});
+        const updatedSkill = _.map(updatedRole[roleI].skills, (s) => {return {...s, edit: false } });
+        const t = updatedSkill[_.findIndex(updatedSkill, j => { return j._id === action.data._id})]
+        t.edit = !action.data.edit
+        updatedRole[roleI].skills[_.findIndex(updatedRole[roleI].skills, (s) => {return s._id === t._id})] = t;
+        return updatedRole
+      } else {
+        return state;
+      }
     default:
       return state;
   }
@@ -207,6 +219,11 @@ const skills = (
     case RoleTypes.TOGGLE_ROLE_ADD:
     case RoleTypes.CREATE_ROLE_SUCCESS:
       return [];
+    case RoleTypes.TOGGLE_ROLE_SKILL_EDIT_ADD_ROLE:
+      updatedSkill = _.map(state, (s) => {return {...s, edit: false } });
+      const t = updatedSkill[_.findIndex(updatedSkill, j => { return j._id === action.data._id})]
+      t.edit === undefined ? t.edit = true : t.edit = !action.data.edit
+      return skillOrder(updatedSkill);
     default:
       return state;
   }
@@ -238,10 +255,10 @@ const editSkill = (
       const newStateOjb = {...state}
       newStateOjb[action.state.field] = action.state.value
       return newStateOjb;
-    case RoleTypes.TOGGLE_ROLE_SKILL_EDIT_ADD:
-      resp = action.persist;
-      if (action.data === true) resp = {};
-      return resp;
+    // case RoleTypes.TOGGLE_ROLE_SKILL_EDIT_ADD:
+    //   resp = action.persist;
+    //   if (action.data === true) resp = {};
+    //   return resp;
     default:
       return state;
   }
@@ -293,7 +310,7 @@ const showEditSkillAdd = (
   action
 ) => {
   switch (action.type) {
-    case RoleTypes.TOGGLE_ROLE_SKILL_EDIT_ADD:
+    case RoleTypes.TOGGLE_ROLE_SKILL_ADD:
       return !state;
     default:
       return state;

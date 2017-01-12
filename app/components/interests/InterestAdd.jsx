@@ -19,7 +19,6 @@ let timeout;
 export default class InterestAdd extends React.Component {
 
   static propTypes = {
-    isEdit: PropTypes.bool.isRequired, 
     interest: PropTypes.object.isRequired,
     interestChange: PropTypes.func.isRequired,
     toggleEdit: PropTypes.func.isRequired,
@@ -58,10 +57,11 @@ export default class InterestAdd extends React.Component {
   }
 
   handleExpand(next) {
-    if (this.props.interest.interest !== next) {
+    const { interest, addVisible, toggleEdit } = this.props;
+    if (interest.interest !== next) {
       if(timeout) { clearTimeout(timeout); }
       timeout = setTimeout(() => {
-        !this.props.addVisible && this.props.interest.interest ? this.props.toggleEdit() : null
+        !addVisible && interest.interest && !interest.edit ? toggleEdit() : null
       }, 500)
     } 
   }
@@ -91,14 +91,13 @@ export default class InterestAdd extends React.Component {
     const {
             interest,
             addVisible,
-            isEdit
           } = this.props;
 
     let iText = interest.interest
     !interest.interest ? iText = '' : null
 
     let interestText = 'Add a Interest';
-    if (isEdit) interestText = 'Interest';
+    if (interest.edit) interestText = 'Interest';
 
     return (
       <div>
@@ -113,7 +112,7 @@ export default class InterestAdd extends React.Component {
             onChange={this.handleChange('interest')}
           />
 
-          { addVisible || isEdit ? (
+          { addVisible || interest.edit ? (
             <span>
               <div className={cx('profile-btn-group')}>
                 <RaisedButton className='pull-right' type="submit" label="Save" primary={true} />

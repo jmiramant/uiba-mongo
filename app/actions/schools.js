@@ -32,6 +32,13 @@ export function toggleSchoolAdd (data) {
   };
 }
 
+export function toggleSchoolEdit (data) {
+  return {
+    type: SchoolTypes.TOGGLE_SCHOOL_EDIT,
+    data: data
+  };
+}
+
 function makeSchoolsRequest(method, data, api = '/schools') {
   return request[method](api, data);
 }

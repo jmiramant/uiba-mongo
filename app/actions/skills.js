@@ -33,6 +33,13 @@ export function toggleSkillAdd (data, persist = false) {
   };
 }
 
+export function toggleSkillEdit (data) {
+  return {
+    type: SkillTypes.TOGGLE_SKILL_EDIT,
+    data: data
+  };
+}
+
 function makeSkillsRequest(method, data, api = '/skills') {
   return request[method](api, data);
 }

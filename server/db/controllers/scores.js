@@ -12,6 +12,7 @@ export function post(req, res) {
     "profile_ids": req.body.profile_ids,
     "job_filter": req.body.job_filters
   }
+  if (!arkhamApi.score_url) return res.status(404).send({error: "There is no 'score_url' URL."})
 
   request({
     url: arkhamApi.score_url,
@@ -31,6 +32,8 @@ export function post(req, res) {
 
 export function sync(req, res) {
 
+  if (!arkhamApi.sync_url) return res.status(404).send({error: "There is no 'sync_url' URL."})
+  
   request({
     url: arkhamApi.sync_url,
     headers: {
