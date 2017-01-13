@@ -12,6 +12,7 @@ import { DB_TYPE, ENV } from './appConfig';
 import { session as dbSession } from '../db';
 import gzip from 'compression';
 import AWS from './aws';
+import 'newrelic';
 
 export default (app) => {
   app.set('port', (process.env.PORT || 3000));
