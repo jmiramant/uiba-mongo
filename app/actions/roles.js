@@ -295,6 +295,15 @@ export function deleteSkill(skillData) {
   };
 }
 
+// Edit Applicant Role Skills
+
+
+export function toggleApplicantRoleSkill(data) {
+  return {
+    type: RoleTypes.TOGGLE_APPLICANT_ROLE_SKILLS,
+    data
+  };
+}
 
 // edit actions
 

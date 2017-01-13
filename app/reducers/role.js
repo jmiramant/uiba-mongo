@@ -220,6 +220,7 @@ const skills = (
     case RoleTypes.CREATE_ROLE_SUCCESS:
       return [];
     case RoleTypes.TOGGLE_ROLE_SKILL_EDIT_ADD_ROLE:
+    case RoleTypes.TOGGLE_APPLICANT_ROLE_SKILLS:
       updatedSkill = _.map(state, (s) => {return {...s, edit: false } });
       const t = updatedSkill[_.findIndex(updatedSkill, j => { return j._id === action.data._id})]
       t.edit === undefined ? t.edit = true : t.edit = !action.data.edit

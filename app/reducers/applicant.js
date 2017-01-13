@@ -186,7 +186,6 @@ const skillsFilter = (
         return j.type !== action.skillData.type;
       }));
     case ApplicantTypes.CREATE_APPLICANT_FILTER_SUCCESS:
-      return [];
     case ApplicantTypes.APPLICANT_FILTER_CLEAR:
       return [];
     default:

@@ -104,6 +104,10 @@ class ApplicantList extends React.Component {
     }
   }
 
+  toggleSkillEdit(skill) {
+    this.props.roleActions.toggleApplicantRoleSkill(skill)
+  }
+
   render() {
 
     const {
@@ -184,6 +188,7 @@ class ApplicantList extends React.Component {
               skillChange={roleActions.skillChange}
               skillsChange={roleActions.skillsChange}
               onSkillDelete={this.handleSkillDelete.bind(this)}
+              toggleSkillEdit={this.toggleSkillEdit.bind(this)}
               toggleSkillAdd={roleActions.toggleRoleSkillsAdd}
             />
           </Measure>

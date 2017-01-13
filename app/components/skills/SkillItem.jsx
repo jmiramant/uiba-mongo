@@ -24,10 +24,6 @@ export default class SkillItem extends React.Component {
     super(props);
   }
 
-  state = {
-    edit: false
-  }
-
   toggleEdit () {
     this.props.toggleEdit(this.props.skill);
   }
