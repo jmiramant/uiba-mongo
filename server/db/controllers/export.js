@@ -121,7 +121,7 @@ const exportUpdatedByDate = (req, res, queryDate, query, type) => {
     }
   }).exec((profErr, profiles) => {
     
-    if (profErr || profiles.length === 0) {
+    if (profErr) {
       return res.status(404).send('There are no profiles updated in before this time.');
     }
 
