@@ -36,7 +36,8 @@ class Apply extends Component {
   }
 
   fetchCompanyData() {
-    this.props.companyActions.fetchCompany(this.props.params.companyName)
+    const { params, companyActions } = this.props;
+    companyActions.fetchCompany(params.companyName.toLowerCase())
   }
 
   fetchRoleData() {
