@@ -10,6 +10,7 @@ import Interest from '../models/interest';
 import Language from '../models/language';
 import Company from '../models/company'
 import Recruiter from '../models/recruiter'
+import Address from '../models/address'
 import async from 'async'
 import moment from 'moment';
 import _ from 'lodash';
@@ -20,7 +21,15 @@ const handleError = (res, err) => {
   });
 }
 
-const exportQueryByDate = (req, res, queryDate, query) => {
+const renameKey = (o, old_key, new_key) => {
+  if (old_key !== new_key) {
+    Object.defineProperty(o, new_key,
+      Object.getOwnPropertyDescriptor(o, old_key));
+    delete o[old_key];
+  }
+}
+
+const exportQueryByDate = (req, res, queryDate, query, type) => {
 
   if (queryDate.toString() === 'Invalid Date') {
     return handleError(res, 'There is a problem with your Epoch datetime. Please provide a provide a properly formatted timestamp.')
@@ -40,7 +49,13 @@ const exportQueryByDate = (req, res, queryDate, query) => {
   _.forEach(models, (v, k) => {
     parallels[k] = (callback) => {
       if (k === 'profile') {
-        v.find(query)
+        let q = query;
+        if (type == 'updated') {
+          q = {...query
+          };
+          renameKey(q, 'updatedAt', 'childUpdatedAt');
+        }
+        v.find(q)
           .limit(500)
           .exec((err, prof) => {
             callback(err, prof);
@@ -92,6 +107,98 @@ const exportQueryByDate = (req, res, queryDate, query) => {
 
     return res.status(200).json(formatted);
   });
+}
+
+const exportUpdatedByDate = (req, res, queryDate, query, type) => {
+
+  if (queryDate.toString() === 'Invalid Date') {
+    return handleError(res, 'There is a problem with your Epoch datetime. Please provide a provide a properly formatted timestamp.')
+  }
+
+  Profile.find({
+    childUpdatedAt: {
+      $gte: queryDate
+    }
+  }).exec((profErr, profiles) => {
+    
+    if (profErr) {
+      return res.status(404).send('There are no profiles updated in before this time.');
+    }
+
+    const profileIds = _.map(profiles, (p) => {
+      return mongoose.Types.ObjectId(p._id)
+    });
+
+    const parallels = {};
+
+    const models = {
+      language: Language,
+      project: Project,
+      school: School,
+      interest: Interest,
+      skill: Skill,
+      job: Job,
+      address: Address
+    };
+
+    _.forEach(models, (v, k) => {
+      parallels[k] = (callback) => {
+        v.find({
+            profile_id: {
+              $in: profileIds
+            }
+          })
+          .exec((err, prof) => {
+            callback(err, prof);
+          })
+      }
+    });
+
+    parallels['profileCount'] = (callback) => {
+      Profile.count({
+        childUpdatedAt: {
+          $gte: queryDate
+        }
+      }).exec((err, resp) => {
+        callback(err, resp)
+      })
+    }
+
+    return async.parallel(parallels, (err, resp) => {
+      
+      if (err) {
+        return res.status(404).send('Something went wrong getting the skills data');
+      }
+
+      const formatted = {
+        details: {
+          timestamp: queryDate,
+          returnedUsers: profiles.length,
+          totalUsers: resp.profileCount,
+          paginated: resp.profileCount !== profiles.length
+        },
+        data: JSON.parse(JSON.stringify(profiles))
+      }
+
+      _.forEach(formatted.data, (user, i) => {
+        _.forEach(resp, (v, k) => {
+          if (k !== 'profile' && k !== 'profileCount') {
+            return user[k] = _.filter(v, (item) => {
+              if (item.profile_id) {
+                return item.profile_id.toString() === user. _id.toString()
+              } else {
+                return false;
+              }
+            })
+          }
+        });
+      })
+
+      return res.status(200).json(formatted);
+    });
+
+  });
+
 }
 
 const exportQueryByProfiles = (req, res, profiles) => {
@@ -159,7 +266,7 @@ export function updated(req, res, next) {
       $gte: queryDate
     }
   };
-  return exportQueryByDate(req, res, queryDate, query);
+  return exportUpdatedByDate(req, res, queryDate, query, 'updated');
 }
 
 export function created(req, res) {
@@ -170,13 +277,15 @@ export function created(req, res) {
       $gte: queryDate
     }
   };
-  return exportQueryByDate(req, res, queryDate, query);
+  return exportQueryByDate(req, res, queryDate, query, 'created');
 }
 
 export function list(req, res) {
-  const lowerName = req.query.target.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-`~()]/g,"").split(' ').join('_')
+  const lowerName = req.query.target.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-`~()]/g, "").split(' ').join('_')
   const query = {
-    ['apply.' + req.query.attr]: {"$in": [lowerName, req.query.target]}
+    ['apply.' + req.query.attr]: {
+      "$in": [lowerName, req.query.target]
+    }
   }
   Profile.find(query).exec((err, profiles) => {
     return exportQueryByProfiles(req, res, profiles);
@@ -199,11 +308,11 @@ export function recruiter(req, res) {
       }
       return a;
     };
-    
+
     let profIds = _.reduce(recruiter.credit, function(a, b) {
       return a.concat(b.candidate);
     }, []);
-    
+
     profIds = profIds.unique()
 
     Profile.find({

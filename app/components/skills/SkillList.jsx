@@ -9,6 +9,7 @@ import SkillAdd from 'components/skills/SkillAdd';
 import NullProfItem from 'components/ProfileNull';
 import ErrorMessage from 'components/ErrorMessage';
 import InfoIcon from 'material-ui/svg-icons/action/info-outline';
+import RadarChart from 'components/d3/chart';
 
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import AddIcon from 'material-ui/svg-icons/content/add';
@@ -22,10 +23,12 @@ class SkillList extends React.Component {
   
   static propTypes = {
     skills: PropTypes.array,
+    dimensions: PropTypes.obj,
     errorMessage: PropTypes.string,
     onSkillSave: PropTypes.func.isRequired,
     addVisible: PropTypes.bool.isRequired,
     toggleSkillAdd: PropTypes.func.isRequired,
+    toggleSkillEdit: PropTypes.func.isRequired,
     onEditSave: PropTypes.func.isRequired,
     onSkillDelete: PropTypes.func.isRequired
   }
@@ -42,6 +45,10 @@ class SkillList extends React.Component {
     } = this.props
 
     this.props.toggleSkillAdd(this.props.addVisible, skill)
+  }
+
+  toggleEditSkill = (skill) => {
+    this.props.toggleSkillEdit(skill);
   }
 
   handleSave = (data) => {
@@ -66,12 +73,13 @@ class SkillList extends React.Component {
 
   render () {
     let { skill,
-            skills,
-            addVisible,
-            inputFocus,
-            actions,
-            errorMessage,
-          } = this.props;
+          skills,
+          dimensions,
+          addVisible,
+          inputFocus,
+          actions,
+          errorMessage,
+        } = this.props;
 
     const listClass = classNames({
       [cx('horizontal')]: true,
@@ -96,6 +104,7 @@ class SkillList extends React.Component {
                     skillChange={actions.skillsChange}
                     handleDelete={this.handleDelete}
                     saveSkillEdit={this.handleEditSave} 
+                    toggleEdit={this.toggleEditSkill.bind(this)}
                   />);
         })}
       </div>
@@ -109,6 +118,11 @@ class SkillList extends React.Component {
             <InfoIcon className={cx('info-icon')}/>
             <p className={cx('msg')}>Important: Please include all knowledge, skills, and abilities developed during your work and non-work experience. The more information Uiba has to work with, the more accurate the assessment of your ability to excel in this role.</p>
           </div>
+
+          <RadarChart
+            points={[skills]}
+            style={{width: dimensions.width * 0.65, height: dimensions.width * 0.5}}
+          />
 
           { skills.length ? (
             <div className={listClass}>

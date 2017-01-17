@@ -1,4 +1,4 @@
-import * as types from 'types';
+import { UserTypes } from 'types';
 import { combineReducers } from 'redux';
 import { indentifyUser, setUser } from 'middlewares/mixpanelTrackers';
 import { SIBIdentifyAndSignIn, SIBsignIn } from 'middlewares/sendInBlueEvents';
@@ -8,8 +8,8 @@ const isFetching = (
   action
 ) => {
   switch (action.type) {
-    case types.GET_USERS_SUCCESS:
-    case types.GET_USERS_FAILURE:
+    case UserTypes.GET_USERS_SUCCESS:
+    case UserTypes.GET_USERS_FAILURE:
       return false;
     default:
       return state;
@@ -21,19 +21,19 @@ const currentUser = (
   action
 ) => {
   switch (action.type) {
-    case types.GET_CURRENT_USER_SUCCESS:
+    case UserTypes.GET_CURRENT_USER_SUCCESS:
       indentifyUser(action.res.data.email);
       setUser(action.res.data.email, action.res.data);
       return action.res.data;
-    case types.LOGIN_SUCCESS_USER:
+    case UserTypes.LOGIN_SUCCESS_USER:
       SIBsignIn(action.user);
       return action.user;
-    case types.LOGOUT_ERROR_USER:
-    case types.LOGIN_ERROR_USER:
-    case types.SIGNUP_ERROR_USER:
-    case types.LOGOUT_SUCCESS_USER:
+    case UserTypes.LOGOUT_ERROR_USER:
+    case UserTypes.LOGIN_ERROR_USER:
+    case UserTypes.SIGNUP_ERROR_USER:
+    case UserTypes.LOGOUT_SUCCESS_USER:
       return {};
-    case types.SIGNUP_SUCCESS_USER:
+    case UserTypes.SIGNUP_SUCCESS_USER:
       SIBIdentifyAndSignIn(action.profile, action.user)
       return {};
     default:
@@ -46,7 +46,7 @@ const isLogin = (
   action
 ) => {
   switch (action.type) {
-    case types.TOGGLE_LOGIN_MODE:
+    case UserTypes.TOGGLE_LOGIN_MODE:
       let resp = !state;
       if (!action.isLogin.type) { 
         resp = (action.isLogin === 'true') ? true : false 
@@ -62,15 +62,15 @@ const message = (
   action
 ) => {
   switch (action.type) {
-    case types.TOGGLE_LOGIN_MODE:
-    case types.MANUAL_LOGIN_USER:
-    case types.SIGNUP_USER:
-    case types.LOGOUT_USER:
-    case types.LOGIN_SUCCESS_USER:
-    case types.SIGNUP_SUCCESS_USER:
+    case UserTypes.TOGGLE_LOGIN_MODE:
+    case UserTypes.MANUAL_LOGIN_USER:
+    case UserTypes.SIGNUP_USER:
+    case UserTypes.LOGOUT_USER:
+    case UserTypes.LOGIN_SUCCESS_USER:
+    case UserTypes.SIGNUP_SUCCESS_USER:
       return '';
-    case types.LOGIN_ERROR_USER:
-    case types.SIGNUP_ERROR_USER:
+    case UserTypes.LOGIN_ERROR_USER:
+    case UserTypes.SIGNUP_ERROR_USER:
       if (action.message) {
         return action.message;
       } else {
@@ -86,16 +86,16 @@ const isWaiting = (
   action
 ) => {
   switch (action.type) {
-    case types.MANUAL_LOGIN_USER:
-    case types.SIGNUP_USER:
-    case types.LOGOUT_USER:
+    case UserTypes.MANUAL_LOGIN_USER:
+    case UserTypes.SIGNUP_USER:
+    case UserTypes.LOGOUT_USER:
       return true;
-    case types.LOGIN_SUCCESS_USER:
-    case types.SIGNUP_SUCCESS_USER:
-    case types.LOGOUT_SUCCESS_USER:
-    case types.LOGIN_ERROR_USER:
-    case types.SIGNUP_ERROR_USER:
-    case types.LOGOUT_ERROR_USER:
+    case UserTypes.LOGIN_SUCCESS_USER:
+    case UserTypes.SIGNUP_SUCCESS_USER:
+    case UserTypes.LOGOUT_SUCCESS_USER:
+    case UserTypes.LOGIN_ERROR_USER:
+    case UserTypes.SIGNUP_ERROR_USER:
+    case UserTypes.LOGOUT_ERROR_USER:
       return false;
     default:
       return state;
@@ -107,13 +107,13 @@ const authenticated = (
   action
 ) => {
   switch (action.type) {
-    case types.LOGIN_SUCCESS_USER:
-    case types.LOGOUT_ERROR_USER:
+    case UserTypes.LOGIN_SUCCESS_USER:
+    case UserTypes.LOGOUT_ERROR_USER:
       return true;
-    case types.LOGIN_ERROR_USER:
-    case types.SIGNUP_SUCCESS_USER:
-    case types.SIGNUP_ERROR_USER:
-    case types.LOGOUT_SUCCESS_USER:
+    case UserTypes.LOGIN_ERROR_USER:
+    case UserTypes.SIGNUP_SUCCESS_USER:
+    case UserTypes.SIGNUP_ERROR_USER:
+    case UserTypes.LOGOUT_SUCCESS_USER:
       return false;
     default:
       return state;

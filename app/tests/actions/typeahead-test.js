@@ -6,7 +6,7 @@ import { polyfill } from 'es6-promise';
 import axios from 'axios';
 import expect from 'expect';
 import * as actions from 'actions/typeahead';
-import * as types from 'types';
+import { TypeaheadTypes } from 'types';
 
 polyfill();
 

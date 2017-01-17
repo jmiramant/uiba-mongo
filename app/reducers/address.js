@@ -1,4 +1,4 @@
-import * as types from 'types';
+import { AddressTypes } from 'types';
 import { combineReducers } from 'redux';
 import _ from 'lodash';
 
@@ -7,10 +7,10 @@ const isFetching = (
   action
 ) => {
   switch (action.type) {
-    case types.GET_ADDRESS_REQUEST:
+    case AddressTypes.GET_ADDRESS_REQUEST:
       return true;
-    case types.GET_ADDRESS_SUCCESS:
-    case types.GET_ADDRESS_FAILURE:
+    case AddressTypes.GET_ADDRESS_SUCCESS:
+    case AddressTypes.GET_ADDRESS_FAILURE:
       return false;
     default:
       return state;
@@ -22,9 +22,9 @@ const autofill = (
   action
 ) => {
   switch (action.type) {
-    case types.UPDATE_ADDRESS_AUTOFILL_SUCCESS:
+    case AddressTypes.UPDATE_ADDRESS_AUTOFILL_SUCCESS:
       return action.results.data;
-    case types.CREATE_ADDRESS_SUCCESS:
+    case AddressTypes.CREATE_ADDRESS_SUCCESS:
       return {};      
     default:
       return state;
@@ -36,12 +36,12 @@ const error = (
   action
 ) => {
   switch (action.type) {
-    case types.UPDATE_ADDRESS_AUTOFILL_SUCCESS:
-    case types.CREATE_ADDRESS_SUCCESS:
+    case AddressTypes.UPDATE_ADDRESS_AUTOFILL_SUCCESS:
+    case AddressTypes.CREATE_ADDRESS_SUCCESS:
       return '';
-    case types.CREATE_ADDRESS_ERROR_MSG:
-    case types.UPDATE_ADDRESS_FAILURE:
-    case types.CREATE_ADDRESS_FAILURE:
+    case AddressTypes.CREATE_ADDRESS_ERROR_MSG:
+    case AddressTypes.UPDATE_ADDRESS_FAILURE:
+    case AddressTypes.CREATE_ADDRESS_FAILURE:
       return action.error;
     default:
       return state;
@@ -54,9 +54,9 @@ const editIcon = (
   action
 ) => {
   switch (action.type) {
-    case types.SHOW_ADDRESS_EDIT_ICON:
+    case AddressTypes.SHOW_ADDRESS_EDIT_ICON:
       return true;
-    case types.HIDE_ADDRESS_EDIT_ICON:
+    case AddressTypes.HIDE_ADDRESS_EDIT_ICON:
       return false;
     default:
       return state;
@@ -68,10 +68,10 @@ const edit = (
   action
 ) => {
   switch (action.type) {
-    case types.TOGGLE_ADDRESS_EDIT:
+    case AddressTypes.TOGGLE_ADDRESS_EDIT:
       return !action.data
-    case types.CREATE_ADDRESS_SUCCESS:
-    case types.UPDATE_ADDRESS_SUCCESS:
+    case AddressTypes.CREATE_ADDRESS_SUCCESS:
+    case AddressTypes.UPDATE_ADDRESS_SUCCESS:
       return false;
     default:
       return state;
@@ -84,15 +84,15 @@ const address = (
   action
 ) => {
   switch (action.type) {
-    case types.GET_ADDRESS_SUCCESS:
+    case AddressTypes.GET_ADDRESS_SUCCESS:
       return action.res.data;
-    case types.CREATE_ADDRESS_SUCCESS:
+    case AddressTypes.CREATE_ADDRESS_SUCCESS:
       return [...state, action.data.data];
-    case types.GET_ADDRESS_FAILURE:
+    case AddressTypes.GET_ADDRESS_FAILURE:
       return [];
-    case types.DELETE_ADDRESS_SUCCESS:
+    case AddressTypes.DELETE_ADDRESS_SUCCESS:
       return _.filter(state, (a) => { return a._id !== action.data.id })
-    case types.UPDATE_ADDRESS_SUCCESS:
+    case AddressTypes.UPDATE_ADDRESS_SUCCESS:
       return [...state]
     default:
       return state;
@@ -104,9 +104,9 @@ const zip = (
   action
 ) => {
   switch (action.type) {
-    case types.SET_ZIP:
+    case AddressTypes.SET_ZIP:
       return action.data;
-    case types.CLEAR_RANGE_ADDRESS:
+    case AddressTypes.CLEAR_RANGE_ADDRESS:
       return '';
     default:
       return state;
@@ -118,9 +118,9 @@ const range = (
   action
 ) => {
   switch (action.type) {
-    case types.SET_RANGE:
+    case AddressTypes.SET_RANGE:
       return action.data;
-    case types.CLEAR_RANGE_ADDRESS:
+    case AddressTypes.CLEAR_RANGE_ADDRESS:
       return '';
     default:
       return state;
@@ -132,9 +132,9 @@ const rangeZips = (
   action
 ) => {
   switch (action.type) {
-    case types.UPDATE_RANGE_AUTOFILL_SUCCESS:
+    case AddressTypes.UPDATE_RANGE_AUTOFILL_SUCCESS:
       return action.results.data.zip_codes;
-    case types.CLEAR_RANGE_ADDRESS:
+    case AddressTypes.CLEAR_RANGE_ADDRESS:
       return [];
     default:
       return state;

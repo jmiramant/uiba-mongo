@@ -1,33 +1,40 @@
 import { polyfill } from 'es6-promise';
 import request from 'axios';
 
-import * as types from 'types';
+import { SchoolTypes } from 'types';
 
 polyfill();
 
 export function newSchool() {
   return {
-    type: types.NEW_SCHOOL,
+    type: SchoolTypes.NEW_SCHOOL,
   };
 }
 
 export function schoolChange(state) {
   return {
-    type: types.CHANGE_SCHOOL,
+    type: SchoolTypes.CHANGE_SCHOOL,
     state
   };
 }
 
 export function schoolsChange(state) {
   return {
-    type: types.CHANGE_SCHOOLS,
+    type: SchoolTypes.CHANGE_SCHOOLS,
     state
   };
 }
 
 export function toggleSchoolAdd (data) {
   return {
-    type: types.TOGGLE_SCHOOL_ADD,
+    type: SchoolTypes.TOGGLE_SCHOOL_ADD,
+    data: data
+  };
+}
+
+export function toggleSchoolEdit (data) {
+  return {
+    type: SchoolTypes.TOGGLE_SCHOOL_EDIT,
     data: data
   };
 }
@@ -40,49 +47,49 @@ export function fetchSchools(profId) {
   let path = '/schools/me'
   if (profId) path = '/schools/' + profId
   return {
-    type: types.GET_SCHOOLS,
+    type: SchoolTypes.GET_SCHOOLS,
     promise: makeSchoolsRequest('get', {}, path)
   };
 }
 
 export function createSchoolRequest(data) {
   return {
-    type: types.CREATE_SCHOOL,
+    type: SchoolTypes.CREATE_SCHOOL,
     data: data
   };
 }
 
 export function createSchoolSuccess(data) {
   return {
-    type: types.CREATE_SCHOOL_SUCCESS,
+    type: SchoolTypes.CREATE_SCHOOL_SUCCESS,
     data: data
   };
 }
 
 export function createSchoolFailure(data) {
   return {
-    type: types.CREATE_SCHOOL_FAILURE,
+    type: SchoolTypes.CREATE_SCHOOL_FAILURE,
     error: data.error
   };
 }
 
 export function updateSchoolRequest(data) {
   return {
-    type: types.UPDATE_SCHOOL,
+    type: SchoolTypes.UPDATE_SCHOOL,
     data: data
   }
 }
 
 export function updateSchoolSuccess(data) {
   return {
-    type: types.UPDATE_SCHOOL_SUCCESS,
+    type: SchoolTypes.UPDATE_SCHOOL_SUCCESS,
     data: data
   }
 }
 
 export function updateSchoolFailure(data) {
   return {
-    type: types.UPDATE_SCHOOL_FAILURE,
+    type: SchoolTypes.UPDATE_SCHOOL_FAILURE,
     error: data.error
   };
 }
@@ -123,21 +130,21 @@ export function updateSchool(schoolData) {
 
 export function deleteSchoolRequest (data) {
   return {
-    type: types.DELETE_SCHOOL_REQUEST,
+    type: SchoolTypes.DELETE_SCHOOL_REQUEST,
     data: data
   }
 }
 
 export function deleteSchoolSuccess (data) {
   return {
-    type: types.DELETE_SCHOOL_SUCCESS,
+    type: SchoolTypes.DELETE_SCHOOL_SUCCESS,
     data: data
   }
 }
 
 export function deleteSchoolFailure (data) {
   return {
-    type: types.DELETE_SCHOOL_FAILURE,
+    type: SchoolTypes.DELETE_SCHOOL_FAILURE,
     error: data.error
   }
 }

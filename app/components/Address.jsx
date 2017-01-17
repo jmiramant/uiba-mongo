@@ -36,15 +36,20 @@ class Address extends Component {
   }
 
   validate() {
-    return !_.find(this.props.address, (a) => {return a.zip_code === this.state.zip})
+    if (_.find(this.props.address, (a) => {return a.zip_code === this.state.zip})) {
+      return 'This zip code has already been added.'
+    } else if (this.props.address.length >= 2) {
+      return 'Only two addresses can be included.'
+    }
   }
 
   handleSubmit() {
-    if (this.validate()) {
+    const valid = this.validate()
+    if (!valid) {
       this.props.onAddressSave(this.state.zip);
       this.setState({zip: ''});
     } else {
-      this.props.handleErrorMsg('This zip code has already been added.')
+      this.props.handleErrorMsg(valid)
     }
   }  
   
@@ -104,9 +109,11 @@ class Address extends Component {
             errorText={this.props.error}
             onChange={this.handleChange()}
           />
-          <div>
-            <RaisedButton label="Add Address" labelStyle={{fontSize: '11px'}} onClick={this.handleSubmit.bind(this)}  type="submit" />
-          </div>
+          { address.length < 2 ? (
+            <div>
+              <RaisedButton label="Add Address" labelStyle={{fontSize: '11px'}} onClick={this.handleSubmit.bind(this)}  type="submit" />
+            </div>
+          ) : (null)}
         </div>
       )
     }

@@ -1,4 +1,4 @@
-import * as types from 'types';
+import { ApplicantTypes } from 'types';
 import { combineReducers } from 'redux';
 
 const order = (applicants, order = 'asc') => {
@@ -17,15 +17,15 @@ const applicant = (
 ) => {
   let updatedProfile;
   switch (action.type) {
-    case types.GET_APPLICANT_SUCCESS:
+    case ApplicantTypes.GET_APPLICANT_SUCCESS:
       return action.res.data;
-    case types.CHANGE_APPLICANT:
+    case ApplicantTypes.CHANGE_APPLICANT:
       const newStateOjb = {...state}
       newStateOjb[action.state.field] = action.state.value
       return newStateOjb;
-    case types.GET_APPLICANT_FAILURE:
+    case ApplicantTypes.GET_APPLICANT_FAILURE:
       return state;
-    case types.UPDATE_APPLICANT_SUCCESS:
+    case ApplicantTypes.UPDATE_APPLICANT_SUCCESS:
       return {...state}
     default:
       return state;
@@ -39,30 +39,30 @@ const applicants = (
 ) => {
   let updatedApplicants;
   switch (action.type) {
-    case types.GET_APPLICANTS_SUCCESS:
+    case ApplicantTypes.GET_APPLICANTS_SUCCESS:
       return order(action.res.data)
-    case types.CREATE_APPLICANT_SUCCESS:
+    case ApplicantTypes.CREATE_APPLICANT_SUCCESS:
       const newApplicantss = state.concat(action.data);
       return order(newApplicantss)
-    case types.CHANGE_APPLICANTS:
+    case ApplicantTypes.CHANGE_APPLICANTS:
       updatedApplicants = [...state]
       const index = _.findIndex(state, {
         _id: action.state._id
       })
       updatedApplicants[index] = {...updatedApplicants[index], ...action.state}
       return order(updatedApplicants)
-    case types.UPDATE_APPLICANT_SUCCESS:
+    case ApplicantTypes.UPDATE_APPLICANT_SUCCESS:
       updatedApplicants = state.slice()
       updatedApplicants[_.findIndex(state, function(j) {
         return j._id === action.data._id;
       })] = action.data
       return order(updatedApplicants)
-    case types.DELETE_APPLICANT_SUCCESS:
+    case ApplicantTypes.DELETE_APPLICANT_SUCCESS:
       const newState = state.slice();
       return newState.filter(j => {
         return j._id !== action.data.id;
       })
-    case types.CREATE_APPLICANT_REQUEST:
+    case ApplicantTypes.CREATE_APPLICANT_REQUEST:
       return {
         data: action.res.data,
       };
@@ -82,17 +82,17 @@ const filters = (
   action
 ) => {
   switch (action.type) {
-    case types.APPLICANT_FILTER_CHANGE:
+    case ApplicantTypes.APPLICANT_FILTER_CHANGE:
       return {...state, ...action.data}
-    case types.APPLICANT_FILTER_CLEAR:
+    case ApplicantTypes.APPLICANT_FILTER_CLEAR:
       return {};
-    case types.APPLICANT_FILTER_REMOVE:
+    case ApplicantTypes.APPLICANT_FILTER_REMOVE:
       const resp = {...state};
       if (action.data.type === 'school') {
         resp[action.data.type] = _.filter(resp[action.data.type], (fi) => {return fi !== action.data.value })
       }
       return resp;
-    case types.UPDATE_APPLICANT_FILTERS:
+    case ApplicantTypes.UPDATE_APPLICANT_FILTERS:
       return {
         ...state,
         ...action.filters
@@ -119,7 +119,7 @@ const showSkillAdd = (
   action
 ) => {
   switch (action.type) {
-    case types.TOGGLE_APPLICANT_FILTER_SKILL_ADD:
+    case ApplicantTypes.TOGGLE_APPLICANT_FILTER_SKILL_ADD:
       return !state;
     default:
       return state;
@@ -131,29 +131,29 @@ const skillFilter = (
   action
 ) => {
   switch (action.type) {
-    case types.CREATE_NEW_APPLICANT_FILTER_SKILL:
+    case ApplicantTypes.CREATE_NEW_APPLICANT_FILTER_SKILL:
       return {
         type: '', 
         proficiency: undefined,
         lengthOfUse: undefined,
       }
-    case types.CHANGE_APPLICANT_FILTER_SKILL:
+    case ApplicantTypes.CHANGE_APPLICANT_FILTER_SKILL:
       const newStateOjb = {...state}
       newStateOjb[action.state.field] = action.state.value
       return newStateOjb;
-    case types.CREATE_APPLICANT_FILTER_SKILL:
+    case ApplicantTypes.CREATE_APPLICANT_FILTER_SKILL:
       return {
         type: '', 
         proficiency: undefined,
         lengthOfUse: undefined,
       };
-    case types.TOGGLE_APPLICANT_FILTER_SKILL_ADD:
+    case ApplicantTypes.TOGGLE_APPLICANT_FILTER_SKILL_ADD:
       if (!action.data && action.persist) {
         return action.persist
       } else {
         return {};
       }
-    case types.CREATE_APPLICANT_FILTER_SUCCESS:
+    case ApplicantTypes.CREATE_APPLICANT_FILTER_SUCCESS:
       return {
         type: '', 
         proficiency: undefined,
@@ -170,24 +170,23 @@ const skillsFilter = (
 ) => {
   let updatedSkill
   switch (action.type) {
-    case types.CREATE_APPLICANT_FILTER_SKILL:
+    case ApplicantTypes.CREATE_APPLICANT_FILTER_SKILL:
       return skillOrder([...state, action.skillData])
-    case types.UPDATE_APPLICANT_FILTER_SKILL:
+    case ApplicantTypes.UPDATE_APPLICANT_FILTER_SKILL:
       updatedSkill = [...state];
       updatedSkill[_.findIndex(state, (j) => { return j.type === action.skillData.type; })] = action.skillData
       return skillOrder(updatedSkill)
-    case types.CHANGE_APPLICANT_FILTER_SKILLS:
+    case ApplicantTypes.CHANGE_APPLICANT_FILTER_SKILLS:
       updatedSkill = [...state];
       updatedSkill[_.findIndex(updatedSkill, {type: action.state.type})][action.state.field] = action.state.value
       return skillOrder(updatedSkill)
-    case types.DELETE_APPLICANT_FILTER_SKILL:
+    case ApplicantTypes.DELETE_APPLICANT_FILTER_SKILL:
       const newState = [...state];
       return skillOrder(newState.filter( j => {
         return j.type !== action.skillData.type;
       }));
-    case types.CREATE_APPLICANT_FILTER_SUCCESS:
-      return [];
-    case types.APPLICANT_FILTER_CLEAR:
+    case ApplicantTypes.CREATE_APPLICANT_FILTER_SUCCESS:
+    case ApplicantTypes.APPLICANT_FILTER_CLEAR:
       return [];
     default:
       return state;
@@ -199,12 +198,12 @@ const educationFilter = (
   action
 ) => {
   switch (action.type) {
-    case types.TOGGLE_APPLICANT_EDU_FILTER:
+    case ApplicantTypes.TOGGLE_APPLICANT_EDU_FILTER:
       const requirments = [...state];
       const dupIndex = requirments.indexOf(action.data);
       dupIndex !== -1 ? requirments.splice(dupIndex, 1) : requirments.push(action.data)
       return requirments
-    case types.APPLICANT_FILTER_CLEAR:
+    case ApplicantTypes.APPLICANT_FILTER_CLEAR:
       return [];
     default:
       return state;

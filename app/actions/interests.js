@@ -1,37 +1,45 @@
 import { polyfill } from 'es6-promise';
 import request from 'axios';
 
-import * as types from 'types';
+import { InterestTypes } from 'types';
 
 polyfill();
 
 export function newInterest() {
   return {
-    type: types.NEW_INTEREST,
+    type: InterestTypes.NEW_INTEREST,
   };
 }
 
 export function interestChange(state) {
   return {
-    type: types.CHANGE_INTEREST,
+    type: InterestTypes.CHANGE_INTEREST,
     state
   };
 }
 
 export function interestsChange(state) {
   return {
-    type: types.CHANGE_INTERESTS,
+    type: InterestTypes.CHANGE_INTERESTS,
     state
   };
 }
 
 export function toggleInterestAdd (data, persist = false) {
   return {
-    type: types.TOGGLE_INTEREST_ADD,
+    type: InterestTypes.TOGGLE_INTEREST_ADD,
     data: data,
     persist: persist
   };
 }
+
+export function toggleInterestEdit (data) {
+  return {
+    type: InterestTypes.TOGGLE_INTEREST_EDIT,
+    data: data
+  };
+}
+
 
 function makeInterestsRequest(method, data, api = '/interests') {
   return request[method](api, data);
@@ -41,49 +49,49 @@ export function fetchInterests(profId) {
   let path = '/interests/me'
   if (profId) path = '/interests/' + profId
   return {
-    type: types.GET_INTERESTS,
+    type: InterestTypes.GET_INTERESTS,
     promise: makeInterestsRequest('get', {}, path)
   };
 }
 
 export function createInterestRequest(data) {
   return {
-    type: types.CREATE_INTEREST,
+    type: InterestTypes.CREATE_INTEREST,
     data: data
   };
 }
 
 export function createInterestSuccess(data) {
   return {
-    type: types.CREATE_INTEREST_SUCCESS,
+    type: InterestTypes.CREATE_INTEREST_SUCCESS,
     data: data
   };
 }
 
 export function createInterestFailure(data) {
   return {
-    type: types.CREATE_INTEREST_FAILURE,
+    type: InterestTypes.CREATE_INTEREST_FAILURE,
     error: data.error
   };
 }
 
 export function updateInterestRequest(data) {
   return {
-    type: types.UPDATE_INTEREST,
+    type: InterestTypes.UPDATE_INTEREST,
     data: data
   }
 }
 
 export function updateInterestSuccess(data) {
   return {
-    type: types.UPDATE_INTEREST_SUCCESS,
+    type: InterestTypes.UPDATE_INTEREST_SUCCESS,
     data: data
   }
 }
 
 export function updateInterestFailure(data) {
   return {
-    type: types.UPDATE_INTEREST_FAILURE,
+    type: InterestTypes.UPDATE_INTEREST_FAILURE,
     error: data.error
   };
 }
@@ -128,21 +136,21 @@ export function updateInterest(interestData) {
 
 export function deleteInterestRequest (data) {
   return {
-    type: types.DELETE_INTEREST_REQUEST,
+    type: InterestTypes.DELETE_INTEREST_REQUEST,
     data: data
   }
 }
 
 export function deleteInterestSuccess (data) {
   return {
-    type: types.DELETE_INTEREST_SUCCESS,
+    type: InterestTypes.DELETE_INTEREST_SUCCESS,
     data: data
   }
 }
 
 export function deleteInterestFailure (data) {
   return {
-    type: types.DELETE_INTEREST_FAILURE,
+    type: InterestTypes.DELETE_INTEREST_FAILURE,
     error: data.error
   }
 }
@@ -167,6 +175,6 @@ export function deleteInterest(interest) {
 
 export function dismissError() {
   return { 
-      type: types.DISMISS_INTEREST_ERROR 
+      type: InterestTypes.DISMISS_INTEREST_ERROR 
   };  
 }

@@ -16,6 +16,7 @@ export default class SchoolItem extends React.Component {
   
   static propTypes = {
     school: PropTypes.object.isRequired, 
+    toggleEdit: PropTypes.func.isRequired,
     schoolChange: PropTypes.func.isRequired,
     saveSchoolEdit: PropTypes.func.isRequired,
     handleDelete: PropTypes.func.isRequired
@@ -25,12 +26,9 @@ export default class SchoolItem extends React.Component {
     super(props);
   }
 
-  state = {
-    edit: false,
-  }
-
   toggleEdit () {
-    this.setState({edit: !this.state.edit})
+    const { toggleEdit, school } = this.props;
+    toggleEdit(school);
   }
 
   saveEdit (school) {
@@ -64,7 +62,7 @@ export default class SchoolItem extends React.Component {
       }
     }
     
-    if (this.state.edit) {
+    if (school.edit) {
 
       return (
         <SchoolAdd

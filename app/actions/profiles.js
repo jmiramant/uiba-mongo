@@ -2,13 +2,13 @@ import { polyfill } from 'es6-promise';
 import request from 'axios';
 import { push } from 'react-router-redux';
 
-import * as types from 'types';
+import { ProfileTypes }from 'types';
 
 polyfill();
 
 export function profileChange(state) {
   return {
-    type: types.CHANGE_PROFILE,
+    type: ProfileTypes.CHANGE_PROFILE,
     state
   };
 }
@@ -19,28 +19,28 @@ function makeProfileRequest(method, data, api = '/profile') {
 
 export function updateProfileRequest(data) {
   return {
-    type: types.UPDATE_PROFILE,
+    type: ProfileTypes.UPDATE_PROFILE,
     data: data
   }
 }
 
 export function updateProfileSuccess(data) {
   return {
-    type: types.UPDATE_PROFILE_SUCCESS,
+    type: ProfileTypes.UPDATE_PROFILE_SUCCESS,
     data: data
   }
 }
 
 export function updateProfileFailure(data) {
   return {
-    type: types.UPDATE_PROFILE_SUCCESS,
+    type: ProfileTypes.UPDATE_PROFILE_SUCCESS,
     error: data.error
   }
 }
 
 export function toggleProfileEdit (data) {
   return {
-    type: types.TOGGLE_PROFILE_EDIT,
+    type: ProfileTypes.TOGGLE_PROFILE_EDIT,
     data: data
   };
 }
@@ -68,7 +68,7 @@ export function fetchProfile(profId) {
   let path = '/profile/me';
   if (profId) path = '/profile/' + profId;
   return {
-    type: types.GET_PROFILE,
+    type: ProfileTypes.GET_PROFILE,
     promise: makeProfileRequest('get', {}, path)
   };
 }

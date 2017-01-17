@@ -10,6 +10,7 @@ import * as applicantActionCreators from 'actions/applicants';
 import * as languagesActionCreators from 'actions/languages';
 import * as projectsActionCreators from 'actions/projects';
 import * as interestsActionCreators from 'actions/interests';
+import * as rolesActionCreators from 'actions/roles';
 
 import {Card, CardHeader} from 'material-ui/Card';
 import DefaultUserIcon from 'material-ui/svg-icons/action/account-circle';
@@ -20,6 +21,8 @@ import LanguageItem from 'components/applicants/LanguageItem';
 import SkillItem from 'components/applicants/SkillItem';
 import ProjectItem from 'components/applicants/ProjectItem';
 import InterestItem from 'components/applicants/InterestItem';
+import RadarChart from 'components/d3/chart';
+import Measure from 'react-measure';
 
 import classNames from 'classnames/bind';
 import styles from 'css/components/applicantShow';
@@ -28,17 +31,23 @@ const cx = classNames.bind(styles);
 
 class ApplicantShow extends React.Component {
 
+  state = {
+    dimensions: {width: 0}
+  }
+
   componentWillMount() {
     const { params,
-            applicantActions,
             jobActions,
-            schoolActions,
+            roleActions,
             skillActions,
+            schoolActions,
+            projectActions,
             interestActions,
             languageActions,
-            projectActions,
+            applicantActions,
     } = this.props;
 
+    if (params.roleId) roleActions.fetchRole(params.roleId);
     applicantActions.fetchApplicant(params.profId)
     schoolActions.fetchSchools(params.profId);
     jobActions.fetchJobs(params.profId);
@@ -51,14 +60,20 @@ class ApplicantShow extends React.Component {
   render() {
     
     const {
-      applicant,
+      role,
       jobs,
-      languages,
       skills,
-      projects,
       schools,
+      projects,
+      applicant,
+      languages,
       interests
     } = this.props;
+
+    const { dimensions } = this.state;
+
+    const chartData = [skills];
+    if (role.skills) chartData.push(role.skills);
 
     return (
       <div>
@@ -113,10 +128,23 @@ class ApplicantShow extends React.Component {
             </div>
           
             <div className='col-md-8 col-md-offset-2'>
-              <UibaCardHeader
-                style='xray'
-                text='Knowledge, Skills, Abilities'
-              />
+              <Measure
+                onMeasure={(dimensions) => {
+                  this.setState({dimensions})
+                }}
+              >
+                <UibaCardHeader
+                  style='xray'
+                  text='Knowledge, Skills, Abilities'
+                />
+              </Measure>
+
+              { chartData.length === 2 ? (
+                <RadarChart
+                  points={chartData}
+                  style={{width: dimensions.width * 0.65, height: dimensions.width * 0.5}}
+                />
+              ) : (null)}
                 {skills.length === 0 ? (
                   <div className={cx('null-info')}>{applicant.firstName} hasn't added any items in the knowledge, skills, and abilities section.</div>
                 ) : (
@@ -199,15 +227,17 @@ function mapStateToProps(state) {
     applicant: state.applicant.applicant,
     schools: state.school.schools,
     jobs: state.job.jobs,
+    role: state.role.role,
     skills: state.skill.skills,
     languages: state.language.languages,
     projects: state.project.projects,
-    interests: state.interest.interests
+    interests: state.interest.interests,
   };
 }
 
 function mapDispatchToProps (dispatch) {
   return {
+    roleActions: bindActionCreators(rolesActionCreators, dispatch),
     schoolActions: bindActionCreators(schoolsActionCreators, dispatch),
     jobActions: bindActionCreators(jobsActionCreators, dispatch),
     skillActions: bindActionCreators(skillsActionCreators, dispatch),
@@ -215,7 +245,6 @@ function mapDispatchToProps (dispatch) {
     projectActions: bindActionCreators(projectsActionCreators, dispatch),
     interestActions: bindActionCreators(interestsActionCreators, dispatch),
     applicantActions: bindActionCreators(applicantActionCreators, dispatch),
-
   }
 }
 

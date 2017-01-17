@@ -1,19 +1,19 @@
 import { polyfill } from 'es6-promise';
 import request from 'axios';
-import * as types from 'types';
+import { TypeaheadTypes } from 'types';
 
 polyfill();
 
 export function updateTypeahead(results) {
   return {
-    type: types.UPDATE_RESULTS_SUCCESS,
+    type: TypeaheadTypes.UPDATE_RESULTS_SUCCESS,
     results
   };
 }
 
 export function setTypeaheadData(selection) {
   return {
-    type: types.UPDATE_SELECTION,
+    type: TypeaheadTypes.UPDATE_SELECTION,
     selection
   };
 }
@@ -21,7 +21,7 @@ export function setTypeaheadData(selection) {
 
 export function setInitialTypeaheadData(selection) {
   return {
-    type: types.SET_INITIAL_SELECTION,
+    type: TypeaheadTypes.SET_INITIAL_SELECTION,
     selection
   };
 }

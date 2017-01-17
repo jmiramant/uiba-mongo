@@ -17,7 +17,8 @@ export default class ProjectItem extends React.Component {
     project: PropTypes.object.isRequired, 
     projectChange: PropTypes.func.isRequired,
     saveProjectEdit: PropTypes.func.isRequired,
-    handleDelete: PropTypes.func.isRequired
+    handleDelete: PropTypes.func.isRequired,
+    toggleEdit: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -26,11 +27,10 @@ export default class ProjectItem extends React.Component {
 
   state = {
     validationErrors: {},
-    edit: false,
   }
 
   toggleEdit () {
-    this.setState({edit: !this.state.edit})
+    this.props.toggleEdit(this.props.project);
   }
 
   saveEdit (project) {
@@ -51,7 +51,7 @@ export default class ProjectItem extends React.Component {
 
     let descId = 0;
 
-    if (this.state.edit) {
+    if (project.edit) {
 
       return (
         <ProjectAdd

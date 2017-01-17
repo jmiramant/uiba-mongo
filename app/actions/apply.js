@@ -2,7 +2,7 @@ import request from 'axios';
 import { polyfill } from 'es6-promise';
 import { push } from 'react-router-redux'
 
-import * as types from 'types';
+import { ApplyTypes } from 'types';
 
 function makeApplyRequest(method, data, api) {
   return request[method](api, data);
@@ -10,20 +10,20 @@ function makeApplyRequest(method, data, api) {
 
 export function toggleApplyState () {
   return {
-    type: types.TOGGLE_APPLY,
+    type: ApplyTypes.TOGGLE_APPLY,
   };
 }
 
 export function submitApplySuccess(data) {
   return {
-    type: types.APPLY_SUCCESS,
+    type: ApplyTypes.APPLY_SUCCESS,
     data: data
   };
 }
 
 export function submitApplyFailure(data) {
   return {
-    type: types.APPLY_FAILURE,
+    type: ApplyTypes.APPLY_FAILURE,
     error: data.error
   };
 }
@@ -36,9 +36,8 @@ export function navBackToProfile(data) {
 
 export function sumbitApplication(profile) {
   return (dispatch) => {
-    profile.apply.applied = false;
-    profile.apply.applyComplete = true;
-    return makeApplyRequest('put', profile, '/profile')
+    const prof = {...profile, apply: {...profile.apply, applied:false, applyComplete: true}};
+    return makeApplyRequest('put', prof, '/profile')
       .then(res => {
         if (res.status === 200) {
           dispatch(push('/applyConfirmation'))

@@ -1,38 +1,41 @@
-import React, { PropTypes } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import React, { PropTypes }         from 'react';
+import { bindActionCreators }       from 'redux';
+import { connect }                  from 'react-redux';
 
-import * as usersActionCreators from 'actions/users';
-import * as profilesActionCreators from 'actions/profiles';
-import * as jobsActionCreators from 'actions/jobs';
-import * as schoolsActionCreators from 'actions/schools';
-import * as skillsActionCreators from 'actions/skills';
-import * as profileActionCreators from 'actions/profiles';
+import * as usersActionCreators     from 'actions/users';
+import * as profilesActionCreators  from 'actions/profiles';
+import * as jobsActionCreators      from 'actions/jobs';
+import * as schoolsActionCreators   from 'actions/schools';
+import * as skillsActionCreators    from 'actions/skills';
+import * as profileActionCreators   from 'actions/profiles';
 import * as languagesActionCreators from 'actions/languages';
-import * as projectsActionCreators from 'actions/projects';
-import * as rolesActionCreators from 'actions/roles';
-import * as messagesActionCreators from 'actions/messages';
+import * as projectsActionCreators  from 'actions/projects';
+import * as rolesActionCreators     from 'actions/roles';
+import * as messagesActionCreators  from 'actions/messages';
 import * as interestsActionCreators from 'actions/interests';
-import * as applyActionCreators from 'actions/apply';
+import * as applyActionCreators     from 'actions/apply';
+import * as scoreActionCreators     from 'actions/score';
 
-import { mixpanelTrack } from 'middlewares/mixpanelTrackers';
-import { Card } from 'material-ui/Card';
-import CardHeader from 'components/CardHeader';
-import Jobs from 'components/jobs/JobList';
-import Schools from 'components/schools/SchoolList';
-import Skills from 'components/skills/SkillList';
-import Languages from 'components/language/LanguageList';
-import Interests from 'components/interests/InterestList';
-import Projects from 'components/projects/ProjectList';
-import ApplyBtn from 'components/ApplyBtn';
-import UserCard from 'components/userCard/UserCard';
-import Loading from 'components/Loading';
-import { validateSubmitHelper } from 'components/helpers/submitValidations';
+import { mixpanelTrack }            from 'middlewares/mixpanelTrackers';
+import { Card }                     from 'material-ui/Card';
+import CardHeader                   from 'components/CardHeader';
+import Jobs                         from 'components/jobs/JobList';
+import Schools                      from 'components/schools/SchoolList';
+import Skills                       from 'components/skills/SkillList';
+import Languages                    from 'components/language/LanguageList';
+import Interests                    from 'components/interests/InterestList';
+import Projects                     from 'components/projects/ProjectList';
+import ApplyBtn                     from 'components/ApplyBtn';
+import UserCard                     from 'components/userCard/UserCard';
+import Loading                      from 'components/Loading';
+import { validateSubmitHelper }     from 'components/helpers/submitValidations';
 import { SIBApplySubmit } from 'middlewares/sendInBlueEvents';
 
-import Scroll from 'react-scroll';
-import styles from 'css/common/profile';
-import classNames from 'classnames/bind';
+import Scroll                   from 'react-scroll';
+import Measure                  from 'react-measure';
+import styles                   from 'css/common/profile';
+import classNames               from 'classnames/bind';
+
 const cx = classNames.bind(styles);
 const scroll = Scroll.animateScroll;
 var Element = Scroll.Element;
@@ -71,7 +74,8 @@ class Profile extends React.Component {
   }
   
   state = {
-    validationErrors: {}
+    validationErrors: {},
+    skillDimensions: {width: 0}
   }
 
   isValidated() {
@@ -79,18 +83,28 @@ class Profile extends React.Component {
 
     if (errorStore.containsErrors) {
       this.handleValidationErrors(errorStore.errors);
+      
+      setTimeout( () => {
+        this.setState({validationErrors: {}});
+      }, 5000)
+
     }
 
     return errorStore.containsErrors;
   }
 
   handleApply () {
-    const {messageActions, profile, applyActions, roleActions} = this.props;
+    const {messageActions, profile, applyActions, roleActions, scoreActions} = this.props;
     this.props.messageActions.dismissMessage();
     if (!this.isValidated()) {
       if (profile.profile.apply.role_code && !profile.profile.apply.applyComplete) roleActions.increment(profile.profile.apply.role_code)
+<<<<<<< HEAD
       SIBApplySubmit(profile.profile)
       applyActions.sumbitApplication(profile.profile)
+=======
+      applyActions.sumbitApplication(profile.profile);
+      scoreActions.syncScores();
+>>>>>>> test
     }
   }
 
@@ -159,16 +173,17 @@ class Profile extends React.Component {
                 error={validationErrors.jobs}
               />
             </Element>
-            <Jobs 
+            <Jobs
               jobs={jobs.jobs} 
               addVisible={jobs.addShow}
               toggleJobAdd={jobActions.toggleJobAdd}
+              toggleJobEdit={jobActions.toggleJobEdit}
               onEditSave={jobActions.updateJob} 
               onJobSave={jobActions.createJob} 
               onJobDelete={jobActions.deleteJob}
             />
           </div>
-
+          
           <div className='col-md-8 col-md-offset-2'>
             <Element name="skill">
               <CardHeader
@@ -178,17 +193,26 @@ class Profile extends React.Component {
                 error={validationErrors.skills}
               />
             </Element>
-            <Skills 
-              skills={skills.skills}
-              addVisible={skills.addShow}
-              onEditSave={skillActions.updateSkill} 
-              onSkillSave={skillActions.createSkill} 
-              skillChange={skillActions.skillChange}
-              skillsChange={skillActions.skillsChange}
-              errorMessage={messages.errorMessage}
-              onSkillDelete={skillActions.deleteSkill} 
-              toggleSkillAdd={skillActions.toggleSkillAdd}
-            />
+            <Measure
+              onMeasure={(dimensions) => {
+                this.setState({skillDimensions: dimensions})
+              }}
+            >
+              <Skills 
+                skills={skills.skills}
+                dimensions={this.state.skillDimensions}
+                addVisible={skills.addShow}
+                onEditSave={skillActions.updateSkill} 
+                onSkillSave={skillActions.createSkill} 
+                skillChange={skillActions.skillChange}
+                skillsChange={skillActions.skillsChange}
+                errorMessage={skills.message}
+                onSkillDelete={skillActions.deleteSkill} 
+                toggleSkillAdd={skillActions.toggleSkillAdd}
+                toggleSkillEdit={skillActions.toggleSkillEdit}
+              />
+            </Measure>
+
           </div>
 
           <div className='col-md-8 col-md-offset-2'>
@@ -204,6 +228,7 @@ class Profile extends React.Component {
               schools={schools.schools} 
               addVisible={schools.addShow}
               toggleSchoolAdd={schoolActions.toggleSchoolAdd}
+              toggleSchoolEdit={schoolActions.toggleSchoolEdit}
               onEditSave={schoolActions.updateSchool} 
               onSchoolSave={schoolActions.createSchool} 
               onSchoolDelete={schoolActions.deleteSchool} 
@@ -219,8 +244,9 @@ class Profile extends React.Component {
             <Languages
               languages={languages.languages}
               addVisible={languages.addShow}
-              errorMessage={messages.errorMessage}
+              errorMessage={languages.message}
               toggleLanguageAdd={languageActions.toggleLanguageAdd}
+              toggleLanguageEdit={languageActions.toggleLanguageEdit}
               onEditSave={languageActions.updateLanguage} 
               onLanguageSave={languageActions.createLanguage} 
               onLanguageDelete={languageActions.deleteLanguage} 
@@ -237,6 +263,7 @@ class Profile extends React.Component {
               projects={projects.projects}
               addVisible={projects.addShow}
               toggleProjectAdd={projectActions.toggleProjectAdd}
+              toggleProjectEdit={projectActions.toggleProjectEdit}
               onEditSave={projectActions.updateProject} 
               onProjectSave={projectActions.createProject} 
               onProjectDelete={projectActions.deleteProject} 
@@ -255,7 +282,8 @@ class Profile extends React.Component {
             <Interests
               interests={interests.interests}
               addVisible={interests.addShow}
-              errorMessage={messages.errorMessage}
+              errorMessage={interests.message}
+              toggleInterestEdit={interestActions.toggleInterestEdit}
               toggleInterestAdd={interestActions.toggleInterestAdd}
               onEditSave={interestActions.updateInterest} 
               onInterestSave={interestActions.createInterest} 
@@ -309,6 +337,7 @@ function mapDispatchToProps (dispatch) {
     messageActions: bindActionCreators(messagesActionCreators, dispatch),
     interestActions: bindActionCreators(interestsActionCreators, dispatch),
     applyActions: bindActionCreators(applyActionCreators, dispatch),
+    scoreActions: bindActionCreators(scoreActionCreators, dispatch),
   }
 }
 

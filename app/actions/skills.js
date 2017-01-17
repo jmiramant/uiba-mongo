@@ -1,35 +1,42 @@
 import { polyfill } from 'es6-promise';
 import request from 'axios';
 
-import * as types from 'types';
+import { SkillTypes } from 'types';
 
 polyfill();
 
 export function newSkill() {
   return {
-    type: types.NEW_SKILL,
+    type: SkillTypes.NEW_SKILL,
   };
 }
 
 export function skillChange(state) {
   return {
-    type: types.CHANGE_SKILL,
+    type: SkillTypes.CHANGE_SKILL,
     state
   };
 }
 
 export function skillsChange(state) {
   return {
-    type: types.CHANGE_SKILLS,
+    type: SkillTypes.CHANGE_SKILLS,
     state
   };
 }
 
 export function toggleSkillAdd (data, persist = false) {
   return {
-    type: types.TOGGLE_SKILL_ADD,
+    type: SkillTypes.TOGGLE_SKILL_ADD,
     data: data,
     persist: persist
+  };
+}
+
+export function toggleSkillEdit (data) {
+  return {
+    type: SkillTypes.TOGGLE_SKILL_EDIT,
+    data: data
   };
 }
 
@@ -41,56 +48,56 @@ export function fetchSkills(profId) {
   let path = '/skills/me';
   if (profId) path = '/skills/' + profId;
   return {
-    type: types.GET_SKILLS,
+    type: SkillTypes.GET_SKILLS,
     promise: makeSkillsRequest('get', {}, path)
   };
 }
 
 export function fetchSkillsList(idArray) {
   return {
-    type: types.GET_SKILLS,
+    type: SkillTypes.GET_SKILLS,
     promise: makeSkillsRequest('get', {}, '/skill-list/' + idArray)
   };
 }
 
 export function createSkillRequest(data) {
   return {
-    type: types.CREATE_SKILL,
+    type: SkillTypes.CREATE_SKILL,
     data: data
   };
 }
 
 export function createSkillSuccess(data) {
   return {
-    type: types.CREATE_SKILL_SUCCESS,
+    type: SkillTypes.CREATE_SKILL_SUCCESS,
     data: data
   };
 }
 
 export function createSkillFailure(data) {
   return {
-    type: types.CREATE_SKILL_FAILURE,
+    type: SkillTypes.CREATE_SKILL_FAILURE,
     error: data.error
   };
 }
 
 export function updateSkillRequest(data) {
   return {
-    type: types.UPDATE_SKILL,
+    type: SkillTypes.UPDATE_SKILL,
     data: data
   }
 }
 
 export function updateSkillSuccess(data) {
   return {
-    type: types.UPDATE_SKILL_SUCCESS,
+    type: SkillTypes.UPDATE_SKILL_SUCCESS,
     data: data
   }
 }
 
 export function updateSkillFailure(data) {
   return {
-    type: types.UPDATE_SKILL_FAILURE,
+    type: SkillTypes.UPDATE_SKILL_FAILURE,
     error: data.error
   };
 }
@@ -133,21 +140,21 @@ export function updateSkill(skillData) {
 
 export function deleteSkillRequest (data) {
   return {
-    type: types.DELETE_SKILL_REQUEST,
+    type: SkillTypes.DELETE_SKILL_REQUEST,
     data: data
   }
 }
 
 export function deleteSkillSuccess (data) {
   return {
-    type: types.DELETE_SKILL_SUCCESS,
+    type: SkillTypes.DELETE_SKILL_SUCCESS,
     data: data
   }
 }
 
 export function deleteSkillFailure (data) {
   return {
-    type: types.DELETE_SKILL_FAILURE,
+    type: SkillTypes.DELETE_SKILL_FAILURE,
     error: data.error
   }
 }
@@ -171,7 +178,7 @@ export function deleteSkill(skill) {
 
 export function handleInputFocus(show) {
   return {
-    type: types.TOGGLE_SKILL_INPUT_FOCUS,
+    type: SkillTypes.TOGGLE_SKILL_INPUT_FOCUS,
     data: show
   }
 }

@@ -1,33 +1,39 @@
 import { polyfill } from 'es6-promise';
 import request from 'axios';
-
-import * as types from 'types';
+import { JobTypes } from 'types';
 
 polyfill();
 
 export function newJob() {
   return {
-    type: types.NEW_JOB,
+    type: JobTypes.NEW_JOB,
   };
 }
 
 export function jobChange(state) {
   return {
-    type: types.CHANGE_JOB,
+    type: JobTypes.CHANGE_JOB,
     state
   };
 }
 
 export function jobsChange(state) {
   return {
-    type: types.CHANGE_JOBS,
+    type: JobTypes.CHANGE_JOBS,
     state
   };
 }
 
 export function toggleJobAdd (data) {
   return {
-    type: types.TOGGLE_JOB_ADD,
+    type: JobTypes.TOGGLE_JOB_ADD,
+    data: data
+  };
+}
+
+export function toggleJobEdit (data) {
+  return {
+    type: JobTypes.TOGGLE_JOB_EDIT,
     data: data
   };
 }
@@ -40,49 +46,49 @@ export function fetchJobs(profId) {
   let path = '/jobs/me'
   if (profId) path = '/jobs/' + profId
   return {
-    type: types.GET_JOBS,
+    type: JobTypes.GET_JOBS,
     promise: makeJobsRequest('get', {}, path)
   };
 }
 
 export function createJobRequest(data) {
   return {
-    type: types.CREATE_JOB,
+    type: JobTypes.CREATE_JOB,
     data: data
   };
 }
 
 export function createJobSuccess(data) {
   return {
-    type: types.CREATE_JOB_SUCCESS,
+    type: JobTypes.CREATE_JOB_SUCCESS,
     data: data
   };
 }
 
 export function createJobFailure(data) {
   return {
-    type: types.CREATE_JOB_FAILURE,
+    type: JobTypes.CREATE_JOB_FAILURE,
     error: data.error
   };
 }
 
 export function updateJobRequest(data) {
   return {
-    type: types.UPDATE_JOB,
+    type: JobTypes.UPDATE_JOB,
     data: data
   }
 }
 
 export function updateJobSuccess(data) {
   return {
-    type: types.UPDATE_JOB_SUCCESS,
+    type: JobTypes.UPDATE_JOB_SUCCESS,
     data: data
   }
 }
 
 export function updateJobFailure(data) {
   return {
-    type: types.UPDATE_JOB_FAILURE,
+    type: JobTypes.UPDATE_JOB_FAILURE,
     error: data.error
   };
 }
@@ -123,21 +129,21 @@ export function updateJob(jobData) {
 
 export function deleteJobRequest (data) {
   return {
-    type: types.DELETE_JOB_REQUEST,
+    type: JobTypes.DELETE_JOB_REQUEST,
     data: data
   }
 }
 
 export function deleteJobSuccess (data) {
   return {
-    type: types.DELETE_JOB_SUCCESS,
+    type: JobTypes.DELETE_JOB_SUCCESS,
     data: data
   }
 }
 
 export function deleteJobFailure (data) {
   return {
-    type: types.DELETE_JOB_FAILURE,
+    type: JobTypes.DELETE_JOB_FAILURE,
     error: data.error
   }
 }

@@ -12,9 +12,10 @@ const cx = classNames.bind(styles);
 export default class ApplicantListItem extends React.Component {
   
   static propTypes = {
-    applicant: PropTypes.object.isRequired, 
-    company: PropTypes.object.isRequired,
+    role: PropTypes.object.isRequired, 
     score: PropTypes.string,
+    company: PropTypes.object.isRequired,
+    applicant: PropTypes.object.isRequired, 
     isScoreFetching: PropTypes.bool,
   }
 
@@ -27,7 +28,9 @@ export default class ApplicantListItem extends React.Component {
   }
 
   render () {
+    
     const { 
+      role,
       score,
       company,
       applicant,
@@ -42,7 +45,7 @@ export default class ApplicantListItem extends React.Component {
         <TableRowColumn>{moment(new Date(applicant.updatedAt)).format('MMM DD, YYYY')}</TableRowColumn>
         <TableRowColumn><ScoreChip score={score} isFetching={isScoreFetching} /></TableRowColumn>
         <TableRowColumn>
-          <Link to={'/company-admin/applicant/' + applicant._id }>
+          <Link to={'/company-admin/role/' + role._id + '/applicant/' + applicant._id }>
             <FlatButton label="View Applicant" primary={true} />
           </Link>
         </TableRowColumn>

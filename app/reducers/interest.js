@@ -1,4 +1,4 @@
-import * as types from 'types';
+import { InterestTypes } from 'types';
 import { combineReducers } from 'redux';
 import _ from 'lodash';
 
@@ -7,10 +7,10 @@ const isFetching = (
   action
 ) => {
   switch (action.type) {
-    case types.GET_INTERESTS_REQUEST:
+    case InterestTypes.GET_INTERESTS_REQUEST:
       return true;
-    case types.GET_INTERESTS_SUCCESS:
-    case types.GET_INTERESTS_FAILURE:
+    case InterestTypes.GET_INTERESTS_SUCCESS:
+    case InterestTypes.GET_INTERESTS_FAILURE:
       return false;
     default:
       return state;
@@ -34,21 +34,21 @@ const interest = (
   action
 ) => {
   switch (action.type) {
-    case types.CREATE_NEW_INTEREST:
+    case InterestTypes.CREATE_NEW_INTEREST:
       return {
         profile_id: undefined,
         interest: undefined,
       }
-    case types.CREATE_INTEREST_SUCCESS:
-    case types.CREATE_INTEREST_FAILURE:
+    case InterestTypes.CREATE_INTEREST_SUCCESS:
+    case InterestTypes.CREATE_INTEREST_FAILURE:
       return {};
-    case types.TOGGLE_INTEREST_ADD:
+    case InterestTypes.TOGGLE_INTEREST_ADD:
       if (!action.data && action.persist) {
         return action.persist
       } else {
         return {};
       }
-    case types.CHANGE_INTEREST:
+    case InterestTypes.CHANGE_INTEREST:
       const newStateOjb = {...state}
       newStateOjb[action.state.field] = action.state.value
       return newStateOjb;
@@ -63,25 +63,30 @@ const interests = (
 ) => {
   let updatedInterest;
   switch (action.type) {
-    case types.GET_INTERESTS_SUCCESS:
+    case InterestTypes.GET_INTERESTS_SUCCESS:
       return interestOrder(action.res.data)
-    case types.CREATE_INTEREST_SUCCESS:
+    case InterestTypes.CREATE_INTEREST_SUCCESS:
       const newInterests = state.concat(action.data);
       return interestOrder(newInterests)
-    case types.CHANGE_INTERESTS:
+    case InterestTypes.CHANGE_INTERESTS:
       updatedInterest = [...state]
       updatedInterest[_.findIndex(updatedInterest, {_id: action.state.id})][action.state.field] = updatedInterest[_.findIndex(updatedInterest, {_id: action.state.id})][action.state.field] = action.state.value
       return updatedInterest
-    case types.UPDATE_INTEREST_SUCCESS:
+    case InterestTypes.UPDATE_INTEREST_SUCCESS:
       updatedInterest = state.slice()
       updatedInterest[_.findIndex(state, function(j) { return j._id === action.data._id; })] = action.data
       return interestOrder(updatedInterest)
-    case types.DELETE_INTEREST_SUCCESS:
+    case InterestTypes.DELETE_INTEREST_SUCCESS:
       const newState = state.slice();
       return newState.filter( j => {
         return j._id !== action.data.id;
       })
-    case types.CREATE_INTEREST_REQUEST:
+    case InterestTypes.TOGGLE_INTEREST_EDIT:
+      updatedInterest = _.map(state, (s) => {return {...s, edit: false } });
+      const t = updatedInterest[_.findIndex(updatedInterest, j => { return j._id === action.data._id})]
+      t.edit = !action.data.edit
+      return interestOrder(updatedInterest);
+    case InterestTypes.CREATE_INTEREST_REQUEST:
       return {
         data: action.res.data,
       };
@@ -95,33 +100,33 @@ const addShow = (
   action
 ) => {
   switch (action.type) {
-    case types.TOGGLE_INTEREST_ADD:
+    case InterestTypes.TOGGLE_INTEREST_ADD:
       return !action.data
     default:
       return state;
   }
 };
 
-const errorMessage = (
+const message = (
   state = '',
   action
 ) => {
   switch (action.type) {
-    case types.CREATE_INTEREST_FAILURE:
-      return action.error
-    case types.DISMISS_INTEREST_ERROR:
-      return ''
+    case InterestTypes.CREATE_INTEREST_FAILURE:
+      return action.error;
+    case InterestTypes.DISMISS_INTEREST_MESSAGE:
+      return '';
     default:
-      return state;
+      return state
   }
-};
+}
 
 const interestReducer = combineReducers({
   interest,
   interests,
-  errorMessage,
   addShow,
-  isFetching
+  isFetching,
+  message
 });
 
 export default interestReducer;

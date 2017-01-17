@@ -16,19 +16,16 @@ export default class InterestItem extends React.Component {
     interest: PropTypes.object.isRequired,
     interestChange: PropTypes.func.isRequired,
     saveInterestEdit: PropTypes.func.isRequired,
-    handleDelete: PropTypes.func.isRequired
+    handleDelete: PropTypes.func.isRequired,
+    toggleEdit: PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props);
   }
 
-  state = {
-    edit: false,
-  }
-
   toggleEdit () {
-    this.setState({edit: !this.state.edit})
+    this.props.toggleEdit(this.props.interest)
   }
 
   saveEdit (interest) {
@@ -42,16 +39,14 @@ export default class InterestItem extends React.Component {
 
   render () {
     const { 
-            isntLast, 
             interest, 
             interestChange
           } = this.props;
 
-    if (this.state.edit) {
+    if (interest.edit) {
 
       return (
         <InterestAdd
-          isEdit={true}
           interest={interest}
           interestChange={interestChange}
           onInterestSave={this.saveEdit.bind(this)}

@@ -32,7 +32,6 @@ class CompanyDashboard extends Component {
       editShow,
       roleEdit,
     } = this.props;
-
     return (
       <div>
         <RoleList

@@ -6,7 +6,7 @@ import { polyfill } from 'es6-promise';
 import axios from 'axios';
 import expect from 'expect';
 import * as actions from 'actions/jobs';
-import * as types from 'types';
+import { JobTypes } from 'types';
 
 polyfill();
 
@@ -55,10 +55,10 @@ describe('Job Actions', () => {
     it('dispatches request and success actions when status is 200', done => {
       const expectedActions = [
         {
-          type: types.CREATE_JOB,
+          type: JobTypes.CREATE_JOB,
           data: data
         }, {
-          type: types.CREATE_JOB_SUCCESS,
+          type: JobTypes.CREATE_JOB_SUCCESS,
           data: undefined
         }
       ];
@@ -76,10 +76,10 @@ describe('Job Actions', () => {
     it('dispatches request and failed actions when status is NOT 200', done => {
       const expectedActions = [
         {
-          type: types.CREATE_JOB,
+          type: JobTypes.CREATE_JOB,
           data: data
         }, {
-          type: types.CREATE_JOB_FAILURE,
+          type: JobTypes.CREATE_JOB_FAILURE,
           error: 'Oops! Something went wrong and we couldn\'t create your job.'
         }
       ];
@@ -96,10 +96,10 @@ describe('Job Actions', () => {
     it('updateJob dispatches a change action on success', done => {
       const expectedActions = [{
         data: data,
-        type: types.UPDATE_JOB
+        type: JobTypes.UPDATE_JOB
       }, {
         data: undefined,
-        type: types.UPDATE_JOB_SUCCESS
+        type: JobTypes.UPDATE_JOB_SUCCESS
       }];
       sandbox.stub(axios, 'put').returns(Promise.resolve({ status: 200 }));
       const store = mockStore();
@@ -113,10 +113,10 @@ describe('Job Actions', () => {
     it('updateJob dispatches a failed action on failure', done => {
       const expectedActions = [{
         data: data,
-        type: types.UPDATE_JOB
+        type: JobTypes.UPDATE_JOB
       }, {
         error: 'Oops! Something went wrong and we couldn\'t create your job.',
-        type: types.UPDATE_JOB_FAILURE
+        type: JobTypes.UPDATE_JOB_FAILURE
       }];
       sandbox.stub(axios, 'put').returns(Promise.reject({status: 404, data: 'Oops! Something went wrong and we couldn\'t delete your job.'}));
       const store = mockStore();
@@ -146,10 +146,10 @@ describe('Job Actions', () => {
 
     it('deleteJob dispatches a failure event on failure', done => {
       const expectedActions = [{
-        type: types.DELETE_JOB_REQUEST,
+        type: JobTypes.DELETE_JOB_REQUEST,
         data: data
       }, {
-        type: types.DELETE_JOB_FAILURE,
+        type: JobTypes.DELETE_JOB_FAILURE,
         error: 'Oops! Something went wrong and we couldn\'t delete your job.',
       }];
       sandbox.stub(axios, 'delete').returns(Promise.reject({status: 404, data: 'Oops! Something went wrong and we couldn\'t delete your job.'}));

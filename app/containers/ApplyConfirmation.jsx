@@ -14,9 +14,10 @@ const cx = classNames.bind(styles);
 
 class ApplyConfirmation extends React.Component {
   
-  static need = [  // eslint-disable-line
-    profileActionCreators.fetchProfile
-  ]
+  componentWillMount() {
+    const { profileActions } = this.props;
+    profileActions.fetchProfile();
+  }
 
   constructor(props) {
     super(props)

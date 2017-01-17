@@ -21,6 +21,7 @@ class LanguageList extends React.Component {
     errorMessage: PropTypes.string,
     onEditSave: PropTypes.func.isRequired,
     toggleLanguageAdd: PropTypes.func.isRequired,
+    toggleLanguageEdit: PropTypes.func.isRequired,
     onLanguageSave: PropTypes.func.isRequired,
     onLanguageDelete: PropTypes.func.isRequired
   }
@@ -30,7 +31,7 @@ class LanguageList extends React.Component {
   }
   
   toggleAddLanguage = () => {
-    let {
+    const {
       addVisible,
       language,
       toggleLanguageAdd
@@ -38,9 +39,17 @@ class LanguageList extends React.Component {
 
     toggleLanguageAdd(addVisible, language)
   }
+
+  toggleEditLanguage(language) {
+    const {
+      toggleLanguageEdit
+    } = this.props
+
+    toggleLanguageEdit(language)
+  }
   
   handleSave = (data) => {
-    let {
+    const {
       addVisible,
       language,
       toggleLanguageAdd,
@@ -60,7 +69,7 @@ class LanguageList extends React.Component {
   }
 
   render () {
-    let { language,
+    const { language,
           languages,
           addVisible,
           actions,
@@ -90,6 +99,7 @@ class LanguageList extends React.Component {
                     key={language._id} 
                     language={language}
                     languageChange={actions.languagesChange}
+                    toggleEdit={this.toggleEditLanguage.bind(this)}
                     saveLanguageEdit={this.handleEditSave} 
                     handleDelete={this.handleDelete}
                   />)

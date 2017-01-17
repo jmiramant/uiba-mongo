@@ -49,7 +49,7 @@ export function get(req, res) {
   }
 
   if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
-    
+
     Roles.findById(req.params.id, respCb)
   
   } else {

@@ -24,6 +24,7 @@ class SkillList extends React.Component {
     onSkillSave: PropTypes.func.isRequired,
     addVisible: PropTypes.bool.isRequired,
     toggleSkillAdd: PropTypes.func.isRequired,
+    toggleSkillEdit: PropTypes.func.isRequired,
     onEditSave: PropTypes.func.isRequired,
     onSkillDelete: PropTypes.func.isRequired
   }
@@ -33,7 +34,7 @@ class SkillList extends React.Component {
   }
   
   toggleAddSkill = () => {
-    let {
+    const {
       addVisible,
       skill,
       toggleSkillAdd
@@ -42,8 +43,12 @@ class SkillList extends React.Component {
     this.props.toggleSkillAdd(this.props.addVisible, skill)
   }
 
+  toggleSkillEdit = (skill) => {
+    this.props.toggleSkillEdit(skill)
+  }
+
   handleSave = (data) => {
-    let {
+    const {
       addVisible,
       skill,
       toggleSkillAdd,
@@ -63,14 +68,15 @@ class SkillList extends React.Component {
   }
 
   render () {
-    let { skill,
+    const { skill,
             skills,
+            actions,
+            errorText,
             addVisible,
             skillChange,
             skillsChange,
-            actions,
             errorMessage,
-            errorText
+            toggleSkillEdit
           } = this.props;
 
     const listClass = classNames({
@@ -95,6 +101,7 @@ class SkillList extends React.Component {
                     skill={_skill} 
                     skillChange={skillsChange}
                     handleDelete={this.handleDelete}
+                    toggleEdit={this.toggleSkillEdit.bind(this)}
                     saveSkillEdit={this.handleEditSave} 
                     style={{fontSize: '12px', fontWeight: '400', lineHeight: '28px', paddingLeft: '10px', paddingRight: '10px'}}
                   />);
@@ -121,7 +128,6 @@ class SkillList extends React.Component {
               errorText={errorText}
             />
             <SkillAdd
-              isEdit={false}
               skill={skill}
               skillChange={skillChange}
               toggleEdit={this.toggleAddSkill.bind(this)} 

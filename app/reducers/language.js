@@ -1,4 +1,4 @@
-import * as types from 'types';
+import { LanguageTypes } from 'types';
 import { combineReducers } from 'redux';
 import _ from 'lodash';
 
@@ -7,10 +7,10 @@ const isFetching = (
   action
 ) => {
   switch (action.type) {
-    case types.GET_LANGUAGES_REQUEST:
+    case LanguageTypes.GET_LANGUAGES_REQUEST:
       return true;
-    case types.GET_LANGUAGES_SUCCESS:
-    case types.GET_LANGUAGES_FAILURE:
+    case LanguageTypes.GET_LANGUAGES_SUCCESS:
+    case LanguageTypes.GET_LANGUAGES_FAILURE:
       return false;
     default:
       return state;
@@ -34,23 +34,23 @@ const language = (
   action
 ) => {
   switch (action.type) {
-    case types.CREATE_NEW_LANGUAGE:
+    case LanguageTypes.CREATE_NEW_LANGUAGE:
       return {
         profile_id: undefined,
         language: undefined,
         proficiency: undefined,
         experience: undefined,
       }
-    case types.CREATE_LANGUAGE_SUCCESS:
-    case types.CREATE_LANGUAGE_FAILURE:
+    case LanguageTypes.CREATE_LANGUAGE_SUCCESS:
+    case LanguageTypes.CREATE_LANGUAGE_FAILURE:
       return {};
-    case types.TOGGLE_LANGUAGE_ADD:
+    case LanguageTypes.TOGGLE_LANGUAGE_ADD:
       if (!action.data && action.persist) {
         return action.persist
       } else {
         return {};
       }
-    case types.CHANGE_LANGUAGE:
+    case LanguageTypes.CHANGE_LANGUAGE:
       const newStateOjb = {...state}
       newStateOjb[action.state.field] = action.state.value
       return newStateOjb;
@@ -65,28 +65,33 @@ const languages = (
 ) => {
   let updatedLangauge;
   switch (action.type) {
-    case types.GET_LANGUAGES_SUCCESS:
+    case LanguageTypes.GET_LANGUAGES_SUCCESS:
       return languageOrder(action.res.data)
-    case types.CREATE_LANGUAGE_SUCCESS:
+    case LanguageTypes.CREATE_LANGUAGE_SUCCESS:
       const newLangauges = state.concat(action.data);
       return languageOrder(newLangauges)
-    case types.CHANGE_LANGUAGES:
+    case LanguageTypes.CHANGE_LANGUAGES:
       updatedLangauge = [...state]
       updatedLangauge[_.findIndex(updatedLangauge, {_id: action.state.id})][action.state.field] = updatedLangauge[_.findIndex(updatedLangauge, {_id: action.state.id})][action.state.field] = action.state.value
       return updatedLangauge
-    case types.UPDATE_LANGUAGE_SUCCESS:
+    case LanguageTypes.UPDATE_LANGUAGE_SUCCESS:
       updatedLangauge = state.slice()
       updatedLangauge[_.findIndex(state, function(j) { return j._id === action.data._id; })] = action.data
       return languageOrder(updatedLangauge)
-    case types.DELETE_LANGUAGE_SUCCESS:
+    case LanguageTypes.DELETE_LANGUAGE_SUCCESS:
       const newState = state.slice();
       return newState.filter( j => {
         return j._id !== action.data.id;
       })
-    case types.CREATE_LANGUAGE_REQUEST:
+    case LanguageTypes.CREATE_LANGUAGE_REQUEST:
       return {
         data: action.res.data,
       };
+    case LanguageTypes.TOGGLE_LANGUAGE_EDIT:
+      updatedLangauge = _.map(state, (s) => {return {...s, edit: false } });
+      const t = updatedLangauge[_.findIndex(updatedLangauge, j => { return j._id === action.data._id})]
+      t.edit = !action.data.edit
+      return languageOrder(updatedLangauge);
     default:
       return state;
   }
@@ -97,33 +102,33 @@ const addShow = (
   action
 ) => {
   switch (action.type) {
-    case types.TOGGLE_LANGUAGE_ADD:
+    case LanguageTypes.TOGGLE_LANGUAGE_ADD:
       return !action.data
     default:
       return state;
   }
 };
 
-const errorMessage = (
+const message = (
   state = '',
   action
 ) => {
   switch (action.type) {
-    case types.CREATE_LANGUAGE_FAILURE:
-      return action.error
-    case types.DISMISS_LANGUAGE_ERROR:
-      return ''
+    case LanguageTypes.CREATE_LANGUAGE_FAILURE:
+      return action.error;
+    case LanguageTypes.DISMISS_LANGUAGE_MESSAGE:
+      return '';
     default:
-      return state;
+      return state
   }
-};
+}
 
 const languageReducer = combineReducers({
+  addShow,
+  message,
   language,
   languages,
-  errorMessage,
-  addShow,
-  isFetching
+  isFetching,
 });
 
 export default languageReducer;

@@ -21,6 +21,7 @@ class InterestList extends React.Component {
     errorMessage: PropTypes.string,
     onEditSave: PropTypes.func.isRequired,
     toggleInterestAdd: PropTypes.func.isRequired,
+    toggleInterestEdit: PropTypes.func.isRequired,
     onInterestSave: PropTypes.func.isRequired,
     onInterestDelete: PropTypes.func.isRequired
   }
@@ -30,7 +31,7 @@ class InterestList extends React.Component {
   }
   
   toggleAddInterest = () => {
-    let {
+    const {
       addVisible,
       interest,
       toggleInterestAdd
@@ -40,7 +41,7 @@ class InterestList extends React.Component {
   }
   
   handleSave = (data) => {
-    let {
+    const {
       addVisible,
       interest,
       toggleInterestAdd,
@@ -60,11 +61,12 @@ class InterestList extends React.Component {
   }
 
   render () {
-    let { interest,
+    const { interest,
           interests,
           addVisible,
           actions,
           errorMessage,
+          toggleInterestEdit
         } = this.props;
 
     const lengthIndex = interests.length - 1;
@@ -92,6 +94,7 @@ class InterestList extends React.Component {
                     interestChange={actions.interestsChange}
                     saveInterestEdit={this.handleEditSave} 
                     handleDelete={this.handleDelete}
+                    toggleEdit={toggleInterestEdit}
                   />)
         })}
       </div>

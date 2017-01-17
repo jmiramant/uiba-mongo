@@ -1,33 +1,40 @@
 import { polyfill } from 'es6-promise';
 import request from 'axios';
 
-import * as types from 'types';
+import { ProjectTypes } from 'types';
 
 polyfill();
 
 export function newProject() {
   return {
-    type: types.NEW_PROJECT,
+    type: ProjectTypes.NEW_PROJECT,
   };
 }
 
 export function projectChange(state) {
   return {
-    type: types.CHANGE_PROJECT,
+    type: ProjectTypes.CHANGE_PROJECT,
     state
   };
 }
 
 export function projectsChange(state) {
   return {
-    type: types.CHANGE_PROJECTS,
+    type: ProjectTypes.CHANGE_PROJECTS,
     state
   };
 }
 
 export function toggleProjectAdd (data) {
   return {
-    type: types.TOGGLE_PROJECT_ADD,
+    type: ProjectTypes.TOGGLE_PROJECT_ADD,
+    data: data
+  };
+}
+
+export function toggleProjectEdit (data) {
+  return {
+    type: ProjectTypes.TOGGLE_PROJECT_EDIT,
     data: data
   };
 }
@@ -40,49 +47,49 @@ export function fetchProjects(profId) {
   let path = '/projects/me'
   if (profId) path = '/projects/' + profId
   return {
-    type: types.GET_PROJECTS,
+    type: ProjectTypes.GET_PROJECTS,
     promise: makeProjectsRequest('get', {}, path)
   };
 }
 
 export function createProjectRequest(data) {
   return {
-    type: types.CREATE_PROJECT,
+    type: ProjectTypes.CREATE_PROJECT,
     data: data
   };
 }
 
 export function createProjectSuccess(data) {
   return {
-    type: types.CREATE_PROJECT_SUCCESS,
+    type: ProjectTypes.CREATE_PROJECT_SUCCESS,
     data: data
   };
 }
 
 export function createProjectFailure(data) {
   return {
-    type: types.CREATE_PROJECT_FAILURE,
+    type: ProjectTypes.CREATE_PROJECT_FAILURE,
     error: data.error
   };
 }
 
 export function updateProjectRequest(data) {
   return {
-    type: types.UPDATE_PROJECT,
+    type: ProjectTypes.UPDATE_PROJECT,
     data: data
   }
 }
 
 export function updateProjectSuccess(data) {
   return {
-    type: types.UPDATE_PROJECT_SUCCESS,
+    type: ProjectTypes.UPDATE_PROJECT_SUCCESS,
     data: data
   }
 }
 
 export function updateProjectFailure(data) {
   return {
-    type: types.UPDATE_PROJECT_FAILURE,
+    type: ProjectTypes.UPDATE_PROJECT_FAILURE,
     error: data.error
   };
 }
@@ -122,21 +129,21 @@ export function updateProject(projectData) {
 
 export function deleteProjectRequest (data) {
   return {
-    type: types.DELETE_PROJECT_REQUEST,
+    type: ProjectTypes.DELETE_PROJECT_REQUEST,
     data: data
   }
 }
 
 export function deleteProjectSuccess (data) {
   return {
-    type: types.DELETE_PROJECT_SUCCESS,
+    type: ProjectTypes.DELETE_PROJECT_SUCCESS,
     data: data
   }
 }
 
 export function deleteProjectFailure (data) {
   return {
-    type: types.DELETE_PROJECT_FAILURE,
+    type: ProjectTypes.DELETE_PROJECT_FAILURE,
     error: data.error
   }
 }

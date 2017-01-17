@@ -1,0 +1,3 @@
+export const DISMISS_MESSAGE = 'DISMISS_MESSAGE';
+export const DISMISS_ERROR = 'DISMISS_ERROR';
+export const CREATE_ERROR = 'CREATE_ERROR';

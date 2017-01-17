@@ -1,4 +1,4 @@
-import * as types from 'types';
+import { ScoreTypes } from 'types';
 import { combineReducers } from 'redux';
 import _ from 'lodash';
 
@@ -7,10 +7,10 @@ const isFetching = (
   action
 ) => {
   switch (action.type) {
-    case types.GET_SCORES_REQUEST:
+    case ScoreTypes.GET_SCORES_REQUEST:
       return true;
-    case types.GET_SCORES_SUCCESS:
-    case types.GET_SCORES_FAILURE:
+    case ScoreTypes.GET_SCORES_SUCCESS:
+    case ScoreTypes.GET_SCORES_FAILURE:
       return false;
     default:
       return state;
@@ -22,9 +22,9 @@ const scores = (
   action
 ) => {
   switch (action.type) {
-    case types.GET_SCORES_SUCCESS:
+    case ScoreTypes.GET_SCORES_SUCCESS:
       return action.data;
-    case types.CLEAR_SCORES:
+    case ScoreTypes.CLEAR_SCORES:
       return [];
     default:
       return state;

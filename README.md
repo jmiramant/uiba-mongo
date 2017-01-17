@@ -361,6 +361,76 @@ Master branch deploys to production. Staging deploys to staging.
     });
   ```
   
+**POST: Authorize Emails**
+----
+  Given any number of existing user's emails, will verify the email.
+
+* **URL**
+
+  /api/v1/admin/authorize-emails
+
+* **Method:**
+
+  `POST`
+  
+*  **Headers**
+
+    Requires an ```x-access-token``` from 'api/v1/token'
+
+*  **Required:**
+    Headers:  `x-access-token=[string]`
+    Body: 
+    `emails: <string>,<string>`(comma seperated)
+
+* **Success Response:**
+
+  * **Code:** 200
+    **Content:** 
+```
+[
+  [{
+      "_id": "5870238efb1d6b156cd5f096",
+      "profile_id": "5870238efb1d6b156cd5f097",
+      "email": "djks@gmail.com",
+      "password": "$2a$05$8q2dZYH0JCrccuRyj1vldumQsnf2ET.iCXK4oPkPE/PeAUPoGg5aS",
+      "__v": 0,
+      "verifyEmailToken": "8d8a3f363104e4520c14f54c26f876",
+      "verifyEmailTokenExpires": "2017-01-07T23:09:02.172Z",
+      "isEmailVerified": true,
+      "role": [
+        1
+      ],
+      "claim": false,
+      "tokens": [],
+    },
+    0
+  ], ...
+]
+```
+ 
+* **Error Response:**
+
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ error : "Please provide an api key." }`
+
+* **Sample Call:**
+
+  ```javascript
+    $.ajax({
+      url: "/api/v1/admin/authorize-emails",
+      headers: {
+        x-access-token: <token>
+      },
+      data: {
+        emails: 'josh@miramant.me','Another@email.com'
+      }
+      type : "POST",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+  
 **DELETE: Delete a User**
 ----
   This will delete a user and all associated files, including any attributions on Roles or recruiters. There will be nothing left of this user after a delete.

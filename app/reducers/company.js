@@ -1,6 +1,21 @@
-import * as types from 'types';
+import { CompanyTypes } from 'types';
 import { combineReducers } from 'redux';
 import _ from 'lodash';
+
+const isFetching = (
+  state = false,
+  action
+) => {
+  switch (action.type) {
+    case CompanyTypes.GET_COMPANY_REQUEST:
+      return true;
+    case CompanyTypes.GET_COMPANY_SUCCESS:
+    case CompanyTypes.GET_COMPANY_FAILURE:
+      return false;
+    default:
+      return state;
+  }
+};
 
 const company = (
   state = {
@@ -17,17 +32,17 @@ const company = (
   action
 ) => {
   switch (action.type) {
-    case types.CREATE_NEW_COMPANY:
+    case CompanyTypes.CREATE_NEW_COMPANY:
       return state;
-    case types.CHANGE_COMPANY:
+    case CompanyTypes.CHANGE_COMPANY:
       const newStateOjb = {...state}
       newStateOjb[action.state.field] = action.state.value
       return newStateOjb;
-    case types.CREATE_COMPANY_SUCCESS:
+    case CompanyTypes.CREATE_COMPANY_SUCCESS:
       return action.data;
-    case types.SET_COMPANY_FROM_TYPEAHEAD:
+    case CompanyTypes.SET_COMPANY_FROM_TYPEAHEAD:
       return action.company;
-    case types.GET_COMPANY_SUCCESS:
+    case CompanyTypes.GET_COMPANY_SUCCESS:
       return action.data;
     default:
       return state;
@@ -39,9 +54,9 @@ const isExistingData = (
   action
 ) => {
   switch (action.type) {
-    case types.CHANGE_COMPANY:
+    case CompanyTypes.CHANGE_COMPANY:
       return false;
-    case types.SET_COMPANY_FROM_TYPEAHEAD:
+    case CompanyTypes.SET_COMPANY_FROM_TYPEAHEAD:
       return true;
     default:
       return state;
@@ -53,7 +68,7 @@ const typeahead = (
   action
 ) => {
   switch (action.type) {
-    case types.UPDATE_COMPANY_TYPEAHEAD_SUCCESS: 
+    case CompanyTypes.UPDATE_COMPANY_TYPEAHEAD_SUCCESS: 
       return action.results;
     default:
       return state;
@@ -65,9 +80,9 @@ const selection = (
   action
 ) => {
   switch (action.type) {
-    case types.SET_INITIAL_COMPANY_SELECTION:
+    case CompanyTypes.SET_INITIAL_COMPANY_SELECTION:
       return (action.selection ? action.selection : '')
-    case types.UPDATE_COMPANY_SELECTION:
+    case CompanyTypes.UPDATE_COMPANY_SELECTION:
       return action.selection
     default:
       return state;
@@ -79,10 +94,10 @@ const addShow = (
   action
 ) => {
   switch (action.type) {
-    case types.TOGGLE_COMPANY_ADD:
+    case CompanyTypes.TOGGLE_COMPANY_ADD:
       return !action.data
-    case types.GET_COMPANY_SUCCESS:
-    case types.GET_COMPANY_FAILURE:
+    case CompanyTypes.GET_COMPANY_SUCCESS:
+    case CompanyTypes.GET_COMPANY_FAILURE:
       let resp = false;
       if (!action.data) resp = true
       return resp
@@ -96,6 +111,7 @@ const companyReducer = combineReducers({
   addShow,
   typeahead,
   selection,
+  isFetching,
   isExistingData
 });
 

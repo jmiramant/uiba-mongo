@@ -6,7 +6,7 @@ import { polyfill } from 'es6-promise';
 import axios from 'axios';
 import expect from 'expect';
 import * as actions from 'actions/skills';
-import * as types from 'types';
+import { SkillTypes } from 'types';
 
 polyfill();
 
@@ -45,10 +45,10 @@ describe('Skill Actions', () => {
     it('dispatches request and success actions when status is 200', done => {
       const expectedActions = [
         {
-          type: types.CREATE_SKILL,
+          type: SkillTypes.CREATE_SKILL,
           data: data
         }, {
-          type: types.CREATE_SKILL_SUCCESS,
+          type: SkillTypes.CREATE_SKILL_SUCCESS,
           data: undefined
         }
       ];
@@ -66,10 +66,10 @@ describe('Skill Actions', () => {
     it('dispatches request and failed actions when status is NOT 200', done => {
       const expectedActions = [
         {
-          type: types.CREATE_SKILL,
+          type: SkillTypes.CREATE_SKILL,
           data: data
         }, {
-          type: types.CREATE_SKILL_FAILURE,
+          type: SkillTypes.CREATE_SKILL_FAILURE,
           error: {
             data: 'Oops! Something went wrong and we couldn\'t create your skill.',
             status: 404
@@ -89,10 +89,10 @@ describe('Skill Actions', () => {
     it('updateSkill dispatches a change action on success', done => {
       const expectedActions = [{
         data: data,
-        type: types.UPDATE_SKILL
+        type: SkillTypes.UPDATE_SKILL
       }, {
         data: undefined,
-        type: types.UPDATE_SKILL_SUCCESS
+        type: SkillTypes.UPDATE_SKILL_SUCCESS
       }];
       sandbox.stub(axios, 'put').returns(Promise.resolve({ status: 200 }));
       const store = mockStore();
@@ -106,10 +106,10 @@ describe('Skill Actions', () => {
     it('updateSkill dispatches a failed action on failure', done => {
       const expectedActions = [{
         data: data,
-        type: types.UPDATE_SKILL
+        type: SkillTypes.UPDATE_SKILL
       }, {
         error: 'Oops! Something went wrong and we couldn\'t create your skill.',
-        type: types.UPDATE_SKILL_FAILURE
+        type: SkillTypes.UPDATE_SKILL_FAILURE
       }];
       sandbox.stub(axios, 'put').returns(Promise.reject({status: 404, data: 'Oops! Something went wrong and we couldn\'t delete your skill.'}));
       const store = mockStore();
@@ -139,10 +139,10 @@ describe('Skill Actions', () => {
 
     it('deleteSkill dispatches a failure event on failure', done => {
       const expectedActions = [{
-        type: types.DELETE_SKILL_REQUEST,
+        type: SkillTypes.DELETE_SKILL_REQUEST,
         data: data
       }, {
-        type: types.DELETE_SKILL_FAILURE,
+        type: SkillTypes.DELETE_SKILL_FAILURE,
         error: 'Oops! Something went wrong and we couldn\'t delete your skill.',
       }];
       sandbox.stub(axios, 'delete').returns(Promise.reject({status: 404, data: 'Oops! Something went wrong and we couldn\'t delete your skill.'}));

@@ -30,7 +30,7 @@ class RoleList extends React.Component {
     roleEditChange: PropTypes.func.isRequired,
     rolesChange: PropTypes.func.isRequired,
     onToggleEduReqSelect: PropTypes.func.isRequired,
-
+    // toggleSkillEdit: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -74,6 +74,7 @@ class RoleList extends React.Component {
             rolesChange,
             roleEditChange,
             toggleRoleEdit,
+            toggleSkillEdit
           } = this.props;
 
     const { copiedPath } = this.state
@@ -253,6 +254,7 @@ class RoleList extends React.Component {
         onRoleSave={this.handleEdit}
         roleChange={roleEditChange}
         toggleEdit={toggleRoleEdit} 
+        // toggleSkillEdit={toggleSkillEdit}
         editShow={editShow}
       />
 
@@ -261,7 +263,8 @@ class RoleList extends React.Component {
         company={company}
         onRoleSave={this.handleSave} 
         roleChange={roleChange}
-        toggleEdit={this.toggleAddRole.bind(this)} 
+        toggleEdit={this.toggleAddRole.bind(this)}
+        // toggleSkillEdit={toggleSkillEdit}
         addVisible={addVisible}
       />
 

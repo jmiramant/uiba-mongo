@@ -1,7 +1,7 @@
 import { polyfill } from 'es6-promise';
 import request from 'axios';
 
-import * as types from 'types';
+import { ScoreTypes } from 'types';
 
 polyfill();
 
@@ -11,28 +11,55 @@ function makeScoreRequest(method, data, api = '/scores') {
 
 export function clearScores () {
   return {
-    type: types.CLEAR_SCORES
+    type: ScoreTypes.CLEAR_SCORES
   }  
 }
 
 export function fetchScoreRequest (data) {
   return {
-    type: types.GET_SCORES_REQUEST,
+    type: ScoreTypes.GET_SCORES_REQUEST,
     data: data
   }
 }
 
 export function fetchScoreSuccess (data) {
   return {
-    type: types.GET_SCORES_SUCCESS,
+    type: ScoreTypes.GET_SCORES_SUCCESS,
     data: data
   }
 }
 
 export function fetchScoreFailure (data) {
   return {
-    type: types.GET_SCORES_FAILURE,
+    type: ScoreTypes.GET_SCORES_FAILURE,
     error: data.error
+  }
+}
+
+export function syncScoreSuccess (data) {
+  return {
+    type: ScoreTypes.SYNC_SCORES_SUCCESS,
+    data: data
+  }
+}
+
+export function syncScoreFailure (data) {
+  return {
+    type: ScoreTypes.SYNC_SCORES_FAILURE,
+    error: data.error
+  }
+}
+export function syncScores () {
+  return (dispatch) => {
+    return makeScoreRequest('put', null, '/scores/sync')
+      .then(res => {
+        if (res.status === 200) {
+          return dispatch(syncScoreSuccess(res.data));
+        }
+      })
+      .catch((err) => {
+        return dispatch(syncScoreFailure({ error: err}));
+      });
   }
 }
 

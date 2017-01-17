@@ -46,13 +46,15 @@ class CompanyContainer extends React.Component {
   }
   
   stepHandler(child) {
-    const _child = child.split('/')[2]
+    const _child = child.split('/')[2];
+
     switch (_child) {
       case "dashboard":
         return [1];
       case "applicants":
         return [1,2];
       case "applicant":
+      case "role":
         return [1,2,3];
     }
 
