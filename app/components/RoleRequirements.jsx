@@ -62,7 +62,6 @@ export default class RoleRequirements extends React.Component {
       toggleSkillEdit,
     } = this.props;
 
-    console.log(skills[6])
     const {
       skillError
     } = this.state;

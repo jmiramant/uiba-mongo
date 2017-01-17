@@ -7,3 +7,20 @@
   height: 35px;
   width: 35px;
 }
+
+.oneDigit {
+  padding-left: 13px;
+}
+
+.twoDigit {
+  padding-left: 9px;
+}
+
+.threeDigit {
+  padding-left: 5px;
+}
+
+.naDigit {
+  padding: 9px 13px 8px 8px;
+  font-size: 11px;
+}
