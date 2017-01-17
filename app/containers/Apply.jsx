@@ -105,11 +105,13 @@ class Apply extends Component {
   }
 
   render () {
+
     const {
       role,
       userActions: { toggleLoginMode }, 
       user: { isWaiting, message, isLogin }, 
-      location: { query: { rid } }, 
+      location: { query: { rid } },
+      companyFetching,
       company
     } = this.props;
 
@@ -186,8 +188,20 @@ class Apply extends Component {
       </div>
     )
 
+    const notFound = (
+      <div className={cx('welcome-text')}>
+        <p>I'm sorry. There is no company found via this URL. Please confirm the web address with you referrer.</p>
+      </div>
+    )
+
     return (
-      company.name ? (applyPage) : (loadingPage)
+      <div className={cx('apply-container')}>
+        {
+          company.name ? (applyPage) : (
+            companyFetching ? (loadingPage) : (notFound)
+          )
+        }
+      </div>
     );
   }
 };
@@ -197,6 +211,7 @@ function mapStateToProps(state) {
   return {
     user: state.user,
     company: state.company.company,
+    companyFetching: state.company.isFetching,
     role: state.role.role
   };
 }

@@ -7,13 +7,6 @@ function makeCompaniesRequest(method, data, api = '/companies') {
   return request[method](api, data);
 }
 
-export function fetchCompanyRequest(id) {
-  return {
-    type: CompanyTypes.GET_COMPANY,
-    promise: makeCompaniesRequest('get', {}, '/companies/' + id)
-  };
-}
-
 export function fetchCompanySuccess(data) {
   return {
     type: CompanyTypes.GET_COMPANY_SUCCESS,
@@ -29,12 +22,19 @@ export function fetchCompanyFailure(data) {
   };
 }
 
+export function fetchCompanyRequest() {
+  return {
+    type: CompanyTypes.GET_COMPANY_REQUEST
+  };
+}
+
 export function fetchCompany(id) {
  
   return (dispatch) => {
 
     const uri = id ? ('/company/' + id) : ('/company')
 
+    dispatch(fetchCompanyRequest())
     return makeCompaniesRequest('get', {}, uri)
       .then(res => {
         if (res.status === 200) {

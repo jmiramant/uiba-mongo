@@ -2,6 +2,21 @@ import { CompanyTypes } from 'types';
 import { combineReducers } from 'redux';
 import _ from 'lodash';
 
+const isFetching = (
+  state = false,
+  action
+) => {
+  switch (action.type) {
+    case CompanyTypes.GET_COMPANY_REQUEST:
+      return true;
+    case CompanyTypes.GET_COMPANY_SUCCESS:
+    case CompanyTypes.GET_COMPANY_FAILURE:
+      return false;
+    default:
+      return state;
+  }
+};
+
 const company = (
   state = {
     name: "",
@@ -96,6 +111,7 @@ const companyReducer = combineReducers({
   addShow,
   typeahead,
   selection,
+  isFetching,
   isExistingData
 });
 

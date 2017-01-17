@@ -81,6 +81,11 @@ class Profile extends React.Component {
 
     if (errorStore.containsErrors) {
       this.handleValidationErrors(errorStore.errors);
+      
+      setTimeout( () => {
+        this.setState({validationErrors: {}});
+      }, 5000)
+
     }
 
     return errorStore.containsErrors;
