@@ -190,7 +190,7 @@ class Apply extends Component {
 
     const notFound = (
       <div className={cx('welcome-text')}>
-        <p>I'm sorry. There is not company or role found via this URL. Please confirm the web address with you referrer.</p>
+        <p>I'm sorry. There is no company found via this URL. Please confirm the web address with you referrer.</p>
       </div>
     )
 
