@@ -6,6 +6,7 @@ import passport from 'passport';
 import Company from '../models/company';
 import async from 'async'
 import mailer from '../../utils/email.js'
+import sendInBlue from '../../utils/sendInBlue.js'
 import _ from 'lodash';
 
 const isApply = (req) => {
@@ -165,7 +166,8 @@ export function signUp(req, res, next) {
     email: req.body.email
   }, (findErr, existingUser) => {
     if (existingUser && !existingUser.claim) {
-      return res.status(409).json({
+      console.log(existingUser)
+      return res.status(403).json({
         message: 'Account with this email address already exists. Did you sign up with LinkedIn?'
       });
     }
@@ -203,7 +205,10 @@ export function signUp(req, res, next) {
           user: user.save
         }, function(saveErr, resp) {
           if (saveErr) return next(saveErr);
+          
           mailer.sendEmailConfirmation(user, req.headers.host)
+          sendInBlue.identifyUser(resp._profile[0], resp.user[0]);
+          
           return res.status(200).send({
             message: 'You have successfully signed up.', 
             profile: resp._profile[0], 

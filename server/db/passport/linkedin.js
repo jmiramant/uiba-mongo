@@ -6,6 +6,7 @@ import Role from '../models/role';
 import Recruiter from '../models/recruiter';
 import Company from '../models/company';
 import cookie from 'react-cookie';
+import sendInBlue from '../../utils/sendInBlue.js'
 
 const setDefaultProfileFields = (prof, profile, userId) => {
   prof.user_id = userId;
@@ -214,6 +215,7 @@ export default (req, accessToken, refreshToken, profile, done) => {
           _profile: _profile.save,
           user: user.save,
         }, function(err, res) {
+          sendInBlue.identifyUser(resp._profile[0], resp.user[0]);
           isApply(req) ? resolveApplyRedirect(req, res.user[0], done) : done(null, res.user[0])
         });
 

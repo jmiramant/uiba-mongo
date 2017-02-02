@@ -29,7 +29,7 @@ import ApplyBtn                     from 'components/ApplyBtn';
 import UserCard                     from 'components/userCard/UserCard';
 import Loading                      from 'components/Loading';
 import { validateSubmitHelper }     from 'components/helpers/submitValidations';
-import { SIBApplySubmit } from 'middlewares/sendInBlueEvents';
+import { SIBApplySubmit, SIBProfileInit } from 'middlewares/sendInBlueEvents';
 
 import Scroll                   from 'react-scroll';
 import Measure                  from 'react-measure';
@@ -67,6 +67,7 @@ class Profile extends React.Component {
 
   componentDidMount() {
     mixpanelTrack("PROFILE[load]:init")
+    SIBProfileInit(this.props.profile);
   }
 
   constructor(props) {
@@ -98,13 +99,9 @@ class Profile extends React.Component {
     this.props.messageActions.dismissMessage();
     if (!this.isValidated()) {
       if (profile.profile.apply.role_code && !profile.profile.apply.applyComplete) roleActions.increment(profile.profile.apply.role_code)
-<<<<<<< HEAD
       SIBApplySubmit(profile.profile)
       applyActions.sumbitApplication(profile.profile)
-=======
-      applyActions.sumbitApplication(profile.profile);
       scoreActions.syncScores();
->>>>>>> test
     }
   }
 

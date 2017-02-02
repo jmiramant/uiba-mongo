@@ -29,8 +29,13 @@ export function SIBApplySubmit(prof) {
   }
 }
 
+export function SIBProfileInit() {
+  if (sendinblue) sendinblue.track('PROFILE:initialized')
+}
+
 export default {
-  SIBIdentifyAndSignIn,
   SIBsignIn,
+  SIBProfileInit,
   SIBApplySubmit,
+  SIBIdentifyAndSignIn,
 }

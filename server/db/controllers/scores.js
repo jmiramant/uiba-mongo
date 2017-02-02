@@ -41,7 +41,8 @@ export function sync(req, res) {
     },
     method: 'GET'
   }, (err, response, body) => {
-    const resp = JSON.parse(body)["body"]["results"]
+    let resp = 0;
+    if (JSON.parse(body)["body"]) resp = JSON.parse(body)["body"]["results"]
     if (err || !resp.updated) return res.status(404).send({
       err: err
     });

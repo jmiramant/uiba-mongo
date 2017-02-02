@@ -34,7 +34,6 @@ const currentUser = (
     case UserTypes.LOGOUT_SUCCESS_USER:
       return {};
     case UserTypes.SIGNUP_SUCCESS_USER:
-      SIBIdentifyAndSignIn(action.profile, action.user)
       return {};
     default:
       return state;
