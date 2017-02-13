@@ -38,13 +38,22 @@ export default class ApplicantListItem extends React.Component {
       isScoreFetching,
     } = this.props;
 
-    const setRoleUrl = (role, applicant) => {
+    const setRoleUrl = (applicant) => {
       let respUrl = '/company-admin';
-      if (role && role._id) {
-        respUrl += '/role/' + role._id;
+      if (applicant.role && applicant.role._id) {
+        respUrl += '/role/' + applicant.role._id;
       }
       respUrl += '/applicant/' + applicant._id;
       return respUrl;
+    };
+
+    const roleTitle = (app) => {
+      if (app.role) {
+        return (<Link to={'/company-admin/applicants/' + app.role._id}>
+          {app.role.title}
+        </Link>);
+      }
+      return 'General Applicant';
     };
 
     return (
@@ -52,9 +61,9 @@ export default class ApplicantListItem extends React.Component {
         <TableRowColumn>{applicant.firstName}</TableRowColumn>
         <TableRowColumn>{applicant.lastName}</TableRowColumn>
         <TableRowColumn>{moment(new Date(applicant.updatedAt)).format('MMM DD, YYYY')}</TableRowColumn>
-        <TableRowColumn><ScoreChip score={score} isFetching={isScoreFetching} /></TableRowColumn>
+        <TableRowColumn>{roleTitle(applicant)}</TableRowColumn>
         <TableRowColumn>
-          <Link to={setRoleUrl(role, applicant)}>
+          <Link to={setRoleUrl(applicant)}>
             <FlatButton label="View Applicant" primary={true} />
           </Link>
         </TableRowColumn>

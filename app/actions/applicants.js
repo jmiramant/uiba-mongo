@@ -1,6 +1,7 @@
+/* eslint-disable object-shorthand */
+/* eslint-disable import/no-extraneous-dependencies */
 import { polyfill } from 'es6-promise';
 import request from 'axios';
-
 import { ApplicantTypes } from 'types';
 
 polyfill();
@@ -13,7 +14,14 @@ export function fetchApplicants(id) {
   return {
     type: ApplicantTypes.GET_APPLICANTS,
     promise: makeApplicantRequest('get', {}, '/applicants/' + id)
-  }
+  };
+}
+
+export function fetchCompanyApplicants(companyId) {
+  return {
+    type: ApplicantTypes.GET_APPLICANTS,
+    promise: makeApplicantRequest('get', {}, '/applicants/company/' + companyId)
+  };
 }
 
 export function fetchApplicant(profId) {
@@ -21,28 +29,28 @@ export function fetchApplicant(profId) {
   if (profId) {
     path = '/profile/' + profId;
   }
-  
+
   return {
     type: ApplicantTypes.GET_APPLICANT,
     promise: makeApplicantRequest('get', {}, path)
-  }
+  };
 }
 
 export function filterChange(data) {
   return {
     type: ApplicantTypes.APPLICANT_FILTER_CHANGE,
     data
-  }
+  };
 }
 
 export function toggleEduReqSelect(data) {
   return {
-    type: ApplicantTypes.TOGGLE_APPLICANT_EDU_FILTER,  
+    type: ApplicantTypes.TOGGLE_APPLICANT_EDU_FILTER,
     data: data
-  }
+  };
 }
 
-export function toggleRoleSkillsAdd (data, persist = false) {
+export function toggleRoleSkillsAdd(data, persist = false) {
   return {
     type: ApplicantTypes.TOGGLE_APPLICANT_FILTER_SKILL_ADD,
     data: data,
@@ -95,7 +103,7 @@ export function removeFilter(data) {
   return {
     type: ApplicantTypes.APPLICANT_FILTER_REMOVE,
     data: data
-  }
+  };
 }
 
 export function updateFilters(filters) {

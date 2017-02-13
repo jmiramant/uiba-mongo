@@ -1,6 +1,3 @@
-/**
- * Routes for express app
- */
 import passport from 'passport';
 import unsupportedMessage from '../db/unsupportedMessage';
 import {
@@ -31,7 +28,6 @@ const filtersController = controllers && controllers.filters;
 
 
 export default (app) => {
-
   if (profilesController) {
     app.get('/profile/me', profilesController.me);
     app.get('/profile/:id', profilesController.get);
@@ -48,7 +44,7 @@ export default (app) => {
     app.post('/api/v1/user/role', jwtauth, usersController.role);
     app.post('/api/v1/user/company', jwtauth, usersController.company);
     app.get('/validateEmail/:token', usersController.emailConfirmation);
-    app.post('/resendValidationEmail', usersController.resendEmailConfirmation)
+    app.post('/resendValidationEmail', usersController.resendEmailConfirmation);
   } else {
     console.warn(unsupportedMessage('users routes'));
   }
@@ -79,11 +75,11 @@ export default (app) => {
   if (companysController) {
     app.get('/company/:id', companysController.get);
     app.get('/company', companysController.get);
+    app.get('/companies/typeahead', companysController.typeahead);
     app.post('/company', companysController.create);
     app.post('/api/v1/company', jwtauth, companysController.create);
     app.put('/company', companysController.update);
     app.delete('/company/:id', companysController.remove);
-    app.get('/companies/typeahead', companysController.typeahead);
   } else {
     console.warn(unsupportedMessage('companies routes'));
   }
@@ -132,6 +128,7 @@ export default (app) => {
   }
 
   if (applicantsController) {
+    app.get('/applicants/company/:companyId', applicantsController.listByCompanyId);
     app.get('/applicants/:id', applicantsController.list);
   } else {
     console.warn(unsupportedMessage('applicants routes'));
@@ -167,7 +164,7 @@ export default (app) => {
 
   if (scoresController) {
     app.post('/scores', scoresController.post);
-    app.put('/scores/sync', scoresController.sync)
+    app.put('/scores/sync', scoresController.sync);
   } else {
     console.warn(unsupportedMessage('scores routes'));
   }
@@ -185,7 +182,7 @@ export default (app) => {
   }
 
   app.use('/s3', require('react-s3-uploader/s3router')({
-    bucket: "uiba-test",
+    bucket: 'uiba-test',
     headers: {
       'Access-Control-Allow-Origin': '*'
     },
@@ -219,10 +216,9 @@ export default (app) => {
   }
 
   if (passportConfig && passportConfig.linkedin) {
-
     app.get('/auth/linkedin',
       passport.authenticate('linkedin'),
-      function(req, res) {
+      () => {
         // The request will be redirected to LinkedIn for authentication, so this
         // function will not be called.
       });
@@ -236,15 +232,14 @@ export default (app) => {
 
     app.get('/auth/linkedin/:companyName',
       passport.authenticate('linkedin'),
-      function(req, res) {
+      () => {
         // The request will be redirected to LinkedIn for authentication, so this
         // function will not be called.
       });
-
   }
 
   if (adminController) {
-    app.post('/admin/recovery', adminController.recovery)
+    app.post('/admin/recovery', adminController.recovery);
     app.delete('/api/v1/admin/delete-user', jwtauth, adminController.deleteUser);
     app.post('/api/v1/admin/authorize-emails', jwtauth, adminController.authorizeEmails);
   } else {
@@ -265,6 +260,4 @@ export default (app) => {
   } else {
     console.warn(unsupportedMessage('export API routes'));
   }
-
-
 };

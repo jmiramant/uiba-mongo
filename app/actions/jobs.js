@@ -96,7 +96,7 @@ export function updateJobFailure(data) {
 export function createJob(jobData) {
   return (dispatch) => {
     dispatch(createJobRequest(jobData));
-    
+
     return makeJobsRequest('post', jobData, '/jobs')
       .then(res => {
         if (res.status === 200) {
@@ -113,7 +113,7 @@ export function updateJob(jobData) {
   return (dispatch) => {
 
     dispatch(updateJobRequest(jobData));
-    
+
     return makeJobsRequest('put', jobData, '/jobs')
       .then(res => {
         if (res.status === 200) {

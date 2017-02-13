@@ -7,7 +7,7 @@ import Profile from '../models/profile';
 export function me(req, res) {
   if (!req.user || !req.user.profile_id) return res.status(404).send({error: 'No Current Profile'});
   const query = {"_id": mongoose.Types.ObjectId(req.user.profile_id)};
-  
+
   Profile.findOne(query).exec( (err, profile) => {
     if (!profile || err) {
       console.log('Error in "profile/me" query');
@@ -27,7 +27,6 @@ export function get(req, res) {
     if (!profile) return res.status(404).send({error: 'Profile resource not found: ' + err.value});
     return res.json(profile);
   });
-
 }
 
 export function update(req, res) {
@@ -46,5 +45,5 @@ export function update(req, res) {
 export default {
   me,
   get,
-  update
+  update,
 };

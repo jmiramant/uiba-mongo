@@ -4,7 +4,7 @@ const CompanySchema = new mongoose.Schema({
   name: { type: String },
   name_lower: { type: String, unique: true, lowercase: true },
   address_id: {type: Schema.Types.ObjectId, ref: 'Address'},
-  description: { type: String }, 
+  description: { type: String },
   foundedDate: { type: Date },
   size: { type: Number },
   websiteUrl: { type: String },
@@ -16,8 +16,8 @@ const CompanySchema = new mongoose.Schema({
 
 function lowerCaseName(next) {
   const company = this;
-  if (company.name) company.name_lower = company.name.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").split(' ').join('_');
-  return next();
+  if (company.name) company.name_lower = company.name.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '').split(' ').join('_'); // eslint-disable-line no-useless-escape
+  next();
 }
 
 CompanySchema.pre('save', lowerCaseName);

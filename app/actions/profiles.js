@@ -1,8 +1,8 @@
+/* eslint-disable object-shorthand */
+/* eslint-disable import/no-extraneous-dependencies */
 import { polyfill } from 'es6-promise';
 import request from 'axios';
-import { push } from 'react-router-redux';
-
-import { ProfileTypes }from 'types';
+import { ProfileTypes } from 'types';
 
 polyfill();
 
@@ -21,24 +21,24 @@ export function updateProfileRequest(data) {
   return {
     type: ProfileTypes.UPDATE_PROFILE,
     data: data
-  }
+  };
 }
 
 export function updateProfileSuccess(data) {
   return {
     type: ProfileTypes.UPDATE_PROFILE_SUCCESS,
     data: data
-  }
+  };
 }
 
 export function updateProfileFailure(data) {
   return {
     type: ProfileTypes.UPDATE_PROFILE_SUCCESS,
     error: data.error
-  }
+  };
 }
 
-export function toggleProfileEdit (data) {
+export function toggleProfileEdit(data) {
   return {
     type: ProfileTypes.TOGGLE_PROFILE_EDIT,
     data: data
@@ -48,20 +48,16 @@ export function toggleProfileEdit (data) {
 
 export function updateProfile(profileData) {
   return (dispatch) => {
-
     dispatch(updateProfileRequest(profileData));
-    
+
     return makeProfileRequest('put', profileData)
       .then(res => {
-        if (res.status === 200) {
-          return dispatch(updateProfileSuccess(res.data));
-        }
+        return dispatch(updateProfileSuccess(res.data));
       })
       .catch(() => {
         return dispatch(updateProfileFailure({ error: 'Oops! Something went wrong and we couldn\'t create your profile.'}));
       });
-  }
-
+  };
 }
 
 export function fetchProfile(profId) {
