@@ -28,6 +28,7 @@ class ApplicantFiltersController extends Component {
       address,
       messages,
       applicant,
+      globalView,
       filterActions,
       applicantLength,
       applicantActions,
@@ -45,6 +46,7 @@ class ApplicantFiltersController extends Component {
           skill={applicant.skillFilter}
           skills={applicant.skillsFilter}
           clearFilters={this.clearFilters.bind(this)}
+          globalView={globalView}
           removeFilter={applicantActions.removeFilter}
           skillChange={applicantActions.skillChange}
           skillsChange={applicantActions.skillsChange}
@@ -57,9 +59,9 @@ class ApplicantFiltersController extends Component {
           onToggleEduReqSelect={applicantActions.toggleEduReqSelect}
           filterChange={applicantActions.filterChange}
           toggleSkillAdd={applicantActions.toggleRoleSkillsAdd}
-          onEditSave={applicantActions.updateSkill} 
-          onSkillSave={applicantActions.createSkill} 
-          onSkillDelete={applicantActions.deleteSkill} 
+          onEditSave={applicantActions.updateSkill}
+          onSkillSave={applicantActions.createSkill}
+          onSkillDelete={applicantActions.deleteSkill}
         />
         <div>Showing {applicantLength} of {applicant.applicants.length}</div>
       </div>

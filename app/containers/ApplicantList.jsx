@@ -45,7 +45,7 @@ class ApplicantList extends React.Component {
     const { prevSkills } = this.state;
     const isScoreFetching = !score.isFetching;
     const isApplicantListLoaded = applicantsBase.length > 0;
-    
+
     if (isApplicantListLoaded && !_.isEqual(prevSkills, skills) || ( !isScoreFetching && prevSkills.length === 0)) {
       this.fetchScores(applicantsBase, skills);
       this.setState({prevSkills: skills});
@@ -71,9 +71,9 @@ class ApplicantList extends React.Component {
 
     if (score) {
       return score.score.toString();
-    } else { 
+    } else {
       if (this.props.score.scores.length === 0) {
-        return null  
+        return null
       } else {
         return '-';
       }
@@ -128,6 +128,7 @@ class ApplicantList extends React.Component {
 
         <ApplicantFilterController
           applicantLength={applicants.length}
+          globalView={false}
         />
 
         <Table
@@ -161,12 +162,12 @@ class ApplicantList extends React.Component {
             })}
           </TableBody>
         </Table>
-        { applicants.length ? (null) : (<div onClick={this.clearFilters.bind(this)} className={cx('no-results')}>No applicants fit these filters. Click to clear filters.</div>)}        
-      
+        { applicants.length ? (null) : (<div onClick={this.clearFilters.bind(this)} className={cx('no-results')}>No applicants fit these filters. Click to clear filters.</div>)}
+
         <div className={cx('req-container')}>
           <div className={cx('req-title')}>Role Skill Requirements</div>
           <div className={cx('req-sub')}>Uiba uses role skill requirements to generate a score for each candidates. Edit this role's skill requirements to see how it impacts candidate ranking.</div>
-          
+
           <RadarChart
             points={[roles.skills]}
             style={{width: dimensions.width * 0.55, height: dimensions.width * 0.4}}
@@ -178,7 +179,7 @@ class ApplicantList extends React.Component {
             }}
           >
             <RoleRequirements
-              skill={roles.skill} 
+              skill={roles.skill}
               skills={roles.skills}
               showSkillAdd={roles.showSkillAdd}
               messages={messages}

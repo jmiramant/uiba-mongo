@@ -16,7 +16,7 @@ const cx = classNames.bind(roleStyles);
 const cy = classNames.bind(styles);
 
 export default class ApplicantFiler extends React.Component {
-  
+
   static PropTypes =  {
     role: PropTypes.object.isRequired,
     address: PropTypes.object.isRequired,
@@ -50,12 +50,12 @@ export default class ApplicantFiler extends React.Component {
   closePopover = (popover) => {
     this.setState({
       [popover]: {
-        open: false, 
-        anchorEl: null 
+        open: false,
+        anchorEl: null
       }
     })
   }
-  
+
   skillSet() {
     this.setState({skill: { open: false, anchorEl: null }})
     this.props.filterChange({skill: this.props.skills});
@@ -90,7 +90,7 @@ export default class ApplicantFiler extends React.Component {
       return false;
     };
   }
-  
+
   filterRemove = (filter) => (e) => {
     this.props.removeFilter(filter)
   }
@@ -102,7 +102,7 @@ export default class ApplicantFiler extends React.Component {
       setTimeout(() => {
         this.setState({skillError: undefined});
       }, 4000)
-    } else {  
+    } else {
       onSkillSave(skill);
     }
 
@@ -140,7 +140,7 @@ export default class ApplicantFiler extends React.Component {
 
     const isFilterSet = this.isFilters(setFilters);
     let height = {};
-    if (isFilterSet) height = {height: '45px'} 
+    if (isFilterSet) height = {height: '45px'}
 
     return (
       <div className={cx('req-container') + " " + cy('filter-container')}>
@@ -191,13 +191,13 @@ export default class ApplicantFiler extends React.Component {
               skill={skill}
               skills={skills}
               addVisible={showSkillAdd}
-              onEditSave={onEditSave} 
-              onSkillSave={this.onSkillSave.bind(this)} 
+              onEditSave={onEditSave}
+              onSkillSave={this.onSkillSave.bind(this)}
               errorText={skillError}
               skillChange={skillChange}
               skillsChange={skillsChange}
               errorMessage={skillError}
-              onSkillDelete={onSkillDelete} 
+              onSkillDelete={onSkillDelete}
               toggleSkillAdd={toggleSkillAdd}
             />
             <FlatButton className='pull-right' label="set" onClick={this.skillSet.bind(this)} primary={true} />
@@ -238,12 +238,13 @@ export default class ApplicantFiler extends React.Component {
             <div className={cy('enabled-filters', 'enabled-filter-item', 'skill-filter')}>Applicants <span className={cy('strong')}>{setFilters.address.range}</span> mile radius of <span className={cy('strong')}>{setFilters.address.zip}</span></div>
           ) : (null)}
         </div>
-
-        <ScoreSlider 
-          role={role}
-          onSet={filterChange}
-          scoreFilter={setFilters.score}
-        />
+        { this.props.globalView ? null : (
+          <ScoreSlider
+            role={role}
+            onSet={filterChange}
+            scoreFilter={setFilters.score}
+          />
+        )}
         <div style={height} className={cy('footer-container')}>
 
           <div className={cy('filter-state') + ' pull-right'}>

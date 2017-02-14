@@ -124,6 +124,7 @@ class ApplicantList extends React.Component {
 
         <ApplicantFilterController
           applicantLength={applicants.length}
+          globalView={true}
         />
 
         <Table
