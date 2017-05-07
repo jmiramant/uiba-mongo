@@ -1,12 +1,11 @@
-import async from 'async'
-import _ from 'lodash'
+import async from 'async';
+import _ from 'lodash';
 import User from '../models/user';
-import Profile from '../models/profile'
+import Profile from '../models/profile';
 import Role from '../models/role';
 import Recruiter from '../models/recruiter';
 import Company from '../models/company';
-import cookie from 'react-cookie';
-import sendInBlue from '../../utils/sendInBlue.js'
+import sendInBlue from '../../utils/sendInBlue.js';
 
 const setDefaultProfileFields = (prof, profile, userId) => {
   prof.user_id = userId;
@@ -40,55 +39,50 @@ const isApply = (req) => {
 
 const logRecruiter = (req, profId) => {
   if (req.headers.referer.split('/apply/').length > 1) {
-
     const company = req.headers.referer.split('/apply/')[1].split('/')[0];
-    
-    const isRole = req.headers.referer.split('/apply/')[1].split('/').length > 1
-    if (isRole) role = req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[0];
 
+    const isRole = req.headers.referer.split('/apply/')[1].split('/').length > 1;
     if (isRole) {
-
+      const role = req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[0];
       Role.findOne({
-        'applicantCode': role
+        applicantCode: role
       }, (err, _role) => {
         if (!err && _role) {
           _role.applicants.push(profId);
           _role.save();
         }
-      })
+      });
     }
 
-    const isRid = req.headers.referer.split('/apply/')[1].split('?')[1]
+    const isRid = req.headers.referer.split('/apply/')[1].split('?')[1];
 
     if (isRid) {
-      
       const rid = isRid.split('&')[0].split('=')[1];
 
       Recruiter.findOne({
         key: rid
       }).exec((err, recruiter) => {
         if (!recruiter) {
-          console.log('no recruiter with this ID')
+          console.log('no recruiter with this ID');
           return false;
         }
         const companyObj = _.find(recruiter.credit, (obj) => {
-          return obj.company.toLowerCase() === company
-        })
+          return obj.company.toLowerCase() === company;
+        });
 
         if (companyObj) {
           companyObj.candidate.push(profId);
         } else {
           recruiter.credit.push({
-            company: company,
+            company,
             candidate: [profId]
           });
         }
-        recruiter.save()
+        recruiter.save();
       });
-
     }
   }
-}
+};
 
 const resolveApplyRedirect = (req, user, done) => {
   const companyName = req.headers.referer.split('/apply/')[1].split('/')[0].split('?')[0];
@@ -104,7 +98,7 @@ const resolveApplyRedirect = (req, user, done) => {
       user_id: user._id
     }, (profErr, _profile) => {
       if (profErr) return res.status(401).json({ message: profErr });
-      
+
       _profile.apply = {
         applied: true,
         name: companyName,
@@ -117,36 +111,35 @@ const resolveApplyRedirect = (req, user, done) => {
       logRecruiter(req, _profile._id);
       return _profile.save((err, prof) => {
         done(null, user);
-      })
-    })  
-  })  
-}
+      });
+    });
+  });
+};
 
 /* eslint-disable no-param-reassign */
 export default (req, accessToken, refreshToken, profile, done) => {
-
   if (req.user) {
     return User.findOne({
       linkedin: profile.id
     }, (findOneErr, existingUser) => {
-      //standard
       if (existingUser) {
         return done(null, false, {
           message: 'There is already a linkedin account that belongs to you. Sign in with that account or delete it, then link it with your current account.'
         });
       }
       User.findOne({
-        '_id': req.user._id
+        _id: req.user._id
       }, (findByIdErr, _user) => {
         if (req.user.tokens.length === 0) {
-
           const secondUser = new User();
           Profile.findById(req.user.profile_id, (err, updatedProfile) => {
-            if (err) return done(null, false, {
-              message: 'There was an error finding a profile associated with this user.'
-            });
-            setDefaultUserFields(secondUser, profile, accessToken)
-            setDefaultUserFields(_user, profile, accessToken)
+            if (err) {
+              return done(null, false, {
+                message: 'There was an error finding a profile associated with this user.'
+              });
+            }
+            setDefaultUserFields(secondUser, profile, accessToken);
+            setDefaultUserFields(_user, profile, accessToken);
             setDefaultProfileFields(updatedProfile, profile, _user._id);
 
             updatedProfile.user_id = secondUser._id;
@@ -156,14 +149,11 @@ export default (req, accessToken, refreshToken, profile, done) => {
               _profile: updatedProfile.save,
               secondUser: secondUser.save,
               user: _user.save,
-            }, function(err, res) {
-              done(err, res.user[0])
+            }, (_err, res) => {
+              done(_err, res.user[0]);
             });
-
-          })
-
+          });
         } else {
-
           setDefaultUserFields(user, profile, accessToken)
 
           Profile.findOne({

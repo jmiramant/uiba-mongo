@@ -143,6 +143,7 @@ class ApplicantList extends React.Component {
               <TableHeaderColumn>Last Name</TableHeaderColumn>
               <TableHeaderColumn>Apply Date</TableHeaderColumn>
               <TableHeaderColumn>Score</TableHeaderColumn>
+              <TableHeaderColumn>Send Email</TableHeaderColumn>
               <TableHeaderColumn></TableHeaderColumn>
             </TableRow>
           </TableHeader>

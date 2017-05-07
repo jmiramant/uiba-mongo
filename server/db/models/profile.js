@@ -6,12 +6,12 @@ import { Job } from './job';
 const ProfileSchema = new mongoose.Schema({
   user_id: {type: Schema.Types.ObjectId, ref: 'User'},
   company_id: {type: Schema.Types.ObjectId, ref: 'Company'},
-  name: { type: String, default: '' },
-  firstName: { type: String, default: '' },
-  lastName: { type: String, default: '' },
-  email: { type: String, default: '' },
+  name: { type: String },
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  email: { type: String, required: true },
   headline: { type: String, default: '' },
-  apply: { 
+  apply: {
     applied: {type: Boolean, default: false },
     name: {type: String },
     applyComplete: {type: Boolean, default: false },
@@ -23,16 +23,23 @@ const ProfileSchema = new mongoose.Schema({
   location: { type: String, default: '' },
   website: { type: String, default: '' },
   picture: { type: String, default: '' },
-  service: { type: String, enum: ['linkedin', 'email', 'google'] }, 
+  service: { type: String, enum: ['linkedin', 'email', 'google', 'api'] },
   childUpdatedAt: { type: Date }
 }, {timestamps: true});
 
+// ProfileSchema.post('save', (err, doc, next) => {
+//   doc.name = `${doc.firstName} ${doc.lastName}`;
+//   doc.save((_err, doc) => {
+//     next();
+//   });
+// });
+
 ProfileSchema.post('save', (doc) => {
-  updateProfile(doc)
+  updateProfile(doc);
 });
 
 ProfileSchema.pre('remove', (doc) => {
-  updateProfile(doc)
+  updateProfile(doc);
 });
 
 ProfileSchema.statics = {};

@@ -1,43 +1,40 @@
+import _ from 'lodash';
+import async from 'async';
+import passport from 'passport';
 import User from '../models/user';
 import Profile from '../models/profile';
 import Recruiter from '../models/recruiter';
 import Role from '../models/role';
-import passport from 'passport';
 import Company from '../models/company';
-import async from 'async'
-import mailer from '../../utils/email.js'
-import sendInBlue from '../../utils/sendInBlue.js'
-import _ from 'lodash';
+import mailer from '../../utils/email.js';
+import sendInBlue from '../../utils/sendInBlue.js';
 
 const isApply = (req) => {
-  return req.headers.referer.indexOf('/apply/') !== -1
-}
+  return req.headers.referer.indexOf('/apply/') !== -1;
+};
 
 const logRecruiter = (req, profId) => {
   if (req.headers.referer.split('/apply/').length > 1) {
-
-    const company = req.headers.referer.split('/apply/')[1].split('/')[0];
-    
     let role;
-    const isRole = req.headers.referer.split('/apply/')[1].split('/').length > 1
+    const company = req.headers.referer.split('/apply/')[1].split('/')[0];
+
+    const isRole = req.headers.referer.split('/apply/')[1].split('/').length > 1;
     if (isRole) role = req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[0];
 
     if (isRole) {
-
       Role.findOne({
-        'applicantCode': role
+        applicantCode: role
       }, (err, _role) => {
         if (!err && _role) {
           _role.applicants.push(profId);
           _role.save();
         }
-      })
+      });
     }
 
-    const isRid = req.headers.referer.split('/apply/')[1].split('?')[1]
+    const isRid = req.headers.referer.split('/apply/')[1].split('?')[1];
 
     if (isRid) {
-      
       const rid = isRid.split('&')[0].split('=')[1];
 
       Recruiter.findOne({
@@ -48,27 +45,26 @@ const logRecruiter = (req, profId) => {
           return false;
         }
         const companyObj = _.find(recruiter.credit, (obj) => {
-          return obj.company.toLowerCase() === company
-        })
+          return obj.company.toLowerCase() === company;
+        });
 
         if (companyObj) {
           companyObj.candidate.push(profId);
         } else {
           recruiter.credit.push({
-            company: company,
+            company,
             candidate: [profId]
           });
         }
-        recruiter.save()
+        recruiter.save();
       });
-
     }
   }
-}
+};
 
 const resolveApplyRedirect = (req, profile, cb) => {
   const companyName = req.headers.referer.split('/apply/')[1].split('/')[0].split('?')[0];
-  const nameLower = companyName.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-`~()]/g, "").split(' ').join('_')
+  const nameLower = companyName.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-`~()]/g, "").split(' ').join('_');
   const roleUid = req.headers.referer.split('/apply/')[1].split('/')[1];
 
   Company.findOne({
@@ -89,8 +85,8 @@ const resolveApplyRedirect = (req, profile, cb) => {
 
     logRecruiter(req, profile._id);
     cb();
-  })
-}
+  });
+};
 
 /**
  * GET /user
@@ -122,15 +118,15 @@ export function login(req, res, next) {
             message: 'You have been successfully logged in.'
           });
         });
-      }
+      };
 
       if (isApply(req)) {
         return Profile.findOne({
           service: 'email',
           user_id: user._id
         }, (profErr, _profile) => {
-          if (profErr) return res.status(401).json({ message: profErr }); 
-          if (!_profile) return res.status(404).json({ message: "Could not find user." }); 
+          if (profErr) return res.status(401).json({ message: profErr });
+          if (!_profile) return res.status(404).json({ message: "Could not find user." });
           const cb = () => {
             _profile.save((err, prof) => {
               login();
@@ -183,13 +179,13 @@ export function signUp(req, res, next) {
       email: req.body.email
     }, (profErr, claimProfile) => {
       if (profErr) return res.status(500).send(profErr);
-      
+
       let _profile = new Profile();
-      
+
       if (claimProfile) {
         _profile = claimProfile;
         _profile.claim = false;
-      } 
+      }
 
       _profile.user_id = user.id;
       _profile.firstName = req.body.first;
@@ -205,18 +201,18 @@ export function signUp(req, res, next) {
           user: user.save
         }, function(saveErr, resp) {
           if (saveErr) return next(saveErr);
-          
+
           mailer.sendEmailConfirmation(user, req.headers.host)
           sendInBlue.identifyUser(resp._profile[0], resp.user[0]);
-          
+
           return res.status(200).send({
-            message: 'You have successfully signed up.', 
-            profile: resp._profile[0], 
+            message: 'You have successfully signed up.',
+            profile: resp._profile[0],
             user: resp.user[0]
           });
         });
       }
-      
+
       user.profile_id = _profile._id;
 
       if (isApply(req)) {
@@ -325,22 +321,15 @@ export function role(req, res) {
       }
 
       user.save((err, user) => {
-
         if (!user || err) {
           console.log('Error saving user in role');
           return res.status(500).send('Something went wrong getting the data');
         }
-
         return res.json(user);
-
       });
-
     });
-
   } else {
-
     return res.status(500).send('User role must be a number.');
-
   }
 }
 
@@ -354,13 +343,13 @@ export function company(req, res) {
   }).exec((cErr, company) => {
     if (cErr) return res.status(500).send(cErr);
     if (!company) return res.status(404).send('Could not find that company.');
-    
+
     Profile.findOne({
       email: req.body.email
     }, (profErr, _prof) => {
 
       if (profErr) return res.status(500).send(profErr);
-      
+
       User.findOne({
         email: req.body.email
       }, (uErr, _user) => {
@@ -381,20 +370,18 @@ export function company(req, res) {
           user.claim = true;
           user.email = req.body.email;
         }
-        user.role = [1,2];
+        user.role = [1, 2];
 
         async.parallel({
           user: user.save,
           profile: prof.save
-        }, (err, resp) => { 
-          if (err) return res.status(500).send(err)
+        }, (err, resp) => {
+          if (err) return res.status(500).send(err);
           return res.json(resp.profile);
-        })
-
+        });
       });
     });
   });
-
 }
 
 export default {

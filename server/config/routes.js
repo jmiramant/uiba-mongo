@@ -8,6 +8,7 @@ import jwtauth from './jwtauth';
 
 const adminController = controllers && controllers.admin;
 const usersController = controllers && controllers.users;
+const profileApiController = controllers && controllers.profilesApi;
 const profilesController = controllers && controllers.profiles;
 const jobsController = controllers && controllers.jobs;
 const schoolsController = controllers && controllers.schools;
@@ -25,7 +26,6 @@ const exportsController = controllers && controllers._exports;
 const tokensController = controllers && controllers.tokens;
 const scoresController = controllers && controllers.scores;
 const filtersController = controllers && controllers.filters;
-
 
 export default (app) => {
   if (profilesController) {
@@ -45,6 +45,12 @@ export default (app) => {
     app.post('/api/v1/user/company', jwtauth, usersController.company);
     app.get('/validateEmail/:token', usersController.emailConfirmation);
     app.post('/resendValidationEmail', usersController.resendEmailConfirmation);
+  } else {
+    console.warn(unsupportedMessage('users routes'));
+  }
+
+  if (profileApiController) {
+    app.post('/api/v1/profile/create', profileApiController.create);
   } else {
     console.warn(unsupportedMessage('users routes'));
   }

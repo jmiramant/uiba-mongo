@@ -23,3 +23,7 @@
 .req-sub {
   @apply --blue-banner;
 }
+
+.email-applicant {
+  color: #757575;
+}

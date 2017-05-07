@@ -16,6 +16,7 @@ import roles from './roles';
 import admin from './admin';
 import applicants from './applicants';
 import filters from './filters';
+import profilesApi from './api/profiles';
 import scores from './scores';
 
 export {
@@ -36,7 +37,8 @@ export {
   roles,
   applicants,
   filters,
-  scores
+  scores,
+  profilesApi,
 };
 
 export default {
@@ -58,5 +60,6 @@ export default {
   roles,
   applicants,
   filters,
-  scores
+  scores,
+  profilesApi,
 };

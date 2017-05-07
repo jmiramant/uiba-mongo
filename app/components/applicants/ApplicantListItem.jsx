@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import ReactDOM from 'react-dom';
 import ScoreChip from 'components/ScorerChip';
 import FlatButton from 'material-ui/FlatButton';
+import MessageIcon from 'material-ui/svg-icons/communication/message';
 import {TableRow, TableRowColumn} from 'material-ui/Table';
 import moment from 'moment';
 import classNames from 'classnames/bind';
@@ -53,6 +54,7 @@ export default class ApplicantListItem extends React.Component {
         <TableRowColumn>{applicant.lastName}</TableRowColumn>
         <TableRowColumn>{moment(new Date(applicant.updatedAt)).format('MMM DD, YYYY')}</TableRowColumn>
         <TableRowColumn><ScoreChip score={score} isFetching={isScoreFetching} /></TableRowColumn>
+        <TableRowColumn><a href={`mailto:${applicant.email}`} target='_blank'><MessageIcon className="email-applicant"/></a></TableRowColumn>
         <TableRowColumn>
           <Link to={setRoleUrl(role, applicant)}>
             <FlatButton label="View Applicant" primary={true} />
