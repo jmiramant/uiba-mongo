@@ -12,6 +12,7 @@ import * as projectsActionCreators from 'actions/projects';
 import * as interestsActionCreators from 'actions/interests';
 import * as rolesActionCreators from 'actions/roles';
 
+import MessageIcon from 'material-ui/svg-icons/communication/message';
 import {Card, CardHeader} from 'material-ui/Card';
 import DefaultUserIcon from 'material-ui/svg-icons/action/account-circle';
 import UibaCardHeader from 'components/CardHeader';
@@ -58,7 +59,7 @@ class ApplicantShow extends React.Component {
   }
 
   render() {
-    
+
     const {
       role,
       jobs,
@@ -87,6 +88,7 @@ class ApplicantShow extends React.Component {
               title={applicant.firstName  + ' ' + applicant.lastName}
               avatar={applicant.picture || <DefaultUserIcon/>}
               titleStyle={{fontSize: '20px'}}
+              children={<a href={`mailto:${applicant.email}`} target='_blank'><MessageIcon className="email-applicant pull-right"/></a>}
             />
           </Card>
           <p className={cx('name')}></p>
@@ -126,7 +128,7 @@ class ApplicantShow extends React.Component {
                 </span>
               )}
             </div>
-          
+
             <div className='col-md-8 col-md-offset-2'>
               <Measure
                 onMeasure={(dimensions) => {
@@ -157,7 +159,7 @@ class ApplicantShow extends React.Component {
                 </div>
               )}
             </div>
-          
+
             <div className='col-md-4 col-md-offset-2'>
               <UibaCardHeader
                 style='xray'
@@ -249,6 +251,6 @@ function mapDispatchToProps (dispatch) {
 }
 
 export default connect(
-  mapStateToProps, 
+  mapStateToProps,
   mapDispatchToProps
 )(ApplicantShow);
