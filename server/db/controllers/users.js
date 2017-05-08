@@ -16,7 +16,7 @@ const logRecruiter = (req, profId) => {
   if (req.headers.referer.split('/apply/').length > 1) {
 
     const company = req.headers.referer.split('/apply/')[1].split('/')[0];
-    
+
     let role;
     const isRole = req.headers.referer.split('/apply/')[1].split('/').length > 1
     if (isRole) role = req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[0];
@@ -36,7 +36,7 @@ const logRecruiter = (req, profId) => {
     const isRid = req.headers.referer.split('/apply/')[1].split('?')[1]
 
     if (isRid) {
-      
+
       const rid = isRid.split('&')[0].split('=')[1];
 
       Recruiter.findOne({
@@ -127,8 +127,8 @@ export function login(req, res, next) {
           service: 'email',
           user_id: user._id
         }, (profErr, _profile) => {
-          if (profErr) return res.status(401).json({ message: profErr }); 
-          if (!_profile) return res.status(404).json({ message: "Could not find user." }); 
+          if (profErr) return res.status(401).json({ message: profErr });
+          if (!_profile) return res.status(404).json({ message: "Could not find user." });
           const cb = () => {
             _profile.save((err, prof) => {
               login();
@@ -180,13 +180,13 @@ export function signUp(req, res, next) {
       email: req.body.email
     }, (profErr, claimProfile) => {
       if (profErr) return res.status(500).send(profErr);
-      
+
       let _profile = new Profile();
-      
+
       if (claimProfile) {
         _profile = claimProfile;
         _profile.claim = false;
-      } 
+      }
 
       _profile.user_id = user.id;
       _profile.firstName = req.body.first;
@@ -206,7 +206,7 @@ export function signUp(req, res, next) {
           return res.redirect(200, '/email-confirmation');
         });
       }
-      
+
       user.profile_id = _profile._id;
 
       if (isApply(req)) {
@@ -344,13 +344,13 @@ export function company(req, res) {
   }).exec((cErr, company) => {
     if (cErr) return res.status(500).send(cErr);
     if (!company) return res.status(404).send('Could not find that company.');
-    
+
     Profile.findOne({
       email: req.body.email
     }, (profErr, _prof) => {
 
       if (profErr) return res.status(500).send(profErr);
-      
+
       User.findOne({
         email: req.body.email
       }, (uErr, _user) => {
@@ -373,10 +373,10 @@ export function company(req, res) {
         }
         user.role = [1,2];
 
-        async.parallel({
+        async.series({
           user: user.save,
           profile: prof.save
-        }, (err, resp) => { 
+        }, (err, resp) => {
           if (err) return res.status(500).send(err)
           return res.json(resp.profile);
         })
