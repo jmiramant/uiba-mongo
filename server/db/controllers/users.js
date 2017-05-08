@@ -134,7 +134,7 @@ export function login(req, res, next) {
         }, (profErr, _profile) => {
           if (profErr) return res.status(401).json({ message: profErr });
           if (!_profile) return res.status(404).json({ message: "Could not find user." });
-          const cb = () => {
+          const cb = (res) => {
             _profile.save((saveErr, prof) => {
               console.log('saveErr', saveErr)
               if (saveErr) return handleError(res, saveErr)
