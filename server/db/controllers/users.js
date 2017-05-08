@@ -247,7 +247,8 @@ export function emailConfirmation(req, res, next) {
     verifyEmailTokenExpires: {
       $gt: Date.now()
     }
-  }, (err, user) => {
+  }, (userErr, user) => {
+    if (userErr) return handleError(res, userErr);
     if (!user) {
       return res.status(404).json({
         message: "Token is not valid or expired."
