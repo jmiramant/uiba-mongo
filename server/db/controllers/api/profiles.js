@@ -65,57 +65,56 @@ const errHandler = (err) => {
   new Error(err);
 };
 
-const JSONize =(str) => {
-  return JSON.parse(str
-    .replace(/([\$\w]+)\s*:/g, function(_, $1){return '"'+$1+'":'})
-    .replace(/'([^']+)'/g, function(_, $1){return '"'+$1+'"'}));
-}
-
-const createNewAcct = async function(data) {
-  const profData = {
-    ...JSONize(data.profile),
-    service: 'api'
-  };
-
-  Profile.create(profData, (err, profile) => {
-    if (data.skills) {
-      const skillData = JSONize(data.skills).map( s => {return {...s, profile_id: profile._id} });
-      Skill.create(skillData, err => console.log(err))
-    }
-
-    if (data.interests) {
-      const interestData = JSONize(data.interests).map( s => {return {...s, profile_id: profile._id} });
-      Interest.create(interestData, err => console.log(err))
-    }
-
-    if (data.schools) {
-      const schoolData = JSONize(data.schools).map( s => {return {...s, profile_id: profile._id} });
-      Schools.create(schoolData, err => console.log(err))
-    }
-
-    if (data.jobs) {
-      const jobData = JSONize(data.jobs).map( s => {return {...s, profile_id: profile._id} });
-      Schools.create(jobData, err => console.log(err))
-    }
-
-    if (data.languages) {
-      const languageData = JSONize(data.languages).map( s => {return {...s, profile_id: profile._id} });
-      Language.create(languageData, err => console.log(err))
-    }
-
-
-    return profile;
-  });
-}
-
-export function create(req, res) {
-  let data = req.body || {}
-  // if (!req.user || !req.user.profile_id) return res.status(404).send({error: 'No Current Profile'});
-  // const query = {"_id": mongoose.Types.ObjectId(req.user.profile_id)};
-  createNewAcct(data);
-  return res.json({ msg: 'yay'});
-}
+// const JSONize =(str) => {
+//   return JSON.parse(str
+//     .replace(/([\$\w]+)\s*:/g, function(_, $1){return '"'+$1+'":'})
+//     .replace(/'([^']+)'/g, function(_, $1){return '"'+$1+'"'}));
+// }
+//
+// const createNewAcct = async function(data) {
+//   const profData = {
+//     ...JSONize(data.profile),
+//     service: 'api'
+//   };
+//
+//   Profile.create(profData, (err, profile) => {
+//     if (data.skills) {
+//       const skillData = JSONize(data.skills).map( s => {return {...s, profile_id: profile._id} });
+//       Skill.create(skillData, err => console.log(err))
+//     }
+//
+//     if (data.interests) {
+//       const interestData = JSONize(data.interests).map( s => {return {...s, profile_id: profile._id} });
+//       Interest.create(interestData, err => console.log(err))
+//     }
+//
+//     if (data.schools) {
+//       const schoolData = JSONize(data.schools).map( s => {return {...s, profile_id: profile._id} });
+//       Schools.create(schoolData, err => console.log(err))
+//     }
+//
+//     if (data.jobs) {
+//       const jobData = JSONize(data.jobs).map( s => {return {...s, profile_id: profile._id} });
+//       Schools.create(jobData, err => console.log(err))
+//     }
+//
+//     if (data.languages) {
+//       const languageData = JSONize(data.languages).map( s => {return {...s, profile_id: profile._id} });
+//       Language.create(languageData, err => console.log(err))
+//     }
+//
+//
+//     return profile;
+//   });
+// }
+//
+// export function create(req, res) {
+//   let data = req.body || {}
+//   // if (!req.user || !req.user.profile_id) return res.status(404).send({error: 'No Current Profile'});
+//   // const query = {"_id": mongoose.Types.ObjectId(req.user.profile_id)};
+//   createNewAcct(data);
+//   return res.json({ msg: 'yay'});
+// }
 
 export default {
-  create,
 };
