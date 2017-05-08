@@ -8,7 +8,7 @@ import jwtauth from './jwtauth';
 
 const adminController = controllers && controllers.admin;
 const usersController = controllers && controllers.users;
-const profileApiController = controllers && controllers.profilesApi;
+// const profileApiController = controllers && controllers.profilesApi;
 const profilesController = controllers && controllers.profiles;
 const jobsController = controllers && controllers.jobs;
 const schoolsController = controllers && controllers.schools;
@@ -49,11 +49,11 @@ export default (app) => {
     console.warn(unsupportedMessage('users routes'));
   }
 
-  if (profileApiController) {
-    app.post('/api/v1/profile/create', profileApiController.create);
-  } else {
-    console.warn(unsupportedMessage('users routes'));
-  }
+  // if (profileApiController) {
+  //   app.post('/api/v1/profile/create', profileApiController.create);
+  // } else {
+  //   console.warn(unsupportedMessage('users routes'));
+  // }
 
   if (addressessController) {
     app.get('/address/me', addressessController.me);
