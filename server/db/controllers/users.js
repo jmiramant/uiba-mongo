@@ -75,7 +75,9 @@ const resolveApplyRedirect = (req, res, profile, cb) => {
   const companyName = req.headers.referer.split('/apply/')[1].split('/')[0].split('?')[0];
   const nameLower = companyName.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-`~()]/g, "").split(' ').join('_');
   const roleUid = req.headers.referer.split('/apply/')[1].split('/')[1];
-
+  console.log(companyName)
+  console.log(nameLower)
+  console.log(roleUid)
   Company.findOne({
     name_lower: nameLower
   }, (companyErr, _company) => {
