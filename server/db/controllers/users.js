@@ -1,16 +1,22 @@
+import async from 'async';
+import _ from 'lodash';
+import passport from 'passport';
 import User from '../models/user';
 import Profile from '../models/profile';
 import Recruiter from '../models/recruiter';
 import Role from '../models/role';
-import passport from 'passport';
 import Company from '../models/company';
-import async from 'async'
-import mailer from '../../utils/email.js'
-import _ from 'lodash';
+import mailer from '../../utils/email.js';
 
 const isApply = (req) => {
-  return req.headers.referer.indexOf('/apply/') !== -1
-}
+  return req.headers.referer.indexOf('/apply/') !== -1;
+};
+
+const handleError = (res, err) => {
+  return res.status(404).json({
+    message: err
+  });
+};
 
 const logRecruiter = (req, profId) => {
   if (req.headers.referer.split('/apply/').length > 1) {
@@ -197,13 +203,14 @@ export function signUp(req, res, next) {
       _profile.isEmailVerified = false;
 
       const saveResolve = () => {
-        return async.series({
-          _profile: _profile.save,
-          user: user.save
-        }, function(saveErr, resp) {
-          if (saveErr) return next(saveErr);
-          mailer.sendEmailConfirmation(user, req.headers.host)
-          return res.redirect(200, '/email-confirmation');
+        _profile.save((pErr, profile) => {
+          if (pErr) return handleError(res, pErr)
+          user.save((uErr, _user) => {
+            if (uErr) return handleError(res, uErr)
+
+            mailer.sendEmailConfirmation(user, req.headers.host)
+            return res.redirect(200, '/email-confirmation');
+          });
         });
       }
 
