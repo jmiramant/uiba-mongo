@@ -13,7 +13,14 @@ const isApply = (req) => {
   return req.headers.referer.indexOf('/apply/') !== -1;
 };
 
-const logRecruiter = (req, profId) => {
+const handleError = (res, err) => {
+  console.log(err)
+  return res.status(404).json({
+    message: err
+  });
+};
+
+const logRecruiter = (req, res, profId) => {
   if (req.headers.referer.split('/apply/').length > 1) {
     let role;
     const company = req.headers.referer.split('/apply/')[1].split('/')[0];
@@ -25,6 +32,7 @@ const logRecruiter = (req, profId) => {
       Role.findOne({
         applicantCode: role
       }, (err, _role) => {
+        if (err) return handleError(res, err)
         if (!err && _role) {
           _role.applicants.push(profId);
           _role.save();
@@ -39,7 +47,8 @@ const logRecruiter = (req, profId) => {
 
       Recruiter.findOne({
         key: rid
-      }).exec((err, recruiter) => {
+      }).exec((Rerr, recruiter) => {
+        if (Rerr) return handleError(res, Rerr)
         if (!recruiter) {
           console.log('no recruiter with this ID')
           return false;
@@ -62,7 +71,7 @@ const logRecruiter = (req, profId) => {
   }
 };
 
-const resolveApplyRedirect = (req, profile, cb) => {
+const resolveApplyRedirect = (req, res, profile, cb) => {
   const companyName = req.headers.referer.split('/apply/')[1].split('/')[0].split('?')[0];
   const nameLower = companyName.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-`~()]/g, "").split(' ').join('_');
   const roleUid = req.headers.referer.split('/apply/')[1].split('/')[1];
@@ -70,9 +79,7 @@ const resolveApplyRedirect = (req, profile, cb) => {
   Company.findOne({
     name_lower: nameLower
   }, (companyErr, _company) => {
-    if (companyErr) return res.status(401).json({
-      message: companyErr
-    });
+    if (companyErr) return handleError(res, companyErr)
 
     profile.apply = {
       applied: true,
@@ -83,8 +90,8 @@ const resolveApplyRedirect = (req, profile, cb) => {
 
     if (roleUid) profile.apply.role_code = roleUid.split('?')[0];
 
-    logRecruiter(req, profile._id);
-    cb();
+    logRecruiter(req, res, profile._id);
+    cb(res);
   });
 };
 
@@ -108,7 +115,7 @@ export function login(req, res, next) {
     }
     if (user.isEmailVerified) {
 
-      const login = () => {
+      const login = (res) => {
         return req.logIn(user, (loginErr) => {
           if (loginErr) return res.status(401).json({
             message: loginErr
@@ -128,14 +135,15 @@ export function login(req, res, next) {
           if (profErr) return res.status(401).json({ message: profErr });
           if (!_profile) return res.status(404).json({ message: "Could not find user." });
           const cb = () => {
-            _profile.save((err, prof) => {
-              login();
+            _profile.save((saveErr, prof) => {
+              if (saveErr) return handleError(res, saveErr)
+              login(res);
             })
           }
-          resolveApplyRedirect(req, _profile, cb)
+          resolveApplyRedirect(req, res, _profile, cb)
         })
       } else {
-        login();
+        login(res);
       }
 
 
@@ -161,8 +169,8 @@ export function signUp(req, res, next) {
   User.findOne({
     email: req.body.email
   }, (findErr, existingUser) => {
+    if (findErr) return handleError(res, findErr)
     if (existingUser && !existingUser.claim) {
-      console.log(existingUser)
       return res.status(403).json({
         message: 'Account with this email address already exists. Did you sign up with LinkedIn?'
       });
@@ -178,7 +186,7 @@ export function signUp(req, res, next) {
     Profile.findOne({
       email: req.body.email
     }, (profErr, claimProfile) => {
-      if (profErr) return res.status(500).send(profErr);
+      if (profErr) return handleError(res, profErr)
 
       let _profile = new Profile();
 
@@ -195,12 +203,12 @@ export function signUp(req, res, next) {
       _profile.service = 'email';
       _profile.isEmailVerified = false;
 
-      const saveResolve = () => {
+      const saveResolve = (res) => {
         return async.series({
           _profile: _profile.save,
           user: user.save
         }, function(saveErr, resp) {
-          if (saveErr) return next(saveErr);
+          if (saveErr) return handleError(res, saveErr)
 
           mailer.sendEmailConfirmation(user, req.headers.host)
           sendInBlue.identifyUser(resp._profile[0], resp.user[0]);
@@ -216,9 +224,9 @@ export function signUp(req, res, next) {
       user.profile_id = _profile._id;
 
       if (isApply(req)) {
-        resolveApplyRedirect(req, _profile, saveResolve)
+        resolveApplyRedirect(req, res, _profile, saveResolve)
       } else {
-        saveResolve()
+        saveResolve(res)
       }
 
     });
