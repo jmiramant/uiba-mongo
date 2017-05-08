@@ -51,12 +51,12 @@ export function deleteUser(req, res) {
     if (err) return handleError(res, err)
     if (!user || !user.profile_id) return handleError(res, "No user was found with this id.")
     Profile.findOne({"_id": user.profile_id}, (profErr, profile) => {
-      if (err) return handleError(res, profErr);
+      if (profErr) return handleError(res, profErr);
       if (!profile) {
         User.remove({
           'email': req.body.email
         }, (uErr) => {
-          if (uErr) return handleError(res, profErr);
+          if (uErr) return handleError(res, uErr);
           return res.status(200).send('User: ' + req.body.email + " deleted.")
         })
       }
@@ -141,8 +141,8 @@ export function deleteUser(req, res) {
           })
         }
       }
-      async.series(parallels, (err, resp) => {
-        if (err) return handleError(res, err)
+      async.series(parallels, (_err, resp) => {
+        if (_err) return handleError(res, _err)
         return res.status(200).send('User: ' + req.body.email + " deleted.")
       })
 
