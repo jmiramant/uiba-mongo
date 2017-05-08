@@ -205,8 +205,6 @@ export function signUp(req, res, next) {
       _profile.isEmailVerified = false;
 
       const saveResolve = () => {
-        console.log(_profile)
-        console.log(user)
         _profile.save((pErr, profile) => {
           if (pErr) return handleError(res, pErr)
           user.save((uErr, _user) => {
@@ -222,22 +220,6 @@ export function signUp(req, res, next) {
             });
           });
         });
-
-        // return async.series({
-        //   _profile: _profile.save,
-        //   user: user.save
-        // }, function(saveErr, resp) {
-        //   if (saveErr) return handleError(res, saveErr)
-        //
-        //   mailer.sendEmailConfirmation(user, req.headers.host)
-        //   sendInBlue.identifyUser(resp._profile[0], resp.user[0]);
-        //
-        //   return res.status(200).send({
-        //     message: 'You have successfully signed up.',
-        //     profile: resp._profile[0],
-        //     user: resp.user[0]
-        //   });
-        // });
       }
 
       user.profile_id = _profile._id;
