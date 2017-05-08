@@ -33,19 +33,21 @@ export function post(req, res) {
 export function sync(req, res) {
 
   if (!arkhamApi.sync_url) return res.status(404).send({error: "There is no 'sync_url' URL."})
-  
+
   request({
     url: arkhamApi.sync_url,
     headers: {
-      "x-api-key": arkhamApi.access_token
+      'x-api-key': arkhamApi.access_token
     },
     method: 'GET'
   }, (err, response, body) => {
-    const resp = JSON.parse(body)["body"]["results"]
-    if (err || !resp.updated) return res.status(404).send({
-      err: err
-    });
-    return res.json(resp.status);
+    if (err) res.status(404).send({ err });
+    try {
+      const resp = JSON.parse(body)['body']['results'];
+      return res.json(resp.status);
+    } catch (cErr) {
+      if (cErr) res.status(404).send({ err: cErr });
+    }
   });
 }
 
