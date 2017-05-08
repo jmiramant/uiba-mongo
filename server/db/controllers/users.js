@@ -75,9 +75,7 @@ const resolveApplyRedirect = (req, res, profile, cb) => {
   const companyName = req.headers.referer.split('/apply/')[1].split('/')[0].split('?')[0];
   const nameLower = companyName.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-`~()]/g, "").split(' ').join('_');
   const roleUid = req.headers.referer.split('/apply/')[1].split('/')[1];
-  console.log("companyName", companyName)
-  console.log("nameLower", nameLower)
-  console.log("roleUid", roleUid)
+
   Company.findOne({
     name_lower: nameLower
   }, (companyErr, _company) => {
@@ -206,22 +204,40 @@ export function signUp(req, res, next) {
       _profile.service = 'email';
       _profile.isEmailVerified = false;
 
-      const saveResolve = (res) => {
-        return async.series({
-          _profile: _profile.save,
-          user: user.save
-        }, function(saveErr, resp) {
-          if (saveErr) return handleError(res, saveErr)
+      const saveResolve = () => {
+        console.log(_profile)
+        console.log(user)
+        _profile.save((pErr, profile) => {
+          if (pErr) return handleError(res, pErr)
+          user.save((uErr, _user) => {
+            if (uErr) return handleError(res, uErr)
 
-          mailer.sendEmailConfirmation(user, req.headers.host)
-          sendInBlue.identifyUser(resp._profile[0], resp.user[0]);
+            mailer.sendEmailConfirmation(user, req.headers.host)
+            sendInBlue.identifyUser(profile, _user);
 
-          return res.status(200).send({
-            message: 'You have successfully signed up.',
-            profile: resp._profile[0],
-            user: resp.user[0]
+            return res.status(200).send({
+              message: 'You have successfully signed up.',
+              profile,
+              user: _user,
+            });
           });
         });
+
+        // return async.series({
+        //   _profile: _profile.save,
+        //   user: user.save
+        // }, function(saveErr, resp) {
+        //   if (saveErr) return handleError(res, saveErr)
+        //
+        //   mailer.sendEmailConfirmation(user, req.headers.host)
+        //   sendInBlue.identifyUser(resp._profile[0], resp.user[0]);
+        //
+        //   return res.status(200).send({
+        //     message: 'You have successfully signed up.',
+        //     profile: resp._profile[0],
+        //     user: resp.user[0]
+        //   });
+        // });
       }
 
       user.profile_id = _profile._id;
