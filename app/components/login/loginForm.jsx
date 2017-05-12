@@ -12,7 +12,7 @@ import moment from 'moment';
 const cx = classNames.bind(styles);
 
 export default class LoginFrom extends React.Component {
-  
+
   static propTypes = {
     user: PropTypes.object.isRequired,
     onSumbit: PropTypes.func.isRequired
@@ -28,12 +28,14 @@ export default class LoginFrom extends React.Component {
   }
 
   onDataChange = field => (e, uiVal) => {
+    let val = uiVal;
+    if (field === 'email') val = uiVal.toLowerCase();
     this.setState({
       formInputs: {
         ...this.state.formInputs,
-        [field]: uiVal,
+        [field]: val,
       }
-    });  
+    });
   }
 
   handleSubmit = e => {
@@ -70,13 +72,13 @@ export default class LoginFrom extends React.Component {
       <div>
         {user.message.length ? (<p className={cx('error')}>{user.message}</p>) : (null)}
         <TextField
-          fullWidth={true} 
+          fullWidth={true}
           errorText={validationErrors.email}
           floatingLabelText="Email"
           onChange={this.onDataChange('email')}
         />
         <TextField
-          fullWidth={true} 
+          fullWidth={true}
           type='password'
           errorText={validationErrors.password}
           floatingLabelText="Password"

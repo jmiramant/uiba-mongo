@@ -9,9 +9,9 @@ const ProfileSchema = new mongoose.Schema({
   name: { type: String, default: '' },
   firstName: { type: String, default: '' },
   lastName: { type: String, default: '' },
-  email: { type: String, default: '' },
+  email: { type: String, lowercase: true, trim: true, default: '' },
   headline: { type: String, default: '' },
-  apply: { 
+  apply: {
     applied: {type: Boolean, default: false },
     name: {type: String },
     applyComplete: {type: Boolean, default: false },
@@ -23,7 +23,7 @@ const ProfileSchema = new mongoose.Schema({
   location: { type: String, default: '' },
   website: { type: String, default: '' },
   picture: { type: String, default: '' },
-  service: { type: String, enum: ['linkedin', 'email', 'google'] }, 
+  service: { type: String, enum: ['linkedin', 'email', 'google'] },
   childUpdatedAt: { type: Date }
 }, {timestamps: true});
 

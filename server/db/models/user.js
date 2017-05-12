@@ -12,7 +12,7 @@ import { Profile } from './profile';
  */
 
 const UserSchema = new mongoose.Schema({
-  email: { type: String, lowercase: true },
+  email: { type: String, lowercase: true, trim: true },
   password: String,
   tokens: Array,
   resetPasswordToken: String,
@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema({
   google: {},
   linkedin: {},
   claim: { type: Boolean, default: false },
-  role: { 
+  role: {
     type: Array,
     enum: [1,2,3],
     default: [1]
