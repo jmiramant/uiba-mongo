@@ -380,13 +380,14 @@ export function company(req, res) {
         }
         user.role = [1,2];
 
-        user.save().then((usrErr) => {
-          if (usrErr) return handleError(res, usrErr);
-          prof.save().then((pErr, saveProf) => {
-            if (pErr) return handleError(res, pErr);
-            return res.json(saveProf);
-          });
+        async.series({
+          user: user.save,
+          profile: prof.save
+        }, (err, resp) => {
+          if (err) return res.status(500).send(err)
+          return res.json(resp.profile);
         });
+
       });
     });
   });
