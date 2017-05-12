@@ -378,20 +378,18 @@ export function company(req, res) {
           user.claim = true;
           user.email = req.body.email;
         }
-        user.role = [1,2];
+        user.role = [1, 2];
 
-        async.series({
-          user: user.save,
-          profile: prof.save
-        }, (err, resp) => {
-          if (err) return res.status(500).send(err)
-          return res.json(resp.profile);
+        user.save((userErr) => {
+          if (userErr) return handleError(res, userErr);
+          return prof.save((prfErr, profile) => {
+            if (prfErr) return handleError(res, prfErr);
+            return res.json(profile);
+          });
         });
-
       });
     });
   });
-
 }
 
 export default {
