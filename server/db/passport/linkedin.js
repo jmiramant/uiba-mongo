@@ -122,6 +122,7 @@ const resolveApplyRedirect = (req, user, done) => {
 
 /* eslint-disable no-param-reassign */
 export default (req, accessToken, refreshToken, profile, done) => {
+
   if (req.user) {
     return User.findOne({
       linkedin: profile.id
@@ -160,7 +161,7 @@ export default (req, accessToken, refreshToken, profile, done) => {
           })
 
         } else {
-          console.log('path 1')
+
           setDefaultUserFields(user, profile, accessToken)
 
           Profile.findOne({
@@ -175,7 +176,7 @@ export default (req, accessToken, refreshToken, profile, done) => {
               _profile: _profile.save,
               user: user.save,
             }, function(err, res) {
-              console.log('path 2')
+              console.log(res)
               done(err, res.user[0])
             });
 
@@ -212,7 +213,6 @@ export default (req, accessToken, refreshToken, profile, done) => {
           _profile: _profile.save,
           user: user.save,
         }, function(err, res) {
-          console.log('asdas')
           isApply(req) ? resolveApplyRedirect(req, res.user[0], done) : done(null, res.user[0])
         });
 
