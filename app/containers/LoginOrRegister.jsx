@@ -48,7 +48,7 @@ class LoginOrRegister extends Component {
         <LoginForm
           user={this.props.user}
           onSumbit={this.handleOnSubmit}
-        />     
+        />
       );
     }
 
@@ -70,7 +70,7 @@ class LoginOrRegister extends Component {
         ...this.state.formInputs,
         [field]: uiVal,
       }
-    });  
+    });
   }
 
   render() {
@@ -82,7 +82,7 @@ class LoginOrRegister extends Component {
         <div className={cx('login', {
           waiting: isWaiting
         })}>
-          <div className={cx('li-container')}>
+          {/* <div className={cx('li-container')}>
             <a className={cx('li-auth')}
               href="/auth/linkedin"
             >
@@ -93,12 +93,12 @@ class LoginOrRegister extends Component {
             </a>
 
           </div>
-          <Divider/>
-          
+          <Divider/> */}
+
 
             <div>
               <div className={cx('toggle-container')}>
-                <p 
+                <p
                   onClick={() => { this.setLoginState('true')}}
                   className={cx('toggle', {
                     'active': isLogin
@@ -112,7 +112,7 @@ class LoginOrRegister extends Component {
                   style={{width: 50}}
                   toggled={!isLogin}
                 />
-                <p 
+                <p
                   onClick={() => { this.setLoginState('false')}}
                   className={cx('toggle', {
                     'active': !isLogin
@@ -147,4 +147,3 @@ function mapStateToProps({user}) {
 }
 
 export default connect(mapStateToProps, { manualLogin, signUp, toggleLoginMode })(LoginOrRegister);
-
