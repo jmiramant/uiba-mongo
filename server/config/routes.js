@@ -227,12 +227,10 @@ export default (app) => {
         // function will not be called.
       });
 
-    app.get('/auth/linkedin/callback',
-      passport.authenticate('linkedin', { failureRedirect: '/login' }),
-      function(req, res) {
-        res.redirect('/profile');
-      }
-    );
+    app.get('/auth/linkedin/callback', passport.authenticate('linkedin', {
+      successRedirect: '/profile',
+      failureRedirect: '/login'
+    }));
 
     app.get('/auth/linkedin/:companyName',
       passport.authenticate('linkedin'),
