@@ -1,11 +1,10 @@
-import async from 'async'
-import _ from 'lodash'
+import async from 'async';
+import _ from 'lodash';
 import User from '../models/user';
-import Profile from '../models/profile'
+import Profile from '../models/profile';
 import Role from '../models/role';
 import Recruiter from '../models/recruiter';
 import Company from '../models/company';
-import cookie from 'react-cookie';
 
 const setDefaultProfileFields = (prof, profile, userId) => {
   prof.user_id = userId;
@@ -41,7 +40,7 @@ const logRecruiter = (req, profId) => {
   if (req.headers.referer.split('/apply/').length > 1) {
 
     const company = req.headers.referer.split('/apply/')[1].split('/')[0];
-    
+
     const isRole = req.headers.referer.split('/apply/')[1].split('/').length > 1
     if (isRole) role = req.headers.referer.split('/apply/')[1].split('/')[1].split('?')[0];
 
@@ -60,7 +59,7 @@ const logRecruiter = (req, profId) => {
     const isRid = req.headers.referer.split('/apply/')[1].split('?')[1]
 
     if (isRid) {
-      
+
       const rid = isRid.split('&')[0].split('=')[1];
 
       Recruiter.findOne({
@@ -103,7 +102,7 @@ const resolveApplyRedirect = (req, user, done) => {
       user_id: user._id
     }, (profErr, _profile) => {
       if (profErr) return res.status(401).json({ message: profErr });
-      
+
       _profile.apply = {
         applied: true,
         name: companyName,
@@ -117,13 +116,12 @@ const resolveApplyRedirect = (req, user, done) => {
       return _profile.save((err, prof) => {
         done(null, user);
       })
-    })  
-  })  
+    })
+  })
 }
 
 /* eslint-disable no-param-reassign */
 export default (req, accessToken, refreshToken, profile, done) => {
-
   if (req.user) {
     return User.findOne({
       linkedin: profile.id
@@ -162,7 +160,7 @@ export default (req, accessToken, refreshToken, profile, done) => {
           })
 
         } else {
-
+          console.log('path 1')
           setDefaultUserFields(user, profile, accessToken)
 
           Profile.findOne({
@@ -177,7 +175,7 @@ export default (req, accessToken, refreshToken, profile, done) => {
               _profile: _profile.save,
               user: user.save,
             }, function(err, res) {
-              console.log(res)
+              console.log('path 2')
               done(err, res.user[0])
             });
 
@@ -214,6 +212,7 @@ export default (req, accessToken, refreshToken, profile, done) => {
           _profile: _profile.save,
           user: user.save,
         }, function(err, res) {
+          console.log('asdas')
           isApply(req) ? resolveApplyRedirect(req, res.user[0], done) : done(null, res.user[0])
         });
 
