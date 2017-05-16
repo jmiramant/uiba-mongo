@@ -48,7 +48,7 @@ export default (app) => {
     app.post('/api/v1/user/role', jwtauth, usersController.role);
     app.post('/api/v1/user/company', jwtauth, usersController.company);
     app.get('/validateEmail/:token', usersController.emailConfirmation);
-    app.post('/resendValidationEmail', usersController.resendEmailConfirmation)
+    app.post('/resendValidationEmail', usersController.resendEmailConfirmation);
   } else {
     console.warn(unsupportedMessage('users routes'));
   }
@@ -228,10 +228,10 @@ export default (app) => {
       });
 
     app.get('/auth/linkedin/callback',
-      passport.authenticate('linkedin', {
-        successRedirect: '/profile',
-        failureRedirect: '/login'
-      })
+      passport.authenticate('linkedin', { failureRedirect: '/login' }),
+      function(req, res) {
+        res.redirect('/profile');
+      }
     );
 
     app.get('/auth/linkedin/:companyName',
