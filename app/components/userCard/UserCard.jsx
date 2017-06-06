@@ -87,16 +87,6 @@ class UserCard extends React.Component {
                 <DefaultUserIcon className={cx('userCard--default-icon')}/>
               )}
             </div>
-            {profile.service === 'linkedin' ? (null) : (
-              <div
-                className={cx('auto-complete')}
-              >
-                <div className={cx('popup') + liClass}>Fetch Photo from LinkedIn</div>
-                <div className={cx('auto-complete-container')}>
-                  <img className={cx('li-img')} src={LiImg} />
-                </div>
-              </div>
-            )}
             <div
               onDoubleClick={this.toggleEdit.bind(this)}
               onMouseEnter={this.editIconShow.bind(this)}
