@@ -18,7 +18,7 @@ import moment from 'moment';
 const cx = classNames.bind(styles);
 
 class UserCard extends React.Component {
-  
+
   static propTypes = {
     editMode: PropTypes.bool.isRequired,
     profile: PropTypes.object.isRequired,
@@ -60,7 +60,7 @@ class UserCard extends React.Component {
       showLi: false
     });
   }
-  
+
   toggleLiEnter() {
     this.setState({
       showLi: true
@@ -75,7 +75,7 @@ class UserCard extends React.Component {
     } = this.props;
 
     const liClass = this.state.showLi ? " " + cx("show") : ''
-    
+
     return (
       <div className={cx('userCard--container') + ' text-center'}>
         <div>
@@ -88,21 +88,18 @@ class UserCard extends React.Component {
               )}
             </div>
             {profile.service === 'linkedin' ? (null) : (
-              <a 
+              <div
                 className={cx('auto-complete')}
-                href="/auth/linkedin"
-                onMouseEnter={this.toggleLiEnter.bind(this)}
-                onMouseLeave={this.toggleLiLeave.bind(this)} 
               >
                 <div className={cx('popup') + liClass}>Fetch Photo from LinkedIn</div>
                 <div className={cx('auto-complete-container')}>
                   <img className={cx('li-img')} src={LiImg} />
                 </div>
-              </a>
+              </div>
             )}
-            <div 
-              onDoubleClick={this.toggleEdit.bind(this)} 
-              onMouseEnter={this.editIconShow.bind(this)} 
+            <div
+              onDoubleClick={this.toggleEdit.bind(this)}
+              onMouseEnter={this.editIconShow.bind(this)}
               onMouseLeave={this.editIconHide.bind(this)}
             >
               {editMode ? (
@@ -122,7 +119,7 @@ class UserCard extends React.Component {
                       className={cx("userCard--edit")}
                     />
                   ) : (
-                    <span />            
+                    <span />
                   )}
                   <div className={cx('userCard--name')}>{profile.name}</div>
                   <div>{profile.headline}</div>
